@@ -1,0 +1,63 @@
+\documentclass[
+    %draft, % Mit % kommentieren, um Bilder sichtbar zu machen und Links zu aktivieren
+    pdftex,
+    a4paper,
+    oneside,
+    parskip,
+    numbers=noenddot,
+    listof=totoc,
+    bibliography=totoc,
+    hyperfootnotes=false
+]{scrreprt}
+\setuptoc{toc}{totoc}
+
+\newcommand{\thesistitle}{Untersuchung der allgemeinen Anwendbarkeit von Fluxkondensatoren}
+\newcommand{\thesistype}{M A S T E R A R B E I T}
+\newcommand{\thesistypedesc}{im Fachbereich Elektrotechnik/Informatik \\
+    der Universität Kassel}
+\newcommand{\thesisauthorname}{Max Mustermann}
+\newcommand{\thesisauthorhomestreet}{Beispielstr. 42}
+\newcommand{\thesisauthorhometown}{34121 Kassel}
+\newcommand{\thesisauthormatrikelnumber}{35123456}
+\newcommand{\thesisauthoremail}{max.mustermann@uni-kassel.de}
+\newcommand{\thesisdepartment}{Fachgebiet Software Engineering}
+\newcommand{\thesisfirstreviewer}{Prof.\ Dr.\ Albert Zündorf}
+\newcommand{\thesissecondreviewer}{Prof.\ Dr.\ Emmett Brown}
+\newcommand{\thesissupervisor}{Christian Coupé,\ M.Sc.}
+\newcommand{\thesisdate}{\today}
+
+\input{header}
+
+\begin{document}
+
+    \pagenumbering{roman}
+
+    \include{titlepage}
+    \include{declaration}
+    \include{abstract}
+
+    \tableofcontents
+
+    \include{acronyms}
+
+    \pagebreak
+    \pagenumbering{arabic}
+
+    % Hier weitere Kapitel einfügen
+    \include{chapter/1-introduction}
+
+    % Die nächsten zwei Zeilen sind optional, sie sorgen dafür dass alles nach dem Inhalt wieder mit römischen Zahlen nummeriert wird.
+    \pagenumbering{roman}
+    \addtocounter{page}{4} % Dies ist die Anzahl der Seiten vor der Einleitung, muss möglicherweise angepasst werden, wenn das Inhaltsverzeichnis mehrere Seiten umfasst.
+
+    \bibliographystyle{alphadin}
+    \bibliography{main}
+
+    \listoffigures
+    \listoftables
+    \renewcommand{\listoflistingscaption}{Listing-Verzeichnis}
+    \listoflistings
+
+    \appendix
+    \include{appendix}
+\end{document}

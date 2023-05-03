@@ -1,0 +1,62 @@
+\chapter{Einleitung}\label{ch:introduction}
+
+Das ist die Einleitung.
+"Dies ist ein Zitat"~\cite{dragon-book}.
+Das ist \ac{zB} eine Abkürzung: \ac{http}.
+Beim zweiten Mal steht nur noch \ac{http}.
+Das ist eine Fußnote\footnote{Ich putz hier nur.}.
+
+Abbildung~\ref{fig:uni-kassel-logo} zeigt das Logo der Uni Kassel.
+
+\begin{figure}[htp] % htp = hier (h), top (t), oder auf einer eigenen Seite (p).
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/Logo_UniKassel.png} % width immer angeben!
+    \caption{Das Logo der Uni Kassel}
+    \label{fig:uni-kassel-logo}
+\end{figure}
+
+Listing~\ref{lst:simple-class} implementiert eine Klasse in \code{java}.
+
+\begin{listing}[htp]
+    \begin{minted}{java}
+        class Foo {
+            String bar;
+        }
+    \end{minted}
+    \caption{Eine einfache Klasse}
+    \label{lst:simple-class}
+\end{listing}
+
+Tabelle~\ref{tbl:evaluation-data} enthält die Daten für die Auswertung.
+
+\begin{table}[htp]
+    \centering
+    \caption{Einfache Daten}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+        Nr. & Punkte & Aufgaben & Bewertet \\
+        \hline
+        1  & 30 & 40 & 26 \\
+        2  & 44 & 75 & 43 \\
+        3  & 22 & 23 & 14 \\
+        4  & 47 & 46 & 32 \\
+        5  & 45 & 63 & 42 \\
+        6  & 58 & 71 & 54 \\
+        7  & 54 & 80 & 54 \\
+        8  & 51 & 60 & 44 \\
+        9  & 35 & 48 & 35 \\
+        10 & 25 & 38 & 25 \\
+        11 & 37 & 48 & 37 \\
+        \hline
+        Gesamt & 448 & 592 & 406 \\
+        \hline
+    \end{tabular}
+    \label{tbl:evaluation-data}
+\end{table}
+
+\section{\acs{http}-Schnittstellen} % Akronyme in Überschriften sollten immer mit \code{\acs} eingebunden werden, da sonst die ausgeschriebene Form nur im Inhaltsverzeichnis steht.
+
+\begin{description}
+    \item[GET /example] Gibt ein Beispiel für eine Beschreibungsliste zurück.
+    Bei mehrzeiligem Text wird ab der zweiten Zeile eingerückt.
+\end{description}
