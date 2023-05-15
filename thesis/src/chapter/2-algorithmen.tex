@@ -1,6 +1,48 @@
 \chapter{Algorithmen}\label{ch:algorithmen}
+Rechtschreib Extension für VS Code!!!!!!!!!!!
 
-Einleitung Algorithmen
+Verschiedene Theorien von Speicher und Ladesysteme ausarbeiten und Zeiten 
+messen (Mit Java und JSON erstmal). Verschiedene Spielarten und Speichersysteme
+für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber 
+allgemein Daten aufteilen müsste gut sein)
 
 \section{Speichersysteme}
+Erstmal Theorie von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
+
+Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
+-Spieler (HP, LVL, Ausrüstung, Position, Rotation, ...)\\
+-Gegner (HP, LVL, Ausrüstung, Position, Rotation, ...)\\
+-Ausrüstung (Beschreibung/ID, Verteidigung, Angriff)\\
+-Hindernisse (Beschreibung/ID, Position, Rotation)\\
+-Items (Beschreibung/ID, Position, Rotation)\\
+-> Klassendiagramm zeigen, um Daten des Spieles zu visualisieren
+
+\subsection{Varianten von Daten in Videospielen}
+Statische Daten (Maps, Texturen, etc.) und sich ändernde Daten (Spielerdaten und 
+Daten zu dem Spielstand). Fokus dieser Arbeit sind nicht die statischen Daten!
+
+\subsection{Aufteilung der Daten}
+\subsection{Kodierung der Daten}
+Eigentlich auch eine Art der Komprimierung der Daten, wenn richtig gemacht. 
+
+\subsection{Komprimierung der Daten}
+Zippen der Daten
+
+\subsection{Speicherprozess}
+Effizientes schreiben in (JSON) Datenbanken
+\subsection{Laufzeiten der Speicherstrategien}
+
 \section{Ladesysteme}
+Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
+von 2.1 testen und Laufzeiten messen.
+
+\subsection{Lazy Loading}
+Weiß nicht, ob das der richtige Begriff dafür ist, aber hier soll über das prozedulare 
+Laden der Daten geschrieben werden (nicht alles auf einmal laden, sondern erstmal nur das
+nötigste und dann Stück für Stück den Rest laden). 
+
+\subsection{Laufzeiten der Ladestrategien}
+Laufzeiten vom Laden messen. Vielleicht läuft das Laden mit manchen Speicherstrategien 
+besser als mit anderen. Außerdem ist die Performance nicht nur an Zeit zu messen, sondern
+an Ressourcen, die vom Computer benötigt werden. Vielleicht gibt es Lade Strategien, die
+leichtgewichtet laufen können.
