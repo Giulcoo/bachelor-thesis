@@ -2,7 +2,7 @@
 Rechtschreib Extension für VS Code!!!!!!!!!!!
 
 Verschiedene Theorien von Speicher und Ladesysteme ausarbeiten und Zeiten 
-messen (Mit Java und JSON erstmal). Verschiedene Spielarten und Speichersysteme
+messen (Mit Java und JSON erst mal). Verschiedene Spielarten und Speichersysteme
 für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber 
 allgemein Daten aufteilen müsste gut sein)
 
@@ -17,18 +17,39 @@ Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
 -Items (Beschreibung/ID, Position, Rotation)\\
 -> Klassendiagramm zeigen, um Daten des Spieles zu visualisieren
 
-\subsection{Varianten von Daten in Videospielen}
+\subsection{Daten in Videospielen}
 Statische Daten (Maps, Texturen, etc.) und sich ändernde Daten (Spielerdaten und 
 Daten zu dem Spielstand). Fokus dieser Arbeit sind nicht die statischen Daten!
 
+Typen von Daten:\\
+\begin{itemize}
+    \item Statische Daten
+    \begin{itemize}
+        \item Grafikdaten
+        \item Audiotechnische Daten
+        \item Level- oder Kartendaten
+    \end{itemize}
+    \item Dynamische Daten
+    \begin{itemize}
+        \item Spielstand
+        \item Benutzerdaten
+    \end{itemize}
+\end{itemize}
+
+\subsection{Delta basierte Speicherung}
+Speichern nur von den veränderten Daten
+
 \subsection{Aufteilung der Daten}
-\subsection{Kodierung der Daten}
-Eigentlich auch eine Art der Komprimierung der Daten, wenn richtig gemacht. 
+Chunking\\
+Sharding
 
 \subsection{Komprimierung der Daten}
 Zippen der Daten
 
-\subsection{Speicherprozess}
+\subsection{Kodierung der Daten}
+Eigentlich auch eine Art der Komprimierung der Daten, wenn richtig gemacht. 
+
+\subsection{Serialisieren}
 Effizientes schreiben in (JSON) Datenbanken
 \subsection{Laufzeiten der Speicherstrategien}
 
@@ -38,11 +59,11 @@ von 2.1 testen und Laufzeiten messen.
 
 \subsection{Lazy Loading}
 Weiß nicht, ob das der richtige Begriff dafür ist, aber hier soll über das prozedulare 
-Laden der Daten geschrieben werden (nicht alles auf einmal laden, sondern erstmal nur das
+Laden der Daten geschrieben werden (nicht alles auf einmal laden, sondern erst mal nur das
 nötigste und dann Stück für Stück den Rest laden). 
 
 \subsection{Laufzeiten der Ladestrategien}
 Laufzeiten vom Laden messen. Vielleicht läuft das Laden mit manchen Speicherstrategien 
 besser als mit anderen. Außerdem ist die Performance nicht nur an Zeit zu messen, sondern
 an Ressourcen, die vom Computer benötigt werden. Vielleicht gibt es Lade Strategien, die
-leichtgewichtet laufen können.
+leicht gewichtet laufen können.

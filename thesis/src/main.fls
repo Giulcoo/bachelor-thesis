@@ -1,8 +1,8 @@
-PWD c:/Users/giuli/OneDrive/Dokumente/GitHub/bachelor-thesis/thesis/src
+PWD d:/Documents/Github Projects/bachelor-thesis/thesis/src
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/giuli/OneDrive/Dokumente/GitHub/bachelor-thesis/thesis/src/main.tex
+INPUT d:/Documents/Github Projects/bachelor-thesis/thesis/src/main.tex
 OUTPUT main.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
@@ -1157,6 +1157,7 @@ INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
 INPUT ./nul
 INPUT ./nul
+INPUT ./nul
 INPUT nul
 INPUT c:/texlive/2023/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/etoolbox/etoolbox.sty
@@ -1528,6 +1529,8 @@ INPUT chapter/2-algorithmen.tex
 INPUT ./chapter/2-algorithmen.tex
 INPUT chapter/2-algorithmen.tex
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecsx1200.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
+INPUT c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./chapter/3-speicherarten.tex
 INPUT ./chapter/3-speicherarten.tex
 INPUT ./chapter/3-speicherarten.tex
