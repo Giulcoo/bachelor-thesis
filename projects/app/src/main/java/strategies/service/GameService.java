@@ -13,8 +13,10 @@ public class GameService {
     private Random random;
 
     public void createGame(int botCount, int obstacleCount, int equipmentCount, int seed) {
-        game = new Game().setPlayer(randomCharacter(false));
         random = new Random(seed);
+        game = new Game();
+
+        game.getCharacters().add(randomCharacter(false));
 
         for (int i = 0; i < botCount; i++) game.getCharacters().add(randomCharacter(true));
     }
@@ -54,5 +56,9 @@ public class GameService {
 
     private boolean randBool(double chance){
         return random.nextDouble() <= chance;
+    }
+
+    public void printGame(){
+        System.out.println(game);
     }
 }

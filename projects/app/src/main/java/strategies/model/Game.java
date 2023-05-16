@@ -1,9 +1,9 @@
 package strategies.model;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private List<Character> characters;
-    private Character player;
+    private List<Character> characters = new ArrayList<>();
 
     public Game setCharacters(List<Character> characters) {
         this.characters = characters;
@@ -14,12 +14,12 @@ public class Game {
         return characters;
     }
 
-    public Game setPlayer(Character player) {
-        this.player = player;
-        return this;
-    }
+    @Override
+    public String toString() {
+        String result = "";
 
-    public Character getPlayer() {
-        return player;
+        for(Character character : characters) result += character.toString() + "\n";
+
+        return result;
     }
 }

@@ -64,4 +64,12 @@ public class Character {
         isBot = bot;
         return this;
     }
+
+    @Override
+    public String toString() {
+        String equipment = "";
+        for(Equipment e : this.equipment) equipment += "   " + e.toString() + "\n";
+
+        return "Char: " + this.name + " with hp: " + this.hp + " and lvl: " + this.lvl + " and equipment:\n" + equipment;
+    }
 }

@@ -33,4 +33,9 @@ public class Equipment {
         this.strength = strength;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Equip: " + this.name + " with strength " + this.strength;
+    }
 }
