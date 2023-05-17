@@ -11,19 +11,24 @@ import static strategies.Constants.*;
 public class GameService {
     private Game game;
     private Random random;
+    private boolean verbose;
 
-    public void createGame(int botCount, int obstacleCount, int equipmentCount, int seed) {
+    public void createGame(int botCount, int obstacleCount, int itemCount, int seed, boolean verbose){
         random = new Random(seed);
         game = new Game();
+        this.verbose = verbose;
 
-        game.getCharacters().add(randomCharacter(false));
+        game.withCharacter(randomCharacter(false));
+        for (int i = 0; i < botCount; i++) game.withCharacter(randomCharacter(true));
 
-        for (int i = 0; i < botCount; i++) game.getCharacters().add(randomCharacter(true));
+        for (int i = 0; i < obstacleCount; i++) game.withObstacle(randomObstacle());
+
+        for (int i = 0; i < itemCount; i++) game.withItem(randomItem());
     }
 
     private Character randomCharacter(boolean isBot){
         return new Character()
-                .setBot(isBot).setGame(game)
+                .setBot(isBot)
                 .setName(isBot ? "Monster" : "Player")
                 .setHp(100).setLvl(isBot? randInt(1,100) : 1)
                 .setEquipment(randomEquipments());
@@ -50,6 +55,23 @@ public class GameService {
                 .setType(type);
     }
 
+    private Obstacle randomObstacle(){
+        return new Obstacle().setName("Cube")
+                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setScale(new Vector(randDouble(1, 10), randDouble(1, 10), randDouble(1, 10)))
+                .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
+    }
+
+    private Item randomItem(){
+        return new Item().setName("Coin")
+                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
+    }
+
+    private double randDouble(double min, double max){
+        return random.nextDouble() * (max - min) + min;
+    }
+
     private int randInt(int min, int max){
         return random.nextInt(max - min + 1) + min;
     }
@@ -59,6 +81,6 @@ public class GameService {
     }
 
     public void printGame(){
-        System.out.println(game);
+        if(verbose) System.out.println(game);
     }
 }

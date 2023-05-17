@@ -3,9 +3,28 @@ package strategies.model;
 import java.util.List;
 
 public class Equipment {
+    private Character character;
     private String name;
     private String type;
     private double strength;
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public Equipment setCharacter(Character character) {
+        if(this.character == character) return this;
+
+        final Character oldCharacter = this.character;
+        if(this.character != null){
+            this.character = null;
+            oldCharacter.withoutEquipment(this);
+        }
+
+        this.character = character;
+        if(character != null) character.withEquipment(this);
+        return this;
+    }
 
     public String getName() {
         return name;
