@@ -116,4 +116,8 @@ public class Quaternion
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ", " + w + ")";
     }
+
+    public Quaternion copy() {
+        return new Quaternion(x, y, z, w);
+    }
 }

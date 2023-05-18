@@ -1,4 +1,6 @@
 package strategies.model;
+import strategies.service.ChangeTracker;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -14,6 +16,11 @@ public class Game
     private List<Obstacle> obstacles;
     private List<Character> characters;
     protected PropertyChangeSupport listeners;
+    private ChangeTracker changeTracker;
+
+    public Game(ChangeTracker tracker) {
+        this.changeTracker = tracker;
+    }
 
     public List<Item> getItems()
     {
@@ -55,6 +62,7 @@ public class Game
 
     public Game withoutItems(Item value)
     {
+        this.changeTracker.addRemovedObject(value.copy());
         if (this.items != null && this.items.remove(value))
         {
             value.setGame(null);
@@ -187,6 +195,7 @@ public class Game
 
     public Game withoutCharacters(Character value)
     {
+        this.changeTracker.addRemovedObject(value.copy());
         if (this.characters != null && this.characters.remove(value))
         {
             value.setGame(null);
@@ -210,6 +219,15 @@ public class Game
         {
             this.withoutCharacters(item);
         }
+        return this;
+    }
+
+    public ChangeTracker getChangeTracker() {
+        return changeTracker;
+    }
+
+    public Game setChangeTracker(ChangeTracker changeTracker) {
+        this.changeTracker = changeTracker;
         return this;
     }
 

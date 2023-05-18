@@ -102,4 +102,8 @@ public class Vector
     public String toString() {
         return "(" + x + ", " + y + ", " + z + ")";
     }
+
+    public Vector copy() {
+        return new Vector(x, y, z);
+    }
 }

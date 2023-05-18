@@ -9,13 +9,19 @@ import java.util.Random;
 import static strategies.Constants.*;
 
 public class GameService {
+
+    private final ChangeTracker changeTracker;
     private Game game;
     private Random random;
     private boolean verbose;
 
+    public GameService(ChangeTracker changeTracker) {
+        this.changeTracker = changeTracker;
+    }
+
     public void createGame(int botCount, int obstacleCount, int itemCount, int seed, boolean verbose){
         random = new Random(seed);
-        game = new Game();
+        game = new Game(changeTracker);
         this.verbose = verbose;
 
         game.withCharacters(randomCharacter(false));
@@ -67,6 +73,7 @@ public class GameService {
                 .setName(isBot ? "Monster" : "Player")
                 .setHp(100).setLvl(isBot? randInt(1,100) : 1)
                 .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setRotation(new Quaternion(0, 0, 0, 0))
                 .withEquipment(randomEquipments());
     }
 

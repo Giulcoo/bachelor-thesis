@@ -98,6 +98,8 @@ public class Item
 
     public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)
     {
+        if(this.game != null) this.game.getChangeTracker().addChange(this);
+
         if (this.listeners != null)
         {
             this.listeners.firePropertyChange(propertyName, oldValue, newValue);
@@ -124,5 +126,13 @@ public class Item
     public void removeYou()
     {
         this.setGame(null);
+    }
+
+    public Item copy()
+    {
+        return new Item()
+            .setName(new String(this.getName()))
+            .setPosition(this.getPosition().copy())
+            .setRotation(this.getRotation().copy());
     }
 }

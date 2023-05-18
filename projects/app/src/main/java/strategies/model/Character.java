@@ -250,6 +250,8 @@ public class Character
 
     public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)
     {
+        if(this.game != null) this.game.getChangeTracker().addChange(this);
+
         if (this.listeners != null)
         {
             this.listeners.firePropertyChange(propertyName, oldValue, newValue);
@@ -280,5 +282,19 @@ public class Character
     {
         this.withoutEquipment(new ArrayList<>(this.getEquipment()));
         this.setGame(null);
+    }
+
+    public Character copy(){
+        Character copy = new Character()
+                .setName(new String(this.getName()))
+                .setHp(this.getHp())
+                .setExp(this.getExp())
+                .setLvl(this.getLvl())
+                .setPosition(this.getPosition().copy())
+                .setRotation(this.getRotation().copy())
+                .setIsBot(this.isIsBot());
+
+        this.getEquipment().forEach(e -> copy.withEquipment(e.copy()));
+        return copy;
     }
 }

@@ -125,5 +125,12 @@ public class Equipment
     {
         this.setCharacter(null);
     }
+
+    public Equipment copy(){
+        return new Equipment()
+            .setName(this.getName())
+            .setType(this.getType())
+            .setStrength(this.getStrength());
+    }
 }
 
