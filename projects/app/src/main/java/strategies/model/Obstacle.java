@@ -1,70 +1,148 @@
 package strategies.model;
 
-public class Obstacle {
-    public Game game;
-    public String name;
-    public Vector position;
-    public Vector scale;
-    public Quaternion rotation;
+import java.util.Objects;
+import java.beans.PropertyChangeSupport;
 
-    public Game getGame() {
-        return game;
+public class Obstacle
+{
+    public static final String PROPERTY_NAME = "name";
+    public static final String PROPERTY_POSITION = "position";
+    public static final String PROPERTY_SCALE = "scale";
+    public static final String PROPERTY_ROTATION = "rotation";
+    public static final String PROPERTY_GAME = "game";
+    private String name;
+    private Vector position;
+    private Vector scale;
+    private Quaternion rotation;
+    private Game game;
+    protected PropertyChangeSupport listeners;
+
+    public String getName()
+    {
+        return this.name;
     }
 
-    public Obstacle setGame(Game game) {
-        if(this.game == game) return this;
+    public Obstacle setName(String value)
+    {
+        if (Objects.equals(value, this.name))
+        {
+            return this;
+        }
 
-        Game oldGame = this.game;
-        if(this.game != null){
+        final String oldValue = this.name;
+        this.name = value;
+        this.firePropertyChange(PROPERTY_NAME, oldValue, value);
+        return this;
+    }
+
+    public Vector getPosition()
+    {
+        return this.position;
+    }
+
+    public Obstacle setPosition(Vector value)
+    {
+        if (Objects.equals(value, this.position))
+        {
+            return this;
+        }
+
+        final Vector oldValue = this.position;
+        this.position = value;
+        this.firePropertyChange(PROPERTY_POSITION, oldValue, value);
+        return this;
+    }
+
+    public Vector getScale()
+    {
+        return this.scale;
+    }
+
+    public Obstacle setScale(Vector value)
+    {
+        if (Objects.equals(value, this.scale))
+        {
+            return this;
+        }
+
+        final Vector oldValue = this.scale;
+        this.scale = value;
+        this.firePropertyChange(PROPERTY_SCALE, oldValue, value);
+        return this;
+    }
+
+    public Quaternion getRotation()
+    {
+        return this.rotation;
+    }
+
+    public Obstacle setRotation(Quaternion value)
+    {
+        if (Objects.equals(value, this.rotation))
+        {
+            return this;
+        }
+
+        final Quaternion oldValue = this.rotation;
+        this.rotation = value;
+        this.firePropertyChange(PROPERTY_ROTATION, oldValue, value);
+        return this;
+    }
+
+    public Game getGame()
+    {
+        return this.game;
+    }
+
+    public Obstacle setGame(Game value)
+    {
+        if (this.game == value)
+        {
+            return this;
+        }
+
+        final Game oldValue = this.game;
+        if (this.game != null)
+        {
             this.game = null;
-            oldGame.withoutObstacle(this);
+            oldValue.withoutObstacles(this);
         }
-
-        this.game = game;
-        if(game != null){
-            game.withObstacle(this);
+        this.game = value;
+        if (value != null)
+        {
+            value.withObstacles(this);
         }
+        this.firePropertyChange(PROPERTY_GAME, oldValue, value);
         return this;
     }
 
-    public String getName() {
-        return name;
+    public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)
+    {
+        if (this.listeners != null)
+        {
+            this.listeners.firePropertyChange(propertyName, oldValue, newValue);
+            return true;
+        }
+        return false;
     }
 
-    public Obstacle setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Vector getPosition() {
-        return position;
-    }
-
-    public Obstacle setPosition(Vector position) {
-        this.position = position;
-        return this;
-    }
-
-    public Vector getScale() {
-        return scale;
-    }
-
-    public Obstacle setScale(Vector scale) {
-        this.scale = scale;
-        return this;
-    }
-
-    public Quaternion getRotation() {
-        return rotation;
-    }
-
-    public Obstacle setRotation(Quaternion rotation) {
-        this.rotation = rotation;
-        return this;
+    public PropertyChangeSupport listeners()
+    {
+        if (this.listeners == null)
+        {
+            this.listeners = new PropertyChangeSupport(this);
+        }
+        return this.listeners;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Obst: " + name + " with pos: " + position + " scale:" + scale + " rotation:" + rotation;
+    }
+
+    public void removeYou()
+    {
+        this.setGame(null);
     }
 }

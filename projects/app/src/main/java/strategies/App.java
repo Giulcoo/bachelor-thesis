@@ -2,24 +2,25 @@ package strategies;
 import strategies.service.*;
 
 public class App {
-    private static GameService gameService;
-
-    //public String getGreeting() { return "Hello World!"; }
+    private static final GameService gameService = new GameService();
+    private static final ChangeTracker changeTracker = new ChangeTracker();
+    private static final TimeService timeService = new TimeService();
 
     public static void main(String[] args) {
-        //System.out.println(new App().getGreeting());
-
-        // Arguments: botCount, obstacleCount, itemCount, seed, verbose
         if(args.length < 5) {
-            System.out.println("Too few command line arguments!");
+            System.out.println("Arguments needed: botCount (int), obstacleCount (int), itemCount (int), seed (int), verbose (boolean)");
             return;
         }
 
-        System.out.println("Create new game");
-        gameService = new GameService();
+        //TODO: Load or create new game
+        timeService.start("createGame");
         gameService.createGame(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
                 Integer.parseInt(args[3]), Boolean.parseBoolean(args[4]));
+        timeService.stop("createGame");
 
-        gameService.printGame();
+        gameService.randomChanges(10, 10, 5, 5, 10, 10);
+
+        //TODO: Save game every x seconds or everytime something changes
+        //TODO: Save game when program is closed
     }
 }

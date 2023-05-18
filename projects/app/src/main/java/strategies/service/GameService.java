@@ -18,20 +18,56 @@ public class GameService {
         game = new Game();
         this.verbose = verbose;
 
-        game.withCharacter(randomCharacter(false));
-        for (int i = 0; i < botCount; i++) game.withCharacter(randomCharacter(true));
+        game.withCharacters(randomCharacter(false));
+        for (int i = 0; i < botCount; i++) game.withCharacters(randomCharacter(true));
 
-        for (int i = 0; i < obstacleCount; i++) game.withObstacle(randomObstacle());
+        for (int i = 0; i < obstacleCount; i++) game.withObstacles(randomObstacle());
 
-        for (int i = 0; i < itemCount; i++) game.withItem(randomItem());
+        for (int i = 0; i < itemCount; i++) game.withItems(randomItem());
+
+        printGame();
+    }
+
+    public void randomChanges(int charMoves, int itemMoves, int charRemoveCount, int itemRemoveCount, int charAddCount, int itemAddCount){
+        for (int i = 0; i < charMoves; i++) randomCharacterMove();
+        for (int i = 0; i < itemMoves; i++) randomItemMove();
+
+        for(int i = 0; i < charRemoveCount; i++) {
+            if(game.getCharacters().size() > 1) game.withoutCharacters(game.getCharacters().get(randInt(1, game.getCharacters().size() - 1)));
+        }
+
+        for(int i = 0; i < itemRemoveCount; i++) {
+            if(game.getItems().size() > 1) game.withoutItems(game.getItems().get(randInt(1, game.getItems().size() - 1)));
+        }
+
+        for(int i = 0; i < charAddCount; i++) {
+            game.withCharacters(randomCharacter(true));
+        }
+
+        for(int i = 0; i < itemAddCount; i++) {
+            game.withItems(randomItem());
+        }
+
+        printGame();
+    }
+
+    private void randomCharacterMove() {
+        game.getCharacters().get(randInt(0, game.getCharacters().size() - 1))
+                .getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0));
+    }
+
+    private void randomItemMove() {
+        game.getItems().get(randInt(0, game.getItems().size() - 1))
+                .getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0));
     }
 
     private Character randomCharacter(boolean isBot){
         return new Character()
-                .setBot(isBot)
+                .setIsBot(isBot)
                 .setName(isBot ? "Monster" : "Player")
                 .setHp(100).setLvl(isBot? randInt(1,100) : 1)
-                .setEquipment(randomEquipments());
+                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .withEquipment(randomEquipments());
     }
 
     private List<Equipment> randomEquipments(){
