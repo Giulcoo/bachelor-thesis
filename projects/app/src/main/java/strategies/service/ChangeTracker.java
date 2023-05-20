@@ -13,8 +13,6 @@ public class ChangeTracker {
     private final List<Character> deletedCharacters = new ArrayList<>();
     private final List<Item> deletedItems = new ArrayList<>();
 
-    //TODO: Track all changes for all objects here
-
     public void addChange(Character character){
         if(!changedCharacters.contains(character)) changedCharacters.add(character);
     }

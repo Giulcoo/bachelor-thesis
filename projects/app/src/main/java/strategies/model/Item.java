@@ -6,10 +6,12 @@ import java.beans.PropertyChangeSupport;
 public class Item
 {
     public static final String PROPERTY_NAME = "name";
+    public static final String PROPERTY_ID = "id";
     public static final String PROPERTY_POSITION = "position";
     public static final String PROPERTY_ROTATION = "rotation";
     public static final String PROPERTY_GAME = "game";
     private String name;
+    private String id;
     private Vector position;
     private Quaternion rotation;
     private Game game;
@@ -30,6 +32,24 @@ public class Item
         final String oldValue = this.name;
         this.name = value;
         this.firePropertyChange(PROPERTY_NAME, oldValue, value);
+        return this;
+    }
+
+    public String getId()
+    {
+        return this.id;
+    }
+
+    public Item setId(String value)
+    {
+        if (Objects.equals(value, this.id))
+        {
+            return this;
+        }
+
+        final String oldValue = this.id;
+        this.id = value;
+        this.firePropertyChange(PROPERTY_ID, oldValue, value);
         return this;
     }
 
@@ -120,7 +140,7 @@ public class Item
     @Override
     public String toString()
     {
-        return "Item: " + name + " with pos: " + position + " rotation:" + rotation;
+        return "Item: #" + this.id + " " + name + " with pos: " + position + " rotation:" + rotation;
     }
 
     public void removeYou()
@@ -131,8 +151,18 @@ public class Item
     public Item copy()
     {
         return new Item()
+            .setId(this.getId())
             .setName(new String(this.getName()))
             .setPosition(this.getPosition().copy())
             .setRotation(this.getRotation().copy());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Item){
+            return ((Item) obj).getId().equals(this.getId());
+        }
+
+        return false;
     }
 }

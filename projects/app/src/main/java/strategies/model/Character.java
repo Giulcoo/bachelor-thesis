@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 public class Character
 {
     public static final String PROPERTY_NAME = "name";
+    public static final String PROPERTY_ID = "id";
     public static final String PROPERTY_POSITION = "position";
     public static final String PROPERTY_ROTATION = "rotation";
     public static final String PROPERTY_HP = "hp";
@@ -19,6 +20,7 @@ public class Character
     public static final String PROPERTY_EQUIPMENT = "equipment";
     public static final String PROPERTY_GAME = "game";
     private String name;
+    private String id;
     private Vector position;
     private Quaternion rotation;
     private double hp;
@@ -46,6 +48,25 @@ public class Character
         this.firePropertyChange(PROPERTY_NAME, oldValue, value);
         return this;
     }
+
+    public String getId()
+    {
+        return this.id;
+    }
+
+    public Character setId(String value)
+    {
+        if (Objects.equals(value, this.id))
+        {
+            return this;
+        }
+
+        final String oldValue = this.id;
+        this.id = value;
+        this.firePropertyChange(PROPERTY_ID, oldValue, value);
+        return this;
+    }
+
 
     public Vector getPosition()
     {
@@ -275,7 +296,7 @@ public class Character
         String equipment = "";
         for(Equipment e : this.equipment) equipment += "   " + e.toString() + "\n";
 
-        return "Char: " + this.name + " with hp: " + this.hp + " exp: " + exp +  " lvl: " + this.lvl + " position: " + position + " equipment:\n" + equipment;
+        return "Char: #" + this.id + " " + this.name + " with hp: " + this.hp + " exp: " + exp +  " lvl: " + this.lvl + " position: " + position + " equipment:\n" + equipment;
     }
 
     public void removeYou()
@@ -286,6 +307,7 @@ public class Character
 
     public Character copy(){
         Character copy = new Character()
+                .setId(this.getId())
                 .setName(new String(this.getName()))
                 .setHp(this.getHp())
                 .setExp(this.getExp())
@@ -296,5 +318,14 @@ public class Character
 
         this.getEquipment().forEach(e -> copy.withEquipment(e.copy()));
         return copy;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Character){
+            return ((Character) obj).getId().equals(this.getId());
+        }
+
+        return false;
     }
 }

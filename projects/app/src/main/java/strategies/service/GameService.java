@@ -5,11 +5,11 @@ import strategies.model.Character;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import static strategies.Constants.*;
 
 public class GameService {
-
     private final ChangeTracker changeTracker;
     private Game game;
     private Random random;
@@ -71,6 +71,7 @@ public class GameService {
         return new Character()
                 .setIsBot(isBot)
                 .setName(isBot ? "Monster" : "Player")
+                .setId(UUID.randomUUID().toString())
                 .setHp(100).setLvl(isBot? randInt(1,100) : 1)
                 .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
                 .setRotation(new Quaternion(0, 0, 0, 0))
@@ -106,7 +107,9 @@ public class GameService {
     }
 
     private Item randomItem(){
-        return new Item().setName("Coin")
+        return new Item()
+                .setName("Coin")
+                .setId(UUID.randomUUID().toString())
                 .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
                 .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
     }
