@@ -1,10 +1,16 @@
 package strategies;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import strategies.model.Character;
 import strategies.service.*;
 
+import java.util.List;
+
 public class App {
+    private static final TimeService timeService = new TimeService();
     private static final ChangeTracker changeTracker = new ChangeTracker();
     private static final GameService gameService = new GameService(changeTracker);
-    private static final TimeService timeService = new TimeService();
+
+    private static final SaveService saveService = new SaveService(gameService, changeTracker);
 
     public static void main(String[] args) {
         if(args.length < 5) {
@@ -20,14 +26,8 @@ public class App {
 
         gameService.randomChanges(10, 10, 5, 5, 10, 10);
 
-        System.out.println("\n\nChanged:");
-        changeTracker.getChangedCharacters().forEach(System.out::println);
-        changeTracker.getChangedItems().forEach(System.out::println);
-        System.out.println("\n\nRemoved:");
-        changeTracker.getDeletedCharacters().forEach(System.out::println);
-        changeTracker.getDeletedItems().forEach(System.out::println);
-
         //TODO: Save game every x seconds or everytime something changes
         //TODO: Save game when program is closed
+        saveService.saveAsJson();
     }
 }

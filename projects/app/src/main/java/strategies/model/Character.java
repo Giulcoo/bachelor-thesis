@@ -1,5 +1,7 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,16 +11,16 @@ import java.beans.PropertyChangeSupport;
 
 public class Character
 {
-    public static final String PROPERTY_NAME = "name";
-    public static final String PROPERTY_ID = "id";
-    public static final String PROPERTY_POSITION = "position";
-    public static final String PROPERTY_ROTATION = "rotation";
-    public static final String PROPERTY_HP = "hp";
-    public static final String PROPERTY_EXP = "exp";
-    public static final String PROPERTY_LVL = "lvl";
-    public static final String PROPERTY_IS_BOT = "isBot";
-    public static final String PROPERTY_EQUIPMENT = "equipment";
-    public static final String PROPERTY_GAME = "game";
+    @JsonIgnore public static final String PROPERTY_NAME = "name";
+    @JsonIgnore public static final String PROPERTY_ID = "id";
+    @JsonIgnore public static final String PROPERTY_POSITION = "position";
+    @JsonIgnore public static final String PROPERTY_ROTATION = "rotation";
+    @JsonIgnore public static final String PROPERTY_HP = "hp";
+    @JsonIgnore public static final String PROPERTY_EXP = "exp";
+    @JsonIgnore public static final String PROPERTY_LVL = "lvl";
+    @JsonIgnore public static final String PROPERTY_IS_BOT = "isBot";
+    @JsonIgnore public static final String PROPERTY_EQUIPMENT = "equipment";
+    @JsonIgnore public static final String PROPERTY_GAME = "game";
     private String name;
     private String id;
     private Vector position;
@@ -28,8 +30,8 @@ public class Character
     private int lvl;
     private boolean isBot;
     private List<Equipment> equipment;
-    private Game game;
-    protected PropertyChangeSupport listeners;
+    @JsonIgnore private Game game;
+    @JsonIgnore protected PropertyChangeSupport listeners;
 
     public String getName()
     {

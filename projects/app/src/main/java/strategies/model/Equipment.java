@@ -1,19 +1,21 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import java.beans.PropertyChangeSupport;
 
 public class Equipment
 {
-    public static final String PROPERTY_NAME = "name";
-    public static final String PROPERTY_TYPE = "type";
-    public static final String PROPERTY_STRENGTH = "strength";
-    public static final String PROPERTY_CHARACTER = "character";
+    @JsonIgnore public static final String PROPERTY_NAME = "name";
+    @JsonIgnore public static final String PROPERTY_TYPE = "type";
+    @JsonIgnore public static final String PROPERTY_STRENGTH = "strength";
+    @JsonIgnore public static final String PROPERTY_CHARACTER = "character";
     private String name;
     private String type;
     private double strength;
-    private Character character;
-    protected PropertyChangeSupport listeners;
+    @JsonIgnore private Character character;
+    @JsonIgnore protected PropertyChangeSupport listeners;
 
     public String getName()
     {
