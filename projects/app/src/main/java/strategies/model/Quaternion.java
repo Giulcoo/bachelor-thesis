@@ -1,18 +1,20 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.beans.PropertyChangeSupport;
 
 public class Quaternion
 {
-    public static final String PROPERTY_X = "x";
-    public static final String PROPERTY_Y = "y";
-    public static final String PROPERTY_Z = "z";
-    public static final String PROPERTY_W = "w";
+    @JsonIgnore public static final String PROPERTY_X = "x";
+    @JsonIgnore public static final String PROPERTY_Y = "y";
+    @JsonIgnore public static final String PROPERTY_Z = "z";
+    @JsonIgnore public static final String PROPERTY_W = "w";
     private double x;
     private double y;
     private double z;
     private double w;
-    protected PropertyChangeSupport listeners;
+    @JsonIgnore protected PropertyChangeSupport listeners;
 
     public Quaternion(double x, double y, double z, double w) {
         this.setX(x);

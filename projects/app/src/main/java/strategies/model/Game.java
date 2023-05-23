@@ -1,4 +1,5 @@
 package strategies.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import strategies.service.ChangeTracker;
 
 import java.util.ArrayList;
@@ -9,14 +10,14 @@ import java.beans.PropertyChangeSupport;
 
 public class Game
 {
-    public static final String PROPERTY_ITEMS = "items";
-    public static final String PROPERTY_OBSTACLES = "obstacles";
-    public static final String PROPERTY_CHARACTERS = "characters";
-    private List<Item> items;
-    private List<Obstacle> obstacles;
-    private List<Character> characters;
-    protected PropertyChangeSupport listeners;
-    private ChangeTracker changeTracker;
+    @JsonIgnore public static final String PROPERTY_ITEMS = "items";
+    @JsonIgnore public static final String PROPERTY_OBSTACLES = "obstacles";
+    @JsonIgnore public static final String PROPERTY_CHARACTERS = "characters";
+    @JsonIgnore private List<Item> items;
+    @JsonIgnore private List<Obstacle> obstacles;
+    @JsonIgnore private List<Character> characters;
+    @JsonIgnore protected PropertyChangeSupport listeners;
+    @JsonIgnore private ChangeTracker changeTracker;
 
     public Game(ChangeTracker tracker) {
         this.changeTracker = tracker;
@@ -103,6 +104,7 @@ public class Game
         if (!this.obstacles.contains(value))
         {
             this.obstacles.add(value);
+            this.changeTracker.addChange(value);
             value.setGame(this);
             this.firePropertyChange(PROPERTY_OBSTACLES, null, value);
         }

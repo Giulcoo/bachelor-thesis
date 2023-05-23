@@ -1,16 +1,18 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.beans.PropertyChangeSupport;
 
 public class Vector
 {
-    public static final String PROPERTY_X = "x";
-    public static final String PROPERTY_Y = "y";
-    public static final String PROPERTY_Z = "z";
+    @JsonIgnore public static final String PROPERTY_X = "x";
+    @JsonIgnore public static final String PROPERTY_Y = "y";
+    @JsonIgnore public static final String PROPERTY_Z = "z";
     private double x;
     private double y;
     private double z;
-    protected PropertyChangeSupport listeners;
+    @JsonIgnore protected PropertyChangeSupport listeners;
 
     public Vector(double x, double y, double z) {
         this.setX(x);

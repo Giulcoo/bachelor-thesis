@@ -15,4 +15,6 @@ public class TimeService {
         System.out.println("[" + key + "]: " + ((double) time / 1_000_000_000) + "s");
         return time;
     }
+
+    //TODO: Library for time measurement (JMH)
 }

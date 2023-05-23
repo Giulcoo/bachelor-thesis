@@ -1,21 +1,23 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import java.beans.PropertyChangeSupport;
 
 public class Item
 {
-    public static final String PROPERTY_NAME = "name";
-    public static final String PROPERTY_ID = "id";
-    public static final String PROPERTY_POSITION = "position";
-    public static final String PROPERTY_ROTATION = "rotation";
-    public static final String PROPERTY_GAME = "game";
+    @JsonIgnore public static final String PROPERTY_NAME = "name";
+    @JsonIgnore public static final String PROPERTY_ID = "id";
+    @JsonIgnore public static final String PROPERTY_POSITION = "position";
+    @JsonIgnore public static final String PROPERTY_ROTATION = "rotation";
+    @JsonIgnore public static final String PROPERTY_GAME = "game";
     private String name;
     private String id;
     private Vector position;
     private Quaternion rotation;
-    private Game game;
-    protected PropertyChangeSupport listeners;
+    @JsonIgnore private Game game;
+    @JsonIgnore protected PropertyChangeSupport listeners;
 
     public String getName()
     {

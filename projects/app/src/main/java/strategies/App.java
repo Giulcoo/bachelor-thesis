@@ -19,10 +19,12 @@ public class App {
         }
 
         //TODO: Load or create new game
-        timeService.start("createGame");
-        gameService.createGame(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
-                Integer.parseInt(args[3]), Boolean.parseBoolean(args[4]));
-        timeService.stop("createGame");
+        if(saveService.createFolderStructure()){
+            timeService.start("createGame");
+            gameService.createGame(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
+                    Integer.parseInt(args[3]), Boolean.parseBoolean(args[4]));
+            timeService.stop("createGame");
+        }
 
         gameService.randomChanges(10, 10, 5, 5, 10, 10);
 

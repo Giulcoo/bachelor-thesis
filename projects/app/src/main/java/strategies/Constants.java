@@ -3,6 +3,7 @@ import strategies.model.*;
 import strategies.model.Character;
 
 public class Constants {
+    // Equipment
     public static String WEAPON_TYPE = "Weapon";
     public static String HEAD_ARMOR_TYPE = "Head Armor";
     public static String BODY_ARMOR_TYPE = "Body Armor";
