@@ -19,7 +19,7 @@ public class GameService {
         this.changeTracker = changeTracker;
     }
 
-    public void createGame(int botCount, int obstacleCount, int itemCount, int seed, boolean verbose){
+    public void createGame(int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
         random = new Random(seed);
         game = new Game(changeTracker);
         this.verbose = verbose;

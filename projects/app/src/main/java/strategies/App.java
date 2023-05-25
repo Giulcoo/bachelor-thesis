@@ -18,13 +18,17 @@ public class App {
             return;
         }
 
+       startGame(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
+               Integer.parseInt(args[3]), Boolean.parseBoolean(args[4]));
+    }
+
+    public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
         //TODO: Load or create new game
-        if(saveService.createFolderStructure()){
+        //if(saveService.createFolderStructure()){
             timeService.start("createGame");
-            gameService.createGame(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
-                    Integer.parseInt(args[3]), Boolean.parseBoolean(args[4]));
+            gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
             timeService.stop("createGame");
-        }
+        //}
 
         gameService.randomChanges(10, 10, 5, 5, 10, 10);
 
