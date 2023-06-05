@@ -6,10 +6,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import strategies.model.Character;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
 
 public class SaveService {
@@ -30,6 +29,8 @@ public class SaveService {
         catch (Exception e) {
             System.out.println(e);
         }
+
+        if(mainPath != null) mainPath += "/resources/strategies/";
     }
 
     public boolean createFolderStructure(){
@@ -41,20 +42,42 @@ public class SaveService {
 
     public void saveAsJson(){
         writeJson("obstacles/obstacles.json", changeTracker.getAddedObstacles());
+        writeJson("characters/characters.json", changeTracker.getChangedCharacters());
+        writeJson("items/items.json", changeTracker.getChangedItems());
     }
 
-    private void writeJson(String file, Object object){
+    public void clearData(){
         try {
-            writer.writeValue(new File(mainPath + "/resources/strategies/" + file), object);
+            deleteDirectoryRecursive(Paths.get(mainPath));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
+    private void writeJson(String file, Object object){
+        try {
+            writer.writeValue(new File(mainPath + file), object);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteDirectoryRecursive(Path path) throws IOException {
+        if (Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)) {
+            try (DirectoryStream<Path> entries = Files.newDirectoryStream(path)) {
+                for (Path entry : entries) {
+                    deleteDirectoryRecursive(entry);
+                }
+            }
+        }
+        Files.delete(path);
+    }
+
     private boolean createDirIfNeeded(String path){
         try {
-            Path dirPath = Paths.get(mainPath, "resources/strategies/" + path);
+            Path dirPath = Paths.get(mainPath, path);
 
             if (!Files.exists(dirPath)) {
                 Files.createDirectories(dirPath);
@@ -72,7 +95,7 @@ public class SaveService {
         createDirIfNeeded(path);
 
         try {
-            Path dirPath = Paths.get(mainPath, "resources/strategies/" + path + "/" + file);
+            Path dirPath = Paths.get(mainPath, path + "/" + file);
 
             if (!Files.exists(dirPath)) {
                 Files.createFile(dirPath);

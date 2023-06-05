@@ -1,16 +1,16 @@
 package strategies;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import strategies.model.Character;
 import strategies.service.*;
 
-import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class App {
     private static final TimeService timeService = new TimeService();
     private static final ChangeTracker changeTracker = new ChangeTracker();
     private static final GameService gameService = new GameService(changeTracker);
-
     private static final SaveService saveService = new SaveService(gameService, changeTracker);
+
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         if(args.length < 5) {
@@ -24,16 +24,33 @@ public class App {
 
     public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
         //TODO: Load or create new game
+        saveService.clearData();
+
+        saveService.createFolderStructure();
         //if(saveService.createFolderStructure()){
-            timeService.start("createGame");
+            //timeService.start("createGame");
             gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
-            timeService.stop("createGame");
+            //timeService.stop("createGame");
         //}
 
-        gameService.randomChanges(10, 10, 5, 5, 10, 10);
-
-        //TODO: Save game every x seconds or everytime something changes
-        //TODO: Save game when program is closed
         saveService.saveAsJson();
+
+        for(int i = 0; i < 1; i++){
+            gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
+            saveService.saveAsJson();
+        }
+    }
+
+    private static void sleep(int seconds){
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void breakPoint(){
+        System.out.print("\n[breakpoint]");
+        scanner.nextLine();
     }
 }

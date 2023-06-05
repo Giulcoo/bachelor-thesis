@@ -38,6 +38,7 @@ public class Game
         {
             this.items.add(value);
             value.setGame(this);
+            changeTracker.addChange(value);
             this.firePropertyChange(PROPERTY_ITEMS, null, value);
         }
         return this;
@@ -172,6 +173,7 @@ public class Game
         {
             this.characters.add(value);
             value.setGame(this);
+            changeTracker.addChange(value);
             this.firePropertyChange(PROPERTY_CHARACTERS, null, value);
         }
         return this;
