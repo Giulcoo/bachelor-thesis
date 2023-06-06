@@ -73,7 +73,7 @@ public class GameService {
                 .setName(isBot ? "Monster" : "Player")
                 .setId(UUID.randomUUID().toString())
                 .setHp(100).setLvl(isBot? randInt(1,100) : 1)
-                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setRotation(new Quaternion(0, 0, 0, 0))
                 .withEquipment(randomEquipments());
     }
@@ -101,7 +101,7 @@ public class GameService {
 
     private Obstacle randomObstacle(){
         return new Obstacle().setName("Cube")
-                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setScale(new Vector(randDouble(1, 10), randDouble(1, 10), randDouble(1, 10)))
                 .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
     }
@@ -110,7 +110,7 @@ public class GameService {
         return new Item()
                 .setName("Coin")
                 .setId(UUID.randomUUID().toString())
-                .setPosition(new Vector(randDouble(-100, 100), randDouble(-100, 100), 0))
+                .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
     }
 

@@ -24,10 +24,6 @@ public class SaveService {
     private final ObjectMapper mapper = new ObjectMapper();
     private final ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
     private final ArrayNode characterNode;
-
-    private final HashMap<String, Integer> characterMap = new HashMap<>(); //Saves index of chunk
-    private final List<List<Character>> characterChunks = new ArrayList<>(); //Saves all chunks
-
     public SaveService(GameService gameService, ChangeTracker changeTracker) {
         this.gameService = gameService;
         this.changeTracker = changeTracker;

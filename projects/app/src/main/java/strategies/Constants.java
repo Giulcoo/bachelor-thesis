@@ -15,4 +15,7 @@ public class Constants {
     public static String[] BODY_ARMORS = {"Cuirass", "Robe", "Vest", "Shirt", "Jacket"};
     public static String[] LEG_ARMORS = {"Greaves", "Pants", "Leggings", "Shorts", "Skirt"};
     public static String[] FOOT_ARMORS = {"Boots", "Shoes", "Slippers", "Socks", "Sandals"};
+
+    // Map
+    public static int MAP_SIZE = 100;
 }

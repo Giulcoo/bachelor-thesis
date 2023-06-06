@@ -13,6 +13,6 @@ public class Benchmarks {
     @Benchmark
     public static void mainBenchmark() {
         App app = new App();
-        app.startGame(1, 1, 1, 1, false);
+        app.startGame(50, 50, 50, 1, false);
     }
 }
