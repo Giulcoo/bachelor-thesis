@@ -5,9 +5,9 @@ import strategies.App;
 
 import java.util.concurrent.TimeUnit;
 
-@Fork(value = 0, warmups = 0)
-@Warmup(iterations = 0)
-@Measurement(iterations = 1)
+@Fork(1)
+@Warmup(iterations = 5)
+@Measurement(iterations = 10)
 @OutputTimeUnit(TimeUnit.SECONDS)
 public class Benchmarks {
     @Benchmark

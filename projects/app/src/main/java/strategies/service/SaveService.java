@@ -1,36 +1,38 @@
 package strategies.service;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import strategies.model.Character;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SaveService {
-    private String mainPath;
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+    private final String mainPath = "data/";
     private final GameService gameService;
     private final ChangeTracker changeTracker;
+
+    //JSON Objects
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+    private final ArrayNode characterNode;
+
+    private final HashMap<String, Integer> characterMap = new HashMap<>(); //Saves index of chunk
+    private final List<List<Character>> characterChunks = new ArrayList<>(); //Saves all chunks
 
     public SaveService(GameService gameService, ChangeTracker changeTracker) {
         this.gameService = gameService;
         this.changeTracker = changeTracker;
 
-        mainPath = null;
-        try {
-            mainPath = Paths.get(getClass().getResource("/").toURI()).toString();
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-
-        if(mainPath != null) mainPath += "/resources/strategies/";
+        characterNode = mapper.createArrayNode();
     }
 
     public boolean createFolderStructure(){
@@ -41,9 +43,13 @@ public class SaveService {
     }
 
     public void saveAsJson(){
+        /*//Add new Objects to the json files by appending them to the files
         writeJson("obstacles/obstacles.json", changeTracker.getAddedObstacles());
         writeJson("characters/characters.json", changeTracker.getChangedCharacters());
-        writeJson("items/items.json", changeTracker.getChangedItems());
+        writeJson("items/items.json", changeTracker.getChangedItems());*/
+
+        /*characterNode.addAll(changeTracker.getChangedCharacters().stream().map(c -> mapper.convertValue(c, JsonNode.class)).toList());
+        writeJson("characters/characters.json", characterNode);*/
     }
 
     public void clearData(){

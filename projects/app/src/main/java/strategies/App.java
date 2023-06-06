@@ -23,19 +23,14 @@ public class App {
     }
 
     public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
-        //TODO: Load or create new game
         saveService.clearData();
 
         saveService.createFolderStructure();
-        //if(saveService.createFolderStructure()){
-            //timeService.start("createGame");
-            gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
-            //timeService.stop("createGame");
-        //}
+        gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
 
         saveService.saveAsJson();
 
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < 3; i++){
             gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
             saveService.saveAsJson();
         }
