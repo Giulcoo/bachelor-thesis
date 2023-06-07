@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 public class App {
     private static final TimeService timeService = new TimeService();
     private static final ChangeTracker changeTracker = new ChangeTracker();
-    private static final GameService gameService = new GameService(changeTracker);
+    private static final ChunkService chunkService = new ChunkService(changeTracker);
+    private static final GameService gameService = new GameService(changeTracker, chunkService);
     private static final SaveService saveService = new SaveService(gameService, changeTracker);
 
     private static final Scanner scanner = new Scanner(System.in);

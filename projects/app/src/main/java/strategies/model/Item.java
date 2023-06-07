@@ -12,11 +12,13 @@ public class Item
     @JsonIgnore public static final String PROPERTY_POSITION = "position";
     @JsonIgnore public static final String PROPERTY_ROTATION = "rotation";
     @JsonIgnore public static final String PROPERTY_GAME = "game";
+    @JsonIgnore public static final String PROPERTY_CHUNK = "chunk";
     private String name;
     private String id;
     private Vector position;
     private Quaternion rotation;
     @JsonIgnore private Game game;
+    @JsonIgnore private Chunk<Item> chunk;
     @JsonIgnore protected PropertyChangeSupport listeners;
 
     public String getName()
@@ -115,6 +117,24 @@ public class Item
             value.withItems(this);
         }
         this.firePropertyChange(PROPERTY_GAME, oldValue, value);
+        return this;
+    }
+
+    public Chunk<Item> getChunk()
+    {
+        return this.chunk;
+    }
+
+    public Item setChunk(Chunk<Item> value)
+    {
+        if (this.chunk == value)
+        {
+            return this;
+        }
+
+        final Chunk<Item> oldValue = this.chunk;
+        this.chunk = value;
+        this.firePropertyChange(PROPERTY_CHUNK, oldValue, value);
         return this;
     }
 

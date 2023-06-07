@@ -11,12 +11,14 @@ import static strategies.Constants.*;
 
 public class GameService {
     private final ChangeTracker changeTracker;
+    private final ChunkService chunkService;
     private Game game;
     private Random random;
     private boolean verbose;
 
-    public GameService(ChangeTracker changeTracker) {
+    public GameService(ChangeTracker changeTracker, ChunkService chunkService) {
         this.changeTracker = changeTracker;
+        this.chunkService = chunkService;
     }
 
     public void createGame(int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
@@ -39,11 +41,19 @@ public class GameService {
         for (int i = 0; i < itemMoves; i++) randomItemMove();
 
         for(int i = 0; i < charRemoveCount; i++) {
-            if(game.getCharacters().size() > 1) game.withoutCharacters(game.getCharacters().get(randInt(1, game.getCharacters().size() - 1)));
+            if(game.getCharacters().size() > 1) {
+                Character randChar = game.getCharacters().get(randInt(1, game.getCharacters().size() - 1));
+                chunkService.removeElement(randChar);
+                game.withoutCharacters(randChar);
+            }
         }
 
         for(int i = 0; i < itemRemoveCount; i++) {
-            if(game.getItems().size() > 1) game.withoutItems(game.getItems().get(randInt(1, game.getItems().size() - 1)));
+            if(game.getItems().size() > 1){
+                Item randItem = game.getItems().get(randInt(1, game.getItems().size() - 1));
+                chunkService.removeElement(randItem);
+                game.withoutItems(randItem);
+            }
         }
 
         for(int i = 0; i < charAddCount; i++) {
@@ -58,17 +68,21 @@ public class GameService {
     }
 
     private void randomCharacterMove() {
-        game.getCharacters().get(randInt(0, game.getCharacters().size() - 1))
-                .getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0));
+        Character randChar = game.getCharacters().get(randInt(0, game.getCharacters().size() - 1));
+        randChar.setPosition(checkPosition(randChar.getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0))));
+
+        chunkService.updateElement(randChar);
     }
 
     private void randomItemMove() {
-        game.getItems().get(randInt(0, game.getItems().size() - 1))
-                .getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0));
+        Item randItem = game.getItems().get(randInt(0, game.getItems().size() - 1));
+        randItem.setPosition(checkPosition(randItem.getPosition().add(new Vector(randDouble(-1, 1), randDouble(-1, 1), 0))));
+
+        chunkService.updateElement(randItem);
     }
 
     private Character randomCharacter(boolean isBot){
-        return new Character()
+        Character newChar = new Character()
                 .setIsBot(isBot)
                 .setName(isBot ? "Monster" : "Player")
                 .setId(UUID.randomUUID().toString())
@@ -76,6 +90,9 @@ public class GameService {
                 .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setRotation(new Quaternion(0, 0, 0, 0))
                 .withEquipment(randomEquipments());
+
+        chunkService.addElement(newChar);
+        return newChar;
     }
 
     private List<Equipment> randomEquipments(){
@@ -100,18 +117,24 @@ public class GameService {
     }
 
     private Obstacle randomObstacle(){
-        return new Obstacle().setName("Cube")
+        Obstacle newObst = new Obstacle().setName("Cube")
                 .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setScale(new Vector(randDouble(1, 10), randDouble(1, 10), randDouble(1, 10)))
                 .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
+
+        chunkService.addElement(newObst);
+        return newObst;
     }
 
     private Item randomItem(){
-        return new Item()
+        Item newItem = new Item()
                 .setName("Coin")
                 .setId(UUID.randomUUID().toString())
                 .setPosition(new Vector(randDouble(-MAP_SIZE/2, MAP_SIZE/2), randDouble(-MAP_SIZE/2, MAP_SIZE/2), 0))
                 .setRotation(new Quaternion(randDouble(-1,1), randDouble(-1,1), randDouble(-1,1), randDouble(-1,1)));
+
+        chunkService.addElement(newItem);
+        return newItem;
     }
 
     private double randDouble(double min, double max){
@@ -126,7 +149,19 @@ public class GameService {
         return random.nextDouble() <= chance;
     }
 
+    private Vector checkPosition(Vector position){
+        if(position.getX() < -MAP_SIZE/2) position.setX(-MAP_SIZE/2);
+        if(position.getX() > MAP_SIZE/2) position.setX(MAP_SIZE/2);
+        if(position.getY() < -MAP_SIZE/2) position.setY(-MAP_SIZE/2);
+        if(position.getY() > MAP_SIZE/2) position.setY(MAP_SIZE/2);
+        return position;
+    }
+
     public void printGame(){
-        if(verbose) System.out.println(game);
+        if(verbose) {
+            //System.out.println(game);
+            System.out.println();
+            chunkService.printChunks();
+        }
     }
 }

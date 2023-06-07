@@ -33,19 +33,23 @@ public class SaveService {
 
     public boolean createFolderStructure(){
         return createFileIfNeeded("", "game.json")
-                && createFileIfNeeded("characters", "characters.json")
-                && createFileIfNeeded("items", "items.json")
-                && createFileIfNeeded("obstacles", "obstacles.json");
+                && createDirIfNeeded("characters")
+                && createDirIfNeeded("items")
+                && createDirIfNeeded("obstacles");
     }
 
     public void saveAsJson(){
-        /*//Add new Objects to the json files by appending them to the files
-        writeJson("obstacles/obstacles.json", changeTracker.getAddedObstacles());
-        writeJson("characters/characters.json", changeTracker.getChangedCharacters());
-        writeJson("items/items.json", changeTracker.getChangedItems());*/
+        changeTracker.getCharacterChanges().forEach(c -> {
+            writeJson("characters/" + c.getId() + ".json", c.getElements());
+        });
 
-        /*characterNode.addAll(changeTracker.getChangedCharacters().stream().map(c -> mapper.convertValue(c, JsonNode.class)).toList());
-        writeJson("characters/characters.json", characterNode);*/
+        changeTracker.getItemChanges().forEach(c -> {
+            writeJson("items/" + c.getId() + ".json", c.getElements());
+        });
+
+        changeTracker.getObstacleChange().forEach(c -> {
+            writeJson("obstacles/" + c.getId() + ".json", c.getElements());
+        });
     }
 
     public void clearData(){

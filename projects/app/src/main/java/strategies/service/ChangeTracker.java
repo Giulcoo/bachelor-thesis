@@ -1,6 +1,7 @@
 package strategies.service;
 
 import strategies.model.Character;
+import strategies.model.Chunk;
 import strategies.model.Item;
 import strategies.model.Obstacle;
 
@@ -14,6 +15,40 @@ public class ChangeTracker {
     private final List<Item> changedItems = new ArrayList<>();
     private final List<Character> deletedCharacters = new ArrayList<>();
     private final List<Item> deletedItems = new ArrayList<>();
+
+    private final List<Chunk<Character>> changedCharacterChunks = new ArrayList<>();
+    private final List<Chunk<Item>> changedCItemChunks = new ArrayList<>();
+    private final List<Chunk<Obstacle>> changedObstacleChunks = new ArrayList<>();
+
+    public void addCharacterChange(Chunk<Character> chunk){
+        if(!changedCharacterChunks.contains(chunk)) changedCharacterChunks.add(chunk);
+    }
+
+    public void addItemChange(Chunk<Item> chunk){
+        if(!changedCItemChunks.contains(chunk)) changedCItemChunks.add(chunk);
+    }
+
+    public void addObstacleChange(Chunk<Obstacle> chunk){
+        if(!changedObstacleChunks.contains(chunk)) changedObstacleChunks.add(chunk);
+    }
+
+    public List<Chunk<Character>> getCharacterChanges(){
+        List<Chunk<Character>> changedCharacterChunksCopy = new ArrayList<>(this.changedCharacterChunks);
+        this.changedCharacterChunks.clear();
+        return changedCharacterChunksCopy;
+    }
+
+    public List<Chunk<Item>> getItemChanges(){
+        List<Chunk<Item>> changedItemChunksCopy = new ArrayList<>(this.changedCItemChunks);
+        this.changedCItemChunks.clear();
+        return changedItemChunksCopy;
+    }
+
+    public List<Chunk<Obstacle>> getObstacleChange(){
+        List<Chunk<Obstacle>> changedObstacleChunksCopy = new ArrayList<>(this.changedObstacleChunks);
+        this.changedObstacleChunks.clear();
+        return changedObstacleChunksCopy;
+    }
 
     public void addChange(Obstacle obstacle){
         if(!addedObstacles.contains(obstacle)) addedObstacles.add(obstacle);

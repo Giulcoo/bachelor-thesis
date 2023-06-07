@@ -21,6 +21,7 @@ public class Character
     @JsonIgnore public static final String PROPERTY_IS_BOT = "isBot";
     @JsonIgnore public static final String PROPERTY_EQUIPMENT = "equipment";
     @JsonIgnore public static final String PROPERTY_GAME = "game";
+    @JsonIgnore public static final String PROPERTY_CHUNK = "chunk";
     private String name;
     private String id;
     private Vector position;
@@ -31,6 +32,7 @@ public class Character
     private boolean isBot;
     private List<Equipment> equipment;
     @JsonIgnore private Game game;
+    @JsonIgnore private Chunk<Character> chunk;
     @JsonIgnore protected PropertyChangeSupport listeners;
 
     public String getName()
@@ -268,6 +270,24 @@ public class Character
             value.withCharacters(this);
         }
         this.firePropertyChange(PROPERTY_GAME, oldValue, value);
+        return this;
+    }
+
+    public Chunk<Character> getChunk()
+    {
+        return this.chunk;
+    }
+
+    public Character setChunk(Chunk<Character> value)
+    {
+        if (this.chunk == value)
+        {
+            return this;
+        }
+
+        final Chunk<Character> oldValue = this.chunk;
+        this.chunk = value;
+        this.firePropertyChange(PROPERTY_CHUNK, oldValue, value);
         return this;
     }
 
