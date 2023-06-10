@@ -31,10 +31,25 @@ public class App {
 
         saveService.saveAsJson();
 
-        for(int i = 0; i < 3; i++){
+        chunkService.printChunks();
+
+        gameService.randomChanges(0, 0, 0, 0, 0, 20);
+
+        saveService.saveAsJson();
+
+        System.out.println("\n\n\nAdded");
+        chunkService.printChunks();
+/*
+        gameService.randomChanges(0, 0, 0, 21, 0, 0);
+        saveService.saveAsJson();
+
+        System.out.println("\n\n\nRemoved");
+        chunkService.printChunks();*/
+
+       /* for(int i = 0; i < 3; i++){
             gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
             saveService.saveAsJson();
-        }
+        }*/
     }
 
     private static void sleep(int seconds){

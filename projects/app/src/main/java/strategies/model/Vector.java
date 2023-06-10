@@ -102,7 +102,7 @@ public class Vector
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ", " + z + ")";
+        return "(" + (double) Math.round(x * 10d) / 10d + ", " + (double) Math.round(y * 10d) / 10d + ", " + (double) Math.round(z * 10d) / 10d + ")";
     }
 
     public Vector copy() {

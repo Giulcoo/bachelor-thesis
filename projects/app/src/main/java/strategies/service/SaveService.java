@@ -39,17 +39,12 @@ public class SaveService {
     }
 
     public void saveAsJson(){
-        changeTracker.getCharacterChanges().forEach(c -> {
-            writeJson("characters/" + c.getId() + ".json", c.getElements());
-        });
+        changeTracker.getCharacterChanges().forEach(c -> writeJson("characters/" + c.getId() + ".json", c));
+        changeTracker.getItemChanges().forEach(c -> writeJson("items/" + c.getId() + ".json", c));
+        changeTracker.getObstacleChange().forEach(c -> writeJson("obstacles/" + c.getId() + ".json", c));
 
-        changeTracker.getItemChanges().forEach(c -> {
-            writeJson("items/" + c.getId() + ".json", c.getElements());
-        });
-
-        changeTracker.getObstacleChange().forEach(c -> {
-            writeJson("obstacles/" + c.getId() + ".json", c.getElements());
-        });
+        changeTracker.getRemovedCharacterChunks().forEach(c -> deleteFile("characters/" + c.getId() + ".json"));
+        changeTracker.getRemovedItemChunks().forEach(c -> deleteFile("items/" + c.getId() + ".json"));
     }
 
     public void clearData(){
@@ -64,6 +59,15 @@ public class SaveService {
     private void writeJson(String file, Object object){
         try {
             writer.writeValue(new File(mainPath + file), object);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteFile(String path){
+        try {
+            Files.delete(Paths.get(mainPath, path));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

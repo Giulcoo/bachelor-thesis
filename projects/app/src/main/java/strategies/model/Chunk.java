@@ -1,37 +1,54 @@
 package strategies.model;
 
-import java.sql.SQLOutput;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 
 public class Chunk<T> {
-    private final List<T> elements;
-    private final String id;
-    private final static int CHUNK_SIZE_LIMIT = 100;
 
-    private final List<Chunk<T>> topChunks;
+    @JsonIgnore private final static int CHUNK_SIZE_LIMIT = 20;
+    @JsonIgnore  private final static int CHUNK_GROUP_SIZE_MIN = 5;
+    private final String id;
+    private Vector center;
+    private Vector size;
+    private final List<T> elements;
+    private final List<String> childrenIds;
+    @JsonIgnore private final Chunk<T> parentChunk;
+    @JsonIgnore private final List<Chunk<T>> childChunks;
+
+    /*private final List<Chunk<T>> topChunks;
 
     private final List<Chunk<T>> leftChunks;
 
     private final List<Chunk<T>> rightChunks;
 
-    private final List<Chunk<T>> bottomChunks;
+    private final List<Chunk<T>> bottomChunks;*/
 
-    private Vector center;
-    private Vector size;
 
-    public Chunk(Vector center, Vector size) {
+    public Chunk(Chunk<T> parentChunk, Vector center, Vector size) {
         this.id = UUID.randomUUID().toString();
         this.center = center;
         this.size = size;
         this.elements = new ArrayList<>();
-        this.topChunks = new ArrayList<>();
+        this.parentChunk = parentChunk;
+        this.childChunks = new ArrayList<>();
+        this.childrenIds = new ArrayList<>();
+        /*this.topChunks = new ArrayList<>();
         this.leftChunks = new ArrayList<>();
         this.rightChunks = new ArrayList<>();
-        this.bottomChunks = new ArrayList<>();
+        this.bottomChunks = new ArrayList<>();*/
     }
 
     public String getId() {
         return id;
+    }
+
+    public Chunk<T> getParent(){
+        return parentChunk;
+    }
+
+    public List<Chunk<T>> getChildChunks(){
+        return childChunks;
     }
 
     public List<T> getElements() {
@@ -57,7 +74,24 @@ public class Chunk<T> {
         return this;
     }
 
-    public Chunk setNeighbours(List<Chunk<T>> topChunks, List<Chunk<T>> leftChunks, List<Chunk<T>> rightChunks, List<Chunk<T>> bottomChunks){
+    public Chunk addChild(Chunk<T> childChunk){
+        childChunks.add(childChunk);
+        childrenIds.add(childChunk.getId());
+        return this;
+    }
+
+    public Chunk addChildren(List<Chunk<T>> childChunks){
+        childChunks.forEach(this::addChild);
+        return this;
+    }
+
+    public Chunk clearChildren(){
+        childChunks.clear();
+        childrenIds.clear();
+        return this;
+    }
+
+    /*public Chunk setNeighbours(List<Chunk<T>> topChunks, List<Chunk<T>> leftChunks, List<Chunk<T>> rightChunks, List<Chunk<T>> bottomChunks){
         this.topChunks.addAll(topChunks);
         this.leftChunks.addAll(leftChunks);
         this.rightChunks.addAll(rightChunks);
@@ -72,24 +106,48 @@ public class Chunk<T> {
         result.addAll(rightChunks);
         result.addAll(bottomChunks);
         return result;
+    }*/
+
+    /**
+     Checks if a chunk has to be split or joined
+     @return -1 if the chunk was joined<br>1 &nbsp;if the chunk was splitted<br>0 &nbsp;if nothing happened
+     */
+    public int checkChunkSize(){
+        /*System.out.println("\n-----------------------------------------------------\nChecking chunk " + center + " elements: " + elements.size());*/
+        List<Chunk<T>> childsToCheck = parentChunk != null ? parentChunk.getChildChunks() : childChunks;
+        if(!childsToCheck.isEmpty() && childsToCheck.stream().mapToInt(c -> c.elements.size()).sum() < CHUNK_GROUP_SIZE_MIN){
+            joinChunk();
+            /*System.out.println("Joining chunk elements");*/
+            return -1;
+        }
+
+        if(elements.size() > CHUNK_SIZE_LIMIT){
+            splitChunk();
+            /*String childs = "";
+            for(Chunk<T> c : childChunks) childs += c.center + " ";
+            System.out.println("Splitting chunk elements: " + childs);*/
+            return 1;
+        }
+
+        return 0;
+
+        //return elements.size() > CHUNK_SIZE_LIMIT ? splitChunk() : 0;
     }
 
-    public List<Chunk<T>> checkChunkSize(){
-        return elements.size() > CHUNK_SIZE_LIMIT ? splitChunk() : new ArrayList<>();
-    }
-
-    private List<Chunk<T>> splitChunk(){
+    private void splitChunk(){
         List<T> elementsCopy = new ArrayList<>(this.elements);
         this.elements.clear();
 
         Vector newSize = new Vector(size.getX()/2,size.getY()/2,0);
 
         List<Chunk<T>> result = new ArrayList<>();
-        result.add(new Chunk<T>(new Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(new Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(new Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(new Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(this, new Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(this, new Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(this, new Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(this, new Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        this.addChildren(result);
 
+        //Split chunk elements in new chunks
         elementsCopy.forEach(e -> {
             for(Chunk c : result){
                 if(c.pointInChunk(e)){
@@ -99,7 +157,7 @@ public class Chunk<T> {
             }
         });
 
-        result.get(0).setNeighbours(new ArrayList<>(topChunks), new ArrayList<>(leftChunks), Arrays.asList(result.get(1)), Arrays.asList(result.get(2)));
+       /* result.get(0).setNeighbours(new ArrayList<>(topChunks), new ArrayList<>(leftChunks), Arrays.asList(result.get(1)), Arrays.asList(result.get(2)));
         result.get(1).setNeighbours(new ArrayList<>(topChunks), Arrays.asList(result.get(0)), new ArrayList<>(rightChunks), Arrays.asList(result.get(3)));
         result.get(2).setNeighbours(Arrays.asList(result.get(0)), new ArrayList<>(leftChunks), Arrays.asList(result.get(3)), new ArrayList<>(bottomChunks));
         this.setNeighbours(Arrays.asList(result.get(1)), Arrays.asList(result.get(2)), new ArrayList<>(rightChunks), new ArrayList<>(bottomChunks));
@@ -107,9 +165,31 @@ public class Chunk<T> {
         this.elements.addAll(result.get(3).elements);
         this.center = result.get(3).center;
         this.size = result.get(3).size;
-
         result.remove(3);
-        return result;
+        return result;*/
+    }
+
+    private void joinChunk(){
+        this.parentChunk.getChildChunks().forEach(c -> {
+            this.parentChunk.addElements(c.elements);
+            c.elements.clear();
+        });
+    }
+
+    public Chunk findChunk(Object o){
+        if(pointInChunk(o)){
+            if(childChunks.isEmpty()) return this;
+            else{
+                for(Chunk c : childChunks){
+                    if(c.pointInChunk(o)){
+                        Chunk result = c.findChunk(o);
+                        if(result != null) return result;
+                    }
+                }
+            }
+        }
+
+        return this.parentChunk.findChunk(o);
     }
 
     public boolean pointInChunk(Object o){
@@ -129,9 +209,14 @@ public class Chunk<T> {
 
     @Override
     public String toString() {
-        String result = "Position: " + center + " Size: " + size + "\nElemenst:\n";
+        String result = "  ID: " + id + "\n  Position: " + center + " Size: " + size + "\n  Children (" + childrenIds.size() + "): [";
+        for(String id : childrenIds){
+            result += id + " ";
+        }
+
+        result += "]\n  Elemenst (" + elements.size() + "):\n";
         for(T element : elements){
-            result += element.toString() + "\n";
+            result += "    " + element.toString() + "\n";
         }
         return result;
     }

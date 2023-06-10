@@ -160,7 +160,7 @@ public class GameService {
     public void printGame(){
         if(verbose) {
             //System.out.println(game);
-            System.out.println();
+            System.out.println("--------------------");
             chunkService.printChunks();
         }
     }
