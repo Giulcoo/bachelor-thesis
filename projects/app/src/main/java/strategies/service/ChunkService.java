@@ -5,8 +5,9 @@ import strategies.model.*;
 import strategies.model.Character;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import static strategies.Constants.*;
 
 public class ChunkService {
     private final ChangeTracker changeTracker;
@@ -16,32 +17,24 @@ public class ChunkService {
 
     public ChunkService(ChangeTracker changeTracker) {
         this.changeTracker = changeTracker;
-        characterChunks.add(new Chunk<>(null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
-        itemChunks.add(new Chunk<>(null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
-        obstacleChunks.add(new Chunk<>(null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
+        characterChunks.add(new Chunk<>(CHARACTER_TYPE, null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
+        itemChunks.add(new Chunk<>(ITEM_TYPE, null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
+        obstacleChunks.add(new Chunk<>(OBSTACLE_TYPE, null, new Vector(0, 0, 0), new Vector(Constants.MAP_SIZE, Constants.MAP_SIZE, 0)));
+    }
+
+    public void clearChunks(){
+        characterChunks.clear();
+        itemChunks.clear();
+        obstacleChunks.clear();
+    }
+
+    public void addChunks(List<Chunk<Character>> characterChunks, List<Chunk<Item>> itemChunks, List<Chunk<Obstacle>> obstacleChunks){
+        this.characterChunks.addAll(characterChunks);
+        this.itemChunks.addAll(itemChunks);
+        this.obstacleChunks.addAll(obstacleChunks);
     }
 
     public void addElement(Character element){
-        /*for(int i = 0; i < characterChunks.size(); i++){
-            Chunk<Character> chunk = characterChunks.get(i);
-            if(chunk.pointInChunk(element)){
-                chunk.addElement(element);
-                changeTracker.addCharacterChange(chunk);
-
-                int sizeCheckResult = chunk.checkChunkSize();
-                if(sizeCheckResult == 1){
-                    chunk.getChildChunks().forEach(changeTracker::addCharacterChange);
-                    characterChunks.addAll(chunk.getChildChunks());
-                }
-                else if(sizeCheckResult == -1){
-                    //TODO: changeTracker removedChunk
-
-                }
-
-                break;
-            }
-        }*/
-
         Chunk<Character> chunk = characterChunks.get(0).findChunk(element);
         chunk.addElement(element);
 

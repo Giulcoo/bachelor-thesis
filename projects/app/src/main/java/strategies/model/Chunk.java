@@ -10,22 +10,29 @@ public class Chunk<T> {
     @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 5;
 
     private final String id;
-    private Vector center;
-    private Vector size;
+    private final Vector center;
+    private final Vector size;
     private final List<T> elements;
-    //private final List<String> childrenIds;
 
-    @JsonIgnore private final Chunk<T> parentChunk;
-    @JsonIgnore private final List<Chunk<T>> childChunks;
+    @JsonIgnore private Chunk<T> parentChunk;
+    @JsonIgnore private List<Chunk<T>> childChunks;
 
-    public Chunk(Chunk<T> parentChunk, Vector center, Vector size) {
-        this.id = UUID.randomUUID().toString();
+    public Chunk(java.lang.Character type, Chunk<T> parentChunk, Vector center, Vector size) {
+        this.id = type + UUID.randomUUID().toString();
         this.center = center;
         this.size = size;
         this.elements = new ArrayList<>();
         this.parentChunk = parentChunk;
         this.childChunks = new ArrayList<>();
-        //this.childrenIds = new ArrayList<>();
+    }
+
+    public Chunk(String id, Vector center, Vector size, List<T> elements){
+        this.id = id;
+        this.center = center;
+        this.size = size;
+        this.elements = elements;
+        this.childChunks = new ArrayList<>();
+        this.parentChunk = null;
     }
 
     public String getId() {
@@ -58,6 +65,11 @@ public class Chunk<T> {
         return size;
     }
 
+    public Chunk<T> setParent(Chunk<T> parentChunk){
+        this.parentChunk = parentChunk;
+        return this;
+    }
+
     public Chunk addElement(T element){
         if(element instanceof Item) ((Item) element).setChunk((Chunk<Item>) this);
         else if(element instanceof Character) ((Character) element).setChunk((Chunk<Character>) this);
@@ -79,7 +91,6 @@ public class Chunk<T> {
 
     public Chunk addChild(Chunk<T> childChunk){
         childChunks.add(childChunk);
-        //childrenIds.add(childChunk.getId());
         return this;
     }
 
@@ -120,10 +131,10 @@ public class Chunk<T> {
         Vector newSize = new Vector(size.getX()/2,size.getY()/2,0);
 
         List<Chunk<T>> result = new ArrayList<>();
-        result.add(new Chunk<T>(this, new Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(this, new Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(this, new Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(this, new Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
         this.addChildren(result);
 
         //Split chunk elements in new chunks
@@ -177,10 +188,11 @@ public class Chunk<T> {
 
     @Override
     public String toString() {
-        String result = "  ID: " + id + "\n  Position: " + center + " Size: " + size + "\n  Children (" + 0 + "): [";
-        /*for(String id : childrenIds){
+        List<String> childrenIDs = this.getChildChunksIds();
+        String result = "  ID: " + id + "\n  Position: " + center + " Size: " + size + "\n  Children (" + childrenIDs.size() + "): [";
+        for(String id : childrenIDs){
             result += id + " ";
-        }*/
+        }
 
         result += "]\n  Elemenst (" + elements.size() + "):\n";
         for(T element : elements){

@@ -10,6 +10,7 @@ public class App {
     private static final ChunkService chunkService = new ChunkService(changeTracker);
     private static final GameService gameService = new GameService(changeTracker, chunkService);
     private static final SaveService saveService = new SaveService(gameService, changeTracker);
+    private static final LoadService loadService = new LoadService(gameService, chunkService);
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -24,7 +25,13 @@ public class App {
     }
 
     public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
-        saveService.clearData();
+        loadService.loadData(seed, verbose);
+        chunkService.printChunks();
+        /*gameService.randomChanges(0, 0, 0, 0, 0, 1);
+        chunkService.printChunks();
+        saveService.saveAsJson();*/
+
+        /*saveService.clearData();
 
         saveService.createFolderStructure();
         gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
@@ -38,15 +45,15 @@ public class App {
         saveService.saveAsJson();
 
         System.out.println("\n\n\nAdded");
-        chunkService.printChunks();
-/*
-        gameService.randomChanges(0, 0, 0, 21, 0, 0);
+        chunkService.printChunks();*/
+
+        /*gameService.randomChanges(0, 0, 0, 21, 0, 0);
         saveService.saveAsJson();
 
         System.out.println("\n\n\nRemoved");
-        chunkService.printChunks();*/
+        chunkService.printChunks();
 
-       /* for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 3; i++){
             gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
             saveService.saveAsJson();
         }*/

@@ -1,22 +1,17 @@
 package strategies.service;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import strategies.model.Character;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import static strategies.Constants.MAIN_PATH;
 
 public class SaveService {
-    private final String mainPath = "data/";
     private final GameService gameService;
     private final ChangeTracker changeTracker;
 
@@ -49,7 +44,7 @@ public class SaveService {
 
     public void clearData(){
         try {
-            deleteDirectoryRecursive(Paths.get(mainPath));
+            deleteDirectoryRecursive(Paths.get(MAIN_PATH));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -58,7 +53,7 @@ public class SaveService {
 
     private void writeJson(String file, Object object){
         try {
-            writer.writeValue(new File(mainPath + file), object);
+            writer.writeValue(new File(MAIN_PATH + file), object);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -67,7 +62,7 @@ public class SaveService {
 
     private void deleteFile(String path){
         try {
-            Files.delete(Paths.get(mainPath, path));
+            Files.delete(Paths.get(MAIN_PATH, path));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -87,7 +82,7 @@ public class SaveService {
 
     private boolean createDirIfNeeded(String path){
         try {
-            Path dirPath = Paths.get(mainPath, path);
+            Path dirPath = Paths.get(MAIN_PATH, path);
 
             if (!Files.exists(dirPath)) {
                 Files.createDirectories(dirPath);
@@ -105,7 +100,7 @@ public class SaveService {
         createDirIfNeeded(path);
 
         try {
-            Path dirPath = Paths.get(mainPath, path + "/" + file);
+            Path dirPath = Paths.get(MAIN_PATH, path + "/" + file);
 
             if (!Files.exists(dirPath)) {
                 Files.createFile(dirPath);

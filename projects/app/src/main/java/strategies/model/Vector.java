@@ -1,6 +1,7 @@
 package strategies.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.beans.PropertyChangeSupport;
 
@@ -18,6 +19,12 @@ public class Vector
         this.setX(x);
         this.setY(y);
         this.setZ(z);
+    }
+
+    public Vector(JsonNode node){
+        this.setX(node.get("x").asDouble());
+        this.setY(node.get("y").asDouble());
+        this.setZ(node.get("z").asDouble());
     }
 
     public double getX()

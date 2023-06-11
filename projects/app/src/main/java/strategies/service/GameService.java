@@ -36,6 +36,18 @@ public class GameService {
         printGame();
     }
 
+    public void loadGame(List<Obstacle> obstacles, List<Character> characters, List<Item> items, int seed, boolean verbose){
+        random = new Random(seed);
+        game = new Game(changeTracker);
+        this.verbose = verbose;
+
+        game.withObstacles(obstacles);
+        game.withCharacters(characters);
+        game.withItems(items);
+
+        printGame();
+    }
+
     public void randomChanges(int charMoves, int itemMoves, int charRemoveCount, int itemRemoveCount, int charAddCount, int itemAddCount){
         for (int i = 0; i < charMoves; i++) randomCharacterMove();
         for (int i = 0; i < itemMoves; i++) randomItemMove();
