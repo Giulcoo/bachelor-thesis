@@ -65,19 +65,6 @@ public class ChunkService {
     }
 
     public void addElement(Item element){
-        /*for(int i = 0; i < itemChunks.size(); i++){
-            Chunk<Item> chunk = itemChunks.get(i);
-            if(chunk.pointInChunk(element)){
-                chunk.addElement(element);
-                changeTracker.addItemChange(chunk);
-
-                List<Chunk<Item>> newChunks = chunk.checkChunkSize();
-                newChunks.forEach(changeTracker::addItemChange);
-                itemChunks.addAll(newChunks);
-                break;
-            }
-        }*/
-
         Chunk<Item> chunk = itemChunks.get(0).findChunk(element);
         chunk.addElement(element);
 
@@ -101,19 +88,6 @@ public class ChunkService {
     }
 
     public void addElement(Obstacle element){
-        /*for(int i = 0; i < obstacleChunks.size(); i++){
-            Chunk<Obstacle> chunk = obstacleChunks.get(i);
-            if(chunk.pointInChunk(element)){
-                chunk.addElement(element);
-                changeTracker.addObstacleChange(chunk);
-
-                List<Chunk<Obstacle>> newChunks = chunk.checkChunkSize();
-                newChunks.forEach(changeTracker::addObstacleChange);
-                obstacleChunks.addAll(newChunks);
-                break;
-            }
-        }*/
-
         Chunk<Obstacle> chunk = obstacleChunks.get(0).findChunk(element);
         chunk.addElement(element);
 
@@ -127,9 +101,6 @@ public class ChunkService {
     }
 
     public void removeElement(Character element){
-        /*changeTracker.addCharacterChange(element.getChunk());
-        element.getChunk().removeElement(element);*/
-
         Chunk<Character> chunk = element.getChunk();
         chunk.removeElement(element);
 
@@ -148,9 +119,6 @@ public class ChunkService {
     }
 
     public void removeElement(Item element){
-        /*changeTracker.addItemChange(element.getChunk());
-        element.getChunk().removeElement(element);*/
-
         Chunk<Item> chunk = element.getChunk();
         chunk.removeElement(element);
 
@@ -169,24 +137,6 @@ public class ChunkService {
     }
 
     public void updateElement(Character element){
-        /*Chunk<Character> currentChunk = element.getChunk();
-        if(currentChunk.pointInChunk(element)) return;
-
-        for(Chunk<Character> c : currentChunk.getNeighbours()){
-            if(c.pointInChunk(element)){
-                changeTracker.addCharacterChange(currentChunk);
-                currentChunk.removeElement(element);
-
-                c.addElement(element);
-                changeTracker.addCharacterChange(c);
-
-                List<Chunk<Character>> newChunks = c.checkChunkSize();
-                newChunks.forEach(changeTracker::addCharacterChange);
-                characterChunks.addAll(newChunks);
-                return;
-            }
-        }*/
-
         Chunk<Character> oldChunk = element.getChunk();
         Chunk<Character> chunk = oldChunk.findChunk(element);
 
@@ -194,24 +144,6 @@ public class ChunkService {
         if(oldChunk != chunk) changeTracker.addCharacterChange(chunk);
     }
     public void updateElement(Item element){
-        /*Chunk<Item> currentChunk = element.getChunk();
-        if(currentChunk.pointInChunk(element)) return;
-
-        for(Chunk<Item> c : currentChunk.getNeighbours()){
-            if(c.pointInChunk(element)){
-                changeTracker.addItemChange(currentChunk);
-                currentChunk.removeElement(element);
-
-                c.addElement(element);
-                changeTracker.addItemChange(c);
-
-                List<Chunk<Item>> newChunks = c.checkChunkSize();
-                newChunks.forEach(changeTracker::addItemChange);
-                itemChunks.addAll(newChunks);
-                return;
-            }
-        }*/
-
         Chunk<Item> oldChunk = element.getChunk();
         Chunk<Item> chunk = oldChunk.findChunk(element);
 
