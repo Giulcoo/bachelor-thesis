@@ -45,9 +45,16 @@ Speichern nur von den veränderten Daten
 
 \subsection{Aufteilung der Daten}
 Chunking\\
+\begin{itemize}
+    \item Aufteilung der Mengen an Daten unter den Chunks
+\end{itemize}
+
 Sharding
 
 \subsection{Komprimierung der Daten}
+Viel zippen vs. kleine Dateien (Kleine Chunks)\\
+Kürzere property Namen\\
+Null Werte ausschließen\\
 Zippen der Daten
 
 \subsection{Kodierung der Daten}
@@ -68,6 +75,9 @@ Arten um mit JSON zu arbeiten:
 \section{Ladesysteme}
 Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
 von 2.1 testen und Laufzeiten messen.
+
+\subsection{Nearby Loading}
+Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance)
 
 \subsection{Lazy Loading}
 Weiß nicht, ob das der richtige Begriff dafür ist, aber hier soll über das prozedulare 

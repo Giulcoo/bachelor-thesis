@@ -1,11 +1,10 @@
 package strategies;
-import strategies.model.*;
 
 import java.lang.Character;
 
 public class Constants {
     // Data Path
-    public static final String MAIN_PATH = "data/";
+    public static final String DATA_PATH = "data/";
 
     // Types
     public static final Character CHARACTER_TYPE = 'c';
@@ -27,4 +26,5 @@ public class Constants {
 
     // Map
     public static final int MAP_SIZE = 100;
+    public static final double RENDER_DISTANCE = 23.0878*2;
 }

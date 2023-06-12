@@ -25,38 +25,31 @@ public class App {
     }
 
     public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
-        loadService.loadData(seed, verbose);
-        chunkService.printChunks();
-        /*gameService.randomChanges(0, 0, 0, 0, 0, 1);
-        chunkService.printChunks();
-        saveService.saveAsJson();*/
+        boolean loading = true;
 
-        /*saveService.clearData();
+        if(loading){
+            //new CompressionService().decompressData();
 
-        saveService.createFolderStructure();
-        gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
+            gameService.createGame(seed, verbose);
+            loadService.loadData(seed, verbose);
+            loadService.loadChunksNearPlayer();
+            chunkService.printChunks();
+        }
+        else{
+            saveService.clearData();
 
-        saveService.saveAsJson();
+            saveService.createFolderStructure();
+            gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
 
-        chunkService.printChunks();
+            saveService.saveAsJson();
+        }
 
-        gameService.randomChanges(0, 0, 0, 0, 0, 20);
-
-        saveService.saveAsJson();
-
-        System.out.println("\n\n\nAdded");
-        chunkService.printChunks();*/
-
-        /*gameService.randomChanges(0, 0, 0, 21, 0, 0);
-        saveService.saveAsJson();
-
-        System.out.println("\n\n\nRemoved");
-        chunkService.printChunks();
-
-        for(int i = 0; i < 3; i++){
+        /*for(int i = 0; i < 3; i++){
             gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
             saveService.saveAsJson();
-        }*/
+        }
+
+        new CompressionService().compressData();*/
     }
 
     private static void sleep(int seconds){

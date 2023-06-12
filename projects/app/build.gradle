@@ -27,7 +27,8 @@ dependencies {
     // Jackson for JSON
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 
-    // JMH for benchmarking
+    // zip4j for zip compression
+    implementation 'net.lingala.zip4j:zip4j:2.11.5'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

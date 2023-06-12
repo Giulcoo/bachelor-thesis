@@ -3,7 +3,6 @@ package strategies.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import strategies.Constants;
 import strategies.model.*;
 import strategies.model.Character;
 
@@ -31,12 +30,15 @@ public class LoadService {
     private final List<Item> items = new ArrayList<>();
     private final List<Obstacle> obstacles = new ArrayList<>();
 
+    private Vector playerPos;
+
     public LoadService(GameService gameService, ChunkService chunkService) {
         this.gameService = gameService;
         this.chunkService = chunkService;
     }
 
     public void loadData(int seed, boolean verbose){
+        getGameData();
         List<Chunk<Character>> characterChunks = getChunks("characters");
         List<Chunk<Item>> itemChunks = getChunks("items");
         List<Chunk<Obstacle>> obstacleChunks = getChunks("obstacles");
@@ -47,7 +49,28 @@ public class LoadService {
 
         chunkService.clearChunks();
         chunkService.addChunks(characterChunks, itemChunks, obstacleChunks);
-        gameService.loadGame(obstacles, characters, items, seed, verbose);
+    }
+
+    public void loadChunksNearPlayer(){
+        Character player = gameService.getGame().getPlayer();
+
+        if(player == null && playerPos == null) return;
+
+        if(player != null) this.playerPos = player.getPosition();
+        chunkService.getRootCharacterChunk()
+                .chunksInArea(playerPos, RENDER_DISTANCE)
+                .stream().filter(c -> c.getElements().isEmpty()).toList()
+                .forEach(c -> getChunkElements("characters/" + c.getElementId() + ".json", c));
+
+        chunkService.getRootItemChunk()
+                .chunksInArea(playerPos, RENDER_DISTANCE)
+                .stream().filter(c -> c.getElements().isEmpty()).toList()
+                .forEach(c -> getChunkElements("items/" + c.getElementId() + ".json", c));
+
+        chunkService.getRootObstacleChunk()
+                .chunksInArea(playerPos, RENDER_DISTANCE)
+                .stream().filter(c -> c.getElements().isEmpty()).toList()
+                .forEach(c -> getChunkElements("obstacles/" + c.getElementId() + ".json", c));
     }
 
     private <T> void linkChunks(Chunk<T> chunk){
@@ -59,11 +82,22 @@ public class LoadService {
         });
     }
 
+    public void getGameData(){
+        try{
+            JsonNode node = mapper.readTree(new File(DATA_PATH + "game.json"));
+
+            playerPos = new Vector(node.get("playerPosition"));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private <T> List<Chunk<T>> getChunks(String path){
         List<Chunk<T>> result = new ArrayList<>();
 
-        for(File file : new File(MAIN_PATH + path).listFiles()){
-            if (file.isFile()) {
+        for(File file : new File(DATA_PATH + path).listFiles()){
+            if (file.isFile() && file.getName().charAt(1) == '-') {
                 Chunk<T> chunk = getChunk(path + "/" + file.getName());
 
                 if(chunk == charRootChunk || chunk == itemRootChunk || chunk == obstRootChunk){
@@ -82,27 +116,19 @@ public class LoadService {
         Chunk<T> result = null;
 
         try{
-            JsonNode node = mapper.readTree(new File(MAIN_PATH + path));
+            JsonNode node = mapper.readTree(new File(DATA_PATH + path));
 
             String id = node.get("id").asText();
             Vector center = new Vector(node.get("center"));
             Vector size = new Vector(node.get("size"));
-            List<T> elements = mapper.convertValue(node.get("elements"), new TypeReference<>() {});
 
-            if(!elements.isEmpty()){
-                if(elements.get(0) instanceof Character) characters.addAll((List<Character>) elements);
-                else if(elements.get(0) instanceof Item) items.addAll((List<Item>) elements);
-                else if(elements.get(0) instanceof Obstacle) obstacles.addAll((List<Obstacle>) elements);
-            }
-
-            result = new Chunk<>(id, center, size, elements);
+            result = new Chunk<>(id, center, size);
 
             List<String> childrenIds = mapper.convertValue(node.get("childChunksIds"), new TypeReference<>() {});
             childrenIDs.put(id, childrenIds);
             chunks.put(id, result);
 
             if(size.getX() == MAP_SIZE){
-                System.out.println(id + " " + childrenIds);
                 if(id.charAt(0) == CHARACTER_TYPE) charRootChunk = (Chunk<Character>) result;
                 else if(id.charAt(0) == ITEM_TYPE) itemRootChunk = (Chunk<Item>) result;
                 else if(id.charAt(0) == OBSTACLE_TYPE) obstRootChunk = (Chunk<Obstacle>) result;
@@ -113,5 +139,23 @@ public class LoadService {
         }
 
         return result;
+    }
+
+    private <T> void getChunkElements(String path, Chunk<T> chunk){
+        try{
+            System.out.println(chunk.getId());
+            JsonNode node = mapper.readTree(new File(DATA_PATH + path));
+            List<T> elements = mapper.convertValue(node, new TypeReference<>() {});
+            chunk.addElements(elements);
+
+            if(!elements.isEmpty()){
+                if(elements.get(0) instanceof Character) gameService.addCharacters((List<Character>) elements);
+                else if(elements.get(0) instanceof Item) gameService.addItems((List<Item>) elements);
+                else if(elements.get(0) instanceof Obstacle) gameService.addObstacles((List<Obstacle>) elements);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

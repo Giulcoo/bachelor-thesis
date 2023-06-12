@@ -6,19 +6,19 @@ import java.util.*;
 
 public class Chunk<T> {
 
-    @JsonIgnore private final static int CHUNK_SIZE_LIMIT = 20;
-    @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 5;
+    @JsonIgnore private final static int CHUNK_SIZE_LIMIT = 5;
+    @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 2;
 
     private final String id;
     private final Vector center;
     private final Vector size;
-    private final List<T> elements;
+    @JsonIgnore final private List<T> elements;
 
     @JsonIgnore private Chunk<T> parentChunk;
     @JsonIgnore private List<Chunk<T>> childChunks;
 
     public Chunk(java.lang.Character type, Chunk<T> parentChunk, Vector center, Vector size) {
-        this.id = type + UUID.randomUUID().toString();
+        this.id = type + "-" + UUID.randomUUID().toString();
         this.center = center;
         this.size = size;
         this.elements = new ArrayList<>();
@@ -26,17 +26,22 @@ public class Chunk<T> {
         this.childChunks = new ArrayList<>();
     }
 
-    public Chunk(String id, Vector center, Vector size, List<T> elements){
+    public Chunk(String id, Vector center, Vector size){
         this.id = id;
         this.center = center;
         this.size = size;
-        this.elements = elements;
+        this.elements = new ArrayList<>();
         this.childChunks = new ArrayList<>();
         this.parentChunk = null;
     }
 
     public String getId() {
         return id;
+    }
+
+    @JsonIgnore
+    public String getElementId(){
+        return id.charAt(0) + "e" + id.substring(1);
     }
 
     @JsonIgnore
@@ -53,6 +58,7 @@ public class Chunk<T> {
         return childChunks.stream().map(Chunk::getId).toList();
     }
 
+    @JsonIgnore
     public List<T> getElements() {
         return elements;
     }
@@ -171,6 +177,21 @@ public class Chunk<T> {
         return this.parentChunk.findChunk(o);
     }
 
+    public List<Chunk<T>> chunksInArea(Vector position, double size){
+        if(rectInChunk(position, size)){
+            if(childChunks.isEmpty()) return List.of(this);
+            else{
+                List<Chunk<T>> result = new ArrayList<>();
+                for(Chunk<T> c : childChunks){
+                    if(c.rectInChunk(position, size)) result.addAll(c.chunksInArea(position, size));
+                }
+                return result;
+            }
+        }
+
+        return new ArrayList<>();
+    }
+
     public boolean pointInChunk(Object o){
         Vector position = null;
         if (o instanceof Character) {
@@ -181,22 +202,42 @@ public class Chunk<T> {
             position = ((Obstacle) o).getPosition();
         }
 
-        return position != null
-                && Math.abs(position.getX() - center.getX()) <= size.getX() / 2
+        return position != null && pointInChunk(position);
+    }
+
+    public boolean pointInChunk(Vector position){
+        return Math.abs(position.getX() - center.getX()) <= size.getX() / 2
                 && Math.abs(position.getY() - center.getY()) <= size.getY() / 2;
+    }
+
+    public boolean rectInChunk(Vector center, double size){
+        Vector leftTop = new Vector(center.getX() - size/2, center.getY() - size/2, 0);
+        Vector bottomRight = new Vector(center.getX() + size/2, center.getY() + size/2, 0);
+
+        return leftTop.getX() <= this.center.getX() + this.size.getX()/2
+                && leftTop.getY() <= this.center.getY() + this.size.getY()/2
+                && bottomRight.getX() >= this.center.getX() - this.size.getX()/2
+                && bottomRight.getY() >= this.center.getY() - this.size.getY()/2;
     }
 
     @Override
     public String toString() {
         List<String> childrenIDs = this.getChildChunksIds();
-        String result = "  ID: " + id + "\n  Position: " + center + " Size: " + size + "\n  Children (" + childrenIDs.size() + "): [";
-        for(String id : childrenIDs){
-            result += id + " ";
+        String result = "  ID: " + id + " | Pos: " + center.toString2D() + " | Size: " + size.getX();
+
+        if(!childrenIDs.isEmpty()){
+            result += "\n  Children (" + childrenIDs.size() + "): [";
+            for(String id : childrenIDs){
+                result += id + " ";
+            }
+            result += "]";
         }
 
-        result += "]\n  Elemenst (" + elements.size() + "):\n";
-        for(T element : elements){
-            result += "    " + element.toString() + "\n";
+        if(!elements.isEmpty()){
+            result += "]\n  Elemenst (" + elements.size() + "):\n";
+            for(T element : elements){
+                result += "    " + element.toString() + "\n";
+            }
         }
         return result;
     }

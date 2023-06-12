@@ -144,17 +144,29 @@ public class ChunkService {
         if(oldChunk != chunk) changeTracker.addItemChange(chunk);
     }
 
+    public Chunk<Character> getRootCharacterChunk(){
+        return characterChunks.get(0);
+    }
+
+    public Chunk<Item> getRootItemChunk(){
+        return itemChunks.get(0);
+    }
+
+    public Chunk<Obstacle> getRootObstacleChunk(){
+        return obstacleChunks.get(0);
+    }
+
     public void printChunks(){
        /* System.out.println("Character chunks:");*/
         int index = 0;
-       /* for(Chunk<Character> c : characterChunks){
+        for(Chunk<Character> c : characterChunks){
             System.out.println("Chunk " + index + ":");
             System.out.println(c);
             System.out.println();
             index++;
-        }*/
+        }
 
-        System.out.println("Item chunks:");
+       /* System.out.println("Item chunks:");
         index = 0;
         for(Chunk<Item> c : itemChunks){
             System.out.println("Chunk " + index + ":");
@@ -163,7 +175,7 @@ public class ChunkService {
             index++;
         }
 
-        /*System.out.println("Obstacle chunks:");
+        System.out.println("Obstacle chunks:");
         index = 0;
         for(Chunk<Obstacle> c : obstacleChunks){
             System.out.println("Chunk " + index + ":");

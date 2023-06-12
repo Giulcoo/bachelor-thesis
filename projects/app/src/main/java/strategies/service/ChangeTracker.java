@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeTracker {
-    private final List<Obstacle> addedObstacles = new ArrayList<>();
+    /*private final List<Obstacle> addedObstacles = new ArrayList<>();
     private final List<Character> changedCharacters = new ArrayList<>();
     private final List<Item> changedItems = new ArrayList<>();
     private final List<Character> deletedCharacters = new ArrayList<>();
-    private final List<Item> deletedItems = new ArrayList<>();
+    private final List<Item> deletedItems = new ArrayList<>();*/
 
     private final List<Chunk<Character>> changedCharacterChunks = new ArrayList<>();
     private final List<Chunk<Character>> removedCharacterChunks = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ChangeTracker {
         return changedObstacleChunksCopy;
     }
 
-    public void addChange(Obstacle obstacle){
+    /*public void addChange(Obstacle obstacle){
         if(!addedObstacles.contains(obstacle)) addedObstacles.add(obstacle);
     }
 
@@ -120,5 +120,5 @@ public class ChangeTracker {
         List<Item> deletedItemsCopy = new ArrayList<>(this.deletedItems);
         deletedItems.clear();
         return deletedItemsCopy;
-    }
+    }*/
 }

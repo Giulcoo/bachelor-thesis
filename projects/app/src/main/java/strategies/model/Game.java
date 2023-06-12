@@ -23,6 +23,7 @@ public class Game
         this.changeTracker = tracker;
     }
 
+    @JsonIgnore
     public List<Item> getItems()
     {
         return this.items != null ? Collections.unmodifiableList(this.items) : Collections.emptyList();
@@ -38,7 +39,6 @@ public class Game
         {
             this.items.add(value);
             value.setGame(this);
-            changeTracker.addChange(value);
             this.firePropertyChange(PROPERTY_ITEMS, null, value);
         }
         return this;
@@ -64,7 +64,6 @@ public class Game
 
     public Game withoutItems(Item value)
     {
-        this.changeTracker.addRemovedObject(value.copy());
         if (this.items != null && this.items.remove(value))
         {
             value.setGame(null);
@@ -91,6 +90,7 @@ public class Game
         return this;
     }
 
+    @JsonIgnore
     public List<Obstacle> getObstacles()
     {
         return this.obstacles != null ? Collections.unmodifiableList(this.obstacles) : Collections.emptyList();
@@ -105,7 +105,6 @@ public class Game
         if (!this.obstacles.contains(value))
         {
             this.obstacles.add(value);
-            this.changeTracker.addChange(value);
             value.setGame(this);
             this.firePropertyChange(PROPERTY_OBSTACLES, null, value);
         }
@@ -158,6 +157,7 @@ public class Game
         return this;
     }
 
+    @JsonIgnore
     public List<Character> getCharacters()
     {
         return this.characters != null ? Collections.unmodifiableList(this.characters) : Collections.emptyList();
@@ -173,7 +173,6 @@ public class Game
         {
             this.characters.add(value);
             value.setGame(this);
-            changeTracker.addChange(value);
             this.firePropertyChange(PROPERTY_CHARACTERS, null, value);
         }
         return this;
@@ -199,7 +198,6 @@ public class Game
 
     public Game withoutCharacters(Character value)
     {
-        this.changeTracker.addRemovedObject(value.copy());
         if (this.characters != null && this.characters.remove(value))
         {
             value.setGame(null);
@@ -226,6 +224,7 @@ public class Game
         return this;
     }
 
+    @JsonIgnore
     public ChangeTracker getChangeTracker() {
         return changeTracker;
     }
@@ -233,6 +232,16 @@ public class Game
     public Game setChangeTracker(ChangeTracker changeTracker) {
         this.changeTracker = changeTracker;
         return this;
+    }
+
+    @JsonIgnore
+    public Character getPlayer(){
+        return characters == null ? null : (characters.isEmpty() ? null : characters.get(0));
+    }
+
+    //DO NOT DELETE!
+    public Vector getPlayerPosition(){
+        return getPlayer() == null ? null : getPlayer().getPosition();
     }
 
     public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)

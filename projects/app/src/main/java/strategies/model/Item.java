@@ -140,8 +140,6 @@ public class Item
 
     public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)
     {
-        if(this.game != null) this.game.getChangeTracker().addChange(this);
-
         if (this.listeners != null)
         {
             this.listeners.firePropertyChange(propertyName, oldValue, newValue);

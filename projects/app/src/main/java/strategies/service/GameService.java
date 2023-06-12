@@ -21,6 +21,10 @@ public class GameService {
         this.chunkService = chunkService;
     }
 
+    public Game getGame(){
+        return game;
+    }
+
     public void createGame(int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
         random = new Random(seed);
         game = new Game(changeTracker);
@@ -36,16 +40,34 @@ public class GameService {
         printGame();
     }
 
-    public void loadGame(List<Obstacle> obstacles, List<Character> characters, List<Item> items, int seed, boolean verbose){
+    public void createGame(int seed, boolean verbose){
         random = new Random(seed);
         game = new Game(changeTracker);
         this.verbose = verbose;
+    }
 
-        game.withObstacles(obstacles);
+    public void addElement(Character character){
+        game.withCharacters(character);
+    }
+
+    public void addElement(Item item){
+        game.withItems(item);
+    }
+
+    public void addElement(Obstacle obstacle){
+        game.withObstacles(obstacle);
+    }
+
+    public void addCharacters(List<Character> characters){
         game.withCharacters(characters);
-        game.withItems(items);
+    }
 
-        printGame();
+    public void addItems(List<Item> items){
+        game.withItems(items);
+    }
+
+    public void addObstacles(List<Obstacle> obstacles){
+        game.withObstacles(obstacles);
     }
 
     public void randomChanges(int charMoves, int itemMoves, int charRemoveCount, int itemRemoveCount, int charAddCount, int itemAddCount){

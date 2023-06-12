@@ -107,6 +107,10 @@ public class Vector
         return this.listeners;
     }
 
+    public String toString2D(){
+        return "(" + x + "," + y + ")";
+    }
+
     @Override
     public String toString() {
         return "(" + (double) Math.round(x * 10d) / 10d + ", " + (double) Math.round(y * 10d) / 10d + ", " + (double) Math.round(z * 10d) / 10d + ")";
