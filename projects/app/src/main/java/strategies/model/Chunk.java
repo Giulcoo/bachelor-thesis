@@ -6,8 +6,8 @@ import java.util.*;
 
 public class Chunk<T> {
 
-    @JsonIgnore private final static int CHUNK_SIZE_LIMIT = 5;
-    @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 2;
+    @JsonIgnore private final static int CHUNK_SIZE_LIMIT = 1000000;
+    @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 0;
 
     private final String id;
     private final Vector center;

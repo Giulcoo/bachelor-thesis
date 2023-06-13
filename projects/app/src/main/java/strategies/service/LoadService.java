@@ -57,6 +57,7 @@ public class LoadService {
         if(player == null && playerPos == null) return;
 
         if(player != null) this.playerPos = player.getPosition();
+        
         chunkService.getRootCharacterChunk()
                 .chunksInArea(playerPos, RENDER_DISTANCE)
                 .stream().filter(c -> c.getElements().isEmpty()).toList()

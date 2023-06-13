@@ -25,31 +25,37 @@ public class App {
     }
 
     public static void startGame( int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
-        boolean loading = true;
+        boolean loading = false;
 
         if(loading){
-            //new CompressionService().decompressData();
-
-            gameService.createGame(seed, verbose);
-            loadService.loadData(seed, verbose);
-            loadService.loadChunksNearPlayer();
-            chunkService.printChunks();
+            loadGame(seed, verbose);
         }
         else{
-            saveService.clearData();
+            createGame(obstacleCount, botCount, itemCount, seed, verbose);
+        }
+    }
 
-            saveService.createFolderStructure();
-            gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
+    public static void loadGame(int seed, boolean verbose){
+        gameService.createGame(seed, verbose);
+        loadService.loadData(seed, verbose);
+        loadService.loadChunksNearPlayer();
+    }
 
+    public static void createGame(int obstacleCount, int botCount, int itemCount, int seed, boolean verbose){
+        saveService.clearData();
+
+        saveService.createFolderStructure();
+        gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
+
+        saveService.saveAsJson();
+    }
+
+    public static void changes(int amount){
+        for(int i = 0; i < amount; i++){
+            gameService.randomChanges(10, 10, 5, 5, 10, 10);
+            loadService.loadChunksNearPlayer();
             saveService.saveAsJson();
         }
-
-        /*for(int i = 0; i < 3; i++){
-            gameService.randomChanges(i * 10, i * 10, i * 5, i * 5, i * 10, i * 10);
-            saveService.saveAsJson();
-        }
-
-        new CompressionService().compressData();*/
     }
 
     private static void sleep(int seconds){
