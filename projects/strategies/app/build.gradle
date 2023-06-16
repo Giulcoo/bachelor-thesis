@@ -29,6 +29,9 @@ dependencies {
 
     // zip4j for zip compression
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
+
+    // mongodb for nosql database
+    implementation 'org.mongodb:mongodb-driver-sync:4.9.1'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

@@ -31,6 +31,7 @@ public class App {
             loadGame(seed, verbose);
         }
         else{
+            new MongoService();
             createGame(obstacleCount, botCount, itemCount, seed, verbose);
         }
     }
