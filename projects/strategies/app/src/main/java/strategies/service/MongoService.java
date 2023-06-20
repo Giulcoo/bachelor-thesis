@@ -4,6 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import strategies.model.Character;
 import strategies.model.Chunk;
 import strategies.model.Item;
@@ -17,21 +18,32 @@ public class MongoService {
     private final MongoClient client;
     private final MongoDatabase db;
     private final MongoCollection<Chunk> characters;
-    private final MongoCollection<Chunk> items;
+    private final MongoCollection<Document> items;
     private final MongoCollection<Chunk> obstacles;
 
     public MongoService() {
         client = MongoClients.create(DB_URL);
 
         db = client.getDatabase("Game");
-        characters = db.getCollection("characters", Chunk.class);
-        items = db.getCollection("items", Chunk.class);
-        obstacles = db.getCollection("obstacles", Chunk.class);
+        characters = db.getCollection("Characters", Chunk.class);
+        items = db.getCollection("Items", Document.class);
+        obstacles = db.getCollection("Obstacles", Chunk.class);
 
-        List<Chunk<Item>> items = new ArrayList<>();
+        //items.insertOne(new Chunk<>('i', null, new Vector(0,0,0), new Vector(0,0,0)));
 
-        items.add(new  Chunk('c', null, new Vector(0,0,0), new Vector(0,0,0)));
-        characters.insertMany(items);
+        items.insertOne(new Document()
+                .append("id", "i-2")
+                .append("center", new Document()
+                        .append("x", 0)
+                        .append("y", 0)
+                        .append("z", 0))
+                .append("size", new Document()
+                        .append("x", 0)
+                        .append("y", 0)
+                        .append("z", 0))
+                .append("elements", new ArrayList<>())
+                .append("parentChunk", null)
+                .append("childChunks", new ArrayList<>()));
     }
 
     public void save() {

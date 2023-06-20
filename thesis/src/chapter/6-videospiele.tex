@@ -1,7 +1,115 @@
 \chapter{Speichersysteme in Videospielen}\label{ch:videospiele}
 
-Recherchieren über Speichersysteme von bekannten und größeren Videospielen (Minecraft, Terraria, GTA, ...)
-
 \section{Minecraft}
+Zusammenfassung über Minecraft (Für Leute die das Spiel nicht kennen).
+
+\subsection{Daten}
+Welche Klassen gibt es bei Minecraft (Blöcke, Chunks,...) und welche Daten 
+beinhalten diese.\\
+\\
+Blöcke mit YZX Position (einfacher zu komprimieren), "BlockStates", etc.\\
+BlockState über "Palette" Liste gespeichert (Welche BlockIDs welchen Zustand haben). 
+
+\url{https://minecraft.fandom.com/wiki/Chunk_format}
+
+\subsection{Ordnerstruktur}
+Ordner:
+\begin{itemize}
+    \item /world/data
+    \item /world/players: Player Data
+    \item /world/DIM-1: Nether world
+    \item /world/DIM1: End world
+    \item /world/region: Overworld regions
+    \item /world/DIM-1/region: Nether regions
+    \item /world/DIM1/region: End regions
+\end{itemize}
+
+Dateien:
+\begin{itemize}
+    \item level.dat: Allgemeine Spieldaten
+    \item $[$playeruuid$]$.dat: Spielerdaten
+    \item $[$region$]$.mca: Regionen in /region Ordner
+\end{itemize}
+
+\url{https://wiki.vg/Map_Format}\\
+\url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
+
+\subsection{Speicherformate}
+\begin{itemize}
+    \item Minecraft Anvil (MCA): Speichern von Chunk Daten
+    \item Named Binary Tag (NBT): .dat-Endung $\Rightarrow$ level.dat, Playerdata, ... 
+    \item JavaScript Object Notation (JSON): Speichern von Texte (Bücher, Schilder, Label)
+\end{itemize}
+
+\url{https://docs.fileformat.com/game/mca/}\\
+\url{https://wiki.vg/NBT}\\
+\url{https://minecraft.fandom.com/wiki/JSON}
+
+\subsection{Datenaufteilung}
+Chunks, Regions und Level. 
+
+\begin{itemize}
+    \item Section: Bereich von 16x16x16-Blöcken
+    \item Chunk: Bereich von 16x16x$[$Welt Höhenlimit$]$ Blöcken
+    \item Region: Gruppierung von Chunks in einem 32x32 Blöcke Gebiet
+    \item Level: (Theoretisch, aber nicht praktisch) unendliche Sammlung von Chunks gespeichert als regions
+\end{itemize}
+
+\url{https://minecraft.fandom.com/wiki/Chunk_format}
+\url{https://wiki.vg/Region_Files}
+
+\subsection{Speichervorgänge}
+
+Speicherung, wenn:
+\begin{itemize}
+    \item Neue Welt generiert
+    \item Pause-Taste wird gedrückt
+    \item Chunks werden entladen (Spieler zu weit weg)
+    \item Alle 5 Minuten
+\end{itemize}
+
+\url{https://minecraft.fandom.com/de/wiki/Spielstand-Speicherung}
+
+\subsection{Ladevorgänge}
+%-----------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------
 \section{Terraria}
-\section{GTA V}
+\subsection{Daten}
+Welche Klassen gibt es bei Terraria (Blöcke, Chunks,...) und welche Daten 
+beinhalten diese.
+
+\subsection{Ordnerstruktur}
+
+\subsection{Speicherformate}
+World-Dateien, Player-Dateien, Konfigurationsdateien 
+
+\subsection{Datenaufteilung}
+Kein Chunksystem, alles in einer Datei gespeichert. Aber Inventar, Position
+usw. werden in verschiedenen Daten gespeichert.
+
+\subsection{Speichervorgänge}
+
+\subsection{Ladevorgänge}
+%-----------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------
+\section{Half-Life}
+\subsection{Ordnerstruktur}
+\subsection{Daten}
+Welche Klassen gibt es bei Half-Life (Blöcke, Chunks,...) und welche Daten 
+beinhalten diese.
+
+\subsection{Datenaufteilung}
+Half-Life benutzt ein Chunk System.
+
+\subsection{Speicherformate}
+BSP-Dateien, MDL-Dateien, WAD-Dateien, SFX-Dateien, CFG-Dateien.
+
+\subsection{Speichervorgänge}
+
+\subsection{Ladevorgänge}
