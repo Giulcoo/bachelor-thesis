@@ -2,13 +2,27 @@
 
 \section{Minecraft}
 Zusammenfassung über Minecraft (Für Leute die das Spiel nicht kennen).
+\begin{itemize}
+    \item Survival Spiel
+    \item 3D Welt die aus Blöcken besteht
+    \item Unter meistgespielten Spielen
+\end{itemize}
+
+In diesem Kapitel wurde die Minecraft Version 1.16 angeschaut. 
+Bei neueren Versionen kann das Speichersystem bereits etwas anders aussehen. Um an den Sourcecode zu kommen wurde das Tool 
+\url{https://github.com/Hexeption/MCP-Reborn/tree/1.16} verwendet. Aus rechtlichen Gründen darf kein
+Sourcecode gezeigt werden.
 
 \subsection{Daten}
 Welche Klassen gibt es bei Minecraft (Blöcke, Chunks,...) und welche Daten 
 beinhalten diese.\\
 \\
 Blöcke mit YZX Position (einfacher zu komprimieren), "BlockStates", etc.\\
-BlockState über "Palette" Liste gespeichert (Welche BlockIDs welchen Zustand haben). 
+BlockState über "Palette" Liste gespeichert (Welche BlockIDs welchen Zustand haben).\\
+$\Rightarrow{}$ ChunkSerializer.java:write()\\
+
+Entity (z.B. Player) mit ID, Position, Motion, Rotation, OnGround, CustomName, ...\\
+$\Rightarrow{}$ Entity.java:writeWithoutTypeID()\\
 
 \url{https://minecraft.fandom.com/wiki/Chunk_format}
 
@@ -36,8 +50,8 @@ Dateien:
 
 \subsection{Speicherformate}
 \begin{itemize}
-    \item Minecraft Anvil (MCA): Speichern von Chunk Daten
-    \item Named Binary Tag (NBT): .dat-Endung $\Rightarrow$ level.dat, Playerdata, ... 
+    \item Minecraft Anvil (MCA): Speichern von Chunk Daten (RegionFileCache.java:loadFile(), SaveFormat.java:convertRegions())
+    \item Named Binary Tag (NBT): .dat-Endung $\Rightarrow$ level.dat, Playerdata, ... (CompoundNBT in vielen Dateien und NBT Folder)
     \item JavaScript Object Notation (JSON): Speichern von Texte (Bücher, Schilder, Label)
 \end{itemize}
 
@@ -50,7 +64,7 @@ Chunks, Regions und Level.
 
 \begin{itemize}
     \item Section: Bereich von 16x16x16-Blöcken
-    \item Chunk: Bereich von 16x16x$[$Welt Höhenlimit$]$ Blöcken
+    \item Chunk: Bereich von 16x16x$[$Welt Höhenlimit$]$ Blöcken (Bei Minecraft 1.16 Höhenlimit = 256 $\Rightarrow{}$ Chunk = 16xSections (Chunk.java:sections))
     \item Region: Gruppierung von Chunks in einem 32x32 Blöcke Gebiet
     \item Level: (Theoretisch, aber nicht praktisch) unendliche Sammlung von Chunks gespeichert als regions
 \end{itemize}
@@ -62,8 +76,8 @@ Chunks, Regions und Level.
 
 Speicherung, wenn:
 \begin{itemize}
-    \item Neue Welt generiert
-    \item Pause-Taste wird gedrückt
+    \item Neue Welt generiert (Minecraft.java:createWorld())
+    \item Pause-Taste wird gedrückt (IntegratedServer.java:tick())
     \item Chunks werden entladen (Spieler zu weit weg)
     \item Alle 5 Minuten
 \end{itemize}

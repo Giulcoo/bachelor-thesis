@@ -1,0 +1,2 @@
+Benchmark                  Mode  Cnt  Score   Error  Units
+Benchmarks.mainBenchmark  thrpt       8,345          ops/s

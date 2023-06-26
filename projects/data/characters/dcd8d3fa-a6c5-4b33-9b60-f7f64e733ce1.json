@@ -1,0 +1,233 @@
+{
+  "id" : "dcd8d3fa-a6c5-4b33-9b60-f7f64e733ce1",
+  "center" : {
+    "x" : 0.0,
+    "y" : 0.0,
+    "z" : 0.0
+  },
+  "size" : {
+    "x" : 100.0,
+    "y" : 100.0,
+    "z" : 0.0
+  },
+  "elements" : [ {
+    "name" : "Player",
+    "id" : "dd3f913a-160c-4d08-b992-bc47162cb53f",
+    "position" : {
+      "x" : 23.08781907032909,
+      "y" : -8.991918850779832,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 1,
+    "isBot" : false,
+    "equipment" : [ {
+      "name" : "Dagger",
+      "type" : "Weapon",
+      "strength" : 5.0
+    }, {
+      "name" : "Crown",
+      "type" : "Head Armor",
+      "strength" : 9.0
+    }, {
+      "name" : "Vest",
+      "type" : "Body Armor",
+      "strength" : 4.0
+    } ]
+  }, {
+    "name" : "Monster",
+    "id" : "6d92dc75-7009-4e8b-a2ec-b6bdd90a2d24",
+    "position" : {
+      "x" : -1.2912625116492364,
+      "y" : 41.39628760146802,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 97,
+    "isBot" : true,
+    "equipment" : [ {
+      "name" : "Dagger",
+      "type" : "Weapon",
+      "strength" : 5.0
+    }, {
+      "name" : "Crown",
+      "type" : "Head Armor",
+      "strength" : 8.0
+    }, {
+      "name" : "Jacket",
+      "type" : "Body Armor",
+      "strength" : 1.0
+    }, {
+      "name" : "Greaves",
+      "type" : "Leg Armor",
+      "strength" : 10.0
+    }, {
+      "name" : "Sandals",
+      "type" : "Foot Armor",
+      "strength" : 6.0
+    } ]
+  }, {
+    "name" : "Monster",
+    "id" : "d8b8acda-1177-4b3b-86bb-66a5433e5545",
+    "position" : {
+      "x" : 30.52277714737137,
+      "y" : -49.49748240075474,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 61,
+    "isBot" : true,
+    "equipment" : [ {
+      "name" : "Sword",
+      "type" : "Weapon",
+      "strength" : 9.0
+    }, {
+      "name" : "Robe",
+      "type" : "Body Armor",
+      "strength" : 6.0
+    }, {
+      "name" : "Shorts",
+      "type" : "Leg Armor",
+      "strength" : 10.0
+    }, {
+      "name" : "Boots",
+      "type" : "Foot Armor",
+      "strength" : 2.0
+    } ]
+  }, {
+    "name" : "Monster",
+    "id" : "f7ba2987-cdb2-44c9-9449-eb367ce2a7e6",
+    "position" : {
+      "x" : -49.870142324739085,
+      "y" : 18.352650345926463,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 87,
+    "isBot" : true,
+    "equipment" : [ {
+      "name" : "Dagger",
+      "type" : "Weapon",
+      "strength" : 6.0
+    }, {
+      "name" : "Hood",
+      "type" : "Head Armor",
+      "strength" : 6.0
+    }, {
+      "name" : "Vest",
+      "type" : "Body Armor",
+      "strength" : 3.0
+    }, {
+      "name" : "Slippers",
+      "type" : "Foot Armor",
+      "strength" : 2.0
+    } ]
+  }, {
+    "name" : "Monster",
+    "id" : "940e1290-36a7-41f7-9e3e-ee552bacd7c1",
+    "position" : {
+      "x" : 38.9908751655377,
+      "y" : -46.16731066807246,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 9,
+    "isBot" : true,
+    "equipment" : [ {
+      "name" : "Dagger",
+      "type" : "Weapon",
+      "strength" : 1.0
+    }, {
+      "name" : "Hat",
+      "type" : "Head Armor",
+      "strength" : 1.0
+    }, {
+      "name" : "Robe",
+      "type" : "Body Armor",
+      "strength" : 2.0
+    }, {
+      "name" : "Skirt",
+      "type" : "Leg Armor",
+      "strength" : 3.0
+    }, {
+      "name" : "Sandals",
+      "type" : "Foot Armor",
+      "strength" : 5.0
+    } ]
+  }, {
+    "name" : "Monster",
+    "id" : "b747451b-700b-412b-97fa-16a44831649e",
+    "position" : {
+      "x" : -44.85516324023072,
+      "y" : -31.645980478851776,
+      "z" : 0.0
+    },
+    "rotation" : {
+      "x" : 0.0,
+      "y" : 0.0,
+      "z" : 0.0,
+      "w" : 0.0
+    },
+    "hp" : 100.0,
+    "exp" : 0.0,
+    "lvl" : 9,
+    "isBot" : true,
+    "equipment" : [ {
+      "name" : "Sword",
+      "type" : "Weapon",
+      "strength" : 2.0
+    }, {
+      "name" : "Hood",
+      "type" : "Head Armor",
+      "strength" : 8.0
+    }, {
+      "name" : "Jacket",
+      "type" : "Body Armor",
+      "strength" : 9.0
+    }, {
+      "name" : "Pants",
+      "type" : "Leg Armor",
+      "strength" : 7.0
+    }, {
+      "name" : "Sandals",
+      "type" : "Foot Armor",
+      "strength" : 5.0
+    } ]
+  } ],
+  "childChunksIds" : [ ]
+}
