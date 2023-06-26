@@ -1,8 +1,8 @@
-PWD d:/Documents/Github Projects/bachelor-thesis/thesis/src
+PWD c:/Users/giuli/OneDrive/Dokumente/GitHub/bachelor-thesis/thesis/src
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT d:/Documents/Github Projects/bachelor-thesis/thesis/src/main.tex
+INPUT c:/Users/giuli/OneDrive/Dokumente/GitHub/bachelor-thesis/thesis/src/main.tex
 OUTPUT main.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
@@ -1155,7 +1155,6 @@ INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
-INPUT ./nul
 INPUT ./nul
 INPUT ./nul
 INPUT nul
