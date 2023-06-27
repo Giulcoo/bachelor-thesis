@@ -11,12 +11,39 @@ Zu testende Game Engines: Unity, Unreal Engine, Godot
 Szene zum testen soll sehr viele Daten zu speichern haben (Große Map und viele unterschiedliche Informationen)
 
 \section{Unity}
-\subsection{PlayerPrefs}
-\subsection{JSON}
-C\# Libraries und JsonUtility (von Unity)
-\subsection{Binäre Serialisierer}
-
 \url{https://blog.unity.com/games/persistent-data-how-to-save-your-game-states-and-settings}
+
+
+\subsection{PlayerPrefs}
+\begin{itemize}
+    \item Nur zum Speichern von string, float, integer
+\end{itemize}
+
+\url{https://docs.unity3d.com/ScriptReference/PlayerPrefs.html}\\
+\url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}
+
+\subsection{JSON}
+\begin{itemize}
+    \item JsonUtility (Von Unity. Hat Einschränkungen, ist dafür aber schnell. Anwendungsbereich ausarbeiten)
+    \item Newtonsoft (Unity Package)
+    \item LitJSON (.Net Library)
+\end{itemize}
+
+\url{https://docs.unity3d.com/2020.1/Documentation/Manual/JSONSerialization.html}\\
+\url{https://www.newtonsoft.com/json}\\
+\url{https://www.newtonsoft.com/json/help/html/Performance.htm}
+\url{https://litjson.net/}
+
+\subsection{BinaryFormatter}
+Soll nicht so gut sein. Kurz erwähnen was BinaryFormatter macht und warum es nicht benutzt
+werden soll.
+
+\url{https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter?view=net-7.0}\\
+\url{https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide}\\
+\url{https://www.mongodb.com/developer/products/realm/saving-data-in-unity3d-using-binary-reader-writer/}
+
+\subsection{StreamWriter}
+\url{https://learn.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=net-7.0}
 
 \section{Unreal Engine}
 \subsection{SaveGame Objekt}
