@@ -1,17 +1,16 @@
 \chapter{Speichersysteme in Videospielen}\label{ch:videospiele}
 Dev Teams die ich anschreiben will:
 \begin{enumerate}
-    \item RE-LOGIC: media@re-logic.com (Terraria)
-    \item Factorio: factorio@factorio.com
+    \item \wichtig{RE-LOGIC: support@re-logic.com oder media@re-logic.com (Terraria)}
+    \item Wube Software: factorio@factorio.com (Factorio)
     \item Spiderling Studios: \url{https://www.spiderlinggames.com/} (Besiege)
-    \item Endnight: info@endnightgames.com (The Forest)
-    \item Frontier: press@frontier.co.uk (Rollercoaster Tycoon)
-    \item Paradox Interactive: \url{https://support.paradoxplaza.com/hc/en-us/articles/360002290474-I-emailed-support-paradoxplaza-com-and-no-one-replied-} (Stelaris)
-    \item Studio Wildcard: \url{http://www.studiowildcard.com/contact} (Ark)
-    \item Minecraft: \url{https://help.minecraft.net/hc/en-us/request/new?ticket_form_id=360001225811}
+    \item Endnight Games: info@endnightgames.com (Sons of the Forest)
+    \item \wichtig{Frontier: press@frontier.co.uk (Rollercoaster Tycoon)}
+    \item \wichtig{Paradox Interactive: \url{https://support.paradoxplaza.com/hc/en-us/articles/360002290474-I-emailed-support-paradoxplaza-com-and-no-one-replied-} (Stelaris)}
+    \item Studio Wildcard: \url{http://www.studiowildcard.com/contact} (Ark: Survival Evolved)
+    \item \wichtig{Minecraft: \url{https://help.minecraft.net/hc/en-us/request/new?ticket_form_id=360001225811}}
     \item Coffee Stain Studios: contact@coffeestain.se (Satisfactory)
 \end{enumerate}
-
 
 Email an Entwicklern:\\
 \\
@@ -20,11 +19,11 @@ I am a student at the University of Kassel in Germany and I am currently working
 
 \begin{enumerate}
     \item Which different Datatypes does your game have (e.g. Player Data, Item Data, Block Data, ...). What does each Datatype store?
-    \item How is the folder structure for the game data organized? Which folders does the save folder have and what data are saved in each folder?
+    \item Which folders and files does the save folder have and what data are saved in each folder?
     \item Which format do the game files have to save each data? (e.g. JSON-Format)
-    \item Is the data split up in some way or is everything saved all together in one big collection? If the data is split up into multiple sections, how is it splitted (e.g. chunk-system to divide the data)?
-    \item Is the data saved compressed? Or is the raw data saved as it is?
-    \item Which phases does the saving of the game have? What data is saved when? Does the game us auto-save and if yes when?
+    \item Is the data split up in some way or is everything saved all together in one big collection? If the data is split up into multiple sections, how is it split (e.g. chunk-system to divide the data)?
+    \item Is the data saved compressed? 
+    \item Which phases does the saving of the game have? What data is saved when? Does the game use auto-save and if yes when?
     \item Which phases does the loading of the game have? Is every data loaded at once or only the needed data? When is the rest of the data loaded?
 \end{enumerate}
 
@@ -121,6 +120,71 @@ Speicherung, wenn:
 
 
 %-----------------------------------------------------------------------
+\section{Factorio}
+\begin{enumerate}
+    \item Ressourcen minen 
+    \item Technologien forschen
+    \item Infrastruktur aufbauen
+    \item Automatisieren von Produktion
+    \item Gegner bekämpfen
+\end{enumerate}
+\url{https://www.factorio.com/}
+
+Allgemein benutzt Factorio ein "Deterministic save load"
+\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
+
+Quelle mit Email nennen
+
+\subsection{Daten}
+Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
+beinhalten diese.
+
+\subsection{Ordnerstruktur}
+
+\subsection{Speicherformate}
+
+\subsection{Datenaufteilung}
+
+\subsection{Speichervorgänge}
+\begin{enumerate}
+    \item Volles leeren der Garbage Collection von allen Lua Zuständen
+    \item Löschen von temporären Map Daten, die während des Speicherprozesses entstanden sind
+    \item ID mapping speichern (ID mapping für alles was IDs benutzt)
+    \item Speichern der Prototypenmigrationen
+    \item Rest, der gespeichert weden soll, abspeichern
+    \item SaveHelpers speichern
+\end{enumerate}
+\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
+
+\subsection{Ladevorgänge}
+\begin{enumerate}
+    \item Map-Version überprüfen (save file map und die map in der die save file map geladen wird)
+    \item Überprüfen, ob aktive Mods oder die Mod-Einstellungen sich verändert haben (wenn ja, müssen Aktionen nach dem laden durchgeführt werden) und setze flag wenn das der Fall ist
+    \item ID mapping laden
+    \item Angewandte Migrationen laden und nicht angewandte Migrationen ausführen
+    \item Standard Map Daten laden (Enitäten, Chunks, Forces, Züge)
+    \item load in allen LoadHelpers aufrufen
+    \item Inszenierte (???) Veränderungen ausführen
+    \item Enitäten, die Ladeprobleme hatten, nachladen
+    \item Targeters wiederherstellen
+    \item setup bei allen LoadHelpers ausrufen
+    \item Wenn Prototyp Daten verändert wurden Elektrisches Netz Daten clearen
+    \item setup aller transport belt connectible Entitäten aufrufen
+    \item Ruf setup von Entität auf, wenn diese während Laden erstellt wurde und nicht existierte, als die Map zuletzt gespeichert wurde
+    \item postLoadHook für die Map aufrufen
+    \item Tile Probleme fixen, nachdem alle Enitäten geladen wurden und setup fertig ist
+    \item Ruf bei allen PreFinalLoadHelper setup auf
+    \item Ruf bei allen FinalLoadHelper setup auf
+    \item Für alle Oberflächen postSetup aufrufen
+    \item Lua Daten laden und wiederherstellen
+    \item "configuration changed" Lua event ausführen
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+
+
+
+%-----------------------------------------------------------------------
 \section{Terraria}
 \subsection{Daten}
 Welche Klassen gibt es bei Terraria (Blöcke, Chunks,...) und welche Daten 
@@ -143,17 +207,18 @@ usw. werden in verschiedenen Daten gespeichert.
 
 
 %-----------------------------------------------------------------------
-\section{Half-Life}
-\subsection{Ordnerstruktur}
+\section{Ein Spiel}
+Beschreibung von dem Spiel
+
 \subsection{Daten}
-Welche Klassen gibt es bei Half-Life (Blöcke, Chunks,...) und welche Daten 
+Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
 beinhalten diese.
 
-\subsection{Datenaufteilung}
-Half-Life benutzt ein Chunk System.
+\subsection{Ordnerstruktur}
 
 \subsection{Speicherformate}
-BSP-Dateien, MDL-Dateien, WAD-Dateien, SFX-Dateien, CFG-Dateien.
+
+\subsection{Datenaufteilung}
 
 \subsection{Speichervorgänge}
 
