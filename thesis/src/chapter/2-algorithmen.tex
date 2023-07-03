@@ -5,7 +5,10 @@ Verschiedene Theorien von Speicher und Ladesysteme ausarbeiten und Zeiten
 messen (Mit Java und JSON erst mal). Verschiedene Spielarten und Speichersysteme
 für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber 
 allgemein Daten aufteilen müsste gut sein)
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \section{Speichersysteme}
 Erstmal Theorie von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
 
@@ -20,7 +23,10 @@ Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
 Wichtiger unterschied zwischen ersten Speichern und das Speichern Danach
 (beim ersten Mal muss die Grundstruktur aufgebaut werden und die random
 erstellte Map gespeichert werden)
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Daten in Videospielen}
 Statische Daten (Maps, Texturen, etc.) und sich ändernde Daten (Spielerdaten und 
 Daten zu dem Spielstand). Fokus dieser Arbeit sind nicht die statischen Daten!
@@ -39,13 +45,19 @@ Typen von Daten:\\
         \item Benutzerdaten
     \end{itemize}
 \end{itemize}
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Spielphasen}
 Verschiedene Phasen ansprechen, die interessant für's Speichern und Laden sind.\\
 1. Neues Spiel laden oder altes Spiel laden\\
 2. Events in Spiel (Spieler bewegt sich, Item spawned, ...) -> Events speichern\\
 3. Chunk Laden 
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Delta basierte Speicherung}
 Speichern nur von den veränderten Daten durch tracken der Änderungen
 \begin{itemize}
@@ -54,7 +66,10 @@ Speichern nur von den veränderten Daten durch tracken der Änderungen
     \item Elemente werden gelöscht
 \end{itemize}
 Gespeicherte Daten müssen diese drei Veränderungen berücksichtigen
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Aufteilung der Daten}
 Chunking\\
 \begin{itemize}
@@ -67,7 +82,10 @@ Chunking\\
 \end{itemize}
 
 Sharding (Mehr was für Kapitel Datenbanken)
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Komprimierung der Daten}
 Zippen der Daten\\
 \begin{itemize}
@@ -78,7 +96,10 @@ Zippen der Daten\\
 Kürzere property Namen\\
 Null Werte ausschließen\\
 Sowas wie Vectoren (x,y,z,...) als ein String speichern?
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Kodierung der Daten}
 Eigentlich auch eine Art der Komprimierung der Daten, wenn richtig gemacht.\\
 JSONH zum Beispiel (\url{https://stackoverflow.com/questions/11160941/is-it-worth-the-effort-to-try-to-reduce-json-size})
@@ -92,7 +113,10 @@ Arten um mit JSON zu arbeiten:
     \item Data Binding
 \end{itemize}
 (Siehe \url{https://www.tutorialspoint.com/jackson/jackson_overview.htm})
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Effizienz der Speicherstrategien}
 Kurz das kleine Java Projekt vorstellen mit den Beispieldaten die gespeichert und geladen
 werden sollen. Erwähnen, dass JMH zum messen der Effizienz verwendet wurde.\\
@@ -106,17 +130,26 @@ Faktoren:\\
 \section{Ladesysteme}
 Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
 von 2.1 testen und Laufzeiten messen.
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Nearby Loading}
 Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance)\\
 Chunk System dafür sehr vorteilhaft für effizienteres Laden, statt durch alle Elemente
 immer zu iterieren.
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Lazy Loading}
 Weiß nicht, ob das der richtige Begriff dafür ist, aber hier soll über das prozedulare 
 Laden der Daten geschrieben werden (nicht alles auf einmal laden, sondern erst mal nur das
 nötigste und dann Stück für Stück den Rest laden). 
+%--------------------------------------------------------------------------
 
+
+%--------------------------------------------------------------------------
 \subsection{Effizienz der Ladestrategien}
 Laufzeiten vom Laden messen. Vielleicht läuft das Laden mit manchen Speicherstrategien 
 besser als mit anderen. Außerdem ist die Performance nicht nur an Zeit zu messen, sondern
