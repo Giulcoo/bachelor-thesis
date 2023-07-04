@@ -2,29 +2,69 @@
 Welche Möglichkeiten gibt es Spielerdaten online abzuspeichern (zum Beispiel um den gleichen Spielstand über mehrere Geräte zu erreichen oder um ein Cloud Save anzubieten)
 
 \section{Databases}
-Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. Und Frage SQL vs NoSQL für Videospiel-Daten herausfinden (Vielleicht eigenes Kapitel: Speicherart document database vs relational database)
+Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. Und Frage SQL vs NoSQL für Videospiel-Daten herausfinden (Vielleicht eigenes Kapitel: Speicherart document database vs relational database). Vorteil von NoSQL ist, dass Objekte direkt zu JSON Dokumenten umgewandelt werden können
 
 \subsection{NoSQL}
 \subsubsection{MongoDB}
 
 \subsection{SQL}
-\subsubsection{PostgeSQL}
+\subsubsection{PostgreSQL}
 
 \section{Cloud Services}
 Welche bereits fertige Cloud Services gibt es
 
 \subsection{Unity Cloud Save} 
 Vor- und Nachteile oder Einschränkungen\\
+
+\begin{itemize}
+    \item Cloud save data of game made in unity
+    \item Cross-device Funktionalität
+    \item Sicherer Speichersystem
+    \item Max 255 Charakter pro Slotname
+    \item Max 2000 Data Slots pro Spieler
+    \item Max 5 MB Speicher pro Spieler über alle seine Slots
+    \item JSON Daten
+\end{itemize}
+
 \url{https://unity.com/products/cloud-save}
 
 \subsection{Azure}
+Azure bietet Cosmos DB an \\
+\begin{itemize}
+    \item Schnell und skalierbar
+    \item Autoscale, damit sich die DB an unvorhersehbaren traffic anpasst
+    \item Unterstützt NoSQL, MongoDB, PostgreSQL, Apache Cassandra
+\end{itemize}
 \url{https://azure.microsoft.com/de-de/products/cosmos-db}
 
 \subsection{AWS}
+Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
+\begin{itemize}
+    \item Amazon Aurora für MySQL und PostgreSQL \url{https://aws.amazon.com/de/rds/aurora/?did=ap_card&trk=ap_card}
+    \item Amazon DynamoDB für schnelle NoSQL-Schlüssel-Werte-Datenbank mit Leistung im einstelligen Millisekundenbereich \url{https://aws.amazon.com/de/dynamodb/?did=ap_card&trk=ap_card}
+    \item Amazon DocumentDB für JSON \url{https://aws.amazon.com/de/documentdb/?did=ap_card&trk=ap_card}
+\end{itemize}
+
 \url{https://aws.amazon.com/de/gametech/databases/}
 
 \subsection{Firebase}
+
+\begin{itemize}
+    \item NoSQL Datenbank von Google
+    \item Cross-device
+    \item Nur für iOS, tvOS oder Android
+    \item Wenn offline benutzt werden Veränderungen zwischengespeichert
+    \item 
+\end{itemize}
+
 \url{https://firebase.google.com/products/realtime-database}
 
 \subsection{Atlas}
+
+\begin{itemize}
+    \item JSON Datenbank
+    \item Cross-device
+    \item Sicherheit
+\end{itemize}
+
 \url{https://www.mongodb.com/atlas}
