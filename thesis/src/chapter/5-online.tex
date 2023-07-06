@@ -2,13 +2,37 @@
 Welche Möglichkeiten gibt es Spielerdaten online abzuspeichern (zum Beispiel um den gleichen Spielstand über mehrere Geräte zu erreichen oder um ein Cloud Save anzubieten)
 
 \section{Databases}
-Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. Und Frage SQL vs NoSQL für Videospiel-Daten herausfinden (Vielleicht eigenes Kapitel: Speicherart document database vs relational database). Vorteil von NoSQL ist, dass Objekte direkt zu JSON Dokumenten umgewandelt werden können
+Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. Und Frage SQL vs NoSQL für Videospiel-Daten herausfinden (Vielleicht eigenes Kapitel: Speicherart document database vs relational database). Vielleicht ist es am Ende nur die Frage, SQL Performance vs NoSQL optimalere Art Daten dazustellen (für Video Spielen).
+
+\url{https://redis.com/solutions/industries/gaming/}\\
+\url{https://gamedev.stackexchange.com/questions/5316/nosql-is-it-a-valid-option-for-web-based-game}
 
 \subsection{NoSQL}
 \subsubsection{MongoDB}
 
+\url{https://kushankpatel7.medium.com/a-database-for-video-games-794b243f0758}\\
+\url{https://www.linkedin.com/pulse/mongodb-gaming-udit-sharma}
+
 \subsection{SQL}
 \subsubsection{PostgreSQL}
+\begin{itemize}
+    \item Open source object-relational database system
+    \item Verschiedene Datentypen
+    \begin{itemize}
+        \item Primitive
+        \item Structured (Arrays, UUID, ...)
+        \item Document (JSON, XML, ...)
+        \item Geometrisch (Punkt, Linie, Polygon, ...)
+    \end{itemize}
+    \item Performant (Beispiele zeigen)
+    \item Disaster Recovery
+    \item Sicherheit (Mehr Infos darüber wäre nice)
+\end{itemize}
+
+\url{https://www.postgresql.org/about/}\\
+\url{https://www.amazingcto.com/postgres-for-everything/}\\
+\url{https://kinsta.com/de/wissensdatenbank/was-ist-postgresql/}\\
+\url{https://www.ibm.com/de-de/topics/postgresql}
 
 \section{Cloud Services}
 Welche bereits fertige Cloud Services gibt es
@@ -54,7 +78,6 @@ Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
     \item Cross-device
     \item Nur für iOS, tvOS oder Android
     \item Wenn offline benutzt werden Veränderungen zwischengespeichert
-    \item 
 \end{itemize}
 
 \url{https://firebase.google.com/products/realtime-database}
@@ -68,3 +91,9 @@ Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
 \end{itemize}
 
 \url{https://www.mongodb.com/atlas}
+
+
+\subsection{Cloud Spanner}
+
+\url{https://cloud.google.com/spanner?hl=de}\\
+\url{https://cloud.google.com/spanner/docs/best-practices-gaming-database?hl=de}
