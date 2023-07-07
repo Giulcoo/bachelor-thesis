@@ -4,13 +4,9 @@ Welche Möglichkeiten gibt es Spielerdaten online abzuspeichern (zum Beispiel um
 \section{Databases}
 Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. Und Frage SQL vs NoSQL für Videospiel-Daten herausfinden (Vielleicht eigenes Kapitel: Speicherart document database vs relational database). Vielleicht ist es am Ende nur die Frage, SQL Performance vs NoSQL optimalere Art Daten dazustellen (für Video Spielen).
 
+% 6.7.
 \url{https://redis.com/solutions/industries/gaming/}\\
 \url{https://gamedev.stackexchange.com/questions/5316/nosql-is-it-a-valid-option-for-web-based-game}
-
-\subsection{MongoDB (NoSQL)}
-
-\url{https://kushankpatel7.medium.com/a-database-for-video-games-794b243f0758}\\
-\url{https://www.linkedin.com/pulse/mongodb-gaming-udit-sharma}
 
 \subsection{PostgreSQL (SQL)}
 \begin{itemize}
@@ -27,11 +23,38 @@ Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. U
     \item Sicherheit (Mehr Infos darüber wäre nice)
 \end{itemize}
 
+% 5.7.
 \url{https://www.postgresql.org/about/}\\
 \url{https://www.amazingcto.com/postgres-for-everything/}\\
 \url{https://kinsta.com/de/wissensdatenbank/was-ist-postgresql/}\\
 \url{https://www.ibm.com/de-de/topics/postgresql}
 
+\subsection{MongoDB (NoSQL)}
+
+\begin{itemize}
+    \item Beliebteste JSON Database
+    \item Speichert Daten in binary encoded JSON format (BSON) 
+    \item insert, query, update, or delete von Dokumenten
+    \item Optimierungsmöglichkeit von Anfragen
+\end{itemize}
+
+% 7.7.
+\url{https://www.mongodb.com/}\\
+\url{https://www.mongodb.com/docs/manual/}\\
+\url{https://www.mongodb.com/databases/json-database}\\
+\url{https://www.mongodb.com/json-and-bson}\\
+\url{https://kushankpatel7.medium.com/a-database-for-video-games-794b243f0758}\\
+\url{https://www.linkedin.com/pulse/mongodb-gaming-udit-sharma}\\
+
+Warum nicht PostgreSQL für JSON benutzen?
+\begin{itemize}
+    \item MongoDB hat Limit für int/float Größe
+    \item PostgreSQL bietet Validierungsfunktionen an, die testen ob JSON Dokumente sinnvoll gestaltet sind
+    \item MongoDB bietet automatisches sharding an für horizontales Skalieren vom Speicher der JSON Daten
+\end{itemize}
+
+% 7.7
+\url{https://community.sisense.com/t5/knowledge/postgres-vs-mongodb-for-storing-json-data-which-should-you/ta-p/111}
 
 \subsection{Redis (Key-Value)}
 
@@ -43,6 +66,7 @@ Welche Datenbanken kann man einrichten, um selber ein Cloud Save zu erstellen. U
     \item JSON Support
 \end{itemize}
 
+% 6.7.
 \url{https://redis.io/docs/about/}\\
 \url{https://redis.io/docs/data-types/}\\
 \url{https://redis.io/docs/interact/programmability/}\\
@@ -64,6 +88,7 @@ Vor- und Nachteile oder Einschränkungen\\
     \item JSON Daten
 \end{itemize}
 
+% 3.7.
 \url{https://unity.com/products/cloud-save}
 
 \subsection{Azure}
@@ -73,6 +98,8 @@ Azure bietet Cosmos DB an \\
     \item Autoscale, damit sich die DB an unvorhersehbaren traffic anpasst
     \item Unterstützt NoSQL, MongoDB, PostgreSQL, Apache Cassandra
 \end{itemize}
+
+% 3.7.
 \url{https://azure.microsoft.com/de-de/products/cosmos-db}
 
 \subsection{AWS}
@@ -83,6 +110,7 @@ Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
     \item Amazon DocumentDB für JSON \url{https://aws.amazon.com/de/documentdb/?did=ap_card&trk=ap_card}
 \end{itemize}
 
+% 3.7.
 \url{https://aws.amazon.com/de/gametech/databases/}
 
 \subsection{Firebase}
@@ -94,6 +122,7 @@ Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
     \item Wenn offline benutzt werden Veränderungen zwischengespeichert
 \end{itemize}
 
+% 3.7.
 \url{https://firebase.google.com/products/realtime-database}
 
 \subsection{Atlas}
@@ -104,10 +133,12 @@ Skalierbare Datenbanken, einfach Einzurichten und mit hoher Leistung
     \item Sicherheit
 \end{itemize}
 
+% 3.7.
 \url{https://www.mongodb.com/atlas}
 
 
 \subsection{Cloud Spanner}
 
+% 5.7.
 \url{https://cloud.google.com/spanner?hl=de}\\
 \url{https://cloud.google.com/spanner/docs/best-practices-gaming-database?hl=de}
