@@ -15,6 +15,8 @@ Szene zum testen soll sehr viele Daten zu speichern haben (Große Map und viele 
 %--------------------------------------------------------------------------
 \section{Unity}
 Unity Engine grob vorstellen und erklären
+
+% 10.7.
 \url{https://blog.unity.com/games/persistent-data-how-to-save-your-game-states-and-settings}
 
 
@@ -23,6 +25,7 @@ Unity Engine grob vorstellen und erklären
     \item Nur zum Speichern von string, float, integer
 \end{itemize}
 
+% 10.7.
 \url{https://docs.unity3d.com/ScriptReference/PlayerPrefs.html}\\
 \url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}
 
@@ -33,6 +36,7 @@ Unity Engine grob vorstellen und erklären
     \item LitJSON (.Net Library)
 \end{itemize}
 
+% 10.7.
 \url{https://docs.unity3d.com/2020.1/Documentation/Manual/JSONSerialization.html}\\
 \url{https://www.newtonsoft.com/json}\\
 \url{https://www.newtonsoft.com/json/help/html/Performance.htm}
@@ -42,14 +46,17 @@ Unity Engine grob vorstellen und erklären
 Soll nicht so gut sein. Kurz erwähnen was BinaryFormatter macht und warum es nicht benutzt
 werden soll.
 
+% 10.7.
 \url{https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter?view=net-7.0}\\
 \url{https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide}\\
 \url{https://www.mongodb.com/developer/products/realm/saving-data-in-unity3d-using-binary-reader-writer/}
 
 \subsection{StreamWriter}
+% 10.7.
 \url{https://learn.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=net-7.0}
 
 \subsection{Easy Save}
+% 10.7.
 \url{https://docs.moodkie.com/product/easy-save-3/}\\
 \url{https://assetstore.unity.com/packages/tools/utilities/easy-save-the-complete-save-data-serializer-system-768}
 %--------------------------------------------------------------------------
@@ -62,14 +69,23 @@ Unreal Engine grob vorstellen und erklären
 \subsection{SaveGame Objekt}
 Erklären was das ist, was benutzt wird und ein kleines Beispiel zeigen.
 
-\url{https://docs.unrealengine.com/4.26/en-US/InteractiveExperiences/SaveGame/}\\
+\begin{itemize}
+    \item Blueprint zum Speichern/Laden der Daten
+    \item Daten in .sav-Datei gespeichert (darüber recherchieren, was das ist und wie Daten hier gespeichert werden. Vor und Nachteile vielleicht auch nennen)
+    \item Asynchrones/Syncrhones Speichern/Laden (bei großen Mengen von Daten ist asynchron besser)
+\end{itemize}
+
+% 10.7.
+\url{https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/SaveGame/}\\
 \url{https://www.tomlooman.com/unreal-engine-cpp-save-system/}
 
 \subsection{JSON}
+% 10.7.
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Serialization/FJsonSerializer/}\\
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Dom/FJsonObject/}
 
 \subsection{Save Extension}
+% 10.7.
 \url{https://www.unrealengine.com/marketplace/en-US/product/save-extension}\\
 \url{https://piperift.com/SaveExtension/#/}
 %--------------------------------------------------------------------------
@@ -83,10 +99,31 @@ Godot Engine grob vorstellen und erklären
 Macht viel Sinn, weil GodotScript Dictionaries hat, die Sachen wie im JSON Stil speichern 
 können. JSON wird dann zu einem Dictionary umgeformt und ein Dictionary in JSON
 
+\begin{itemize}
+    \item Daten in dictionary abspeichern
+    \item Dictionary zu JSON-String serialisieren mit Godot Hilfsklasse JSON
+    \item Manche Datentypen wie Vector2 können nicht serialisiert werden
+\end{itemize}
+
+% 10.7.
 \url{https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html}\\
-\url{https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html#json-vs-binary-serialization}\\
-\url{https://docs.godotengine.org/en/3.0/tutorials/io/saving_games.html}
+
+\subsection{Binary Serialization}
+
+\begin{itemize}
+    \item Umwandeln von Datentypen zu array von bytes
+    \item Godot bietet 30 Datentypen an, die in binären Format gespeichert werden können
+    \item Jedes Packet (Datentyp) hat folgende bytes:
+    \begin{itemize}
+        \item 4-byte header um den Typen zu definieren (0 = null, 1 = bool, 2 = integer, ...) und zum setzen von flags
+        \item Packetinhalt(e), der ab dem 5. Byte anfängt und unterschiedlich groß ist 
+    \end{itemize}
+\end{itemize}
+
+% 10.7.
+\url{https://docs.godotengine.org/en/stable/tutorials/io/binary_serialization_api.html}
 
 \subsection{Universal Save/Load System}
+% 10.7.
 \url{https://godotengine.org/asset-library/asset/1655}\\
 \url{https://stupidratstudio.github.io/thoth/}
