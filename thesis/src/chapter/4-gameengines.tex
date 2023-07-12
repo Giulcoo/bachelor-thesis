@@ -22,7 +22,13 @@ Unity Engine grob vorstellen und erklären
 
 \subsection{PlayerPrefs}
 \begin{itemize}
+    \item Einfachste Art Daten zu speichern, aber sehr limitiert
     \item Nur zum Speichern von string, float, integer
+    \item Allgemein können nicht viele Daten gespeichert werden
+    \item Daten werden beim schließen des Spieles abgespeichert (mit save Funktion kann das aber auch gezwungen werden)
+    \item Je nach OS unterschiedliches Datei-Format
+    \item Besser zum Speichern von Konfigurationen (Auflösung, Audio Device, ...)
+    \item Ungeschützt
 \end{itemize}
 
 % 10.7.
@@ -30,17 +36,46 @@ Unity Engine grob vorstellen und erklären
 \url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}
 
 \subsection{JSON}
+
 \begin{itemize}
     \item JsonUtility (Von Unity. Hat Einschränkungen, ist dafür aber schnell. Anwendungsbereich ausarbeiten)
-    \item Newtonsoft (Unity Package)
+    \item Json.NET (Newtonsoft)
     \item LitJSON (.Net Library)
+\end{itemize}
+
+JsonUtility:
+\begin{itemize}
+    \item "[Serializable]" vor Klassen/Strukturen, damit diese umgewandlet werden können (dürfen aber nicht static sein)
+    \item public oder mit " [SerializeField]" gekenntzeichnette Variablen werden serialisiert
+    \item JsonUtility.ToJson(obj) und JsonUtility.FromJson<T>(json) zum (de)serialisieren
+    \item Manche Typen sind nicht unterstützt (Dictionary<>, Multidimensionale/Jagged Arrays, nested container Typen, ...)
+    \item Nicht unterstützte Typen über implementierung von ISerializationCallbackReceiver serialisieren, mit custom Serialisierung
 \end{itemize}
 
 % 10.7.
 \url{https://docs.unity3d.com/2020.1/Documentation/Manual/JSONSerialization.html}\\
+\url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}\\
+\url{https://docs.unity3d.com/2023.2/Documentation/Manual/script-Serialization.html}
+
+
+Json.NET:
+\begin{itemize}
+    \item JSON Serialisierer um Umwandeln zwischen .NET-Objekten zu JSON zu ermöglichen 
+    \item Typen die JsonUtility nicht unterstützt gehen hier
+    \item Serialisiert alle public Attribute
+    \item "[JsonIgnore]" um beim Serialisierer Attribute zu ignorieren
+\end{itemize}
+
+% 10.7.
 \url{https://www.newtonsoft.com/json}\\
-\url{https://www.newtonsoft.com/json/help/html/Performance.htm}
+\url{https://www.newtonsoft.com/json/help/html/Performance.htm}\\
+
+LitJSON:\\
+% 10.7.
 \url{https://litjson.net/}
+
+\url{https://www.jacksondunstan.com/articles/3303}\\
+\url{https://michaelscodingspot.com/the-battle-of-c-to-json-serializers-in-net-core-3/}
 
 \subsection{BinaryFormatter}
 Soll nicht so gut sein. Kurz erwähnen was BinaryFormatter macht und warum es nicht benutzt
@@ -59,6 +94,10 @@ werden soll.
 % 10.7.
 \url{https://docs.moodkie.com/product/easy-save-3/}\\
 \url{https://assetstore.unity.com/packages/tools/utilities/easy-save-the-complete-save-data-serializer-system-768}
+
+\subsection{Component-Save-System}
+
+\url{https://github.com/AlexMeesters/Component-Save-System}
 %--------------------------------------------------------------------------
 
 
