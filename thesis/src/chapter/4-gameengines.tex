@@ -78,19 +78,56 @@ LitJSON:\\
 \url{https://michaelscodingspot.com/the-battle-of-c-to-json-serializers-in-net-core-3/}
 
 \subsection{BinaryFormatter}
-Soll nicht so gut sein. Kurz erwähnen was BinaryFormatter macht und warum es nicht benutzt
-werden soll.
+Kurz erwähnen was BinaryFormatter macht und warum er nicht benutzt werden soll. Vielleicht mit einem Beispiel
+
+\begin{itemize}
+    \item Serialisieren von Objekten in ein langes stream im binären Format
+    \item Serialize(File filename, Object object)
+    \item Deserialize(File filename)
+    \item Sicherheitsrisiken beim Deserialisieren:
+    \begin{itemize}
+        \item Angreifer kann ein Denial of Serivce (DoS), Veröffentlichung von Informationen oder Remoteausführung von Code in Ziel-App bewirken
+        \item Deserialisieren von Daten mit BinaryFormatter bringt viele Risiken
+        \item Angreifer kann Code im Kontext des Zielprozesses ausführen
+    \end{itemize}
+    \item Sicherere Alternative: BinaryReader und BinaryWriter
+    \begin{itemize}
+        \item Schreiben/Lesen von primitven Datentypen im binären Format
+    \end{itemize}
+\end{itemize}
 
 % 10.7.
 \url{https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter?view=net-7.0}\\
 \url{https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide}\\
-\url{https://www.mongodb.com/developer/products/realm/saving-data-in-unity3d-using-binary-reader-writer/}
+\url{https://github.com/pwntester/ysoserial.net}
 
 \subsection{StreamWriter}
+\begin{itemize}
+    \item Direktes Schreiben von Zeilen auf Dateien 
+    \item Zum Lesen der Zeilen StreamReader
+    \item Eignes Format zum Speichern der Klassen bestimmen
+    \item Wenn Format geändert wird, kann es schwierig werden Dateien mit altem Format zu verwenden
+\end{itemize}
+
 % 10.7.
 \url{https://learn.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=net-7.0}
 
 \subsection{Easy Save}
+
+\begin{itemize}
+    \item Unity Package, welches ein komplettes Speicher und Serialisier System ist
+    \item ES3.Save(String key, Object value)
+    \item ES3.Load<T>(String key, Object defaultValue)
+    \item Klassenattribute werden gespeichert, wenn:
+    \begin{itemize}
+        \item public oder [SerializeField] Attribut haben
+        \item Nicht const oder readonly
+        \item Nicht [Obsolete] oder [NonSerialized] Attribut
+        \item Verschlüsselung mit ES3Settings(ES3.EncryptionType encryptionType, String password)
+        \item Komprimierung mit ES3Settings(ES3.CompressionType compressionType)
+        \item Auto Save Funktion
+    \end{itemize}
+\end{itemize}
 % 10.7.
 \url{https://docs.moodkie.com/product/easy-save-3/}\\
 \url{https://assetstore.unity.com/packages/tools/utilities/easy-save-the-complete-save-data-serializer-system-768}
