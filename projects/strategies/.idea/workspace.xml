@@ -5,22 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1240fca-5b39-427a-993c-52c63e4fc4dd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../databases/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../databases/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41/storage_v2/_src_/schema/.UokAAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41/storage_v2/_src_/schema/Game.EsAhAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41/storage_v2/_src_/schema/admin.TwOGBQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41/storage_v2/_src_/schema/config.QoM_rw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/395eda4e-3299-401d-affd-b8d543febf41/storage_v2/_src_/schema/local.a98lBg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fls" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_11_2023_9_28_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_6_11_2023_9_28_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/SaveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/service/SaveService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +128,7 @@
       <workItem from="1686914811238" duration="3816000" />
       <workItem from="1687183393677" duration="2422000" />
       <workItem from="1687354403983" duration="4000" />
+      <workItem from="1689588405019" duration="2881000" />
     </task>
     <servers />
   </component>

@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 
+import static strategies.Constants.CHANGES_FILE;
 import static strategies.Constants.DATA_PATH;
 
 public class SaveService {
@@ -18,12 +18,10 @@ public class SaveService {
     //JSON Objects
     private final ObjectMapper mapper = new ObjectMapper();
     private final ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-    private final ArrayNode characterNode;
+
     public SaveService(GameService gameService, ChangeTracker changeTracker) {
         this.gameService = gameService;
         this.changeTracker = changeTracker;
-
-        characterNode = mapper.createArrayNode();
     }
 
     public boolean createFolderStructure(){
@@ -60,6 +58,33 @@ public class SaveService {
         });
 
         writeJson("game.json", gameService.getGame());
+    }
+
+    public void saveChanges() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(CHANGES_FILE));
+            PrintWriter printWriter = new PrintWriter(writer);
+            ArrayNode changes = mapper.createArrayNode();
+
+            changes.add("Changed");
+            changeTracker.getCharacterChanges().forEach(c -> changes.addPOJO(c.getElements()));
+            changeTracker.getItemChanges().forEach(c -> changes.addPOJO(c.getElements()));
+            changeTracker.getObstacleChange().forEach(c -> changes.addPOJO(c.getElements()));
+
+            int size = changes.size();
+            changes.add("Removed");
+            changeTracker.getRemovedCharacterChunks().forEach(c -> changes.addPOJO(c.getElements()));
+            changeTracker.getRemovedItemChunks().forEach(c -> changes.addPOJO(c.getElements()));
+
+            //f(size != changes.size()) changes.insert(size, "Removed");
+
+            System.out.println(changes.get(size-1));
+            printWriter.println(changes.toPrettyString());
+            writer.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void clearData(){

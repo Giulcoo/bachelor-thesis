@@ -31,8 +31,10 @@ public class App {
             loadGame(seed, verbose);
         }
         else{
-            new MongoService();
+            //new MongoService();
             createGame(obstacleCount, botCount, itemCount, seed, verbose);
+
+            changes(5);
         }
     }
 
@@ -49,6 +51,7 @@ public class App {
         gameService.createGame(obstacleCount, botCount, itemCount, seed, verbose);
 
         saveService.saveAsJson();
+        //saveService.saveChanges();
     }
 
     public static void changes(int amount){
@@ -56,6 +59,7 @@ public class App {
             gameService.randomChanges(10, 10, 5, 5, 10, 10);
             loadService.loadChunksNearPlayer();
             saveService.saveAsJson();
+            //saveService.saveChanges();
         }
     }
 

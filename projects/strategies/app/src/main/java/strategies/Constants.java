@@ -5,6 +5,7 @@ import java.lang.Character;
 public class Constants {
     // Data Path
     public static final String DATA_PATH = "data/";
+    public static final String CHANGES_FILE = DATA_PATH + "changes.json";
 
     // Types
     public static final Character CHARACTER_TYPE = 'c';

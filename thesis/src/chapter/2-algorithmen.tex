@@ -9,7 +9,7 @@ allgemein Daten aufteilen müsste gut sein)
 
 
 %--------------------------------------------------------------------------
-\section{Speichersysteme}
+\section{Speichersysteme}\label{sect:speichersysteme}
 Erstmal Theorie von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
 
 Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
@@ -23,8 +23,6 @@ Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
 Wichtiger unterschied zwischen ersten Speichern und das Speichern Danach
 (beim ersten Mal muss die Grundstruktur aufgebaut werden und die random
 erstellte Map gespeichert werden)
-
-\wichtig{Idee zum minimieren von schreib Prozessen im Speicher während gespielt wird: Eine Datei, in der alle Veränderten Objekte gespeichert werden, indem diese am Ende der Datei immer hinzugefügt werden. Beim beenden des Spieles oder beim wieder neu starten wird diese Datei abgearbeitet und geleert}
 %--------------------------------------------------------------------------
 
 
@@ -56,6 +54,36 @@ Verschiedene Phasen ansprechen, die interessant für's Speichern und Laden sind.
 1. Neues Spiel laden oder altes Spiel laden\\
 2. Events in Spiel (Spieler bewegt sich, Item spawned, ...) -> Events speichern\\
 3. Chunk Laden 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Spielphasen.png}
+    \caption{Phasen eines Spieles}
+    \label{fig:spielphasen}
+\end{figure}
+
+
+Event = Spielobjekt hat sich verändert oder wurde hinzugefügt/gelöscht.
+
+Allgemeines Speichersystem (manche Schritte optional)
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Speichersystem.png}
+    \caption{Phasen eines allgemeinen Speichersystems}
+    \label{fig:speicherphasen}
+\end{figure}
+
+\begin{itemize}
+    \item Spielstand laden kann alles auf einmal oder nur teile geladen werden (siehe mehr im Kapitel \ref{sect:ladesysteme})
+    \item Je nach Speichersystem müssen hier teilweise noch die gespeicherten Daten überarbeitet werden
+    \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
+    \begin{enumerate}
+        \item Ein Spielobjekt wurde hinzugefügt/geändert
+        \item Ein Spielobjekt wurde gelöscht
+    \end{enumerate}
+    \item Spiel laden nach Events, wenn der Spieler sich z.B. in neuen Bereichen der Map befindet, die noch geladen werden müssen (mehr dazu in \ref{sect:ladesysteme})
+    \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
+\end{itemize}
 %--------------------------------------------------------------------------
 
 
@@ -119,6 +147,13 @@ Arten um mit JSON zu arbeiten:
 
 
 %--------------------------------------------------------------------------
+\subsection{Schreibprozesse reduzieren}
+Das Schreiben in den normalen Speicher ist zeitintensiv. Deshalb sollte möglichst wenig Daten auf die Festplatte geschrieben werden. Eine Möglichkeit ist es, die veränderungen über eine Liste im Arbeitsspeicher zu speichern und bei Programmterminierung diese Liste abzuspeichern. Dies ist aber riskant, da Daten verloren gegangen werden können bei frühzeitigen Löschen. Alternativ kann man diese Liste auf dem Festplattenspeicher führen und beim Laden des Spieles abarbeiten und dann leeren.
+
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
 \subsection{Effizienz der Speicherstrategien}
 Kurz das kleine Java Projekt vorstellen mit den Beispieldaten die gespeichert und geladen
 werden sollen. Erwähnen, dass JMH zum messen der Effizienz verwendet wurde.\\
@@ -129,7 +164,7 @@ Faktoren:\\
     \item Veränderungen
 \end{itemize}
 
-\section{Ladesysteme}
+\section{Ladesysteme}\label{sect:ladesysteme}
 Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
 von 2.1 testen und Laufzeiten messen.
 %--------------------------------------------------------------------------

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/strategies.iml" filepath="$PROJECT_DIR$/.idea/strategies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/strategies.iml" filepath="$PROJECT_DIR$/.idea/modules/strategies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/strategies.app.jmh.iml" filepath="$PROJECT_DIR$/.idea/modules/app/strategies.app.jmh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/strategies.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/strategies.app.main.iml" />
     </modules>
   </component>
 </project>
