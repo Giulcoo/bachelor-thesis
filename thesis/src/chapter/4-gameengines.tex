@@ -156,11 +156,54 @@ Erklären was das ist, was benutzt wird und ein kleines Beispiel zeigen.
 \url{https://www.tomlooman.com/unreal-engine-cpp-save-system/}
 
 \subsection{JSON}
+
+\begin{itemize}
+    \item FJsonSerializer::Serialize((TSharedPtr<FJsonObject> object).ToSharedRef(), TJsonWriterFactory<>::Create(FString jsonString, 0))
+    \item FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(String json), TSharedPtr<FJsonObject> object)
+\end{itemize}
 % 10.7.
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Serialization/FJsonSerializer/}\\
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Dom/FJsonObject/}
 
 \subsection{Save Extension}
+
+\begin{itemize}
+    \item Blueprint zum Speichern/Laden einer Welt mit Slot ID
+    \item Auswählen der Actors und Components, die gespeichert/geladen werden sollen über Filter
+    \item Dateien können dann komprimiert werden
+    \item Jeder Actor hat Save Settings (Sollen die Tags, Transform oder Physik des Actors gespeichert werden?)
+    \item Jeder Actor, Component und Level hat ein "Record" = Block aus serialisierter Information
+    \item Jeder Slot wird in einer Datei gespeichert 
+    \item Damit nicht alle Slots geladen werden müssen (z.B. für Menu wo eine Liste der Slots angezeigt werden soll) werden die Daten in zwei Bereiche gespeichert:
+    \begin{itemize}
+        \item Slot Info (Leichtgewichtete Daten über das Spiel, wie Player Level, XP, Spielername, ...)
+        \item Slot Data (Alle Informationen der serialisierten Actors und Components eines Spieles)
+    \end{itemize}
+    \item Auto-Save (Speichern des aktuellen Slots) und Auto-Load (Laden des letzten aktiven Slots)
+    \item Asynchrone Features:
+    \begin{itemize}
+        \item Multithreaded Serialisierung
+        \item Multithreaded Dateien (Dateien werden im Hintergrund komprimiert und gespeichert/geladen)
+    \end{itemize} 
+    \item Wenn Sublevels entladen werden, werden Daten dieser zwischengespeichert (Cache) und beim laden dieser Sublevels wieder wiederhergestellt
+    \item Speicher Prozess (Bild zu Zuständen in Doku):
+    \begin{enumerate}
+        \item Alten Spielstand löschen
+        \item OnSaveBegan aufrufen
+        \item Thumbnail und Stats speichern
+        \item Welt serialisieren
+        \item OnSaveFinished aufrufen
+    \end{enumerate}
+    \item Lade Prozess (Bild zu Zuständen in Doku):
+    \begin{enumerate}
+        \item OnLoadBegan aufrufen
+        \item Maps und Daten laden
+        \item Bake Filters (Alle Level Filter und genereller Filter baken -> Damit überprüft wird welcher Actor in jedem Level vorbereitet werden muss und wie dieser deserialisiert wird)
+        \item Levels vorbereiten (Gespeicherte Actors wiederherstellen und Actors die nicht existiert haben sollten löschen)
+        \item Welt deserialisieren (Durch alle Levels durchgehen und alle Actor und seine Components deserialisieren)
+    \end{enumerate}
+\end{itemize}
+
 % 10.7.
 \url{https://www.unrealengine.com/marketplace/en-US/product/save-extension}\\
 \url{https://piperift.com/SaveExtension/#/}
