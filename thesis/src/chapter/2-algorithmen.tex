@@ -216,7 +216,7 @@ Allgemeines Speicher- und Ladesystems (manche Schritte optional)
     \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
 \end{itemize}
 
-Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt
+Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt:
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{images/Speichersys1.png}
@@ -224,11 +224,30 @@ Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt
     \label{fig:chunkbasedsystem}
 \end{figure}
 
-Jeder Chunk hat dabei eine Position und Größe. Entweder die Größe eines Chunks ist vordefiniert und bei allen gleich, oder 
+Wobei ein Chunk aus folgenden Variablen besteht:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Chunk.png}
+    \caption{Chunk Klasse}
+    \label{fig:chunkClass}
+\end{figure}
+
+ParentID und ChildrenIDs sind optional.
 
 \begin{itemize}
     \item Chunks haben Position und Größe
-    \item Entweder alle Chunks feste Größe, oder sie passen sich an Datenmenge an
+    \item Dynamische oder statische Chunk Größe (Entweder alle Chunks feste Größe, oder sie passen sich an Datenmenge an)
     \item Chunks speichern Objekte, die in deren Bereich sind
     \item Objekte eines Chunks erst dann laden, wenn nötig (Z.B. Spieler in der Nähe); sowohl am Anfang, als auch während des Spieles
+    \item Chunk Veränderungen speichern bei statischer Chunkgröße:
+    \begin{itemize}
+        \item Daten zu Chunkinhalt komplett neu speichern bei update/added/removed Objekt Event
+    \end{itemize}
+    \item Chunk Veränderungen speichern bei dynamischer Chunkgröße:
+    \begin{itemize}
+        \item Daten zu Chunkinhalt komplett neu speichern bei update/added Objekt Event 
+        \item Chunkgröße bei added/removed Objekt Event überprüfen
+        \item Chunkdaten komplett vom Speicher löschen, wenn dieser im Spiel gelöscht wird (beim Joinen mit benachbarten Chunks)
+        \item Chunkdaten updaten und hinzufügen, wenn ein Chunk auf weiter Child-Chunks gesplitted wird
+    \end{itemize}
 \end{itemize}
