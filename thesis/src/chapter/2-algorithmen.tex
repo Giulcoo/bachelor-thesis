@@ -6,8 +6,13 @@ messen (Mit Java und JSON erst mal). Verschiedene Spielarten und Speichersysteme
 für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber 
 allgemein Daten aufteilen müsste gut sein)
 %--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 
 
+
+
+
+%--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Speichersysteme}\label{sect:speichersysteme}
 Erstmal Theorie von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
@@ -64,32 +69,12 @@ Verschiedene Phasen ansprechen, die interessant für's Speichern und Laden sind.
 
 
 Event = Spielobjekt hat sich verändert oder wurde hinzugefügt/gelöscht.
-
-Allgemeines Speichersystem (manche Schritte optional)
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{images/Speichersystem.png}
-    \caption{Phasen eines allgemeinen Speichersystems}
-    \label{fig:speicherphasen}
-\end{figure}
-
-\begin{itemize}
-    \item Spielstand laden kann alles auf einmal oder nur teile geladen werden (siehe mehr im Kapitel \ref{sect:ladesysteme})
-    \item Je nach Speichersystem müssen hier teilweise noch die gespeicherten Daten überarbeitet werden
-    \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
-    \begin{enumerate}
-        \item Ein Spielobjekt wurde hinzugefügt/geändert
-        \item Ein Spielobjekt wurde gelöscht
-    \end{enumerate}
-    \item Spiel laden nach Events, wenn der Spieler sich z.B. in neuen Bereichen der Map befindet, die noch geladen werden müssen (mehr dazu in \ref{sect:ladesysteme})
-    \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
-\end{itemize}
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Delta basierte Speicherung}
-Speichern nur von den veränderten Daten durch tracken der Änderungen
+Das wichtigste um die Menge der gespeicherten Daten zu reduzieren, ist, dass man nur nur veränderte Daten speichert. 
 \begin{itemize}
     \item Neue Elementen
     \item Elemente verändern sich
@@ -156,16 +141,22 @@ Das Schreiben in den normalen Speicher ist zeitintensiv. Deshalb sollte möglich
 
 
 %--------------------------------------------------------------------------
-\subsection{Effizienz der Speicherstrategien}
-Kurz das kleine Java Projekt vorstellen mit den Beispieldaten die gespeichert und geladen
-werden sollen. Erwähnen, dass JMH zum messen der Effizienz verwendet wurde.\\
+\subsection{Speicherstrategien}
+Kurz das kleine Java Projekt vorstellen mit den Beispieldaten die gespeichert und geladen werden sollen. Erwähnen, dass JMH zum messen der Effizienz der Strategien verwendet wurde.\\
 
 Faktoren:\\
 \begin{itemize}
     \item Chunk size
     \item Veränderungen
 \end{itemize}
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 \section{Ladesysteme}\label{sect:ladesysteme}
 Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
 von 2.1 testen und Laufzeiten messen.
@@ -194,3 +185,50 @@ Laufzeiten vom Laden messen. Vielleicht läuft das Laden mit manchen Speicherstr
 besser als mit anderen. Außerdem ist die Performance nicht nur an Zeit zu messen, sondern
 an Ressourcen, die vom Computer benötigt werden. Vielleicht gibt es Lade Strategien, die
 leicht gewichtet laufen können.
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\section{Strategien}
+Aus den Strategien der vorherigen sections verschiedene Speicherstrategien aufstellen und deren Effizienz auswerten.
+
+Allgemeines Speicher- und Ladesystems (manche Schritte optional)
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Speichersystem.png}
+    \caption{Phasen eines allgemeinen Speicher- und Ladesystems}
+    \label{fig:speicherphasen}
+\end{figure}
+
+\begin{itemize}
+    \item Spielstand laden kann alles auf einmal oder nur teile geladen werden (siehe mehr im Kapitel \ref{sect:ladesysteme})
+    \item Je nach Speichersystem müssen hier teilweise noch die gespeicherten Daten überarbeitet werden
+    \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
+    \begin{enumerate}
+        \item Ein Spielobjekt wurde hinzugefügt/geändert
+        \item Ein Spielobjekt wurde gelöscht
+    \end{enumerate}
+    \item Spiel laden nach Events, wenn der Spieler sich z.B. in neuen Bereichen der Map befindet, die noch geladen werden müssen (mehr dazu in \ref{sect:ladesysteme})
+    \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
+\end{itemize}
+
+Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Speichersys1.png}
+    \caption{Chunk-basiertes System}
+    \label{fig:chunkbasedsystem}
+\end{figure}
+
+Jeder Chunk hat dabei eine Position und Größe. Entweder die Größe eines Chunks ist vordefiniert und bei allen gleich, oder 
+
+\begin{itemize}
+    \item Chunks haben Position und Größe
+    \item Entweder alle Chunks feste Größe, oder sie passen sich an Datenmenge an
+    \item Chunks speichern Objekte, die in deren Bereich sind
+    \item Objekte eines Chunks erst dann laden, wenn nötig (Z.B. Spieler in der Nähe); sowohl am Anfang, als auch während des Spieles
+\end{itemize}
