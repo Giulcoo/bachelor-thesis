@@ -219,9 +219,9 @@ Allgemeines Speicher- und Ladesystems (manche Schritte optional)
 Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt:
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{images/Speichersys1.png}
+    \includegraphics[scale=0.5]{images/Chunkbasiert.png}
     \caption{Chunk-basiertes System}
-    \label{fig:chunkbasedsystem}
+    \label{fig:chunkBasedSystem}
 \end{figure}
 
 Wobei ein Chunk aus folgenden Variablen besteht:
@@ -232,13 +232,20 @@ Wobei ein Chunk aus folgenden Variablen besteht:
     \label{fig:chunkClass}
 \end{figure}
 
-ParentID und ChildrenIDs sind optional.
-
 \begin{itemize}
     \item Chunks haben Position und Größe
     \item Dynamische oder statische Chunk Größe (Entweder alle Chunks feste Größe, oder sie passen sich an Datenmenge an)
     \item Chunks speichern Objekte, die in deren Bereich sind
-    \item Objekte eines Chunks erst dann laden, wenn nötig (Z.B. Spieler in der Nähe); sowohl am Anfang, als auch während des Spieles
+    \item ParentID und ChildrenIDs sind optional
+\end{itemize}
+
+Informationen zu dem System:
+
+\begin{itemize}
+    \item Objekte von Chunks in der Nähe des Spielers laden
+    \begin{itemize}
+        \item Allgemein werden Objekte eines Chunks erst dann laden, wenn es nötig ist (Z.B. Spieler in der Nähe); sowohl am Anfang, als auch während des Spieles
+    \end{itemize}
     \item Chunk Veränderungen speichern bei statischer Chunkgröße:
     \begin{itemize}
         \item Daten zu Chunkinhalt komplett neu speichern bei update/added/removed Objekt Event
@@ -249,5 +256,39 @@ ParentID und ChildrenIDs sind optional.
         \item Chunkgröße bei added/removed Objekt Event überprüfen
         \item Chunkdaten komplett vom Speicher löschen, wenn dieser im Spiel gelöscht wird (beim Joinen mit benachbarten Chunks)
         \item Chunkdaten updaten und hinzufügen, wenn ein Chunk auf weiter Child-Chunks gesplitted wird
+    \end{itemize}
+\end{itemize}
+
+Alternative des Chunk-basierten Systems, um weniger Schreibprozesse auf dem lokalen Speicher zu haben:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Chunkbasiert2.png}
+    \caption{Alternative zu dem Chunk-basierten System}
+    \label{fig:altchunkBasedSystem}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/Changes.png}
+    \caption{Speichern von Veränderungen}
+    \label{fig:changesClass}
+\end{figure}
+
+\begin{itemize}
+    \item Veränderungen anwenden:
+    \begin{itemize}
+        \item Liste von Veränderungen des letzten Spielstandes werden lokal gespeichert (zum Beispiel als Objekte wie \ref{fig:changesClass} in JSON)
+        \item Verschiedene Events = Unterschiedlich was Object ist
+        \item Liste von oben nach unten abarbeiten, da erste Einträge die ältesten sind 
+        \item Objekte aus Liste zu Chunk hinzufügen/updaten oder (bei dynamischer Chunkgröße) Chunks die nicht mehr gebraucht werden löschen
+        \item Liste leeren
+    \end{itemize}
+    \item Nearby loading von Chunks wie beim anderen Chunk-basierten System
+    \item Chunk-Veränderung speichern:
+    \begin{itemize}
+        \item Hinzugefügte/Veränderte/Gelöschte Objekte in Change Liste (im Arbeitsspeicher) speichern
+        \item Entweder direkt in lokaler Change List Datei ans Ende hinzufügen oder erst bei Spielende (sehr riskant, falls Spiel ungewollt terminiert)
+        \item Bei dynamischer Chunkgröße speichern wenn Chunks gelöscht/hinzugefügt wurden
     \end{itemize}
 \end{itemize}
