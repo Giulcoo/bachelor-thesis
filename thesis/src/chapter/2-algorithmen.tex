@@ -1,13 +1,9 @@
 \chapter{Algorithmen}\label{ch:algorithmen}
-Forschungsfrage überlegen (Warum nicht DB zum Speichern von Spielerdaten)
+\wichtig{Forschungsfrage überlegen (Warum nicht DB zum Speichern von Spielerdaten)}
 
-Verschiedene Theorien von Speicher und Ladesysteme ausarbeiten und Zeiten 
-messen (Mit Java und JSON erst mal). Verschiedene Spielarten und Speichersysteme
-für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber 
-allgemein Daten aufteilen müsste gut sein)
+Verschiedene Theorien/Strategien von Speicher und Ladesysteme ausarbeiten und Zeiten messen (Mit Java und JSON hauptsächlich). Verschiedene Spielarten und Speichersysteme für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber allgemein Daten aufteilen müsste gut sein)
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
-
 
 
 
@@ -15,19 +11,9 @@ allgemein Daten aufteilen müsste gut sein)
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Speichersysteme}\label{sect:speichersysteme}
-Erstmal Theorie von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
+Theorie/Strategien von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
 
-Theorie durch Daten/einfaches Spielkonzept mit Java und JSON testen:\\
--Spieler (HP, LVL, Ausrüstung, Position, Rotation, ...)\\
--Gegner (HP, LVL, Ausrüstung, Position, Rotation, ...)\\
--Ausrüstung (Beschreibung/ID, Verteidigung, Angriff)\\
--Hindernisse (Beschreibung/ID, Position, Rotation)\\
--Items (Beschreibung/ID, Position, Rotation)\\
--> Klassendiagramm zeigen, um Daten des Spieles zu visualisieren
-
-Wichtiger unterschied zwischen ersten Speichern und das Speichern Danach
-(beim ersten Mal muss die Grundstruktur aufgebaut werden und die random
-erstellte Map gespeichert werden)
+Wichtiger unterschied zwischen ersten Speichern und das Speichern danach. Beim ersten Mal muss die Grundstruktur aufgebaut werden und auch mehr gespeichert werden.
 %--------------------------------------------------------------------------
 
 
@@ -55,39 +41,39 @@ Typen von Daten:\\
 
 %--------------------------------------------------------------------------
 \subsection{Spielphasen}
-Verschiedene Phasen ansprechen, die interessant für's Speichern und Laden sind.\\
-1. Neues Spiel laden oder altes Spiel laden\\
-2. Events in Spiel (Spieler bewegt sich, Item spawned, ...) -> Events speichern\\
-3. Chunk Laden 
-
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Spielphasen.png}
+    \includegraphics[width=0.8\textwidth]{images/Spielphasen.png}
     \caption{Phasen eines Spieles}
     \label{fig:spielphasen}
 \end{figure}
 
+\begin{itemize}
+    \item Spielstart: Neues Spiel erstellen (und ggf. speichern) oder altes Spiel laden
+    \item Event: Spielobjekt hat sich verändert oder wurde hinzugefügt/gelöscht
+    \item Nach Event müssen ggf. Daten geladen werden (z.B. Spieler ist in einer neuen Zone)
+    \item Spielende: Ggf. noch weitere Daten abspeichern
+\end{itemize}
 
-Event = Spielobjekt hat sich verändert oder wurde hinzugefügt/gelöscht.
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Delta basierte Speicherung}
-Das wichtigste um die Menge der gespeicherten Daten zu reduzieren, ist, dass man nur nur veränderte Daten speichert. 
+Das wichtigste um die Menge der gespeicherten Daten zu reduzieren, ist, dass man nur nur veränderte Daten speichert. Falls die zu speichernde Datenmenge nicht riesig ist, ist sowas auch nicht wirklich notwendig. Falls sich dafür entschieden wird, müssen folgende Events getracked werden:
 \begin{itemize}
-    \item Neue Elementen
+    \item Elemente werden hinzugefügt
     \item Elemente verändern sich
     \item Elemente werden gelöscht
 \end{itemize}
-Gespeicherte Daten müssen diese drei Veränderungen berücksichtigen
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Aufteilung der Daten}
-Chunking\\
+Chunking:
 \begin{itemize}
+    \item Hilfreich bei einer theoretisch unendlichen Welt
     \item Aufteilung der Mengen an Daten unter den Chunks
     \item Datengröße kann sich stark verändern, Chunk System muss sich anpassen
     \item Wenn Daten zu viele werden mehr Chunks
@@ -96,59 +82,80 @@ Chunking\\
     (Nur Chunks mit seinen Elementen laden, wenn dieser in Nähe ist)
 \end{itemize}
 
-Sharding (Mehr was für Kapitel Datenbanken)
-%--------------------------------------------------------------------------
-
-
-%--------------------------------------------------------------------------
-\subsection{Komprimierung der Daten}
-Zippen der Daten\\
+Szenen/Räume:
 \begin{itemize}
-    \item Viel zippen vs. kleine Dateien (Kleine Chunks)
-    \item Bringt lokales Zippen überhaupt was oder nur wenn man mit Server arbeitet?
+    \item Falls die Spielwelt aus mehreren Szenen/Räumen besteht, Daten in diesen aufteilen
+    \item Falls Szenen/Räume zu groß sind ggf. in Sektoren aufteilen
 \end{itemize}
-
-Kürzere property Namen\\
-Null Werte ausschließen\\
-Sowas wie Vectoren (x,y,z,...) als ein String speichern?
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
-\subsection{Kodierung der Daten}
-Eigentlich auch eine Art der Komprimierung der Daten, wenn richtig gemacht.\\
-JSONH zum Beispiel (\url{https://stackoverflow.com/questions/11160941/is-it-worth-the-effort-to-try-to-reduce-json-size})
-
-Binäre Serialisierung?
-
 \subsection{Serialisieren}
-Effizientes schreiben in (JSON) Datenbanken.\\\\
-Arten um mit JSON zu arbeiten:
+\url{https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats}
+
+Serialisierung ist der Prozess, bei dem der Zustand eine Objekts in ein Medium abgespeichert werden kann. Deserializierung ist der Gegenprozess, der den Zustand wieder zu einem Objekten formatiert. \wichtig{Beispiele zu jeder Serialisierung zeigen.\\
+}\url{https://www.codeguru.com/csharp/c-sharp-serialization}
+
+JSON:
+\begin{itemize}
+    \item JavaScript Object Notation
+    \item Lesbarer Code
+    \item Unterstützt nur String, Boolean, Number, Array, Object, null
+    \item Wird für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet 
+\end{itemize}
+\url{https://www.mongodb.com/json-and-bson}
+
+Arten damit zu arbeiten:
 \begin{itemize}
     \item Streaming API
     \item Tree Model
     \item Data Binding
 \end{itemize}
-(Siehe \url{https://www.tutorialspoint.com/jackson/jackson_overview.htm})
+\url{https://www.tutorialspoint.com/jackson/jackson_overview.htm}
+
+BSON:
+\begin{itemize}
+    \item Binary JSON
+    \item Kodiert JSON-Typen und speichert deren Länge (wodurch das Durchqueren der Daten schneller als bei JSON läuft)
+    \item Nicht menschlich lesbar wie JSON
+    \item Unterstützt mehr Typen
+\end{itemize}
+\url{https://www.mongodb.com/json-and-bson}
+
+JSONH: (\url{https://stackoverflow.com/questions/11160941/is-it-worth-the-effort-to-try-to-reduce-json-size})
+
+
+
+Binäre Serialisierung:
+\begin{itemize}
+    \item Konvertierung von Objekt zu Stream von Bytes
+    \item Nicht leserlich für Menschen
+\end{itemize}
+\url{https://learn.microsoft.com/en-us/previous-versions/dotnet/fundamentals/serialization/binary/binary-serialization}
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Komprimierung der Daten}
+Zippen der Daten:
+\begin{itemize}
+    \item Viel zippen vs. kleine Dateien (Kleine Chunks)
+    \item Bringt lokales Zippen überhaupt was oder nur wenn man mit Server arbeitet?
+\end{itemize}
+
+Weitere Ideen:
+\begin{itemize}
+    \item Kürzere property Namen
+    \item Null Werte ausschließen
+    \item Vectoren in einem String (z.B. "1,2,3" für x=1, y=2, z=3)
+\end{itemize}
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Schreibprozesse reduzieren}
 Das Schreiben in den normalen Speicher ist zeitintensiv. Deshalb sollte möglichst wenig Daten auf die Festplatte geschrieben werden. Eine Möglichkeit ist es, die veränderungen über eine Liste im Arbeitsspeicher zu speichern und bei Programmterminierung diese Liste abzuspeichern. Dies ist aber riskant, da Daten verloren gegangen werden können bei frühzeitigen Löschen. Alternativ kann man diese Liste auf dem Festplattenspeicher führen und beim Laden des Spieles abarbeiten und dann leeren.
-
-%--------------------------------------------------------------------------
-
-
-%--------------------------------------------------------------------------
-\subsection{Speicherstrategien}
-Kurz das kleine Java Projekt vorstellen mit den Beispieldaten die gespeichert und geladen werden sollen. Erwähnen, dass JMH zum messen der Effizienz der Strategien verwendet wurde.\\
-
-Faktoren:\\
-\begin{itemize}
-    \item Chunk size
-    \item Veränderungen
-\end{itemize}
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
@@ -158,33 +165,25 @@ Faktoren:\\
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Ladesysteme}\label{sect:ladesysteme}
-Erstmal Theorie vom Laden der Spieldaten erarbeiten. Danach mit Spielkonzept
-von 2.1 testen und Laufzeiten messen.
+Theorie vom Laden der Spieldaten
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Nearby Loading}
-Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance)\\
-Chunk System dafür sehr vorteilhaft für effizienteres Laden, statt durch alle Elemente
-immer zu iterieren.
+Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance). Ein Chunk-System (oder allgemein gute Aufteilung der Daten) dafür sehr vorteilhaft für effizienteres Laden, statt durch alle Elemente immer zu iterieren.
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Lazy Loading}
-Weiß nicht, ob das der richtige Begriff dafür ist, aber hier soll über das prozedulare 
-Laden der Daten geschrieben werden (nicht alles auf einmal laden, sondern erst mal nur das
-nötigste und dann Stück für Stück den Rest laden). 
+Prozedulares Laden der Daten (nicht alles auf einmal laden, sondern erst mal nur das nötigste und dann Stück für Stück den Rest nachladen). 
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
-\subsection{Effizienz der Ladestrategien}
-Laufzeiten vom Laden messen. Vielleicht läuft das Laden mit manchen Speicherstrategien 
-besser als mit anderen. Außerdem ist die Performance nicht nur an Zeit zu messen, sondern
-an Ressourcen, die vom Computer benötigt werden. Vielleicht gibt es Lade Strategien, die
-leicht gewichtet laufen können.
+\subsection{Leseprozesse reduzieren}
+\wichtig{Gibt vielleicht hier was zu schreiben}
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
@@ -194,12 +193,13 @@ leicht gewichtet laufen können.
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Strategien}
-Aus den Strategien der vorherigen sections verschiedene Speicherstrategien aufstellen und deren Effizienz auswerten.
+Aus den Strategien der vorherigen sections verschiedene Speicher- und Ladesysteme aufstellen und deren Effizienz auswerten.
 
+\subsection{Allgemeines Speicher- und Ladesystem}
 Allgemeines Speicher- und Ladesystems (manche Schritte optional)
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Speichersystem.png}
+    \includegraphics[width=0.36\textwidth]{images/Speichersystem.png}
     \caption{Phasen eines allgemeinen Speicher- und Ladesystems}
     \label{fig:speicherphasen}
 \end{figure}
@@ -215,19 +215,23 @@ Allgemeines Speicher- und Ladesystems (manche Schritte optional)
     \item Spiel laden nach Events, wenn der Spieler sich z.B. in neuen Bereichen der Map befindet, die noch geladen werden müssen (mehr dazu in \ref{sect:ladesysteme})
     \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
 \end{itemize}
+%--------------------------------------------------------------------------
 
-Chunk-basiertes Speichersystem, welches Daten in Chunks verpackt:
-\begin{figure}[H]
+
+%--------------------------------------------------------------------------
+\subsection{Chunk-basiertes System}
+Chunk-basiertes System, welches Daten in Chunks verpackt:
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Chunkbasiert.png}
+    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert.png}
     \caption{Chunk-basiertes System}
     \label{fig:chunkBasedSystem}
 \end{figure}
 
 Wobei ein Chunk aus folgenden Variablen besteht:
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Chunk.png}
+    \includegraphics[width=0.28\textwidth]{images/Chunk.png}
     \caption{Chunk Klasse}
     \label{fig:chunkClass}
 \end{figure}
@@ -261,16 +265,16 @@ Informationen zu dem System:
 
 Alternative des Chunk-basierten Systems, um weniger Schreibprozesse auf dem lokalen Speicher zu haben:
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Chunkbasiert2.png}
+    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert2.png}
     \caption{Alternative zu dem Chunk-basierten System}
     \label{fig:altchunkBasedSystem}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htp]
     \centering
-    \includegraphics[scale=0.5]{images/Changes.png}
+    \includegraphics[width=0.25\textwidth]{images/Changes.png}
     \caption{Speichern von Veränderungen}
     \label{fig:changesClass}
 \end{figure}
@@ -291,4 +295,25 @@ Alternative des Chunk-basierten Systems, um weniger Schreibprozesse auf dem loka
         \item Entweder direkt in lokaler Change List Datei ans Ende hinzufügen oder erst bei Spielende (sehr riskant, falls Spiel ungewollt terminiert)
         \item Bei dynamischer Chunkgröße speichern wenn Chunks gelöscht/hinzugefügt wurden
     \end{itemize}
+\end{itemize}
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Auswertung}
+Auswertung der Strategien mit Daten/einfaches Spielkonzept mit Java und JSON testen:
+\begin{itemize}
+    \item Spieler (HP, LVL, Ausrüstung, Position, Rotation, ...)
+    \item Gegner (HP, LVL, Ausrüstung, Position, Rotation, ...)
+    \item Ausrüstung (Beschreibung/ID, Verteidigung, Angriff)
+    \item Hindernisse (Beschreibung/ID, Position, Rotation)
+    \item Items (Beschreibung/ID, Position, Rotation)
+\end{itemize}
+
+Klassendiagramm zeigen, um Daten des Spieles zu visualisieren. Testen der Effizienz mit JMH (Erklären was JMH ist und warum das gut dafür ist)
+
+Zu beachtende Faktoren:
+\begin{itemize}
+    \item Chunk size
+    \item Veränderungen
 \end{itemize}
