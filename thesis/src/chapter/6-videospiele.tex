@@ -1,18 +1,5 @@
 \chapter{Speichersysteme in Videospielen}\label{ch:videospiele}
 \iffalse
-Dev Teams die ich anschreiben will:
-\begin{enumerate}
-    \item RE-LOGIC: support@re-logic.com oder media@re-logic.com (Terraria)
-    \item Wube Software: factorio@factorio.com (Factorio)
-    \item Spiderling Studios: \url{https://www.spiderlinggames.com/} (Besiege)
-    \item Endnight Games: info@endnightgames.com (Sons of the Forest)
-    \item Frontier Developments: press@frontier.co.uk (Rollercoaster Tycoon)
-    \item Paradox Interactive: \url{https://support.paradoxplaza.com/hc/en-us/requests/278019} (Stelaris)
-    \item Studio Wildcard: \url{http://www.studiowildcard.com/contact} (Ark: Survival Evolved)
-    \item Minecraft: \url{https://help.minecraft.net/hc/en-us/request/new?ticket_form_id=360001225811}
-    \item Coffee Stain Studios: contact@coffeestain.se (Satisfactory)
-\end{enumerate}
-
 Email an Entwicklern:\\
 \\
 Dear <Game Studio>,\\
@@ -132,17 +119,37 @@ Speicherung, wenn:
     \item Infrastruktur aufbauen
     \item Automatisieren von Produktion
     \item Gegner bekämpfen
+    \item In Lua geschrieben
 \end{enumerate}
 \url{https://www.factorio.com/}
 
 Allgemein benutzt Factorio ein "Deterministic save load"
 \url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
 
-Quelle mit Email nennen
+\wichtig{Quelle mit Email nennen}
 
 \subsection{Daten}
-Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
-beinhalten diese.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/factorio_save_statistic.png}
+    \caption{Anteil der Datentypen beim Speichern}
+    \label{fig:factorioSaveStatistic}
+\end{figure}
+% 27.7.2023
+\url{https://www.factorio.com/blog/post/fff-270}
+
+Map Daten bestehen aus:
+\begin{itemize}
+    \item Dekorative Spielobjekte 
+    \item Tiles 
+    \item Entitäten
+    \item Blueprint Library
+    \item Physikalische Kräfte
+    \item Transportband
+    \item Oberfläche und Chunk Daten
+    \item Weitere Daten...
+\end{itemize}
 
 \subsection{Ordnerstruktur}
 
@@ -151,6 +158,13 @@ beinhalten diese.
 \subsection{Datenaufteilung}
 
 \subsection{Speichervorgänge}
+Kurzgefasst:
+\begin{enumerate}
+    \item ID Mapping speichern (\url{https://www.factorio.com/blog/post/fff-259})
+    \item Map Daten speichern
+\end{enumerate}
+
+Detaillierter:
 \begin{enumerate}
     \item Volles leeren der Garbage Collection von allen Lua Zuständen
     \item Löschen von temporären Map Daten, die während des Speicherprozesses entstanden sind
@@ -162,6 +176,14 @@ beinhalten diese.
 \url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
 
 \subsection{Ladevorgänge}
+Kurzgefasst:
+\begin{enumerate}
+    \item Map Version überprüfen
+    \item Überprüfen ob Mods hinzugefügt/gelöscht/verändert wurden
+    \item invalide/korrupte save files finden 
+\end{enumerate}
+
+Detaillierter:
 \begin{enumerate}
     \item Map-Version überprüfen (save file map und die map in der die save file map geladen wird)
     \item Überprüfen, ob aktive Mods oder die Mod-Einstellungen sich verändert haben (wenn ja, müssen Aktionen nach dem laden durchgeführt werden) und setze flag wenn das der Fall ist
@@ -209,6 +231,7 @@ usw. werden in verschiedenen Daten gespeichert.
 
 
 %--------------------------------------------------------------------------
+\iffalse
 \section{Ein Spiel}
 Beschreibung von dem Spiel
 
@@ -225,3 +248,4 @@ beinhalten diese.
 \subsection{Speichervorgänge}
 
 \subsection{Ladevorgänge}
+\fi

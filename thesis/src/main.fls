@@ -1642,6 +1642,11 @@ INPUT ./chapter/6-videospiele.tex
 INPUT chapter/6-videospiele.tex
 INPUT ./chapter/6-videospiele.tex
 INPUT chapter/6-videospiele.tex
+INPUT ./images/factorio_save_statistic.png
+INPUT ./images/factorio_save_statistic.png
+INPUT images/factorio_save_statistic.png
+INPUT ./images/factorio_save_statistic.png
+INPUT ./images/factorio_save_statistic.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl
