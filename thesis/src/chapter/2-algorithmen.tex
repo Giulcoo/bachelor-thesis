@@ -94,8 +94,8 @@ Szenen/Räume:
 \subsection{Serialisieren}
 \url{https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats}
 
-Serialisierung ist der Prozess, bei dem der Zustand eine Objekts in ein Medium abgespeichert werden kann. Deserializierung ist der Gegenprozess, der den Zustand wieder zu einem Objekten formatiert. \wichtig{Beispiele zu jeder Serialisierung zeigen.\\
-}\url{https://www.codeguru.com/csharp/c-sharp-serialization}
+Serialisierung ist der Prozess, bei dem der Zustand eine Objekts in ein Medium abgespeichert werden kann. Deserializierung ist der Gegenprozess, der den Zustand wieder zu einem Objekten formatiert.\\
+\url{https://www.codeguru.com/csharp/c-sharp-serialization}
 
 JSON:
 \begin{itemize}
@@ -105,6 +105,25 @@ JSON:
     \item Wird für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet 
 \end{itemize}
 \url{https://www.mongodb.com/json-and-bson}
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {
+            "id": 1,
+            "name": "Vampir",
+            "position": {
+                "x": 0.15,
+                "y": 2.34
+            },
+            "effects": [
+                "giftig", 
+                "frost"
+            ]
+        }
+    \end{minted}
+    \caption{Beispiel für ein JSON-Objekt}
+    \label{lst:jsonExp}
+\end{listing}
 
 Arten damit zu arbeiten:
 \begin{itemize}
@@ -122,6 +141,36 @@ BSON:
     \item Unterstützt mehr Typen
 \end{itemize}
 \url{https://www.mongodb.com/json-and-bson}
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {"hello": "world"}
+    \end{minted}
+    \caption{Weiteres Beispiel eines JSON-Objektes}
+    \label{lst:bsonJsonObj}
+\end{listing} 
+
+\begin{listing}[htp]
+    \begin{minted}{javascript} 
+        \x16\x00\x00\x00           
+        \x02                      
+        hello\x00                  
+        \x06\x00\x00\x00world\x00  
+        \x00                       
+    \end{minted}
+    \caption{Beispiel für ein BSON-Objekt}
+    \label{lst:bsonExp}
+\end{listing}
+
+Das JSON-Objekt \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Objekt \ref{lst:bsonExp}. Die Zeilen bedeuten folgendes:
+\begin{enumerate}
+    \item Gesamt Dokument Größe
+    \item 0x02 = Typ String
+    \item Field-Namen
+    \item Field-Werte
+    \item 0x00 = Ende des Objekts
+\end{enumerate}
+\url{https://www.mongodb.com/json-and-bson} % 28.7.2023
 
 JSONH: (\url{https://stackoverflow.com/questions/11160941/is-it-worth-the-effort-to-try-to-reduce-json-size})
 
@@ -309,6 +358,13 @@ Auswertung der Strategien mit Daten/einfaches Spielkonzept mit Java und JSON tes
     \item Hindernisse (Beschreibung/ID, Position, Rotation)
     \item Items (Beschreibung/ID, Position, Rotation)
 \end{itemize}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/Klassendiagramm.png}
+    \caption{Klassendiagramm des Spieles}
+    \label{fig:classDia}
+\end{figure}
 
 Klassendiagramm zeigen, um Daten des Spieles zu visualisieren. Testen der Effizienz mit JMH (Erklären was JMH ist und warum das gut dafür ist)
 
