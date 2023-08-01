@@ -30,6 +30,8 @@ Zusammenfassung über Minecraft (Für Leute die das Spiel nicht kennen).
     \item Unter meistgespielten Spielen
 \end{itemize}
 
+\wichtig{Quelle mit Email nennen}
+
 In diesem Kapitel wurde die Minecraft Version 1.16 angeschaut. 
 Bei neueren Versionen kann das Speichersystem bereits etwas anders aussehen. Um an den Sourcecode zu kommen wurde das Tool 
 \url{https://github.com/Hexeption/MCP-Reborn/tree/1.16} verwendet. Aus rechtlichen Gründen darf kein
@@ -37,16 +39,59 @@ Sourcecode gezeigt werden.
 
 \subsection{Daten}
 Welche Klassen gibt es bei Minecraft (Blöcke, Chunks,...) und welche Daten 
-beinhalten diese.\\
-\\
+beinhalten diese.
+
 Blöcke mit YZX Position (einfacher zu komprimieren), "BlockStates", etc.\\
-BlockState über "Palette" Liste gespeichert (Welche BlockIDs welchen Zustand haben).\\
-$\Rightarrow{}$ ChunkSerializer.java:write()\\
+BlockState über "Palette" Liste gespeichert (Welche BlockIDs welchen Zustand haben).
 
-Entity (z.B. Player) mit ID, Position, Motion, Rotation, OnGround, CustomName, ...\\
-$\Rightarrow{}$ Entity.java:writeWithoutTypeID()\\
+% 1.8.2023
+\url{https://minecraft.fandom.com/wiki/Chunk_format}\\ 
+Weitere Quelle: ChunkSerializer.java:write()
 
-\url{https://minecraft.fandom.com/wiki/Chunk_format}
+Entität:
+\begin{itemize}
+    \item Player, Boot, Kuh, \dots
+    \item Chunk Data:
+    \begin{itemize}
+        \item Position (X und Z Koordinate)
+        \item Entities (Entitäten von diesem Chunk)
+    \end{itemize}
+    \item Entitäten Daten:
+    \begin{itemize}
+        \item Air (Wieviel Luft die Entität noch hat, dekrementiert jeden Tick um 1)
+        \item CustomName (Name, der über der Entität angezeigt wird)
+        \item FallDistance (Wie weit eine Entität bereits gefallen ist)
+        \item Fire (Positive Nummer: Wieviele Ticks bis das Feuer aus geht. Negative Nummer: Wie lange noch eine Entität auf Feuer stehen kann, bis sie brennt)
+        \item Motion (X,Y,Z Geschwindigkeit der Entität)
+        \item Passengers (Entität, die auf dieser Entität gerade reitet)
+        \item PortalCooldown (Wieviele Ticks, bis diese Entität wieder ein Nether Portal benutzen kann)
+        \item Position (X,Y,Z Position einer Entität)
+        \item Rotation (Y-Axen Rotation [-180,180] und Deklination zum Horizont (Pitch Rotation) [-90,90])
+    \end{itemize}
+\end{itemize}
+
+% 1.8.2023
+\url{https://minecraft.fandom.com/wiki/Entity_format}
+Weitere Quelle: Entity.java:writeWithoutTypeID()\\
+
+Items:
+\begin{itemize}
+    \item Existieren nur im Inventar, Kiste, Item Frames oder Armor stands
+    \item Werden zu Entitäten, wenn gedropped (und als solche dann gespeichert)
+    \item Manche werden zu Blöcken/Enitäten, wenn platziert (und als solche dann gespeichert) 
+    \item Z.B. in player.dat gespeichert
+    \item root tag:
+    \begin{itemize}
+        \item Count (Anzahl gestackter Items)
+        \item Slot (Inventar Slot)
+        \item id (Item/Block ID)
+        \item tag (Optional; z.B. übrige Haltbarkeit von Items, Modifiers die beim Tragen den Spieler beeinflussen, Farbe, \dots)
+    \end{itemize}
+\end{itemize}
+
+% 1.8.2023
+\url{https://minecraft.fandom.com/wiki/Item}\\
+\url{https://minecraft.fandom.com/wiki/Player.dat_format#Item_structure}
 
 \subsection{Ordnerstruktur}
 Ordner:
@@ -62,7 +107,7 @@ Ordner:
 
 Dateien:
 \begin{itemize}
-    \item level.dat: Allgemeine Spieldaten
+    \item level.dat: Allgemeine Spieldaten (NBT Struktur)
     \item $[$playeruuid$]$.dat: Spielerdaten
     \item $[$region$]$.mca: Regionen in /region Ordner
 \end{itemize}
