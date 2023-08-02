@@ -71,7 +71,7 @@ Entität:
 \end{itemize}
 
 % 1.8.2023
-\url{https://minecraft.fandom.com/wiki/Entity_format}
+\url{https://minecraft.fandom.com/wiki/Entity_format}\\
 Weitere Quelle: Entity.java:writeWithoutTypeID()\\
 
 Items:
@@ -112,6 +112,7 @@ Dateien:
     \item $[$region$]$.mca: Regionen in /region Ordner
 \end{itemize}
 
+% 1.8.2023
 \url{https://wiki.vg/Map_Format}\\
 \url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
 
@@ -122,12 +123,25 @@ Dateien:
     \item JavaScript Object Notation (JSON): Speichern von Texte (Bücher, Schilder, Label)
 \end{itemize}
 
+% 1.8.2023
 \url{https://docs.fileformat.com/game/mca/}\\
 \url{https://wiki.vg/NBT}\\
 \url{https://minecraft.fandom.com/wiki/JSON}
 
+NBT:
+\begin{itemize}
+    \item Zum Speichern von Entitäten oder Blöcken
+    \item NBT Objekte werden zu SNBT (stringified NBT) gewandelt um in Speicher zu schreiben 
+    \item NBT File = zipped compound tag mit Namen und tag ID 
+    \item Zipping mit GZip/zlib
+    \item level.dat, $<$player$>$.dat, idcounts.dat, villages.dat, raids.dat, map$\_$$<$\#$>$.dat, Chunks, \dots sind komprimiert im NBT Format gespeichert
+    \item servers.dat, hotbar.nbt sind unkomprimiert im NBT Format gespeichert
+\end{itemize}
+% 1.8.2023
+\url{https://minecraft.fandom.com/wiki/NBT_format}
+
 \subsection{Datenaufteilung}
-Chunks, Regions und Level. 
+Jedes Level hat seinen Ordner, in dem eine level.dat Datei ist und Ordner um Maps und Regions von diesem Level abzuspeichern. 
 
 \begin{itemize}
     \item Section: Bereich von 16x16x16-Blöcken
@@ -136,8 +150,17 @@ Chunks, Regions und Level.
     \item Level: (Theoretisch, aber nicht praktisch) unendliche Sammlung von Chunks gespeichert als regions
 \end{itemize}
 
+level.dat:
+\begin{itemize}
+    \item Globale Informationen über der Welt (Uhrzeit, Singleplayer Spieler, seed, \dots)
+    \item NBT File
+    \item level.dat$\_$old als Backup
+\end{itemize}
+
+% 1.8.2023
 \url{https://minecraft.fandom.com/wiki/Chunk_format}
 \url{https://wiki.vg/Region_Files}
+\url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
 
 \subsection{Speichervorgänge}
 
@@ -149,6 +172,7 @@ Speicherung, wenn:
     \item Alle 5 Minuten
 \end{itemize}
 
+% 1.8.2023
 \url{https://minecraft.fandom.com/de/wiki/Spielstand-Speicherung}
 
 \subsection{Ladevorgänge}
@@ -197,6 +221,19 @@ Map Daten bestehen aus:
 \end{itemize}
 
 \subsection{Ordnerstruktur}
+User data Ordner:
+\begin{itemize}
+    \item ./saves (Save files)
+    \item ./mods (Mods)
+    \item ./script-output (Script-output, z.B. von Spiel Screenshots)
+    \item ./scenarios (Lokale Szenarien)
+    \item ./config/config.ini (Lokale Einstellung)
+    \item factorio-*.log (Log files)
+    \item factorio-dump-*.dmp (Crash dump files)
+\end{itemize}
+
+%2.8.2023
+\url{https://wiki.factorio.com/Application_directory} %Offizielle Factorio Wiki laut Seite
 
 \subsection{Speicherformate}
 
@@ -205,7 +242,7 @@ Map Daten bestehen aus:
 \subsection{Speichervorgänge}
 Kurzgefasst:
 \begin{enumerate}
-    \item ID Mapping speichern (\url{https://www.factorio.com/blog/post/fff-259})
+    \item ID Mapping speichern (\url{https://www.factorio.com/blog/post/fff-259}) %2.8.2023
     \item Map Daten speichern
 \end{enumerate}
 
@@ -218,7 +255,8 @@ Detaillierter:
     \item Rest, der gespeichert weden soll, abspeichern
     \item SaveHelpers speichern
 \end{enumerate}
-\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
+%2.8.2023
+\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42} 
 
 \subsection{Ladevorgänge}
 Kurzgefasst:
@@ -253,7 +291,7 @@ Detaillierter:
 \end{enumerate}
 %--------------------------------------------------------------------------
 
-
+\iffalse
 %--------------------------------------------------------------------------
 \section{Terraria}
 \subsection{Daten}
@@ -276,7 +314,6 @@ usw. werden in verschiedenen Daten gespeichert.
 
 
 %--------------------------------------------------------------------------
-\iffalse
 \section{Ein Spiel}
 Beschreibung von dem Spiel
 
