@@ -19,28 +19,20 @@ Wichtiger unterschied zwischen ersten Speichern und das Speichern danach. Beim e
 
 %--------------------------------------------------------------------------
 \subsection{Daten in Videospielen}
-Statische Daten (Maps, Texturen, etc.) und sich ändernde Daten (Spielerdaten und 
-Daten zu dem Spielstand). Fokus dieser Arbeit sind nicht die statischen Daten!
+Um sich weiter mit Speicher- und Ladesystemen auseinander zu setzen, muss erst einmal definiert werden, welche Arten von Daten es in Videospielen gibt. Allgemein können die Daten in zwei Kategorien unterteilt werden. Ein Videospiel hat \textbf{statische} und \textbf{dynamische} Daten.
 
-Typen von Daten:\\
-\begin{itemize}
-    \item Statische Daten
-    \begin{itemize}
-        \item Grafikdaten
-        \item Audiotechnische Daten
-        \item Level- oder Kartendaten
-    \end{itemize}
-    \item Dynamische Daten
-    \begin{itemize}
-        \item Spielstand
-        \item Benutzerdaten
-    \end{itemize}
-\end{itemize}
+\textbf{Statische Daten} sind wie der Name es schon sagt Daten, die sich nicht mehr verändern. Statische Daten eines Spieles können zum Beispiel die ganzen Grafikdaten und audiotechnischen Daten sein. Spiele haben fast immer Charaktere, Texturen, Musik oder \wichtig{Soundeffekte} die einmal erstellt werden und danach unverändert im Spiel geladen werden. Bei vielen Videospielen gibt es auch Level- oder Kartendaten. Wenn diese sich nie während des Spieles verändern und fest definiert sind, sind diese ebenfalls eine Art von statischen Spieldaten.  
+
+\textbf{Dynamische Daten} dagegen sind auch wie es der Name verrät Daten, die sich ständig verändern können. Hierbei handelt es sich oft um den Spielstand eines erstellten Spieles. Dazu gehören dann zum Beispiel die Position des Spielers, seine Rotation, seine aktuelle Geschwindigkeit oder sein Inventar. Alles Daten, die sich andauernd während des Spielens verändern können. Zu den dynamischen Daten können auch Benutzerdaten gehören. Bei einigen Spielen wird ein Benutzername mit Passwort und Avatar benötigt. Dies sind auch Daten, die sich gelegentlich verändern können.
+
+Der Fokus dieser Arbeit liegt bei dynamischen Daten, genauer gesagt wie der Spielstand eines Spieles effizient gespeichert und geladen werden kann. Für Dynamische Daten gibt es viel mehr Speicherprozesse während der Laufzeit des Videospiels, was das effiziente Speichern herausfordernder macht. Da Benutzerdaten recht selten sich verändern, stehen diese auch nicht im Schwerpunkt der Arbeit.  
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Spielphasen}
+Um zu verstehen, wann ein Spielstand gespeichert oder geladen werden muss, muss erst einmal analysiert werden, welche Phasen ein Videospiel allgemein hat.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{images/Spielphasen.png}
@@ -48,13 +40,11 @@ Typen von Daten:\\
     \label{fig:spielphasen}
 \end{figure}
 
-\begin{itemize}
-    \item Spielstart: Neues Spiel erstellen (und ggf. speichern) oder altes Spiel laden
-    \item Event: Spielobjekt hat sich verändert oder wurde hinzugefügt/gelöscht
-    \item Nach Event müssen ggf. Daten geladen werden (z.B. Spieler ist in einer neuen Zone)
-    \item Spielende: Ggf. noch weitere Daten abspeichern
-\end{itemize}
+In der Abbildung \ref{fig:spielphasen} ist zu erkennen, wie der Ablauf einer generellen Spielphase in Videospielen gestaltet ist. Der Prozess beginnt mit dem Spielstart, bei dem der Benutzer die Wahl zwischen dem Erstellen eines neuen Spiels oder dem Laden eines bereits vorhandenen Spielstands treffen muss. Sobald diese Eröffnungsphase abgeschlossen ist, wird die Hauptphase erreicht. Die Dauer dieser Phase hängt von der Spieldauer ab, da hier der Benutzer aktiv ins Geschehen eingreift und das Videospiel spielt.
 
+In dieser Spielphase können vielfältige Ereignisse auftreten, die entweder direkt oder indirekt als Reaktion auf die Aktionen des Spielers entstehen. Die Ereignisse äußern sich in Form von Veränderungen an Spielobjekten, entweder durch Modifikation, Hinzufügung oder Löschung dieser. Beispielsweise kann der Spieler in eine neue Region vorstoßen, wodurch Daten dieser Region geladen und möglicherweise Daten der vorherigen Region gespeichert werden müssen. Das Spielobjekt des eigenen Charakters wurde in diesem Fall verändert, denn es wurde zum Beispiel die Position und Region des Spielers verändert. Vielleicht müssen dann auch neue Gegner erstellt oder stehen gelassene Items der alten Region gelöscht werden. 
+
+Sobald der Spieler sich dazu entscheidet, das Spiel zu beenden, gelangt er zur Phase des Spielendes. Hierbei ist es eventuell erforderlich, Daten zu speichern, bevor das Programm ordnungsgemäß beendet werden kann, oder die Rückkehr zum Hauptbildschirm des Spiels erfolgt. Diese Phase des Spielendes markiert einen Schlusspunkt im aktuellen Spielsitzung. Wenn diese wieder fortgesetzt werden soll, muss der Spielstand, der bei dem letzten Beenden des Spieles erreicht wurde wieder vollständig hergestellt werden. 
 %--------------------------------------------------------------------------
 
 
