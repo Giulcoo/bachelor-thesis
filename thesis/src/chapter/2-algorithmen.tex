@@ -49,34 +49,32 @@ Sobald der Spieler sich dazu entscheidet, das Spiel zu beenden, gelangt er zur P
 
 
 %--------------------------------------------------------------------------
-\subsection{Delta basierte Speicherung}
-Das wichtigste um die Menge der gespeicherten Daten zu reduzieren, ist, dass man nur nur veränderte Daten speichert. Falls die zu speichernde Datenmenge nicht riesig ist, ist sowas auch nicht wirklich notwendig. Falls sich dafür entschieden wird, müssen folgende Events getracked werden:
-\begin{itemize}
-    \item Elemente werden hinzugefügt
-    \item Elemente verändern sich
-    \item Elemente werden gelöscht
-\end{itemize}
+\subsection{Delta-basierte Speicherung}
+Um die Menge der zu speichernden Daten zu reduzieren, empfiehlt es sich, auf eine delta-basierte Speicherung zurückzugreifen. Bei dieser Methode werden lediglich die Daten gespeichert, die sich seit dem letzten Speichervorgang verändert haben. Insbesondere bei großen Datenmengen entfaltet diese Speichertechnik ihre volle Effektivität, da dann oft nur ein geringer Prozentsatz der Gesamtdatenmenge tatsächlich abgespeichert werden muss und somit der Speicherbedarf stark reduziert wird. Um stets den Überblick darüber zu behalten, welche Veränderungen eingetreten sind, gilt es, auf Ereignisse zu achten, bei denen Modifikationen, Hinzufügungen oder Löschungen von Spielobjekten auftreten.
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Aufteilung der Daten}
-Chunking:
-\begin{itemize}
-    \item Hilfreich bei einer theoretisch unendlichen Welt
-    \item Aufteilung der Mengen an Daten unter den Chunks
-    \item Datengröße kann sich stark verändern, Chunk System muss sich anpassen
-    \item Wenn Daten zu viele werden mehr Chunks
-    \item Wenn Daten zu wenig werden weniger Chunks
-    \item Chunk System nach Area, damit Laden effizienter läuft 
-    (Nur Chunks mit seinen Elementen laden, wenn dieser in Nähe ist)
-\end{itemize}
+Eine weitere Art um die Datenmenge besser zu organisieren um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig jedes mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden.
 
-Szenen/Räume:
-\begin{itemize}
-    \item Falls die Spielwelt aus mehreren Szenen/Räumen besteht, Daten in diesen aufteilen
-    \item Falls Szenen/Räume zu groß sind ggf. in Sektoren aufteilen
-\end{itemize}
+Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textbf{Chunks} \wichtig{(Soll da als Fußnote das deutsche Wort nochmal stehen?)}. Chunks \wichtig{(wann textbf)} haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht fest gesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textbf{statisches} oder \textbf{dynamisches Chunk-System} verwendet werden soll. Bei einem \textbf{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textbf{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einen einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/chunkSplitting.png}
+    \caption{Vollen Chunk auf kleinere aufteilen}
+    \label{fig:chunkSplitting}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/chunkJoining.png}
+    \caption{Leere Chunks vereinigen}
+    \label{fig:chunkJoining}
+\end{figure}
+
+Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann können die Daten auch nach Szenen oder Räumen aufgeteilt werden. Es können dann immer nur die Szenen oder Räume gespeichert oder geladen werden, in dem der Spieler sich momentan befindet. Falls die Szenen oder Räume zu groß werden, können diese auch in Sektoren oder Chunks aufgeteilt werden, damit nicht zu viele Daten durchlaufen werden müssen.    
 %--------------------------------------------------------------------------
 
 
@@ -209,7 +207,7 @@ Theorie vom Laden der Spieldaten
 
 
 %--------------------------------------------------------------------------
-\subsection{Nearby Loading}
+\subsection{Nearby Loading} \label{ssect:nearbLoading}
 Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance). Ein Chunk-System (oder allgemein gute Aufteilung der Daten) dafür sehr vorteilhaft für effizienteres Laden, statt durch alle Elemente immer zu iterieren.
 %--------------------------------------------------------------------------
 
