@@ -84,7 +84,7 @@ Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann 
 \textit{Serialisierung} ist der Prozess, bei dem ein Objekt zu eine Ansammlungen von Bytes umgewandelt wird oder der Zustand eines Objekts in ein Medium abgespeichert wird, um es später wiederherzustellen oder zu übertragen, wobei die Datenstruktur und der Inhalt des Objekts in einer für die Speicherung oder Übertragung geeigneten Form kodiert werden. \textit{Deserialisierung} ist der Gegenprozess von Serialisierung, der den zuvor serialisierten Zustand wieder in das ursprüngliche Objektformat zurückführt, indem die kodierten Daten aus dem Medium extrahiert werden, die ursprüngliche Datenstruktur rekonstruiert und folglich das Objekt in seinen initialien Zustand zurückversetzt.\cite{codeguruWorkingWith}
 
 \subsubsection{JSON}
-Eine sehr beliebte Möglichkeit Objekte auf Medien abzuspeichern ist im JSON-Format\footnote{JavaScript Object Notation \wichtig{Ins Abkürzungsverzeichnis?}}. JSON ist eine Codierung von Daten, die für Menschen lesbar ist und wurde anfang der 2000er Jahre erfunden. JSON Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String\footnote{Zeichenketten}-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. JSON wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
+Eine sehr beliebte Möglichkeit Objekte auf Medien abzuspeichern ist im JSON-Format\footnote{JavaScript Object Notation \wichtig{Ins Abkürzungsverzeichnis?}}. JSON ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde anfang der 2000er Jahre erfunden. JSON Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String\footnote{Zeichenketten}-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. JSON wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
 In dem Code aus \ref{lst:jsonExp} ist zu sehen, wie ein Objekt in dem JSON-Format abgespeichert werden kann. Das entsprechende Klassendiagramm des zu speichernden Objektes ist in der Abbildung \ref{fig:monsterBspKlasse} zu sehen. Das Objekt "position" besteht aus den Variablen x und y, die den Typ Number speichern und das "effects" Array ist ein String-Array. 
 
 \begin{listing}[htp]
@@ -147,7 +147,7 @@ Wenn sich für JSON entschieden wurde, gibt es drei Arten die Daten zu verarbeit
         monster.setName("Vampir")
         monster.setPosition(new Position(0.15, 2.34))
         monster.setEffects(new String[]{"giftig", "frost"})
-        toJSON("data1.json"monster)
+        toJSON("data1.json", monster)
 
         monster = toObject("data2.json")
     \end{minted}
@@ -155,20 +155,16 @@ Wenn sich für JSON entschieden wurde, gibt es drei Arten die Daten zu verarbeit
     \label{lst:dataBindingBsp}
 \end{listing}
 
-BSON:
-\begin{itemize}
-    \item Binary JSON
-    \item Kodiert JSON-Typen und speichert deren Länge (wodurch das Durchqueren der Daten schneller als bei JSON läuft)
-    \item Nicht menschlich lesbar wie JSON
-    \item Unterstützt mehr Typen
-\end{itemize}
-\url{https://www.mongodb.com/json-and-bson}
+\subsubsection{BSON}
+\textit{BSON}\footnote{Binary JSON} ist eine binäre Kodierung von JSON-Daten und wurde für die NoSQL Datenbank MongoDB entwickelt. Es ist mit BSON möglich jede JSON-Dokumente zu speichern. BSON unterstützt alle Datentypen von JSON und erweitert diese noch mit weiteren Typen, wie ein Datum-Typ und ein BinData-Typ. Außerdem wird mit Zahlen anders gearbeitet. Während JSON Zahlen als Zeichenketten speichert, werden diese bei BSON als 32- oder 64-Bit Integers oder 64-Bit \wichtig{double precision floats} gespeichert. Was BSON auch noch zusätzlich einführt ist eine maximale Dokumenten-Größe von 16MB. BSON hat gegenüber JSON den Vorteil, dass die Daten viel schneller durchlaufen werden können, indem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein großer Nachteil von BSON ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
+
+Das JSON-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokument aus \ref{lst:bsonExp}. Die erste Zeile von dem BSON-Dokument beschreibt immer die Größe des ganzen Dokuments. In der nächsten Zeile definiert, dass es sich bei der ersten Variable des Dokuments um ein String Typen handelt. Jeder Typ hat eine eigene Kodierung um diesen zu identifizieren, wobei String als 0x02 kodiert wird. Die nächsten Zwei Zeilen definieren den Schlüssel und Schlüsselwert des Strings. Mit 0x00 wird das Ende des Dokuments gesetzt, wie in der letzten Zeile zu sehen ist.
 
 \begin{listing}[htp]
     \begin{minted}{javascript}
         {"hello": "world"}
     \end{minted}
-    \caption{Weiteres Beispiel eines JSON-Objektes}
+    \caption{Weiteres Beispiel eines JSON-Dokuments \cite{mongodbJSONBSON}}
     \label{lst:bsonJsonObj}
 \end{listing} 
 
@@ -180,25 +176,11 @@ BSON:
         \x06\x00\x00\x00world\x00  
         \x00                       
     \end{minted}
-    \caption{Beispiel für ein BSON-Objekt}
+    \caption{BSON Kodierung des JSON-Dokuments aus \ref{lst:bsonJsonObj} \cite{mongodbJSONBSON}}
     \label{lst:bsonExp}
 \end{listing}
 
-Das JSON-Objekt \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Objekt \ref{lst:bsonExp}. Die Zeilen bedeuten folgendes:
-\begin{enumerate}
-    \item Gesamt Dokument Größe
-    \item 0x02 = Typ String
-    \item Field-Namen
-    \item Field-Werte
-    \item 0x00 = Ende des Objekts
-\end{enumerate}
-\url{https://www.mongodb.com/json-and-bson} % 28.7.2023
-
-JSONH: (\url{https://stackoverflow.com/questions/11160941/is-it-worth-the-effort-to-try-to-reduce-json-size})
-
-
-
-Binäre Serialisierung:
+\subsubsection{Binäre Serialisierung}
 \begin{itemize}
     \item Konvertierung von Objekt zu Stream von Bytes
     \item Nicht leserlich für Menschen
@@ -209,18 +191,52 @@ Binäre Serialisierung:
 
 %--------------------------------------------------------------------------
 \subsection{Komprimierung der Daten}
-Zippen der Daten:
+\subsubsection{Zipping}
 \begin{itemize}
     \item Viel zippen vs. kleine Dateien (Kleine Chunks)
     \item Bringt lokales Zippen überhaupt was oder nur wenn man mit Server arbeitet?
 \end{itemize}
 
-Weitere Ideen:
+\subsubsection{JSON Hpack}
+JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine JSON-Komprimierung, die Arrays in JSON-Dokumenten in einer kompakteren Art darstellt und dabei das JSON-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das JSON-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die komprimierung wird von JSON Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wieviele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health" \wichtig{(Anführungszeichen?)}. Was darauf folgt sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.\cite{webreflectionLastVersion}
+
+\begin{listing}[htp]
+    \begin{minted}{javascript} 
+        [
+            {
+                "id": 1,
+                "name": "Vampir",
+                "level": 5,
+                "health": 95.0
+            },
+            {
+                "id": 2,
+                "name": "Skelett",
+                "level": 7,
+                "health": 30.12
+            },
+            ...
+        ]                   
+    \end{minted}
+    \caption{}
+    \label{lst:hpackJsonExp}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{javascript} 
+        [4,"id","name","level","health", 1, "Vampir", 5, 95.0, 2, "Skelett", 7, 30.12, ...]                  
+    \end{minted}
+    \caption{}
+    \label{lst:hpackCompressedExp}
+\end{listing}
+
+\subsubsection{Weitere Strategien}
 \begin{itemize}
     \item Kürzere property Namen
     \item Null Werte ausschließen
     \item Vectoren in einem String (z.B. "1,2,3" für x=1, y=2, z=3)
 \end{itemize}
+
 %--------------------------------------------------------------------------
 
 
