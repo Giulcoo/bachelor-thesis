@@ -181,24 +181,19 @@ Das JSON-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokume
 \end{listing}
 
 \subsubsection{Binäre Serialisierung}
-\begin{itemize}
-    \item Konvertierung von Objekt zu Stream von Bytes
-    \item Nicht leserlich für Menschen
-\end{itemize}
-\url{https://learn.microsoft.com/en-us/previous-versions/dotnet/fundamentals/serialization/binary/binary-serialization}
+Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.
+\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Komprimierung der Daten}
 \subsubsection{Zipping}
-\begin{itemize}
-    \item Viel zippen vs. kleine Dateien (Kleine Chunks)
-    \item Bringt lokales Zippen überhaupt was oder nur wenn man mit Server arbeitet?
-\end{itemize}
+Google Scholar und mehr Recherche. Bringt Zippen überhaupt für Performance? 
 
 \subsubsection{JSON Hpack}
-JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine JSON-Komprimierung, die Arrays in JSON-Dokumenten in einer kompakteren Art darstellt und dabei das JSON-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das JSON-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die komprimierung wird von JSON Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wieviele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health" \wichtig{(Anführungszeichen?)}. Was darauf folgt sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.\cite{webreflectionLastVersion}
+JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine JSON-Komprimierung, die Arrays in JSON-Dokumenten in einer kompakteren Art darstellt und dabei das JSON-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das JSON-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die komprimierung wird von JSON Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wieviele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health" \wichtig{(Anführungszeichen?)}. Was darauf folgt sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
+\cite{webreflectionLastVersion}
 
 \begin{listing}[htp]
     \begin{minted}{javascript} 
