@@ -187,9 +187,16 @@ Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert,
 
 
 %--------------------------------------------------------------------------
-\subsection{Komprimierung der Daten}
-\subsubsection{Zipping}
-Google Scholar und mehr Recherche. Bringt Zippen überhaupt für Performance? 
+\subsection{Datenkompression}
+\subsubsection{Kompression}
+Kompression von Daten ist bei vielen Software-Projekten weit verbreitet um die Menge der gespeicherten Daten zu reduzieren. Da es bei diesem Paper aber um Effizienz und nicht verringern des verbrauchten Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess, wann lohnt es sich Datenkompression anzuwenden? 
+
+Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf die Festplatte gespeichert werden. Da die Festplatte ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren. 
+\cite{mediumWhenDataCompression}
+
+Eine Möglichkeit Daten zu komprimieren ist mit dem populären patentfreien Kompressionsprogramm GZIP\footnote{GNU zip}. 
+GZIP verwendet den Deflate Algorithmus, der eine Kombination aus dem  LZ77\footnote{Lempel-Ziv 77} Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer gzip-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. 
+\cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 
 \subsubsection{JSON Hpack}
 JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine JSON-Komprimierung, die Arrays in JSON-Dokumenten in einer kompakteren Art darstellt und dabei das JSON-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das JSON-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die komprimierung wird von JSON Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wieviele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health" \wichtig{(Anführungszeichen?)}. Was darauf folgt sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
@@ -226,12 +233,22 @@ JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine 
 \end{listing}
 
 \subsubsection{Weitere Strategien}
-\begin{itemize}
-    \item Kürzere property Namen
-    \item Null Werte ausschließen
-    \item Vectoren in einem String (z.B. "1,2,3" für x=1, y=2, z=3)
-\end{itemize}
+Es gibt noch weitere Strategien, wie dafür gesorgt werden kann, dass die Daten kompakter gespeichert werden können. Zum einen können kürzere Attribut-Namen bei Klassen definiert werden. Beispielsweise können alle Attribute mit einem Buchstaben dargestellt werden, falls es keine Attribute gibt mit gleichem Anfangsbuchstaben. Eine weitere Art die Menge der Daten zu verringern ist, dass Null-Werte ausgeschlossen werden. Wenn keine Information zu einer bestimmten Variable gespeichert wurde, dann kann automatisch angenommen werden, dass diese den Wert von Null hat. Strukturen wie Vektoren lassen sich auch einfach komprimieren. Statt x, y, z oder weitere Attribute zu besitzen, können Vektoren als Array von Zahlen definiert werden. Falls es bei Klassenattributen feste Werte gibt, die gesetzt werden können, können diesen Werten eine feste ID zugeordnet werden, damit dann nur noch die Zahl und nicht der Wert gespeichert werden muss.\cite{objelean2011json}\cite{baeldungReducingJSON}
 
+In dem JSON-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \ref{lst:jsonExp} um einiges kompakter beschrieben werden kann, ohne großen Aufwand zu betreiben. Die Klassenattribute wurden alle mit dem ersten Buchstaben abgekürzt. Da es nur begrenzt viele Monsternamen und Effekte gibt, werden diese über eine ID gespeichert. Der Monstername "Vampir" bekommt die ID 1 unter den Monsternamen. Bei den Effekten hat in diesem Beispiel der Effekt "giftig" die ID 1 und der Effekt "frost" die ID 3 unter allen Effekten bekommen. Das Positions-Objekt wurde als Array dargestellt, wobei der erste Eintrag im Array die x-Position und der zweite Eintrag die y-Position darstellt. Das Resultat ist deutlich kompakter als das ursprüngliche Dokument.
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {
+            "i": 1,
+            "n": 1,
+            "p": [0.15, 2.34],
+            "e": [1, 3]
+        }
+    \end{minted}
+    \caption{Kompaktere Version des JSON-Objekt aus \ref{lst:jsonExp}}
+    \label{lst:shorterJson}
+\end{listing}
 %--------------------------------------------------------------------------
 
 
