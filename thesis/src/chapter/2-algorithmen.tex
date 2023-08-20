@@ -9,9 +9,7 @@ Verschiedene Theorien/Strategien von Speicher und Ladesysteme ausarbeiten und Ze
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Speichersysteme}\label{sect:speichersysteme}
-Theorie/Strategien von Speichersystemen und Bezug auf Arten von Videospiel-Daten.
-
-Wichtiger unterschied zwischen ersten Speichern und das Speichern danach. Beim ersten Mal muss die Grundstruktur aufgebaut werden und auch mehr gespeichert werden.
+Dieser Abschnitt befasst sich ausführlich mit dem komplexen Speicherprozess eines Videospieles. Dabei wird zunächst eine gründliche Analyse der Struktur eines Spiels durchgeführt, um zu verstehen, wie es aufgebaut ist und welche vielfältigen Datentypen verwendet werden. Anschließend werden verschiedene fortschrittliche Strategien und wichtige Faktoren im Zusammenhang mit dem Speichersystem eines Spiels detailliert vorgestellt.
 %--------------------------------------------------------------------------
 
 
@@ -28,7 +26,7 @@ Der Fokus dieser Arbeit liegt bei dynamischen Daten, genauer gesagt wie der Spie
 
 
 %--------------------------------------------------------------------------
-\subsection{Spielphasen}
+\subsection{Spielphasen} \label{ssect:spielphasen}
 Um zu verstehen, wann ein Spielstand gespeichert oder geladen werden muss, muss erst einmal analysiert werden, welche Phasen ein Videospiel allgemein hat.
 
 \begin{figure}[htp]
@@ -47,15 +45,18 @@ Sobald der Spieler sich dazu entscheidet, das Spiel zu beenden, gelangt er zur P
 
 
 %--------------------------------------------------------------------------
-\subsection{Delta-basierte Speicherung}
+\subsection{Delta-basierte Speicherung} \label{ssect:deltasave}
 Um die Menge der zu speichernden Daten zu reduzieren, empfiehlt es sich, auf eine delta-basierte Speicherung zurückzugreifen. Bei dieser Methode werden lediglich die Daten gespeichert, die sich seit dem letzten Speichervorgang verändert haben. Insbesondere bei großen Datenmengen entfaltet diese Speichertechnik ihre volle Effektivität, da dann oft nur ein geringer Prozentsatz der Gesamtdatenmenge tatsächlich abgespeichert werden muss und somit der Speicherbedarf stark reduziert wird. Um stets den Überblick darüber zu behalten, welche Veränderungen eingetreten sind, gilt es, auf Ereignisse zu achten, bei denen Modifikationen, Hinzufügungen oder Löschungen von Spielobjekten auftreten.
+
+Um die Anzahl der Lese- und Schreibprozesse möglichst stark zu minimieren, kann eine Datei erstellt werden, in der zur Laufzeit des Spieles eine Liste aller Veränderungen der Spielobjekte geführt wird. Hierbei muss nicht das ganze Objekt gespeichert werden, es reicht die Identifikationsnummer des Objekts und die veränderten Attribute zu speichern. Somit sind die jeweiligen Schreibprozesse auf dem lokalen Speicher deutlich kleiner während der Laufzeit. Wenn die Spielwelt wieder gestartet und geladen wird, können diese Veränderungen dann endgültig bei den gespeicherten Spielobjekten angewandt werden, um diese zu aktualisieren. Danach kann diese Liste von Veränderungen wieder geleert werden und das Spiel kann gestartet werden.
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
-\subsection{Aufteilung der Daten}
+\subsection{Aufteilung der Daten} 
 Eine weitere Art um die Datenmenge besser zu organisieren um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig jedes mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden.
 
+\subsubsection{Chunks}
 Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht fest gesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einen einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. \wichtig{Nur nötig, wenn theoretisch unendlich viele Objekte in einem Chunk existieren können. }
 \wichtig{Mehr Quellen, aus Google Scholar}
 
@@ -73,6 +74,7 @@ Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks
     \label{fig:chunkJoining}
 \end{figure}
 
+\subsubsection{Level oder Karten}
 Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann können die Daten auch nach Szenen oder Räumen aufgeteilt werden. Es können dann immer nur die Szenen oder Räume gespeichert oder geladen werden, in dem der Spieler sich momentan befindet. Falls die Szenen oder Räume zu groß werden, können diese auch in Sektoren oder Chunks aufgeteilt werden, damit nicht zu viele Daten durchlaufen werden müssen.    
 %--------------------------------------------------------------------------
 
@@ -191,7 +193,7 @@ Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert,
 \subsubsection{Kompression}
 Kompression von Daten ist bei vielen Software-Projekten weit verbreitet um die Menge der gespeicherten Daten zu reduzieren. Da es bei diesem Paper aber um Effizienz und nicht verringern des verbrauchten Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess, wann lohnt es sich Datenkompression anzuwenden? 
 
-Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf die Festplatte gespeichert werden. Da die Festplatte ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren. 
+Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf den Sekundärspeicher gespeichert werden. Da der Sekundärspeicher ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren. 
 \cite{mediumWhenDataCompression}
 
 Eine Möglichkeit Daten zu komprimieren ist mit dem populären patentfreien Kompressionsprogramm GZIP\footnote{GNU zip}. 
@@ -250,12 +252,6 @@ In dem JSON-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \r
     \label{lst:shorterJson}
 \end{listing}
 %--------------------------------------------------------------------------
-
-
-%--------------------------------------------------------------------------
-\subsection{Schreibprozesse reduzieren}
-Das Schreiben in den normalen Speicher ist zeitintensiv. Deshalb sollte möglichst wenig Daten auf die Festplatte geschrieben werden. Eine Möglichkeit ist es, die Veränderungen über eine Liste im Arbeitsspeicher zu speichern und bei Programmterminierung diese Liste abzuspeichern. Dies ist aber riskant, da Daten verloren gegangen werden können bei frühzeitigen Löschen. Alternativ kann man diese Liste auf dem Festplattenspeicher führen und beim Laden des Spieles abarbeiten und dann leeren.
-%--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
 
@@ -264,25 +260,18 @@ Das Schreiben in den normalen Speicher ist zeitintensiv. Deshalb sollte möglich
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Ladesysteme}\label{sect:ladesysteme}
-Theorie vom Laden der Spieldaten
+Strategien vom Laden der Spi
+
+eldaten
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
-\subsection{Nearby Loading} \label{ssect:nearbLoading}
-Nur die Daten laden, die in der Nähe vom Spieler sind (über Render-Distance). Ein Chunk-System (oder allgemein gute Aufteilung der Daten) dafür sehr vorteilhaft für effizienteres Laden, statt durch alle Elemente immer zu iterieren.
-%--------------------------------------------------------------------------
+\subsection{Lazy Loading} \label{ssect:lazyloading}
+Lazy Loading ist eine in der Webentwicklung verwendete Strategie zum effizienteren Laden von Webseiten. Dabei werden Teile einer Webseite erst dann geladen, wenn sie nötig sind. Das Gegenteil dieser Strategie ist das sogenannte Eager Loading, bei dem alles direkt geladen wird. 
+\cite{cloudflareLazyLoad}
 
-
-%--------------------------------------------------------------------------
-\subsection{Lazy Loading}
-Prozedulares Laden der Daten (nicht alles auf einmal laden, sondern erst mal nur das nötigste und dann Stück für Stück den Rest nachladen). 
-%--------------------------------------------------------------------------
-
-
-%--------------------------------------------------------------------------
-\subsection{Leseprozesse reduzieren}
-\wichtig{Gibt vielleicht hier was zu schreiben}
+Bei einer großen Datenmenge von Spielobjekten ist es äußerst ineffizient alle Daten direkt aus dem lokalen Speicher in den Arbeitsspeicher zu laden. Hier ist es sinnvoll eine Lazy Loading Strategie zu verwenden. Eine Möglichkeit die Daten prozedular zu laden, ist die Spielwelt abhängig von der Position des Spielers zu laden. Dabei werden nur die Daten geladen, die in der Nähe vom Spieler sind. Was als nah genug zum Laden definiert ist, kann mit der Draw Distance\footnote{Auch bekannt als Render Distance. Legt fest, ab welcher Distanz Spielobjekte in die Spielwelt gezeichnet werden sollen.\cite{nerdburglarsWhatDraw}} festgelegt werden. Ein Chunk-System ist für diese Strategie äußerst praktisch, denn es können immer die Daten der Chunks geladen werden, die sich im Umfeld des Spielers befinden. Dann muss nicht über alle Spielobjekte iteriert werden, um die Objekte in der Nähe des Spielers zu finden.
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
@@ -292,10 +281,13 @@ Prozedulares Laden der Daten (nicht alles auf einmal laden, sondern erst mal nur
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Strategien}
-Aus den Strategien der vorherigen sections verschiedene Speicher- und Ladesysteme aufstellen und deren Effizienz auswerten.
+Aus den Strategien der vorherigen sections verschiedene Speicher- und Ladesysteme aufstellen und deren Effizienz auswerten. 
 
 \subsection{Allgemeines Speicher- und Ladesystem}
-Allgemeines Speicher- und Ladesystems (manche Schritte optional)
+Ein allgemeines Speicher- und Ladesystem würde aus den Phasen bestehen, die in der Abbildung \ref{fig:speicherphasen} zu sehen sind. Diese Phasen laufen während oder zwischen den Spielphasen, die im Abschnitt \ref{ssect:spielphasen} zu sehen sind. Manche Schritte sind optional, je nachdem für was für ein System sich entschieden wird.
+
+Nachdem das Spiel gestartet wird, muss erst einmal der letzte Spielstand geladen werden. Hier kann entschieden werden, ob alles auf einmal oder nur Teile geladen werden sollen (siehe den Abschnitt zu \hyperref[ssect:lazyloading]{Lazy Loading}). Falls es eine Datei gibt, mit einer Liste von Änderungen, die nochmal abgearbeitet werden muss, wie im Abschnitt \ref{ssect:deltasave}, dann geschiet das Abarbeiten der Liste hier. Während der Hauptphase des Spieles muss nach den Events reagiert werden. Veränderungen der Events müssen gesammelt und entweder direkt abgespeichert werden oder in Intervallen. Wenn die Lazy Loading Methode für Videospiele aus dem Abschnitt \ref{ssect:lazyloading} gewählt wurde, muss hier auf Events geachtet werden, bei denen sich die Position des Spielers verändert. Wenn der Spieler sich an noch ungeladenen Bereichen der Spielwelt annähert, müssen Spielobjekte dieser Bereiche rechtzeitig geladen werden. Bevor dann das Spiel beendet wird, kann es noch sein, dass das Speichersystem letzte Änderungen noch abspeichern muss, damit kein Verlust des Spielstandes entsteht.
+
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.36\textwidth]{images/Speichersystem.png}
@@ -304,15 +296,11 @@ Allgemeines Speicher- und Ladesystems (manche Schritte optional)
 \end{figure}
 
 \begin{itemize}
-    \item Spielstand laden kann alles auf einmal oder nur teile geladen werden (siehe mehr im Kapitel \ref{sect:ladesysteme})
-    \item Je nach Speichersystem müssen hier teilweise noch die gespeicherten Daten überarbeitet werden
     \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
     \begin{enumerate}
         \item Ein Spielobjekt wurde hinzugefügt/geändert
         \item Ein Spielobjekt wurde gelöscht
     \end{enumerate}
-    \item Spiel laden nach Events, wenn der Spieler sich z.B. in neuen Bereichen der Map befindet, die noch geladen werden müssen (mehr dazu in \ref{sect:ladesysteme})
-    \item Spielstand am Ende abspeichern, vor Spielende optional (je nach Speichersystem notwendig)
 \end{itemize}
 %--------------------------------------------------------------------------
 
