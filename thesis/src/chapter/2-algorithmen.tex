@@ -56,8 +56,8 @@ Um die Anzahl der Lese- und Schreibprozesse möglichst stark zu minimieren, kann
 \subsection{Aufteilung der Daten} 
 Eine weitere Art um die Datenmenge besser zu organisieren um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig jedes mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden.
 
-\subsubsection{Chunks}
-Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht fest gesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einen einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. \wichtig{Nur nötig, wenn theoretisch unendlich viele Objekte in einem Chunk existieren können. }
+\subsubsection{Chunks} \label{sssect:chunks}
+Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht fest gesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einen einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. 
 \wichtig{Mehr Quellen, aus Google Scholar}
 
 \begin{figure}[htp]
@@ -73,6 +73,8 @@ Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks
     \caption{Leere Chunks vereinigen}
     \label{fig:chunkJoining}
 \end{figure}
+
+Allgemein sind Chunk-Systeme hilfreich, wenn die Spielwelt theoretisch unendlich ist. Außerdem sind sie eine recht einfache und effiziente Art, Daten klar voneinander zu trennen und zu gruppieren. Chunks haben eine quadratische, oder bei dreidimensionalen Spielen kubische Form. Deutlich aufwendiger wäre es mit anderen Formen, wie Polygonen die Welt aufzuteilen. Dann zu schauen, welches Spielobjekt in welchem Chunk ist, würde mehr und kompliziertere Berechnungen benötigen. Ein dynamisches Chunk-System wäre auch nur sinnvoll, wenn in einem Chunk theoretisch unendlich viele Spielobjekte existieren können. Wenn das Spiel keine Grenze hat, für Spielobjekte pro Chunk, dann ist es auch schwierig vorherzusehen, wie groß die Chunks sein müssen, dass es nicht zu Problemen in der Leistung des Spieles kommt. 
 
 \subsubsection{Level oder Karten}
 Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann können die Daten auch nach Szenen oder Räumen aufgeteilt werden. Es können dann immer nur die Szenen oder Räume gespeichert oder geladen werden, in dem der Spieler sich momentan befindet. Falls die Szenen oder Räume zu groß werden, können diese auch in Sektoren oder Chunks aufgeteilt werden, damit nicht zu viele Daten durchlaufen werden müssen.    
@@ -260,9 +262,7 @@ In dem JSON-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \r
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Ladesysteme}\label{sect:ladesysteme}
-Strategien vom Laden der Spi
-
-eldaten
+Strategien vom Laden der Spieldaten
 %--------------------------------------------------------------------------
 
 
@@ -295,6 +295,7 @@ Nachdem das Spiel gestartet wird, muss erst einmal der letzte Spielstand geladen
     \label{fig:speicherphasen}
 \end{figure}
 
+\iffalse
 \begin{itemize}
     \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
     \begin{enumerate}
@@ -302,20 +303,14 @@ Nachdem das Spiel gestartet wird, muss erst einmal der letzte Spielstand geladen
         \item Ein Spielobjekt wurde gelöscht
     \end{enumerate}
 \end{itemize}
+\fi
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \subsection{Chunk-basiertes System}
-Chunk-basiertes System, welches Daten in Chunks verpackt:
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert.png}
-    \caption{Chunk-basiertes System}
-    \label{fig:chunkBasedSystem}
-\end{figure}
+Sei die Welt theoretisch unendlich, dann ist ein Chunk-System unter den sinnvollsten Aufteilungen der Daten für ein Speicher- und Ladesystem. In der Abbildung \ref{fig:chunkClass} ist zu sehen, aus welchen Attributen die Chunk-Klasse besteht. Jeder Chunk hat eine Identifikationsnummer, Position, Größe und Elemente. Die Position kann die mitte des Chunks sein, oder ein Eckpunkt. Position und Größe sind dabei zwei- oder dreidimensionale Vektoren, je nachdem in welcher Dimension das Spiel gespielt wird. Der Typ der Elemente hängt von dem Chunk ab. Das ausgewählte Chunk-System hat für jeden zu speichernden Datentyp ein eigenes Chunk-Subsystem. Wenn es zu viele Datentypen gibt, ist es sinnvoller, in einem Chunk alle Spielobjekte gemeinsam zu speichern, egal welchen Datentyp diese haben. Optional ist es noch ParentID und ChildrenID zu speichern. Wenn für ein dynamisches Chunk-System entschieden wird, dann können die alten Chunks, die auf kleiner Chunks aufgeteilt wurden, erhalten bleiben. Damit dann eine Relation zwischen den alten Chunks und den neuen Chunks gibt, können diese mit einer Eltern-Kind-Relation verbunden werden. Jeder Eltern-Chunk hat vier Kinder-Chunk, wenn der Eltern-Chunk aufgeteilt wurde. Beim Vereinigen von Chunks können die Elemente dieser auch leichter an den Eltern-Chunk weitergegeben werden. Danach können die Kinder-Chunks gelöscht werden.
 
-Wobei ein Chunk aus folgenden Variablen besteht:
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.28\textwidth]{images/Chunk.png}
@@ -323,41 +318,16 @@ Wobei ein Chunk aus folgenden Variablen besteht:
     \label{fig:chunkClass}
 \end{figure}
 
-\begin{itemize}
-    \item Chunks haben Position und Größe
-    \item Dynamische oder statische Chunk Größe (Entweder alle Chunks feste Größe, oder sie passen sich an Datenmenge an)
-    \item Chunks speichern Objekte, die in deren Bereich sind
-    \item ParentID und ChildrenIDs sind optional
-\end{itemize}
-
-Informationen zu dem System:
-
-\begin{itemize}
-    \item Objekte von Chunks in der Nähe des Spielers laden
-    \begin{itemize}
-        \item Allgemein werden Objekte eines Chunks erst dann laden, wenn es nötig ist (Z.B. Spieler in der Nähe); sowohl am Anfang, als auch während des Spieles
-    \end{itemize}
-    \item Chunk Veränderungen speichern bei statischer Chunkgröße:
-    \begin{itemize}
-        \item Daten zu Chunkinhalt komplett neu speichern bei update/added/removed Objekt Event
-    \end{itemize}
-    \item Chunk Veränderungen speichern bei dynamischer Chunkgröße:
-    \begin{itemize}
-        \item Daten zu Chunkinhalt komplett neu speichern bei update/added Objekt Event 
-        \item Chunkgröße bei added/removed Objekt Event überprüfen
-        \item Chunkdaten komplett vom Speicher löschen, wenn dieser im Spiel gelöscht wird (beim Joinen mit benachbarten Chunks)
-        \item Chunkdaten updaten und hinzufügen, wenn ein Chunk auf weiter Child-Chunks gesplitted wird
-    \end{itemize}
-\end{itemize}
-
-Alternative des Chunk-basierten Systems, um weniger Schreibprozesse auf dem lokalen Speicher zu haben:
+In der Abbildung \ref{fig:chunkBasedSystem} ist ein Ablaufdiagramm zu dem ersten Ansatz  eines Chunk-basierten Systems zu erkennen. Nach Spielstart werden zu Begin die Informationen der einzelnen Chunks geladen. Hiermit sind alle Informationen außer den Elementen eines Chunks gemeint, denn im nächsten Schritt sollen die Elemente der Chunks in der Nähe des Spielers geladen werden. Dafür werden die Positionen und Größen aller Chunks benötigt. Damit ein Lazy Loading stattfindet, werden mit diesem Ansatz nur die Elemente in der Nähe des Spielers geladen. In der Hauptphase des Spieles werden dann weiterhin die Chunk Elemente der Chunks geladen, die in der Nähe des Spielers sind. Die Chunk-Veränderungen zu speichern hängt bei dieser Strategie davon ab, ob die Chunks eine feste Größe haben oder nicht. Wird eine feste Chunkgröße gewählt, so muss der Chunkinhalt, also die Elemente eines Chunks, jedes mal neu angepasst werden, wenn ein Objekt verändert, hinzugefügt oder gelöscht wurde.  Bei einer dynamischen Chunkgröße, wie in \ref{sssect:chunks} gezeigt, wird ähnlich bei Modifikation, Hinzufügung und Löschung von Spielobjekten gearbeitet, nur muss noch zusätlich jedes mal die Größe des Chunkinhaltes überprüft werden. Wenn ein Chunk zu viele Elemente hat, müssen diese auf neue, kleinere Chunks verteilt werden. Wenn ein Chunk zu wenig Elemente hat, müssen diese wieder in dem Eltern-Chunk gespeichert werden und dessen Kind-Chunks müssen im Speicher wieder herausgenommen werden.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert2.png}
-    \caption{Alternative zu dem Chunk-basierten System}
-    \label{fig:altchunkBasedSystem}
+    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert.png}
+    \caption{Chunk-basiertes System}
+    \label{fig:chunkBasedSystem}
 \end{figure}
+
+Eine Erweiterung des Chunk-basierten Systems wäre das Hinzufügen einer Change-Datei, wo alle Veränderungen der Spielwelt abgespeichert werden, wie in \ref{ssect:deltasave} gezeigt. Die Veränderungen können in einer Liste gespeichert werden, als Objekte der Klasse der Abbildung \ref{fig:changesClass}. Diese Klasse besteht aus einem ID-, Event- und Objekt-Attribut. Das Event kann kennzeichnen, ob ein Spielobjekt hinzugefügt, verändert oder gelöscht wurde. Je nach Event sieht dann das Objekt auch anders aus. Wenn ein Spielobjekt verändert wurde, reicht es dort die ID des Objekts und die veränderten Attribute mit deren Werte zu speichern. Falls ein Spielobjekt gelöscht wurde, reicht es hier die ID des gelöschten Objektes anzugeben. Für den Fall, dass ein Spielobjekt neu hinzugefügt wurde, kann hier das komplette Spielobjekt übergeben werden. Zu den Veränderten Daten müssen auch die Chunks betrachtet werden. Falls ein Spielobjekt zu einem anderen Chunk verschoben wurde, muss dies der Change-Datei übergeben werden. Wenn ein dynamisches Chunk-System verwendet wird, muss außerdem noch in der Change-Datei gespeichert werden, wenn ein Chunk erstellt oder gelöscht wurde. Durch diese Strategie werden die Schreib- und Leseprozesse in dem lokalen Speicher stark reduziert, da während der Laufzeit des Spieles nur die Veränderungen gespeichert werden und kein Chunkinhalt neu angepasst werden muss.
 
 \begin{figure}[htp]
     \centering
@@ -366,23 +336,14 @@ Alternative des Chunk-basierten Systems, um weniger Schreibprozesse auf dem loka
     \label{fig:changesClass}
 \end{figure}
 
-\begin{itemize}
-    \item Veränderungen anwenden:
-    \begin{itemize}
-        \item Liste von Veränderungen des letzten Spielstandes werden lokal gespeichert (zum Beispiel als Objekte wie \ref{fig:changesClass} in JSON)
-        \item Verschiedene Events = Unterschiedlich was Object ist
-        \item Liste von oben nach unten abarbeiten, da erste Einträge die ältesten sind 
-        \item Objekte aus Liste zu Chunk hinzufügen/updaten oder (bei dynamischer Chunkgröße) Chunks die nicht mehr gebraucht werden löschen
-        \item Liste leeren
-    \end{itemize}
-    \item Nearby loading von Chunks wie beim anderen Chunk-basierten System
-    \item Chunk-Veränderung speichern:
-    \begin{itemize}
-        \item Hinzugefügte/Veränderte/Gelöschte Objekte in Change Liste (im Arbeitsspeicher) speichern
-        \item Entweder direkt in lokaler Change List Datei ans Ende hinzufügen oder erst bei Spielende (sehr riskant, falls Spiel ungewollt terminiert)
-        \item Bei dynamischer Chunkgröße speichern wenn Chunks gelöscht/hinzugefügt wurden
-    \end{itemize}
-\end{itemize}
+In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-basierten Speicher- und Ladesystems mit Change-Datei zu sehen. Wie zu sehen gibt es einige Parallelen zu dem System aus der Abbildung \ref{fig:chunkBasedSystem}. Ein paar Phasen sind etwas anders oder neu. Zu Begin müssen die Veränderungen des letzten Spielstandes in die ganzen lokalen Daten der Chunkinhalte übertragen werden. Dafür muss die Change-Datei von oben nach unten abgearbeitet werden, da in den ersten Zeilen die ältesten Veränderungen. Zum Beispiel kann es sein, dass zwei mal die Position eines Spielobjektes verändert wurde. Die ältere Position wurde zuerst in die Change-Datei gespeichert und wird dann durch das Abarbeiten von oben nach unten durch die neue Position überschrieben. Danach kann die Change-Datei wieder geleert werden, um wieder die neuen Veränderungen sammeln zu können. Eine weitere Anpassung ist das Speichern der Veränderungen. Hier werden nicht die lokalen Chunk-Daten aktualisiert, sondern stattdessen die Veränderungen der Change-Datei übergeben. Der Rest läuft genau gleich ab, wie bei der vorherigen Chunk-basierten Strategie.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert2.png}
+    \caption{Alternative zu dem Chunk-basierten System}
+    \label{fig:altchunkBasedSystem}
+\end{figure}
 %--------------------------------------------------------------------------
 
 
