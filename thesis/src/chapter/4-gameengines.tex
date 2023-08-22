@@ -21,18 +21,12 @@ Unity Engine grob vorstellen und erklären
 
 
 \subsection{PlayerPrefs}
-\begin{itemize}
-    \item Einfachste Art Daten zu speichern, aber sehr limitiert
-    \item Nur zum Speichern von string, float, integer
-    \item Allgemein können nicht viele Daten gespeichert werden
-    \item Daten werden beim schließen des Spieles abgespeichert (mit save Funktion kann das aber auch gezwungen werden)
-    \item Je nach OS unterschiedliches Datei-Format
-    \item Besser zum Speichern von Konfigurationen (Auflösung, Audio Device, ...)
-    \item Ungeschützt
-\end{itemize}
+Bei Speicher- und Ladesystemen bietet Unity für Entwickler wenige eingebaute Funktionen. Einer der wenigen Funktionen, die Unity bereitstellt sind die PlayerPrefs. Sie eine einfache Art Daten zu speichern, aber ist dabei auch sehr limitiert. Die PlayerPrefs Klasse besitzt wenige Funktionen, denn es werden nur die Datentypen string, float und integer unterstützt. Über einen Schlüssel lässt sich dann ein Schlüsselwert dieser Datentyppen festlegen oder es kann dieser erhalten werden. Die Werte der PlayerPrefs Klasse werden mit der klasseninternen Save-Funktion gespeichert. Diese kann während der Laufzeit im Code aufgerufen werden und wird automatisch bei der Terminierung des Spieles aufgerufen.\cite{unityPlayerPrefsSave} Je nach Betriebssystem werden die PlayerPrefs in einem unterschiedlichen Datei-Format abgespeichert, die Daten werden aber nicht verschlüsselt.
+\cite{unityPlayerPrefs}
 
-% 10.7.
-\url{https://docs.unity3d.com/ScriptReference/PlayerPrefs.html}\\
+Allgemein wird davon abgeraten, Unitys PlayerPrefs System für das Speichern des Spielstandes zu verwenden. Zum einen wird für ein Spiel eine Speicherdatei erstellt. Wenn es aber in dem Spiel verschiedene Spielstände geben soll, gibt es bereits Probleme mit diesem Ansatz. Eine mögliche Lösung von diesem Problem wäre es, dass jeder Spielstand eine Identifikationsnummer bekommt, welche dann an jedem Schlüssel hinzugefügt wird. Die ganzen Identifikationsnummern müssen aber auch gespeichert werden, wo auch schon das nächste Problem mit PlayerPrefs auftritt. Es gibt wenige verfügbare Datentypen, die verwendet werden können. Wenn zum Beispiel eine Liste der Identifikationsnummern aller Spielstände gespeichert werden soll, kann dies nicht so einfach gemacht werden. Über den string-Datentyp lassen sich jedoch JSON-Strings speichern, wodurch wieder mehr Datentypen, wie Listen und andere Gruppierungen von Daten, möglich sind. Und PlayerPrefs, was für Player Preferences steht, ist eigentlich auch genaufür die Arten von Daten gemacht. Es sollten Konfigurationen, wie die Auflösung oder die Lautstärke des Spieles, gespeichert werden. Da die Daten auch alle in einer Datei gespeichert werden, ist es auch nicht sonderlich effizient mit vielen Daten zu arbeiten. Effizienter wäre es die Daten auf verschiedene Dateien aufzuteilen, um schnellere Ladezeiten zu erreichen.
+\cite{logrocketPlayerPrefs}\cite{gamedevbeginnerPlayerPrefs}
+
 \url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}
 
 \subsection{JSON}
