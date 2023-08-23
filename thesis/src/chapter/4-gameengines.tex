@@ -27,30 +27,36 @@ Bei Speicher- und Ladesystemen bietet Unity für Entwickler wenige eingebaute Fu
 Allgemein wird davon abgeraten, Unitys PlayerPrefs System für das Speichern des Spielstandes zu verwenden. Zum einen wird für ein Spiel eine Speicherdatei erstellt. Wenn es aber in dem Spiel verschiedene Spielstände geben soll, gibt es bereits Probleme mit diesem Ansatz. Eine mögliche Lösung von diesem Problem wäre es, dass jeder Spielstand eine Identifikationsnummer bekommt, welche dann an jedem Schlüssel hinzugefügt wird. Die ganzen Identifikationsnummern müssen aber auch gespeichert werden, wo auch schon das nächste Problem mit PlayerPrefs auftritt. Es gibt wenige verfügbare Datentypen, die verwendet werden können. Wenn zum Beispiel eine Liste der Identifikationsnummern aller Spielstände gespeichert werden soll, kann dies nicht so einfach gemacht werden. Über den string-Datentyp lassen sich jedoch JSON-Strings speichern, wodurch wieder mehr Datentypen, wie Listen und andere Gruppierungen von Daten, möglich sind. Und PlayerPrefs, was für Player Preferences steht, ist eigentlich auch genaufür die Arten von Daten gemacht. Es sollten Konfigurationen, wie die Auflösung oder die Lautstärke des Spieles, gespeichert werden. Da die Daten auch alle in einer Datei gespeichert werden, ist es auch nicht sonderlich effizient mit vielen Daten zu arbeiten. Effizienter wäre es die Daten auf verschiedene Dateien aufzuteilen, um schnellere Ladezeiten zu erreichen.
 \cite{logrocketPlayerPrefs}\cite{gamedevbeginnerPlayerPrefs}
 
-\url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}
-
 \subsection{JSON}
+Die verbreiteste Art mit Unity Spielstände abzuspeichern ist mit JSON. Ein Grund dafür ist, dass Unity ein Tool für das Serialisieren von C\# Objekten hat. Dieses Tool heißt \textit{JsonUtility}, welches über Data Binding die Daten verarbeitet. JsonUtility hat zwar einige Einschränkungen, ist dafür aber die schnellste Art, Objekte in JSON zu serialisieren. Eine Einschränkung von JsonUtility ist, dass es einige Typen gibt, die nicht unterstützt werden, wie Dictionary<>, multidimensionale oder Jagged\footnote{Jagged Arrays sind Arrays, dessen Elemente Arrays aus verschiedener Größe sind.\cite{microsoftVerzweigteArrays}} Arrays. Diese lassen sich nicht mit JsonUtility serialisieren. In dem Beispielcode \ref{lst:jsonUtilityExp} werden die drei Funktionen, die JsonUtility anbietet, demonstriert. Von der Zeile 1 bis 7 wird eine Spieler-Klasse definiert, welche dann in einer anderen Klasse, wie ab der Zeile 11 zu sehen ist, verwendet wird. Diese muss mit dem Attribut "Serializable" gekenntzeichnet werden, damit diese auch serialisierbar ist. Alle Variablen, die in dieser Klasse public oder mit "[SerializeField]" gekenntzeichnet werden, werden beim Serialisierungsprozess betrachtet. Als erstes werden drei Spieler-Objekte definiert, welche in den Zeilen 15 bis 18 zu JSON-Strings serialisiert werden. In der Zeile 16 ist zu sehen, wie einer der JSON-Strings aussieht. Der Spieler mit dem Namen "Bob" wird dann in den letzten zwei Zeilen zwei mal überschrieben. Einmal mit den Werten der Spielerin "Alice" und einmal mit den Werten des Spielers "Tom". 
+\cite{unityJsonUtility}\cite{unitySerializationRules} 
+\begin{listing}[htp]
+    \begin{minted}{csharp} 
+        [Serializable]
+        public class Player
+        {
+            public int level;
+            public float health;
+            public string name;
+        }
 
-\begin{itemize}
-    \item JsonUtility (Von Unity. Hat Einschränkungen, ist dafür aber schnell. Anwendungsbereich ausarbeiten)
-    \item Json.NET (Newtonsoft)
-    \item LitJSON (.Net Library)
-\end{itemize}
+        ...
+        
+        Player bob = new Player() { level = 1, health = 75.2f, name = "Bob" };
+        Player alice = new Player() { level = 3, health = 100.0f, name = "Alice" };
+        Player tom = new Player() { level = 2, health = 1.0f, name = "Tom" };
 
-JsonUtility:
-\begin{itemize}
-    \item "[Serializable]" vor Klassen/Strukturen, damit diese umgewandlet werden können (dürfen aber nicht static sein)
-    \item public oder mit " [SerializeField]" gekenntzeichnette Variablen werden serialisiert
-    \item JsonUtility.ToJson(obj) und JsonUtility.FromJson<T>(json) zum (de)serialisieren
-    \item Manche Typen sind nicht unterstützt (Dictionary<>, Multidimensionale/Jagged Arrays, nested container Typen, ...)
-    \item Nicht unterstützte Typen über implementierung von ISerializationCallbackReceiver serialisieren, mit custom Serialisierung
-\end{itemize}
+        string bobJson = JsonUtility.ToJson(bob);
+        //  {"level":1,"health":75.2,"name":"Bob"}
+        string aliceJson = JsonUtility.ToJson(alice);
+        string tomJson = JsonUtility.ToJson(tom);
 
-% 10.7.
-\url{https://docs.unity3d.com/2020.1/Documentation/Manual/JSONSerialization.html}\\
-\url{https://blog.logrocket.com/why-should-shouldnt-save-data-unitys-playerprefs/}\\
-\url{https://docs.unity3d.com/2023.2/Documentation/Manual/script-Serialization.html}
-
+        bob = JsonUtility.FromJson<Player>(aliceJson);
+        JsonUtility.FromJsonOverwrite(tomJson, bob);
+    \end{minted}
+    \caption{JsonUtility Beispielcode}
+    \label{lst:jsonUtilityExp}
+\end{listing}
 
 Json.NET:
 \begin{itemize}
@@ -70,6 +76,13 @@ LitJSON:\\
 
 \url{https://www.jacksondunstan.com/articles/3303}\\
 \url{https://michaelscodingspot.com/the-battle-of-c-to-json-serializers-in-net-core-3/}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/UnityJsonPerformance.png}
+    \caption{Laufzeiten der unterschiedlichen JSON Serialisierer für Unity \cite{jacksondunstanJacksonDunstancomJSON}}
+    \label{fig:unityJsonPerformance}
+\end{figure}
 
 \subsection{BinaryFormatter}
 Kurz erwähnen was BinaryFormatter macht und warum er nicht benutzt werden soll. Vielleicht mit einem Beispiel
