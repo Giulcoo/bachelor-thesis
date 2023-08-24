@@ -58,24 +58,11 @@ Die verbreiteste Art mit Unity Spielstände abzuspeichern ist mit JSON. Ein Grun
     \label{lst:jsonUtilityExp}
 \end{listing}
 
-Json.NET:
-\begin{itemize}
-    \item JSON Serialisierer um Umwandeln zwischen .NET-Objekten zu JSON zu ermöglichen 
-    \item Typen die JsonUtility nicht unterstützt gehen hier
-    \item Serialisiert alle public Attribute
-    \item "[JsonIgnore]" um beim Serialisierer Attribute zu ignorieren
-\end{itemize}
+Eine pupuläre Alternative zu JsonUtility ist die \textit{Newtonsoft.JSON} Bibliothek, auch bekannt als \textit{Json.NET}. Sie wird sehr häufig bei C\# Projekten verwendet, da sie einfach zu verenden ist und das Umwandeln zwischen .NET-Objekten und JSON in schnellen Laufzeiten bewältigen kann.\cite{newtonsoftJsonNETNewtonsoft} Der Vorteil gegenüber JsonUtility ist, dass alle nicht serialisierbaren Klassen von JsonUtility mit Json.NET serialisierbar sind. Es ist beispielsweise möglich ein Dictionary<> zu serialisieren\cite{newtonsoftSerializeDictionary}\cite{newtonsoftDeserializeDictionary} oder jegliche Arten von Arrays. Json.NET wird auch seit der Unity Version 2018.4\footnote{Die Unity Version 2018.4 wurde 2019 veröffentlicht.\cite{unityDownloadArchive}} als Paket \wichtig{(Übersetzung von Package?)} unterstützt.\cite{NewtonsoftJsonUnitySupport} Beim Serialisieren von Objekten werden auch bei Json.NET alle Variablen, die public sind, serialisiert. Um beim Serialisieren weniger Daten entstehen zu lassen bietet Json.NET einige Funktionen an, wie zuum Beispiel das Attribut "[JsonIgnore]", mit dem sich Variablen beim Serialisierungsprozess ignorieren lassen, oder die NullValueHandling Einstellung, mit der eingestellt werden kann, ob null-Werte gespeichert werden sollen. Dadurch, dass Json.NET viele Einstellungen anbietet, bei denen der komplette Serialisierungsprozess anpassbar ist, lassen sich die Laufzeiten für Projekte stark optimieren.\cite{newtonsoftReducingSerialized}\cite{newtonsoftPerformanceTips}
 
-% 10.7.
-\url{https://www.newtonsoft.com/json}\\
-\url{https://www.newtonsoft.com/json/help/html/Performance.htm}\\
+Eine weitere .NET-Bibliothek, die durchaus beliebt ist, ist \textit{LitJSON}. Auch diese ermöglicht es, .NET-Objekte in JSON und umgekehrt zu konvertieren.\cite{litjsonLitJSONDocumentation}. LitJSON bietet zwar viel weniger Funktionen als Json.NET an, aber es ist mithilfe des JsonReader und JsonWriter möglich, über die LitJSON Streaming API zu serialisieren und somit eine eigene Serialisierung der Klassen zu konstruieren.\cite{litjsonLitJSONReaders} Es gibt auch eine Bibliothek, wo LitJSON etwas bearbeitet wurde, damit die .NET-Bibliothek auch für Unity verwendet werden kann.\cite{githubGitHubMervillUnityLitJson}
 
-LitJSON:\\
-% 10.7.
-\url{https://litjson.net/}
-
-\url{https://www.jacksondunstan.com/articles/3303}\\
-\url{https://michaelscodingspot.com/the-battle-of-c-to-json-serializers-in-net-core-3/}
+Wenn für das Unity Projekt mit JSON die Spielstände gespeichert werden sollen, stellt sich die Frage, welche Serialisierungs Klasse oder Bibliothek sich besser eignet. Wie in der Abbildung \ref{fig:unityJsonPerformance} zu sehen, ist JsonUtility die schnellste Art Objekte in JSON umzuwandeln und umgekehrt. Die schnellen Laufzeiten von JsonUtility haben auch den Preis, dass die Klasse etwas eingeschränkt ist und einfach gehalten wurde. Sobald es komplexere Datenstrukturen gibt, ist das Arbeiten mit JsonUtility eine große Herausforderung. Da könnte sich der Entwickler dann doch für Json.NET oder LitJSON entscheiden, da diese mehr Datentypen unterstützten. Wenn es wichtig ist, dass das Programm schnell Serialisieren soll, dann ist LitJSON die adäquatere Wahl zum Arbeiten mit JSON. Falls das Deserialisieren möglichst schnell laufen soll, ist Json.NET geeigneter.
 
 \begin{figure}[htp]
     \centering
