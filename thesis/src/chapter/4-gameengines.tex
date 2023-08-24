@@ -72,39 +72,24 @@ Wenn für das Unity Projekt mit JSON die Spielstände gespeichert werden sollen,
 \end{figure}
 
 \subsection{BinaryFormatter}
-Kurz erwähnen was BinaryFormatter macht und warum er nicht benutzt werden soll. Vielleicht mit einem Beispiel
+Die .NET-Klasse \textit{BinaryFormatter} ist eine Möglichkeit eine binäre Serialisierung der Daten durchzuführen. Sie verwandelt .NET-Objekte in eine Liste von Bytes um und umgekehrt. In dem Beispielcode \ref{lst:binaryFormatterExp} ist zu sehen, wie der BinaryFormatter verwendet werden kann. Dabei werden die Player-Klasse und die Spieler aus dem Beispielcode \ref{lst:jsonUtilityExp} benutzt. In der Zeile 2 wird der Spieler namens "Bob" in der Datei "bobFile" in binärer Form abgespeichert. In der Zeile 3 wird das Objekt namens "tom" mit den Werten aus der "bobFile"-Datei neu gesetzt. Dabei werden die Daten aus "bobFile" wieder deserialisiert.\cite{microsoftBinaryFormatterClass} 
 
-\begin{itemize}
-    \item Serialisieren von Objekten in ein langes stream im binären Format
-    \item Serialize(File filename, Object object)
-    \item Deserialize(File filename)
-    \item Sicherheitsrisiken beim Deserialisieren:
-    \begin{itemize}
-        \item Angreifer kann ein Denial of Serivce (DoS), Veröffentlichung von Informationen oder Remoteausführung von Code in Ziel-App bewirken
-        \item Deserialisieren von Daten mit BinaryFormatter bringt viele Risiken
-        \item Angreifer kann Code im Kontext des Zielprozesses ausführen
-    \end{itemize}
-    \item Sicherere Alternative: BinaryReader und BinaryWriter
-    \begin{itemize}
-        \item Schreiben/Lesen von primitven Datentypen im binären Format
-    \end{itemize}
-\end{itemize}
+\begin{listing}[htp]
+    \begin{minted}{csharp} 
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(bobFile,bob);
+        tom = (Player) formatter.Deserialize(bobFile);
+    \end{minted}
+    \caption{BinaryFormatter Beispielcode}
+    \label{lst:binaryFormatterExp}
+\end{listing}
 
-% 10.7.
-\url{https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter?view=net-7.0}\\
-\url{https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide}\\
-\url{https://github.com/pwntester/ysoserial.net}
+Allgemein wird jedoch von dem Verwenden des BinaryFormatters abgeraten. Die Gefahr von Sicherheitsrisiken beim Deserialisieren ist zu groß. Ein Angreifer könnte den abgespeicherten Binärcode so verändern, dass dieser Code im Kontext des Zielprozesses ausführen wird. Je nach Anwendungstyp können solche Angriffe auch zu einem DoS-Angriff\footnote{Bei einem Denial of Service Angriff wird das Zielsystem mit etlichen Anfragen überflutet, was zu einer starken Verlangsamung, bis hin zu einem Zusammenbruch des Systems führen kann.\cite{bundDoSDDoSAttacken}} oder Veröffentlichung von Informationen führen.\cite{microsoftDeserializationRisks}
 
-\subsection{StreamWriter}
-\begin{itemize}
-    \item Direktes Schreiben von Zeilen auf Dateien 
-    \item Zum Lesen der Zeilen StreamReader
-    \item Eignes Format zum Speichern der Klassen bestimmen
-    \item Wenn Format geändert wird, kann es schwierig werden Dateien mit altem Format zu verwenden
-\end{itemize}
+Eine sicherere Alternative zum BinaryFormatter sind die .NET-Klassen \textit{BinaryReader} und \textit{BinaryWriter}. Diese bieten Funktionalitäten an, zum Schreiben von primitiven Datentypen in Binärcode und zum Umwandeln von Binärcode in primitiven Datentypen. Mit dieser Methode ist es zwar aufwendiger die Daten zu speichern und zu laden, aber dafür sicherer als der BinaryFormatter.\cite{microsoftBinaryReaderClass}\cite{microsoftBinaryWriterClass}
 
-% 10.7.
-\url{https://learn.microsoft.com/en-us/dotnet/api/system.io.streamwriter?view=net-7.0}
+\subsection{StreamWriter und StreamReader}
+Eine weitere Alternative zu JSON und dem binären Serialisieren der Daten mit Unity sind die .NET-Klassen StreamWriter und StreamReader. Mit dem StreamWriter lassen sich Zeilen in Dateien schreiben und mit dem StreamReader lassen sich diese dann lesen.\cite{microsoftStreamWriterKlasse}\cite{microsoftStreamReaderKlasse} Als Entwickler kann dann entschieden werden, ob Formate wie JSON, Binärcode oder XML verwendet werden, oder ob zum Speichern der Daten ein eigenes Format konzipiert werden soll. Zum Beispiel können einfache Datenstrukturen, wie eine Liste von Identifikationsnummern, Zeile für Zeile in einer eigenen Datei gespeichert werden. Kompliziert wird es dann nur, wenn das Format zum Speichern der Daten geändert werden soll. Die alten Daten müssen dann alle in das neue Format übersetzt werden.
 
 \subsection{Easy Save}
 

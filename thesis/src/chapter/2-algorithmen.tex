@@ -1,5 +1,7 @@
 \chapter{Algorithmen}\label{ch:algorithmen}
 Verschiedene Theorien/Strategien von Speicher und Ladesysteme ausarbeiten und Zeiten messen (Mit Java und JSON hauptsächlich). Verschiedene Spielarten und Speichersysteme für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber allgemein Daten aufteilen müsste gut sein)
+
+\wichtig{Speicher und Ladezeiten vs Speicherverbrauch Zusammenhang}
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
@@ -187,6 +189,9 @@ Das JSON-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokume
 \subsubsection{Binäre Serialisierung}
 Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.
 \cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
+
+\wichtig{Protocol Buffer}
+\url{https://protobuf.dev/}
 %--------------------------------------------------------------------------
 
 
