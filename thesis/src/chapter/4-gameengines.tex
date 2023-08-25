@@ -14,21 +14,19 @@ Szene zum testen soll sehr viele Daten zu speichern haben (Große Map und viele 
 
 %--------------------------------------------------------------------------
 \section{Unity}
-Unity Engine grob vorstellen und erklären
+\textit{Unity} ist eine leistungsstarke und vielseitige Echtzeit-3D-Enticklungsplattform zum Entwickeln von Videospielen und Filmen. Sie wurde von Unity Technologies entwickelt und bietet für Spieleentwickler eine breite Auswahl an Systemen, für das Programmieren von 2D- und 3D-Spielen, Simulationen oder interaktiven Anwendungen. Sei es Mobilspiele, Spiele für jegliche Betriebssysteme, wie Windows, MacOS oder Linux oder Spiele für Konsolen, mit allen ist es möglich Unity zu verwenden.\cite{unityUnityEngine}
 
-% 10.7.
-\url{https://blog.unity.com/games/persistent-data-how-to-save-your-game-states-and-settings}
-
+In diesem Kapitel werden eine Vielzahl an Möglichkeiten angeschaut, welche Unity anbietet, um Speicher- und Ladesysteme für das Speichern des Spielstandes aufzustellen. Als erstes wird Unitys PlayerPrefs-Klasse angeschaut. Danach werden verschiedene Arten aufgezählt Objekte von Unity in JSON zu serialisieren und wann welche Strategie Sinn macht zu verwenden. Anschließend werden sich die .NET-Klassen BinaryFormatter, StreamWriter und StreamReader angeschaut. Beim BinaryFormatter werden die Probleme beim Serialisieren und Deserialisieren von Daten erläutert und es werden Alternativen vorgestellt. Zum Schluss wird das kostenpflichtige Paket Easy Save aus dem Asset Store angeschaut, welches einfach und effizient ein komplettes Speicher- und Ladesystem für Spiele implementieren kann.
 
 \subsection{PlayerPrefs}
 Bei Speicher- und Ladesystemen bietet Unity für Entwickler wenige eingebaute Funktionen. Einer der wenigen Funktionen, die Unity bereitstellt sind die PlayerPrefs. Sie eine einfache Art Daten zu speichern, aber ist dabei auch sehr limitiert. Die PlayerPrefs Klasse besitzt wenige Funktionen, denn es werden nur die Datentypen string, float und integer unterstützt. Über einen Schlüssel lässt sich dann ein Schlüsselwert dieser Datentyppen festlegen oder es kann dieser erhalten werden. Die Werte der PlayerPrefs Klasse werden mit der klasseninternen Save-Funktion gespeichert. Diese kann während der Laufzeit im Code aufgerufen werden und wird automatisch bei der Terminierung des Spieles aufgerufen.\cite{unityPlayerPrefsSave} Je nach Betriebssystem werden die PlayerPrefs in einem unterschiedlichen Datei-Format abgespeichert, die Daten werden aber nicht verschlüsselt.
 \cite{unityPlayerPrefs}
 
 Allgemein wird davon abgeraten, Unitys PlayerPrefs System für das Speichern des Spielstandes zu verwenden. Zum einen wird für ein Spiel eine Speicherdatei erstellt. Wenn es aber in dem Spiel verschiedene Spielstände geben soll, gibt es bereits Probleme mit diesem Ansatz. Eine mögliche Lösung von diesem Problem wäre es, dass jeder Spielstand eine Identifikationsnummer bekommt, welche dann an jedem Schlüssel hinzugefügt wird. Die ganzen Identifikationsnummern müssen aber auch gespeichert werden, wo auch schon das nächste Problem mit PlayerPrefs auftritt. Es gibt wenige verfügbare Datentypen, die verwendet werden können. Wenn zum Beispiel eine Liste der Identifikationsnummern aller Spielstände gespeichert werden soll, kann dies nicht so einfach gemacht werden. Über den string-Datentyp lassen sich jedoch JSON-Strings speichern, wodurch wieder mehr Datentypen, wie Listen und andere Gruppierungen von Daten, möglich sind. Und PlayerPrefs, was für Player Preferences steht, ist eigentlich auch genaufür die Arten von Daten gemacht. Es sollten Konfigurationen, wie die Auflösung oder die Lautstärke des Spieles, gespeichert werden. Da die Daten auch alle in einer Datei gespeichert werden, ist es auch nicht sonderlich effizient mit vielen Daten zu arbeiten. Effizienter wäre es die Daten auf verschiedene Dateien aufzuteilen, um schnellere Ladezeiten zu erreichen.
-\cite{logrocketPlayerPrefs}\cite{gamedevbeginnerPlayerPrefs}
+\cite{unityPersistentData}\cite{logrocketPlayerPrefs}\cite{gamedevbeginnerPlayerPrefs}
 
 \subsection{JSON}
-Die verbreiteste Art mit Unity Spielstände abzuspeichern ist mit JSON. Ein Grund dafür ist, dass Unity ein Tool für das Serialisieren von C\# Objekten hat. Dieses Tool heißt \textit{JsonUtility}, welches über Data Binding die Daten verarbeitet. JsonUtility hat zwar einige Einschränkungen, ist dafür aber die schnellste Art, Objekte in JSON zu serialisieren. Eine Einschränkung von JsonUtility ist, dass es einige Typen gibt, die nicht unterstützt werden, wie Dictionary<>, multidimensionale oder Jagged\footnote{Jagged Arrays sind Arrays, dessen Elemente Arrays aus verschiedener Größe sind.\cite{microsoftVerzweigteArrays}} Arrays. Diese lassen sich nicht mit JsonUtility serialisieren. In dem Beispielcode \ref{lst:jsonUtilityExp} werden die drei Funktionen, die JsonUtility anbietet, demonstriert. Von der Zeile 1 bis 7 wird eine Spieler-Klasse definiert, welche dann in einer anderen Klasse, wie ab der Zeile 11 zu sehen ist, verwendet wird. Diese muss mit dem Attribut "Serializable" gekenntzeichnet werden, damit diese auch serialisierbar ist. Alle Variablen, die in dieser Klasse public oder mit "[SerializeField]" gekenntzeichnet werden, werden beim Serialisierungsprozess betrachtet. Als erstes werden drei Spieler-Objekte definiert, welche in den Zeilen 15 bis 18 zu JSON-Strings serialisiert werden. In der Zeile 16 ist zu sehen, wie einer der JSON-Strings aussieht. Der Spieler mit dem Namen "Bob" wird dann in den letzten zwei Zeilen zwei mal überschrieben. Einmal mit den Werten der Spielerin "Alice" und einmal mit den Werten des Spielers "Tom". 
+Die verbreiteste Art mit Unity Spielstände abzuspeichern ist mit JSON. Ein Grund dafür ist, dass Unity ein Tool für das Serialisieren von C\# Objekten hat. Dieses Tool heißt \textit{JsonUtility}, welches über Data Binding die Daten verarbeitet. JsonUtility hat zwar einige Einschränkungen, ist dafür aber die schnellste Art, Objekte in JSON zu serialisieren. Eine Einschränkung von JsonUtility ist, dass es einige Typen gibt, die nicht unterstützt werden, wie Dictionary<>, multidimensionale oder Jagged\footnote{Jagged Arrays sind Arrays, dessen Elemente Arrays aus verschiedener Größe sind.\cite{microsoftVerzweigteArrays}} Arrays. Diese lassen sich nicht mit JsonUtility serialisieren. In dem Beielcode \ref{lst:jsonUtilityExp} werden die drei Funktionen, die JsonUtility anbietet, demonstriert. Von der Zeile 1 bis 7 wird eine Spieler-Klasse definiert, welche dann in einer anderen Klasse, wie ab der Zeile 11 zu sehen ist, verwendet wird. Diese muss mit dem Attribut "Serializable" gekenntzeichnet werden, damit diese auch serialisierbar ist. Alle Variablen, die in dieser Klasse public oder mit "[SerializeField]" gekenntzeichnet werden, werden beim Serialisierungsprozess betrachtet. Als erstes werden drei Spieler-Objekte definiert, welche in den Zeilen 15 bis 18 zu JSON-Strings serialisiert werden. In der Zeile 16 ist zu sehen, wie einer der JSON-Strings aussieht. Der Spieler mit dem Namen "Bob" wird dann in den letzten zwei Zeilen zwei mal überschrieben. Einmal mit den Werten der Spielerin "Alice" und einmal mit den Werten des Spielers "Tom". 
 \cite{unityJsonUtility}\cite{unitySerializationRules} 
 \begin{listing}[htp]
     \begin{minted}{csharp} 
@@ -80,7 +78,7 @@ Die .NET-Klasse \textit{BinaryFormatter} ist eine Möglichkeit eine binäre Seri
         formatter.Serialize(bobFile,bob);
         tom = (Player) formatter.Deserialize(bobFile);
     \end{minted}
-    \caption{BinaryFormatter Beispielcode}
+    \caption{Beispiel für das Serialisieren und Deserialisieren mit dem BinaryFormatter}
     \label{lst:binaryFormatterExp}
 \end{listing}
 
@@ -92,24 +90,18 @@ Eine sicherere Alternative zum BinaryFormatter sind die .NET-Klassen \textit{Bin
 Eine weitere Alternative zu JSON und dem binären Serialisieren der Daten mit Unity sind die .NET-Klassen StreamWriter und StreamReader. Mit dem StreamWriter lassen sich Zeilen in Dateien schreiben und mit dem StreamReader lassen sich diese dann lesen.\cite{microsoftStreamWriterKlasse}\cite{microsoftStreamReaderKlasse} Als Entwickler kann dann entschieden werden, ob Formate wie JSON, Binärcode oder XML verwendet werden, oder ob zum Speichern der Daten ein eigenes Format konzipiert werden soll. Zum Beispiel können einfache Datenstrukturen, wie eine Liste von Identifikationsnummern, Zeile für Zeile in einer eigenen Datei gespeichert werden. Kompliziert wird es dann nur, wenn das Format zum Speichern der Daten geändert werden soll. Die alten Daten müssen dann alle in das neue Format übersetzt werden.
 
 \subsection{Easy Save}
+Für etwas Geld kann sich ein Entwickler das \textit{Easy Save} Paket vom Unity Asset Store anschauen. Dieses Tool bietet ein komplettes Speicher- und Ladesystem für Unity Projekte an, um eine einfache und effiziente Verwaltung der Daten zu ermöglichen.\cite{unityEasySave} In dem Beispielcode \ref{lst:easySaveExp} ist zu sehen, wie ein Wert in das Speichersystem mit aufgenommen werden kann, indem das Level des Spielers gespeichert und geladen wird. ES3 ist die Klasse von Easy Save und wie zu sehen ist, werden die Daten mit einem Schlüssel-Wert System gespeichert, ähnlich wie bei einem Wörterbuch \wichtig{(Versteht man hier, dass ein Dictionary gemeint ist?)}.\cite{moodkieGettingStarted} Easy Save unterstützt viele Datentypen, wie Structs, Arrays, Wörterbücher, HashSets oder ganze Components\footnote{Die Basis-Klasse in Unity für alles was an den Spielobjekten (GameObject-Klasse) hinzugefügt wird.\cite{unityComponent}}.\cite{moodkieSupportedTypes} Falls ein Datentyp nicht von Easy Save unterstützt wird, kann man mit den ES3Types ganz einfach neue Datentypen zu dem System hinzufügen.\cite{moodkieChoosingWhat} Es ist auch möglich die gespeicherten Daten zu verschlüsseln oder zu komprimieren.\cite{moodkieGettingStarted} Vorausgesetzt die Daten sollen automatisch gespeichert, kann die "Auto Save" Funktion von Easy Save verwendet werden.\cite{moodkieAutoSave} Um eine bessere Leistung aus dem Speicher- und Ladesystem rauszuholen, kann mit Easy Save direkt eine Datei zum Speichern der Daten im Cache erstellt werden. Daten die dann dort gespeichert werden, können während der Laufzeit schneller geladen werden.\cite{moodkieImprovingPerformance}. Außerdem lassen sich Strings und Bytes direkt in den Speicherdateien schreiben und lesen.\cite{moodkieSavingLoading} 
 
-\begin{itemize}
-    \item Unity Package, welches ein komplettes Speicher und Serialisier System ist
-    \item ES3.Save(String key, Object value)
-    \item ES3.Load<T>(String key, Object defaultValue)
-    \item Klassenattribute werden gespeichert, wenn:
-    \begin{itemize}
-        \item public oder [SerializeField] Attribut haben
-        \item Nicht const oder readonly
-        \item Nicht [Obsolete] oder [NonSerialized] Attribut
-        \item Verschlüsselung mit ES3Settings(ES3.EncryptionType encryptionType, String password)
-        \item Komprimierung mit ES3Settings(ES3.CompressionType compressionType)
-        \item Auto Save Funktion
-    \end{itemize}
-\end{itemize}
-% 10.7.
-\url{https://docs.moodkie.com/product/easy-save-3/}\\
-\url{https://assetstore.unity.com/packages/tools/utilities/easy-save-the-complete-save-data-serializer-system-768}
+\begin{listing}[htp]
+    \begin{minted}{csharp} 
+        int playerLevel = 1;
+        ES3.Save("playerLevel", playerLevel);
+        ... 
+        if(ES3.KeyExists("playerLevel")) playerLevel = ES3.Load<int>("playerLevel")
+    \end{minted}
+    \caption{Beispiel für das Speichern und Laden mit Easy Save}
+    \label{lst:easySaveExp}
+\end{listing}
 
 \subsection{Component-Save-System}
 
