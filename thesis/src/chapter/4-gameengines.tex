@@ -1,20 +1,13 @@
 \chapter{Game Engines}\label{ch:gameengines}
-In diesem Kapitel soll die Theorie und Algorithmen aus den vorherigen Kapiteln 
-getestet werden. Manche Game Engines bieten auch eigene Speichersysteme oder
-Tools dafür, diese können hier auch getestet werden.
+Eine Game Engine ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Erlebnisse konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr.
 
-Gleiche Szene in verschiedenen Game Engines testen. 
-Verschiedene Speichersysteme ausprobieren und wenn vorhanden über die von den Game Engines erzählen und ausprobieren.
-
-Zu testende Game Engines: Unity, Unreal Engine, Godot
-
-Szene zum testen soll sehr viele Daten zu speichern haben (Große Map und viele unterschiedliche Informationen)
+\dots
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \section{Unity}
-\textit{Unity} ist eine leistungsstarke und vielseitige Echtzeit-3D-Enticklungsplattform zum Entwickeln von Videospielen und Filmen. Sie wurde von Unity Technologies entwickelt und bietet für Spieleentwickler eine breite Auswahl an Systemen, für das Programmieren von 2D- und 3D-Spielen, Simulationen oder interaktiven Anwendungen. Sei es Mobilspiele, Spiele für jegliche Betriebssysteme, wie Windows, MacOS oder Linux oder Spiele für Konsolen, mit allen ist es möglich Unity zu verwenden.\cite{unityUnityEngine}
+\textit{Unity} ist eine leistungsstarke und vielseitige Echtzeit-3D-Enticklungsplattform zum Entwickeln von Videospielen und Filmen. Sie wurde 2015 von Unity Technologies entwickelt und wurde durch die intuitive Benutzeroberfläche schnell zu der meist verwendeten Game Engine der Welt. Unity bietet für Spieleentwickler eine breite Auswahl an Systemen, für das Programmieren von 2D- und 3D-Spielen, Simulationen oder interaktiven Anwendungen. Sei es Mobilspiele, Spiele für jegliche Betriebssysteme, wie Windows, MacOS oder Linux oder Spiele für Konsolen, mit allen ist es möglich Unity zu verwenden. Programmiert wird bei Unity hauptsächlich mit der Programmiersprache C\#.\cite{unityUnityEngine}\cite{vsmid2017comparison}
 
 In diesem Kapitel werden eine Vielzahl an Möglichkeiten angeschaut, welche Unity anbietet, um Speicher- und Ladesysteme für das Speichern des Spielstandes aufzustellen. Als erstes wird Unitys PlayerPrefs-Klasse angeschaut. Danach werden verschiedene Arten aufgezählt Objekte von Unity in JSON zu serialisieren und wann welche Strategie Sinn macht zu verwenden. Anschließend werden sich die .NET-Klassen BinaryFormatter, StreamWriter und StreamReader angeschaut. Beim BinaryFormatter werden die Probleme beim Serialisieren und Deserialisieren von Daten erläutert und es werden Alternativen vorgestellt. Zum Schluss wird das kostenpflichtige Paket Easy Save aus dem Asset Store angeschaut, welches einfach und effizient ein komplettes Speicher- und Ladesystem für Spiele implementieren kann.
 
@@ -111,20 +104,31 @@ Für etwas Geld kann sich ein Entwickler das \textit{Easy Save} Paket vom Unity 
 
 %--------------------------------------------------------------------------
 \section{Unreal Engine}
-Unreal Engine grob vorstellen und erklären
+\textit{Unreal Engine} ist eine von Epic Games entwickelte Spiele-Engine, die von vielen größeren Entwicklungsteams verwendet wird. Unreal Engine ist aber auch bei einzelnen Entwicklern sehr beliebt, da es kostenlos und anfängerfreundlich ist. Bei realistischen Grafiken, Vegetation und Erstellung von Terrain für Videospiele liegt Unreal Engine auf Platz eins unter den Game Engines. Diese Enticklungsplattform ist vor allem für größere Projekte gemacht, obwohl es auch Unterstützung für iOS und Android gibt. Mithilfe der Blueprints lassen sich Spiele visueller erstellen. Blueprints sind Graphen, die aus Blöcken bestehen, die zusammen verbunden sind. Jeder Block hat dabei eine Funktion die ausgeführt wird. Beim Unreal Engine wird hauptsächlich mit der Programmiersprache C++ gearbeitet.\cite{vsmid2017comparison}
 
-\subsection{SaveGame Objekt}
-Erklären was das ist, was benutzt wird und ein kleines Beispiel zeigen.
+\subsection{SaveGame}
+Seit Unreal Engine 4 wird die \textit{SaveGame} Klasse bereitgestellt. Sie bietet dem Entwickler ein fertiges Speicher- und Ladesystem für den Spielstand. Dies kann entweder in einem Blueprint oder mit C++ Code eingestellt werden. Die Daten werden dann alle im ".sav"-Format abgespeichert.
+\cite{unrealengineSavingLoading}
 
-\begin{itemize}
-    \item Blueprint zum Speichern/Laden der Daten
-    \item Daten in .sav-Datei gespeichert (darüber recherchieren, was das ist und wie Daten hier gespeichert werden. Vor und Nachteile vielleicht auch nennen)
-    \item Asynchrones/Syncrhones Speichern/Laden (bei großen Mengen von Daten ist asynchron besser)
-\end{itemize}
+Ein Beispiel für ein Blueprint zum Speichern der Spieldaten mit der SaveGame-Klasse ist in der Abbildung \ref{fig:unrealSaveGameBluePrintSave} zu sehen. Beim Erstellen dieses Blueprints muss als Elternklasse die SaveGame-Klasse ausgewählt werden, in diesem Beispiel heißt die Klasse "MySaveGame". In dieser Klasse können Variablen angelegt werden, die dann gespeichert und geladen werden sollen. Der Knoten "Create Save Game Object" in dem Blueprint erstellt eine neues Objekt der SaveGame-Klasse. In diesem Knoten muss dann "MySaveGame" als SaveGame-Klasse ausgewählt werden, damit mit den erstellten Variablen dieser Klasse gearbeitet werden kann. Mithilfe von "Set"-Knoten können die Werte der einzelnen Variablen in der eigenen SaveGame-Klasse gesetzt werden. Zum Speichern der Werte wird der "Save Game to Slot"-Knoten verwendet. Wenn das Speichern asynchron ablaufen soll, wird stattdessen der "Async Save Game to Slot"-Knoten verwendet, welcher von Epic Games empfohlen wird, wenn viele Daten gespeichert werden müssen. Dieser braucht als Eingabe ein SaveGame-Objekt, einen Slot-Namen und ein Benutzer-Index. Dabei wird der Slot-Name für den Namen der Speicherdatei und der Benutzer-Index als Benutzer-Identifikationsnummer verwendet. In dem Beispiel aus \ref{fig:unrealSaveGameBluePrintSave} werden für die Eingaben dieser die Standardwerte übergeben. Als Ausgabe-Pin gibt es einmal das SaveGame-Objekt der Eingabe und, ob das Speichern erfolgreich war.\cite{unrealengineSavingLoading}
 
-% 10.7.
-\url{https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/SaveGame/}\\
-\url{https://www.tomlooman.com/unreal-engine-cpp-save-system/}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
+    \caption{BluePrint zum Speichern der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \label{fig:unrealSaveGameBluePrintSave}
+\end{figure}
+
+Wie das Laden der Spieldaten mit der SaveGame-Klasse funktioniert, ist in dem Blueprint der Abbildung \ref{fig:unrealSaveGameBluePrintLoad} zu sehen. Zu Beginn wird der "Load Game from Slot"-Knoten gebraucht, um die Daten zu laden. Falls viele Daten geladen werden, oder es während der Ladezeit ein Lade-Bildschirm geben soll, wird auch hier von Epic Games der "Async Load Game from Slot"-Knoten empfohlen, der das Gleiche wie der "Load Game from Slot"-Knoten macht, aber asynchron arbeitet. Als Eingabe braucht dieser Knoten den Slot-Namen und den Benutzer-Index. Der Ausgabewert muss dann zu der eigenen SaveGame-Klasse \wichtig{gecasted} werden. Bei einem asynchronen Laden sollte zuerst mithilfe des "Is Valid"-Knotens überprüft werden, ob die Daten alle erfolgreich geladen wurden. Nach dem \wichtig{Cast} zu der eigenen SaveGame-Klasse kann auf den Variablen dieser Klasse zugegriffen werden.\cite{unrealengineSavingLoading}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
+    \caption{BluePrint zum Laden der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \label{fig:unrealSaveGameBluePrintLoad}
+\end{figure}
+
+Falls das ganze in C++-Code geschehen soll, muss die Header-Datei "Kismet/GameplayStatics.h" zu der eigenen SaveGame-Klasse hinzugefügt werden und diese Klasse muss dann als Kind-Klasse von der USaveGame-Klasse deklariert werden. In der eigenen Klasse können dann die zu speichernden Variablen, der Slot-Name und der Benutzer-Index definiert werden. Mithilfe der Funktion SaveGameToSlot oder AsyncSaveGameToSlot und LoadGameFromSlot oder AsyncLoadGameFromSlot aus der Klasse UGameplayStatics können die Daten synchron oder asynchron gespeichert und geladen werden.\cite{unrealengineSavingLoading}
 
 \subsection{JSON}
 
@@ -133,6 +137,7 @@ Erklären was das ist, was benutzt wird und ein kleines Beispiel zeigen.
     \item FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(String json), TSharedPtr<FJsonObject> object)
 \end{itemize}
 % 10.7.
+\url{https://docs.unrealengine.com/5.2/en-US/BlueprintAPI/Json/}
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Serialization/FJsonSerializer/}\\
 \url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Dom/FJsonObject/}
 
