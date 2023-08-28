@@ -131,15 +131,32 @@ Wie das Laden der Spieldaten mit der SaveGame-Klasse funktioniert, ist in dem Bl
 Falls das ganze in C++-Code geschehen soll, muss die Header-Datei "Kismet/GameplayStatics.h" zu der eigenen SaveGame-Klasse hinzugefügt werden und diese Klasse muss dann als Kind-Klasse von der USaveGame-Klasse deklariert werden. In der eigenen Klasse können dann die zu speichernden Variablen, der Slot-Name und der Benutzer-Index definiert werden. Mithilfe der Funktion SaveGameToSlot oder AsyncSaveGameToSlot und LoadGameFromSlot oder AsyncLoadGameFromSlot aus der Klasse UGameplayStatics können die Daten synchron oder asynchron gespeichert und geladen werden.\cite{unrealengineSavingLoading}
 
 \subsection{JSON}
+Auch bei Unreal Engine ist es möglich die Spieldaten im JSON-Format abzuspeichern. Bei den Blueprints ist der Entwickler etwas eingeschränkt, da es erst seit Unreal Engine 5 Blueprints zum Arbeiten mit JSON gibt, und die Anzahl der Funktionen noch gering ist. Es gibt Knoten für Blueprints, bei denen ein
+C++-Struct zu einem JSON-String umgeandelt wird oder Knoten, bei denen bestimmte Schlüsselwerte von JSON-Objekten zurück gegeben werden. Außerdem gibt es Knoten, die JSON-Objekte aus Dateien speichern und laden können.\cite{unrealengineJsonBlueprint}
 
-\begin{itemize}
-    \item FJsonSerializer::Serialize((TSharedPtr<FJsonObject> object).ToSharedRef(), TJsonWriterFactory<>::Create(FString jsonString, 0))
-    \item FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(String json), TSharedPtr<FJsonObject> object)
-\end{itemize}
-% 10.7.
-\url{https://docs.unrealengine.com/5.2/en-US/BlueprintAPI/Json/}
-\url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Serialization/FJsonSerializer/}\\
-\url{https://docs.unrealengine.com/4.27/en-US/API/Runtime/Json/Dom/FJsonObject/}
+Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu JSON zu serialisieren. Dafür gibt es auch bei Unreal Engine eine \textit{JsonUtility}-Klasse. Zum Speichern der JSON-Daten als C++-Objekt kann die FJsonObject-Klasse verwendet werden. Zum Serialisieren und Deserialisieren wird der FJsonSerializer benutzt. In dem Beispielcode \ref{lst:unrealFJsonSerializer} ist zu sehen, wie diese Klassen verwendet werden können. In den ersten vier Zeilen wird ein neues JSON-Objekt erstellt, mit Schlüssel und Schlüsselwerten wie bei dem Code \ref{lst:jsonUtilityExp}. Danach wird in der Zeile 8 dieses JSON-Objekt zu einem JSON-String konvertiert und in dem Objekt "JsonString" gespeichert. In der Zeile 12 wird dieser String wieder deserialisiert und in ein JSON-Objekt namens "JsonObject" gespeichert. Falls das Deserialisieren erfolgreich abläuft, ist die Kondition aus der Zeile 12 wahr und der Code in der Zeile 14 kann ausgeführt werden.\cite{unrealengineFJsonObject}\cite{unrealengineFJsonSerializer}\cite{wraiythUsingJson1}\cite{wraiythUsingJson2}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{cpp}
+        TSharedPtr BobJsonObject = MakeShareable(new FJsonObject);
+        BobJsonObject->SetNumberField("level", 1);
+        BobJsonObject->SetNumberField("health", 75.2f);
+        BobJsonObject->SetStringField("name", "Bob");
+        
+        FString JsonString;
+        TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&JsonString);
+        FJsonSerializer::Serialize(BobJsonObject.ToSharedRef(), Writer);   
+        
+        TSharedPtr JsonObject;
+        TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
+        if(FJsonSerializer::Deserialize(Reader, JsonObject)) 
+        {
+           ...
+        }
+    \end{minted}
+    \caption{Beispiel für das Serialisieren und Deserialisieren von Daten zu JSON}
+    \label{lst:unrealFJsonSerializer}
+\end{listing}
 
 \subsection{Save Extension}
 
