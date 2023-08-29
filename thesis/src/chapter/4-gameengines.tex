@@ -106,6 +106,8 @@ Für etwas Geld kann sich ein Entwickler das \textit{Easy Save} Paket vom Unity 
 \section{Unreal Engine}
 \textit{Unreal Engine} ist eine von Epic Games entwickelte Spiele-Engine, die von vielen größeren Entwicklungsteams verwendet wird. Unreal Engine ist aber auch bei einzelnen Entwicklern sehr beliebt, da es kostenlos und anfängerfreundlich ist. Bei realistischen Grafiken, Vegetation und Erstellung von Terrain für Videospiele liegt Unreal Engine auf Platz eins unter den Game Engines. Diese Enticklungsplattform ist vor allem für größere Projekte gemacht, obwohl es auch Unterstützung für iOS und Android gibt. Mithilfe der Blueprints lassen sich Spiele visueller erstellen. Blueprints sind Graphen, die aus Blöcken bestehen, die zusammen verbunden sind. Jeder Block hat dabei eine Funktion die ausgeführt wird. Beim Unreal Engine wird hauptsächlich mit der Programmiersprache C++ gearbeitet.\cite{vsmid2017comparison}
 
+In diesem Abschnitt werden verschiedene Strategien betrachtet, die Unreal Engine anbietet, zum Speichern und Laden von Spielständen. Als erstes wird die Unreal Engine "SaveGame"-Klasse angeschaut, welche über C++-Code und Blueprints anbietet, ein vollständiges System zum Speichern und Laden von Daten aufzustellen. Anschließend wird betrachtet, welche Möglichkeit Unreal Engine anbietet, Daten in JSON zu serialisieren und später diese zu deserialisieren. Zum Schluss wird ein Plugin für Unreal Engine 4 vorgestellt, mit dem in wenigen Schritten ein vollständiges Speicher- und Ladesystem aufgestellt werden kann. 
+
 \subsection{SaveGame}
 Seit Unreal Engine 4 wird die \textit{SaveGame} Klasse bereitgestellt. Sie bietet dem Entwickler ein fertiges Speicher- und Ladesystem für den Spielstand. Dies kann entweder in einem Blueprint oder mit C++ Code eingestellt werden. Die Daten werden dann alle im ".sav"-Format abgespeichert.
 \cite{unrealengineSavingLoading}
@@ -115,7 +117,7 @@ Ein Beispiel für ein Blueprint zum Speichern der Spieldaten mit der SaveGame-Kl
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
-    \caption{BluePrint zum Speichern der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \caption{Blueprint zum Speichern der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
     \label{fig:unrealSaveGameBluePrintSave}
 \end{figure}
 
@@ -124,7 +126,7 @@ Wie das Laden der Spieldaten mit der SaveGame-Klasse funktioniert, ist in dem Bl
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
-    \caption{BluePrint zum Laden der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \caption{Blueprint zum Laden der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
     \label{fig:unrealSaveGameBluePrintLoad}
 \end{figure}
 
@@ -159,47 +161,40 @@ Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu JSON zu serial
 \end{listing}
 
 \subsection{Save Extension}
+Falls ein Entwickler ein fertiges Speicher- und Ladesystem sucht, welches er in sein Spiel integrieren möchte, dann ist \textit{Save Extension} geeignet. Dieses Plugin wurde für Unreal Engine 4 gemacht und bietet eine Vielzahl an Funktionen an, die sowohl in C++-Code oder als Blueprint implementiert werden können.\cite{unrealengineSaveExtension}
 
-\begin{itemize}
-    \item Blueprint zum Speichern/Laden einer Welt mit Slot ID
-    \item Auswählen der Actors und Components, die gespeichert/geladen werden sollen über Filter
-    \item Dateien können dann komprimiert werden
-    \item Jeder Actor hat Save Settings (Sollen die Tags, Transform oder Physik des Actors gespeichert werden?)
-    \item Jeder Actor, Component und Level hat ein "Record" = Block aus serialisierter Information
-    \item Jeder Slot wird in einer Datei gespeichert 
-    \item Damit nicht alle Slots geladen werden müssen (z.B. für Menu wo eine Liste der Slots angezeigt werden soll) werden die Daten in zwei Bereiche gespeichert:
-    \begin{itemize}
-        \item Slot Info (Leichtgewichtete Daten über das Spiel, wie Player Level, XP, Spielername, ...)
-        \item Slot Data (Alle Informationen der serialisierten Actors und Components eines Spieles)
-    \end{itemize}
-    \item Auto-Save (Speichern des aktuellen Slots) und Auto-Load (Laden des letzten aktiven Slots)
-    \item Asynchrone Features:
-    \begin{itemize}
-        \item Multithreaded Serialisierung
-        \item Multithreaded Dateien (Dateien werden im Hintergrund komprimiert und gespeichert/geladen)
-    \end{itemize} 
-    \item Wenn Sublevels entladen werden, werden Daten dieser zwischengespeichert (Cache) und beim laden dieser Sublevels wieder wiederhergestellt
-    \item Speicher Prozess (Bild zu Zuständen in Doku):
-    \begin{enumerate}
-        \item Alten Spielstand löschen
-        \item OnSaveBegan aufrufen
-        \item Thumbnail und Stats speichern
-        \item Welt serialisieren
-        \item OnSaveFinished aufrufen
-    \end{enumerate}
-    \item Lade Prozess (Bild zu Zuständen in Doku):
-    \begin{enumerate}
-        \item OnLoadBegan aufrufen
-        \item Maps und Daten laden
-        \item Bake Filters (Alle Level Filter und genereller Filter baken -> Damit überprüft wird welcher Actor in jedem Level vorbereitet werden muss und wie dieser deserialisiert wird)
-        \item Levels vorbereiten (Gespeicherte Actors wiederherstellen und Actors die nicht existiert haben sollten löschen)
-        \item Welt deserialisieren (Durch alle Levels durchgehen und alle Actor und seine Components deserialisieren)
-    \end{enumerate}
-\end{itemize}
+Die ersten Schritte zum Aufstellen des Speicher- und Ladesystems mit der Save Extension über ein Blueprint ist in der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zu sehen. Die zwei Knoten "Save Slot to Id" und "Load Slot from Id" werden verwendet, um Daten aus einem bestimmten Slot zu speichern und zu laden. Jeder Slot kann eine bestimmte Spielwelt von einem Spieler sein und wird in einer eigenen Datei gespeichert.\cite{piperiftPiperiftSaveSlot} Um einen bestimmten Slot auszuwählen, gibt es die Eingabe "Slot Id", wo die Slot-Nummer eingegeben werden kann. Beim Speichern kann auch ausgewählt werden, ob der alte Spielstand eines Slots überschrieben werden soll, falls einer existiert. Zum Auslösen des Speicherns oder Ladens gibt es eine einige Möglichkeiten. In der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zum Beispiel wird das Speichern des Spielstandes dadurch ausgelöst, dass die Tasten K gedrückt wurde. Zum Laden muss in diesem Beispiel die Taste L gedrückt werden. Alternativ unterstüzt das Save Extension Plugin auch ein Auto-Save und Auto-Load. Beim Auto-Save wird automatisch der aktuelle Slot gespeichert und beim Auto-Load wird immer der letzte aktive Slot geladen. Ein Slot wird als aktiv markiert, wenn er geladen wird.\cite{piperiftPiperiftSaveSlot}\cite{piperiftPiperiftSaveBlueprint} 
 
-% 10.7.
-\url{https://www.unrealengine.com/marketplace/en-US/product/save-extension}\\
-\url{https://piperift.com/SaveExtension/#/}
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/SaveExtension_load_save_blueprint.png}
+    \caption{Blueprint zum Laden der Daten mit dem Save Extension Plugin\cite{piperiftPiperiftSaveBlueprint}}
+    \label{fig:unrealSaveExtensionBlueprint}
+\end{figure}
+
+Nach dieser Einrichtung werden noch keine Actor\footnote{Actors sind bei Unreal Engine alle Spielobjekte, die in der Spielwelt geladen werden.\cite{unrealengineActors}}-Klassen oder Components\footnote{Components werden an Actors angehangen und beeinflussen, wie diese sich verhalten.\cite{unrealengineActors}} gespeichert. Über das \textit{SavePreset} Blueprint lassen sich Actors und Component-Klassen zum Speicher- und Ladesystem hinzufügen. Um dann Variablen eines Actors oder Components abzuspeichern, muss für jede zu speichernde Variable die "SaveGame"-Eigenschaften angeklick werden. Komprimierung der Daten ist bei der Save Extension auch möglich. Dies kann bei dem SavePreset eingestellt werden.
+
+Um zu vermeiden, dass zu viel Daten geladen werden, werden Slots in zwei Bereiche unterteilt und gespeichert. Es gibt einmal die Slot Info, die leichtgewichtete Daten über die Spielwelt speichert. Diese enthält zum Beispiel das Level des Spielers, seinen Spielername oder in welchem Bereich der Spielwelt sich der Spieler bei dem Spielstand befindet. Der Rest wird im "Slot Data"-Bereich gespeichert. Hier sind alle Informationen der serialisierten Actors und Components der Spielwelt eines Slots. Diese Unterteilung ist besonders praktisch, wenn wenige Slot-Informationen benötigt werden, aber diese nicht komplett geladen werden sollen. Falls zum Beispiel ein Menü erstellt wird, wo ausgewählt werden kann, mit welcher Spielwelt weitergespielt werden soll, kann hier bei jeder Spielwelt ein paar Informationen über diese beschrieben werden, ohne alle Slots komplett zu laden.\cite{piperiftPiperiftSaveSlot}
+
+Eine weitere Funktion, die die Effizienz des Speicherns enorm verbessern kann, ist die Möglichkeit asynchron zu arbeiten. Bei dem Save Extension Plugin gibt es einmal die Multithreaded oder Frame-splitted Serialisierung, bei denen die zu serialisierenden Daten auf allen verfügbaren CPU-Threads oder auf mehreren Frames verteilt und dort einzeln serialisiert werden. Außerdem gibt es noch Multithreaded Dateien, die asynchron im Hintergrund der Anwendung komprimiert, gespeichert und geladen werden.\cite{piperiftPiperiftSaveMultithreaded}
+
+Der Speicherprozess besteht aus den folgenden Schritten: Als Erstes wird der alte Spielstand gelöscht und es wird die Funktion OnSaveBegan aufgerufen, um weiterzugeben, dass der Speicherprozess begonnen hat. Dann werden der Thumbnail des aktuellen Spieles und die Spielstatistiken abgespeichert und anschließend wird die Spielwelt serialisiert. Zum Schluss wird die Funktion OnSaveFinished aufgerufen, um weiterzugeben, dass der Speicherprozess beendet wurde. In der Abbildung \ref{fig:piperiftSaveProcess} ist der vollständige Speicherprozess zu sehen. Gestrichelte Kanten bedeuten, dass hier mehrere Prozess parallel laufen können.\cite{piperiftSaveProcess}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/piperift_save_process.png}
+    \caption{Speicherprozess der Save Extension\cite{piperiftSaveProcess}}
+    \label{fig:piperiftSaveProcess}
+\end{figure}
+
+Der Ladeprozess ist etwas komplexer. Als erstes wird die Funktion OnLoadBegan aufgerufen, um den Start des Ladeprozesses weiterzugeben. Danach werden alle Maps und Daten geladen und anschließen werden die Filter der einzelnen Level und generelle Filter vorbereitet, damit überprüft werden kann, welcher Actor in welchem Level geladen werden muss und wie dieser deserialisiert werden soll. Hiernach werden die einzelnen Levels vorbereitet und die Welt wird deserialisiert. Beim Vorbereiten der Levels werden gespeicherte Actors wiederhergestellen und nicht mehr existierende endgültig gelöscht. Bei dem Deserialisieren der Welt werden alle Level abgearbeitet und Actors und Components dieser deserialisiert. Zum Schluss wird die Funktion OnLoadFinished aufgerufen, um weiterzugeben, dass der Ladeprozess terminiert hat. In der Abbildung \ref{fig:piperiftLoadProcess} ist der vollständige Ladeprozess zu sehen.\cite{piperiftLoadProcess}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/piperift_load_process.png}
+    \caption{Ladeprozess der Save Extension\cite{piperiftLoadProcess}}
+    \label{fig:piperiftLoadProcess}
+\end{figure}
 %--------------------------------------------------------------------------
 
 
