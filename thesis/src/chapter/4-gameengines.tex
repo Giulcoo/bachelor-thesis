@@ -1,5 +1,5 @@
 \chapter{Game Engines}\label{ch:gameengines}
-Eine Game Engine ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Erlebnisse konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr.
+Eine \wichtig{Game Engine} ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Erlebnisse konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr.
 
 \dots
 %--------------------------------------------------------------------------
@@ -200,22 +200,87 @@ Der Ladeprozess ist etwas komplexer. Als erstes wird die Funktion OnLoadBegan au
 
 %--------------------------------------------------------------------------
 \section{Godot}
-Godot Engine grob vorstellen und erklären
+Godot Engine ist ein open-source und kostenfreies Game Engine, welches von einer Gemeinschaft von unabhängigen Entwicklern erstellt wurde. Es wird hauptsächlich für kleinere Spiele verwendet, da es im Vergleich zu anderen Game Engines bei den Funktion noch recht eingeschränkt ist. Im Vergleich zu Unity und Unreal Engine verwendet Godot keinen komponentenbasierten Ansatz, sondern hat verschiedene Klassen von Objekten, die Nodes genannt werden. Diese werden in einer Hierarchie in der Spiel-Szene angeordnet und jedem Node kann ein Skript angehangen werden, um das Verhalten dieser anzupassen. Statt bereits existierende Programmiersprachen zu verwenden, wurde für Godot eine eigene Programmiersprache entwickelt, namens GDScript, welche viele Ähnlichkeiten zu Python besitzt. Alternativ kann aber auch C\# und C++ zum Entwickeln von Spielen verwendet werden. Mit dem Godot Engine können 2D- und 3D-Spiele für Desktop-Plattformen, Mobilgeräte und das Web entwickelt werden.
+\cite{salmela2022game}
 
 \subsection{JSON}
-Macht viel Sinn, weil GodotScript Dictionaries hat, die Sachen wie im JSON Stil speichern 
-können. JSON wird dann zu einem Dictionary umgeformt und ein Dictionary in JSON
+Da die Programmiersprache GDScript Dictionaries unterstützt, ist es sinnvoll mit JSON arbeiten, da diese im GDScript bereits eine sehr JSON-ähnliche Struktur besitzen. Um ein Speicher- und Ladesystem mit Godot Engine im JSON-Format aufzustellen, sollten zu Beginn erst einmal alle Objekte, die gespeichert werden sollen, markiert werden. Jedes Objekt kann zu einer Gruppe hinzugefügt werden. Gruppen sind Ansammlungen von Objekten mit einem bestimmten Namen, wobei jedes Objekt auch mehreren Gruppen zugehören kann. Danach muss zu allen Objekten, die gespeichert werden sollen, eine Funktion hinzugefügt werden, die das Objekt zu einem JSON-Objekt umwandelt. Wie so eine Funktion aussehen kann, ist in dem Code \ref{lst:godotJsonToJsonFunc} zu sehen. Alle wichtigen Variablen eines Objektes werden in ein Dictionary gepackt und danach mithilfe der "JSON"-Hilfsklasse zu einem JSON-String umgewandelt. Diese Klasse hat aber auch Einschränkungen, was alles in JSON umgewandelt werden kann. Zum Beispiel können Vektoren, wie der "position"-Vektor eines Objektes, nicht direkt in JSON umgewandelt werden. Deshalb muss die Position über eine x und y Variable gespeichert werden, statt direkt den "position"-Vektor zu speichern.\cite{godotengineSavingGames}
 
-\begin{itemize}
-    \item Daten in dictionary abspeichern
-    \item Dictionary zu JSON-String serialisieren mit Godot Hilfsklasse JSON
-    \item Manche Datentypen wie Vector2 können nicht serialisiert werden
-\end{itemize}
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single,tabsize=2]{python}
+        func to_json():
+          var object_data = {
+            "filename" : get_scene_file_path(),
+            "parent" : get_parent().get_path(),
+            "x" : position.x, 
+            "y" : position.y,
+            "level": level,
+            "health": health,
+            "name": name
+          }
 
-% 10.7.
-\url{https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html}\\
+          return JSON.stringify(object_data)
+    \end{minted}
+    \caption{Beispiel für das Speichern mit JSON in Godot\cite{godotengineSavingGames} \wichtig{Wenn ich den Code von Godot leicht angepasst habe, aber deiser doch ähnlich ist, soll ich dann trotzdem cite benutzen?}}
+    \label{lst:godotJsonToJsonFunc}
+\end{listing}
+
+Die "to\_json"-Funktion kann zum Speichern aller Objektzustände verwendet werden. In dem Code \ref{lst:godotJsonSave} ist zu sehen, wie eine Speicherfunktion aussehen könnte. Dabei wird als erstes eine Datei definiert, in der die Daten gespeichert werden sollen. Danach werden alle Objekte aus der "Save"-Gruppe geholt und über diese Menge wird iteriert. Wenn ein Objekt gespeichert werden soll, muss es zu dieser Gruppe hinzugefügt werden. Für jedes Objekt dieser Gruppe wird erst einmal geschaut, ob dieses Objekt aus einer Datei instanziiert wurde und ob in diesem Objekt die "to\_json"-Funktion enthalten ist. Bei jedem Node gibt es die Variable "scene\_file\_path", welche als String speichert, aus welcher Datei das Objekt instanziiert wurde. Alle Kind-Nodes dieses Objektes haben bei dieser Variable einen leeren String.\cite{godotengineNode} Diese Nodes sollen beim Speichern übersprungen werden. Bei den restlichen Objekten wird die "to\_json"-Funktion aufgerufen und der JSON-String der zurückgegeben wird, wird in die Speicherdatei geschrieben.\cite{godotengineSavingGames}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{python}
+        func save_game():
+          var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+          var save_nodes = get_tree().get_nodes_in_group("Save")
+          for node in save_nodes:
+            if node.scene_file_path.is_empty() || !node.has_method("to_json"): 
+              continue 
+
+            var json_string = node.call("to_json")
+            save_game.store_line(json_string)
+    \end{minted}
+    \caption{Beispiel für das Speichern mit JSON in Godot\cite{godotengineSavingGames}}
+    \label{lst:godotJsonSave}
+\end{listing}
+
+Für das Laden der Daten müssen etwas mehr Schritte durchgeführt werden. In dem Code \ref{lst:godotJsonLoad} ist zu sehen, wie ein Spiel in Godot über eine "load\_game"-Funktion geladen werden kann, abhängig von den letzten zwei GDScripts. Zu Beginn sollte überprüft werden, dass die Speicherdatei existiert. Wenn das der Fall ist, kann der Prozess fortgesetzt werden. Als nächstes wird geschaut, ob schon Objekte der "Save"-Group existieren. Diese müssen gelöscht werden, weil sonst beim Laden Duplikate entstehen könnten. Danach kann begonnen werden die Speicherdatei Zeile für Zeile abzulesen. Da die Objekte immer als einzeilige JSON-Strings gespeichert werden, stellt jede Zeile in der Speicherdatei ein Objekt da. Dieses JSON-Objekt wird dann über der "parse"-Funktion der JSON-Hilfsklasse deserialisiert. Falls das Deserialisieren erfolgreich war, werden die Daten des Objektes an die "load\_node"-Funktion weitergegeben. Diese instanziiert das Objekt und setzt die Werte der gespeicherten Variablen\cite{godotengineSavingGames}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{python}
+        func load_game():
+          if not FileAccess.file_exists("user://savegame.save"):
+            return
+
+          var save_nodes = get_tree().get_nodes_in_group("Save")
+          for i in save_nodes:
+            i.queue_free()
+
+          var save_game = FileAccess.open("user://savegame.save", FileAccess.READ)
+          while save_game.get_position() < save_game.get_length():
+            var json_string = save_game.get_line()
+            var json = JSON.new()
+
+            var parse_result = json.parse(json_string)
+            if not parse_result == OK: continue
+
+            load_node(json.get_data())
+
+        func load_node(node_data):
+          var new_object = load(node_data["filename"]).instantiate()
+          get_node(node_data["parent"]).add_child(new_object)
+          new_object.position = Vector2(node_data["x"], node_data["y"])
+
+          for key in node_data.keys():
+            if key == "filename" or key == "parent" or key == "x" or key == "y":
+              continue
+            new_object.set(i, node_data[i])
+    \end{minted}
+    \caption{Beispiel für das Laden mit JSON in Godot\cite{godotengineSavingGames}}
+    \label{lst:godotJsonLoad}
+\end{listing} 
 
 \subsection{Binary Serialization}
+
 
 \begin{itemize}
     \item Umwandeln von Datentypen zu array von bytes
@@ -227,8 +292,7 @@ können. JSON wird dann zu einem Dictionary umgeformt und ein Dictionary in JSON
     \end{itemize}
 \end{itemize}
 
-% 10.7.
-\url{https://docs.godotengine.org/en/stable/tutorials/io/binary_serialization_api.html}
+Die binäre Serialisierung hat viele Vorteile gegenüber der JSON Serialisierung. Zum einen sind die Dateigrößen deutlich kompakter bei binären Daten, im Vergleich zu den gespeicherten JSON-Strings. Außerdem unterstützt Godot viel mehr Datentypen, die binär, aber nicht zu JSON serialisiert werden können. Bei eigenen Klassen braucht es auch eigene Logiken, zum kodieren und dekodieren dieser, um diese zu JSON zu serialisieren. Bei binärer Serialiserung wird weniger eigene Logik benötigt.\cite{godotengineSavingGames}
 
 \subsection{Universal Save/Load System}
 
