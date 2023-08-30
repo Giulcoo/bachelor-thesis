@@ -62,7 +62,7 @@ Wenn für das Unity Projekt mit JSON die Spielstände gespeichert werden sollen,
     \label{fig:unityJsonPerformance}
 \end{figure}
 
-\subsection{BinaryFormatter}
+\subsection{BinaryFormatter}\label{ssec:binaryFormatter}
 Die .NET-Klasse \textit{BinaryFormatter} ist eine Möglichkeit eine binäre Serialisierung der Daten durchzuführen. Sie verwandelt .NET-Objekte in eine Liste von Bytes um und umgekehrt. In dem Beispielcode \ref{lst:binaryFormatterExp} ist zu sehen, wie der BinaryFormatter verwendet werden kann. Dabei werden die Player-Klasse und die Spieler aus dem Beispielcode \ref{lst:jsonUtilityExp} benutzt. In der Zeile 2 wird der Spieler namens "Bob" in der Datei "bobFile" in binärer Form abgespeichert. In der Zeile 3 wird das Objekt namens "tom" mit den Werten aus der "bobFile"-Datei neu gesetzt. Dabei werden die Daten aus "bobFile" wieder deserialisiert.\cite{microsoftBinaryFormatterClass} 
 
 \begin{listing}[htp]
@@ -200,8 +200,9 @@ Der Ladeprozess ist etwas komplexer. Als erstes wird die Funktion OnLoadBegan au
 
 %--------------------------------------------------------------------------
 \section{Godot}
-Godot Engine ist ein open-source und kostenfreies Game Engine, welches von einer Gemeinschaft von unabhängigen Entwicklern erstellt wurde. Es wird hauptsächlich für kleinere Spiele verwendet, da es im Vergleich zu anderen Game Engines bei den Funktion noch recht eingeschränkt ist. Im Vergleich zu Unity und Unreal Engine verwendet Godot keinen komponentenbasierten Ansatz, sondern hat verschiedene Klassen von Objekten, die Nodes genannt werden. Diese werden in einer Hierarchie in der Spiel-Szene angeordnet und jedem Node kann ein Skript angehangen werden, um das Verhalten dieser anzupassen. Statt bereits existierende Programmiersprachen zu verwenden, wurde für Godot eine eigene Programmiersprache entwickelt, namens GDScript, welche viele Ähnlichkeiten zu Python besitzt. Alternativ kann aber auch C\# und C++ zum Entwickeln von Spielen verwendet werden. Mit dem Godot Engine können 2D- und 3D-Spiele für Desktop-Plattformen, Mobilgeräte und das Web entwickelt werden.
-\cite{salmela2022game}
+Godot Engine ist ein open-source und kostenfreies Game Engine, welches von einer Gemeinschaft von unabhängigen Entwicklern erstellt wurde. Es wird hauptsächlich für kleinere Spiele verwendet, da es im Vergleich zu anderen Game Engines bei den Funktion noch recht eingeschränkt ist. Im Vergleich zu Unity und Unreal Engine verwendet Godot keinen komponentenbasierten Ansatz, sondern hat verschiedene Klassen von Objekten, die Nodes genannt werden. Diese werden in einer Hierarchie in der Spiel-Szene angeordnet und jedem Node kann ein Skript angehangen werden, um das Verhalten dieser anzupassen. Statt bereits existierende Programmiersprachen zu verwenden, wurde für Godot eine eigene Programmiersprache entwickelt, namens GDScript, welche viele Ähnlichkeiten zu Python besitzt. Alternativ kann aber auch C\# und C++ zum Entwickeln von Spielen verwendet werden. Mit dem Godot Engine können 2D- und 3D-Spiele für Desktop-Plattformen, Mobilgeräte und das Web entwickelt werden.\cite{salmela2022game}
+
+Zu Beginn von diesem Abschnitt werden zwei Möglichkeiten angeschaut, die von Godot Engine angeboten werden, um Spielobjekte zu serialisieren und deserialisieren. Einmal wird das Arbeiten mit JSON betrachtet und danach die binäre Serialisierung. \wichtig{Letzten Abschnitt beschreiben\dots}
 
 \subsection{JSON}
 Da die Programmiersprache GDScript Dictionaries unterstützt, ist es sinnvoll mit JSON arbeiten, da diese im GDScript bereits eine sehr JSON-ähnliche Struktur besitzen. Um ein Speicher- und Ladesystem mit Godot Engine im JSON-Format aufzustellen, sollten zu Beginn erst einmal alle Objekte, die gespeichert werden sollen, markiert werden. Jedes Objekt kann zu einer Gruppe hinzugefügt werden. Gruppen sind Ansammlungen von Objekten mit einem bestimmten Namen, wobei jedes Objekt auch mehreren Gruppen zugehören kann. Danach muss zu allen Objekten, die gespeichert werden sollen, eine Funktion hinzugefügt werden, die das Objekt zu einem JSON-Objekt umwandelt. Wie so eine Funktion aussehen kann, ist in dem Code \ref{lst:godotJsonToJsonFunc} zu sehen. Alle wichtigen Variablen eines Objektes werden in ein Dictionary gepackt und danach mithilfe der "JSON"-Hilfsklasse zu einem JSON-String umgewandelt. Diese Klasse hat aber auch Einschränkungen, was alles in JSON umgewandelt werden kann. Zum Beispiel können Vektoren, wie der "position"-Vektor eines Objektes, nicht direkt in JSON umgewandelt werden. Deshalb muss die Position über eine x und y Variable gespeichert werden, statt direkt den "position"-Vektor zu speichern.\cite{godotengineSavingGames}
@@ -280,17 +281,9 @@ Für das Laden der Daten müssen etwas mehr Schritte durchgeführt werden. In de
 \end{listing} 
 
 \subsection{Binary Serialization}
+Auch binäre Serialisierung wird von Godot unterstützt. Bei diesem Prozess werden die verschiedenen Datentypen zu einem Array von Bytes umgewandelt. Von Godot Engine werden 30 verschiedene Datentypen bereitgestellt, die im binären Format gespeichert werden können. Beim serialisieren werden die Daten in Pakete verpackt. Ein Paket ist ein Datentyp mit seinem Wert. Die ersten vier Bytes eines Pakets beschreiben den Datentypen und zum setzen von \wichtig{Flags}. Jeder Datentyp ist als Zahl definiert, welche in dem Header binär geschrieben wird. Zum Beispiel ist der Datentyp "int" mit der Zahl 2 definiert und über \wichtig{Flags} kann gespeichert werden, ob es ein 32-Bit oder 64-Bit Integer ist. Ab dem fünften Byte beginnt der Inhalt des Pakets. Dieser varriiert von Datentyp zu Datentyp. Bei Strings zum Beispiel wird in den ersten vier Bytes des Inhalts definiert, wie lang die Zeichenkette ist, und erst nach diesen vier Bytes wird der String-Inhalt bestimmt. Bei solchen Datentypen ist die Größe des Paketinhalts variabel und nicht fest definiert.\cite{godotengineBinarySerialization}
 
-
-\begin{itemize}
-    \item Umwandeln von Datentypen zu array von bytes
-    \item Godot bietet 30 Datentypen an, die in binären Format gespeichert werden können
-    \item Jedes Packet (Datentyp) hat folgende bytes:
-    \begin{itemize}
-        \item 4-byte header um den Typen zu definieren (0 = null, 1 = bool, 2 = integer, ...) und zum setzen von flags
-        \item Packetinhalt(e), der ab dem 5. Byte anfängt und unterschiedlich groß ist 
-    \end{itemize}
-\end{itemize}
+Objekte können über Godots "var\_to\_bytes\_with\_objects"-Funktion binär serialisiert und mit der "bytes\_to\_var\_with\_objects"-Funktion wieder deserialisiert werden. Beim Deserialisieren muss jedoch aufgepasst werden, dass die Daten keinen Code beinhalten, der ausgeführt werden kann. Es sollten immer nur Daten von vertrauten Quellen deserialisert werden, sonst wird es zu Problem kommen, die bei dem BinaryFormatter Abschnitt \ref{ssec:binaryFormatter} genauer beschrieben wurden.\cite{godotengineGlobalScope}
 
 Die binäre Serialisierung hat viele Vorteile gegenüber der JSON Serialisierung. Zum einen sind die Dateigrößen deutlich kompakter bei binären Daten, im Vergleich zu den gespeicherten JSON-Strings. Außerdem unterstützt Godot viel mehr Datentypen, die binär, aber nicht zu JSON serialisiert werden können. Bei eigenen Klassen braucht es auch eigene Logiken, zum kodieren und dekodieren dieser, um diese zu JSON zu serialisieren. Bei binärer Serialiserung wird weniger eigene Logik benötigt.\cite{godotengineSavingGames}
 
