@@ -1,13 +1,13 @@
 \chapter{Game Engines}\label{ch:gameengines}
-Eine \wichtig{Game Engine} ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Erlebnisse konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr.
+Eine \wichtig{\textit{Game Engine}} ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Anwendungen konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr. Dabei ist das Hauptziel einer Game Engine, eine Abstraktion der allgemeinen Videospielfunktionen anzubieten, damit Code und Spielkomponente in verschiedenen Projekten wiederverwendet werden können. Die Funktionen einer modernen Game Engine können eine Rendering-Engine für 2D- oder 3D-Grafiken, Handhabung von Inputs, Physik-Engine, Animationen, Speichermanagement und Prozess-Threading sein. Bei vielen Game Engines heutzutage verwenden Entwickler höhere Programmiersprachen, wie Java, C++ und C\#, zum Entwickeln der Skripte für die Spiele. Außerdem werden immer mehr Plattformen angeboten, für die die Spiele entwickelt werden können, sei es für Desktopumgebungen, Mobilgeräte oder Konsolen.\cite{andrade2015game}
 
-\dots
+In diesem Kapitel werden drei Game Engines genauer betrachtet. Es wird das populäre Game Engine Unity, das von Epic Games veröffentlichte Unreal Engine und das neuere Godot Engine angeschaut. Alle Game Engines bieten eine Vielzahl an Möglichkeiten an, den Spielstand von einem Spieler abzuspeichern und zu laden.
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \section{Unity}
-\textit{Unity} ist eine leistungsstarke und vielseitige Echtzeit-3D-Enticklungsplattform zum Entwickeln von Videospielen und Filmen. Sie wurde 2015 von Unity Technologies entwickelt und wurde durch die intuitive Benutzeroberfläche schnell zu der meist verwendeten Game Engine der Welt. Unity bietet für Spieleentwickler eine breite Auswahl an Systemen, für das Programmieren von 2D- und 3D-Spielen, Simulationen oder interaktiven Anwendungen. Sei es Mobilspiele, Spiele für jegliche Betriebssysteme, wie Windows, MacOS oder Linux oder Spiele für Konsolen, mit allen ist es möglich Unity zu verwenden. Programmiert wird bei Unity hauptsächlich mit der Programmiersprache C\#.\cite{unityUnityEngine}\cite{vsmid2017comparison}
+\textit{Unity} ist eine leistungsstarke und vielseitige Echtzeit-3D-Enticklungsplattform zum Entwickeln von Videospielen und Filmen. Sie wurde 2005 von Unity Technologies entwickelt und wurde durch die intuitive Benutzeroberfläche schnell zu der meist verwendeten Game Engine der Welt. Unity bietet für Spieleentwickler eine breite Auswahl an Systemen, für das Programmieren von 2D- und 3D-Spielen, Simulationen oder interaktiven Anwendungen. Sei es Mobilspiele, Spiele für jegliche Betriebssysteme, wie Windows, MacOS oder Linux oder Spiele für Konsolen, mit allen ist es möglich Unity zu verwenden. Programmiert wird bei Unity hauptsächlich mit der Programmiersprache C\#.\cite{unityUnityEngine}\cite{vsmid2017comparison}
 
 In diesem Kapitel werden eine Vielzahl an Möglichkeiten angeschaut, welche Unity anbietet, um Speicher- und Ladesysteme für das Speichern des Spielstandes aufzustellen. Als erstes wird Unitys PlayerPrefs-Klasse angeschaut. Danach werden verschiedene Arten aufgezählt Objekte von Unity in JSON zu serialisieren und wann welche Strategie Sinn macht zu verwenden. Anschließend werden sich die .NET-Klassen BinaryFormatter, StreamWriter und StreamReader angeschaut. Beim BinaryFormatter werden die Probleme beim Serialisieren und Deserialisieren von Daten erläutert und es werden Alternativen vorgestellt. Zum Schluss wird das kostenpflichtige Paket Easy Save aus dem Asset Store angeschaut, welches einfach und effizient ein komplettes Speicher- und Ladesystem für Spiele implementieren kann.
 
@@ -200,9 +200,9 @@ Der Ladeprozess ist etwas komplexer. Als erstes wird die Funktion OnLoadBegan au
 
 %--------------------------------------------------------------------------
 \section{Godot}
-Godot Engine ist ein open-source und kostenfreies Game Engine, welches von einer Gemeinschaft von unabhängigen Entwicklern erstellt wurde. Es wird hauptsächlich für kleinere Spiele verwendet, da es im Vergleich zu anderen Game Engines bei den Funktion noch recht eingeschränkt ist. Im Vergleich zu Unity und Unreal Engine verwendet Godot keinen komponentenbasierten Ansatz, sondern hat verschiedene Klassen von Objekten, die Nodes genannt werden. Diese werden in einer Hierarchie in der Spiel-Szene angeordnet und jedem Node kann ein Skript angehangen werden, um das Verhalten dieser anzupassen. Statt bereits existierende Programmiersprachen zu verwenden, wurde für Godot eine eigene Programmiersprache entwickelt, namens GDScript, welche viele Ähnlichkeiten zu Python besitzt. Alternativ kann aber auch C\# und C++ zum Entwickeln von Spielen verwendet werden. Mit dem Godot Engine können 2D- und 3D-Spiele für Desktop-Plattformen, Mobilgeräte und das Web entwickelt werden.\cite{salmela2022game}
+Godot Engine ist ein open-source und kostenfreies Game Engine, welches von einer Gemeinschaft von unabhängigen Entwicklern erstellt wurde. Es wurde 2014 veröffentlicht und wird hauptsächlich für kleinere Spiele verwendet, da es im Vergleich zu anderen Game Engines bei den Funktionen noch recht eingeschränkt ist. Im Vergleich zu Unity und Unreal Engine verwendet Godot keinen komponentenbasierten Ansatz, sondern hat verschiedene Klassen von Objekten, die Nodes genannt werden. Diese werden in einer Hierarchie in der Spiel-Szene angeordnet und jedem Node kann ein Skript angehangen werden, um das Verhalten dieser anzupassen. Statt bereits existierende Programmiersprachen zu verwenden, wurde für Godot eine eigene Programmiersprache entwickelt, namens GDScript, welche viele Ähnlichkeiten zu Python besitzt. Alternativ kann aber auch C\# und C++ zum Entwickeln von Spielen verwendet werden. Mit dem Godot Engine können 2D- und 3D-Spiele für Desktop-Plattformen, Mobilgeräte und das Web entwickelt werden.\cite{salmela2022game}
 
-Zu Beginn von diesem Abschnitt werden zwei Möglichkeiten angeschaut, die von Godot Engine angeboten werden, um Spielobjekte zu serialisieren und deserialisieren. Einmal wird das Arbeiten mit JSON betrachtet und danach die binäre Serialisierung. \wichtig{Letzten Abschnitt beschreiben\dots}
+Zu Beginn von diesem Abschnitt werden zwei Möglichkeiten angeschaut, die von Godot Engine angeboten werden, um Spielobjekte zu serialisieren und deserialisieren. Einmal wird das Arbeiten mit JSON betrachtet und danach die binäre Serialisierung. Zum Schluss wird noch ein Godot Plugin vorgestellt, welches ein fertiges Speicher- und Ladesystem für Entwickler anbietet. 
 
 \subsection{JSON}
 Da die Programmiersprache GDScript Dictionaries unterstützt, ist es sinnvoll mit JSON arbeiten, da diese im GDScript bereits eine sehr JSON-ähnliche Struktur besitzen. Um ein Speicher- und Ladesystem mit Godot Engine im JSON-Format aufzustellen, sollten zu Beginn erst einmal alle Objekte, die gespeichert werden sollen, markiert werden. Jedes Objekt kann zu einer Gruppe hinzugefügt werden. Gruppen sind Ansammlungen von Objekten mit einem bestimmten Namen, wobei jedes Objekt auch mehreren Gruppen zugehören kann. Danach muss zu allen Objekten, die gespeichert werden sollen, eine Funktion hinzugefügt werden, die das Objekt zu einem JSON-Objekt umwandelt. Wie so eine Funktion aussehen kann, ist in dem Code \ref{lst:godotJsonToJsonFunc} zu sehen. Alle wichtigen Variablen eines Objektes werden in ein Dictionary gepackt und danach mithilfe der "JSON"-Hilfsklasse zu einem JSON-String umgewandelt. Diese Klasse hat aber auch Einschränkungen, was alles in JSON umgewandelt werden kann. Zum Beispiel können Vektoren, wie der "position"-Vektor eines Objektes, nicht direkt in JSON umgewandelt werden. Deshalb muss die Position über eine x und y Variable gespeichert werden, statt direkt den "position"-Vektor zu speichern.\cite{godotengineSavingGames}
@@ -287,16 +287,51 @@ Objekte können über Godots "var\_to\_bytes\_with\_objects"-Funktion binär ser
 
 Die binäre Serialisierung hat viele Vorteile gegenüber der JSON Serialisierung. Zum einen sind die Dateigrößen deutlich kompakter bei binären Daten, im Vergleich zu den gespeicherten JSON-Strings. Außerdem unterstützt Godot viel mehr Datentypen, die binär, aber nicht zu JSON serialisiert werden können. Bei eigenen Klassen braucht es auch eigene Logiken, zum kodieren und dekodieren dieser, um diese zu JSON zu serialisieren. Bei binärer Serialiserung wird weniger eigene Logik benötigt.\cite{godotengineSavingGames}
 
-\subsection{Universal Save/Load System}
+\subsection{Thoth}
+Falls ein fertiges Speicher- und Ladesystem gesucht wird, welches in das Projekt integriert werden soll, dann ist das Plugin \textit{Thoth} eine Alternative zu den eingebauten Godot Engine Funktionen. Dieses System wurde so entwickelt, dass es für jede Art von Spiel verwendet werden kann und speichert den Spielzustand in einem Format, welches ähnlich zu JSON ist, ab.\cite{stupidratstudioGodotSaveLoad}
 
-\begin{itemize}
-    \item Savestate Spielobjekt, welches mit einer Speicherdatei verbunden ist
-    \item Savestate speichert Variablen oder Levels
-    \item In Liste "serializable" alle Variablen von einem Objekt, die gespeichert werden sollen, speichern
-    \item In "serializable\_collections" alle collections speichern, die von einem Level gespeichert werden sollen
-    \item JSON-Format für Spielstand Daten
-\end{itemize}
+Um das System aufzustellen, muss das "Savestate"-Node von diesem Plugin hinzugefügt werden. Diese Node ist immer mit einer Speicherdatei verbunden und kann den Spielzustand zu einem beliebigen Zeitpunkt speichern. Im GDScript-Code \ref{lst:godotThoth} ist zu sehen, wie das "Savestate"-Node verwendet werden kann. Als erstes wird in dem Array "serializable\_collections" definiert, welche Objekte serialisiert werden sollen. In dem Beispielcode werden alle Kinder-Nodes, von dem "SaveObjects"-Node serialisiert. Bei jedem Objekt kann außerdem mit dem "serializable"-Array eingestellt werden, welche Variable gespeichert wird. In dem Objekt, dem der Code \ref{lst:godotThothObject} angehangen wird, werden zum Beispiel nur die Variablen "level", "health" und "name" gespeichert. Die Variable "effects" wird beim Serialisieren übersprungen. Zum Speichern und Laden müssen die Funktionen "save\_game" und "load\_game" aus dem Code \ref{lst:godotThoth} aufgerufen werden. Bei der Speicherfunktion müssen als erstes die gespeicherten Daten geladen werden, da vielleicht noch Informationen der alten Spielstände gebraucht werden. Anschließend kann der aktuelle Spielzustand serialisiert und dann gespeichert werden. Bei der Ladefunktion wird als erstes der letzte Spielzustand geladen und danach deserialisert. 
 
-% 10.7.
-\url{https://godotengine.org/asset-library/asset/1655}\\
-\url{https://stupidratstudio.github.io/thoth/}
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{python}
+        extends Node2D
+
+        const serializable_collections = [
+          "SaveObjects"
+        ]
+
+        @onready var savestate = get_node("Savestate")
+
+        func save_game():
+          savestate.load_game_state()
+          savestate.pack_game_state(self)  
+          savestate.save_game_state()
+
+        func load_game():
+          savestate.load_game_state()
+          savestate.unpack_game_state(self)
+    \end{minted}
+    \caption{Beispiel für das Speichern und laden mit Thoth}
+    \label{lst:godotThoth}
+\end{listing} 
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{python}
+        extends Node2D
+
+        var level
+        var health
+        var name
+        var effects
+
+        const serializable = [
+            "level",
+            "health",
+            "name"
+        ]
+
+        ...
+    \end{minted}
+    \caption{Beispiel für die Einstellung, welche Variablen serialisiert werden sollen}
+    \label{lst:godotThothObject}
+\end{listing} 
