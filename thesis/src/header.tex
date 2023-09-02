@@ -90,6 +90,13 @@
 % Tables
 \usepackage{booktabs}
 
+% Todos
+\usepackage{todonotes}
+
+% Directory Tree
+\usepackage{dirtree}
+\DTsetlength{1em}{1.3em}{0.2em}{0.4pt}{2pt}
+
 % Frequently used column types
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}} % centering column type with fixed width
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} % right aligned column type with fixed width
@@ -102,3 +109,6 @@
 \newcommand{\lst}[1]{Listing~\ref{#1}} %shortcut for a listing reference
 \newcommand{\sect}[1]{Section~\ref{#1}} %shortcut for a Section reference
 \newcommand{\br}[0]{\hspace{0cm}\\}
+
+% Custom commands
+\newcommand{\wichtig}[1]{\textbf{\textcolor{red}{#1}}}

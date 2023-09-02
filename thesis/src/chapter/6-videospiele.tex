@@ -7,7 +7,7 @@ Anschauen, wie Videospiele Daten speichern und laden\dots
 \section{Minecraft}
 Minecraft ist ein Sandbox-Spiel\footnote{Ein Sandbox-Spiel lässt Spieler frei entscheiden, was mit der Spielwelt gemacht werden soll. Es gibt keine feste Geschichte im Spiel, die verfolgt werden muss.\cite{ocio2009multi}}, welches von Mojang Studio entwwickelt wurde. Minecraft gilt unter den meistverkauften Videospiele aller Zeiten und kann auf eine Vielzahl von Plattformen gespielt werden.\cite{ignBestSellingVideo} Es wird in einer dreidimensionalen Welt, die aus Blöcken besteht, gespielt und es kann mit Entitäten interagiert werden. Es gibt verschiedene Spielmodi, wie zum Beispiel ein Überlebens- und Kreativmodus. Beim Überlebensmodus geht es hauptsächlich um das Überleben in der Spielwelt, jedoch kann der Spieler frei entscheiden, was er in der Spielwelt machen wird.\cite{minecraftWikiHome}
 
-\wichtig{Quelle mit Email nennen}
+\todo{Quelle mit Email}
 
 In diesem Kapitel wurde die Minecraft Version 1.16 angeschaut. 
 Bei neueren Versionen kann das Speichersystem bereits etwas anders aussehen. Um an den Sourcecode zu kommen wurde das Tool 
@@ -15,7 +15,7 @@ Bei neueren Versionen kann das Speichersystem bereits etwas anders aussehen. Um 
 Sourcecode gezeigt werden.
 
 \subsection{Daten}
-Bevor sich das Speicher- und Ladesystem von Minecraft genauer angeschaut werden kann, ist es erstmal wichtig zu wissen, mit welchen Arten von Daten Minecraft arbeitet. Die Spielwelt in Minecraft besteht aus verschiedenen Blöcken, \wichtig{Entitäten} und Items. 
+Bevor sich das Speicher- und Ladesystem von Minecraft genauer angeschaut werden kann, ist es erstmal wichtig zu wissen, mit welchen Arten von Daten Minecraft arbeitet. Die Spielwelt in Minecraft besteht aus verschiedenen Blöcken, Entitäten\todo{Entitäten vs Entitys} und Items. 
 
 \textit{Blöcke} werden in Minecraft nicht einzeln behandelt, sondern als Section, ein Bereich von 16x16x16-Block, gespeichert. Mehr zu dieser Aufteilung bei Minecraft gibt es im Abschnitt \ref{ssec:datenaufteilung}. Informationen, die zu so einem Block gehören, sind die Position, BlockID, Block Zustände und Informationen zum Licht. Die Position eines Blocks wird in der Reihenfolge y-, z- und x-Koordinate gespeichert, für bessere Komprimierung. Jeder Blocktyp hat eine eigene BlockID, die diesen Block genau identifiziert. Der Zustand eines Blocks wird für jede Section in einer Liste namens "BlockStates" abgespeichert. Informationen dessen Zustands können zum Beispiel sein, in welcher Himmelsrichtung der Block plaziert wurde, welche Rotation der Block hat und ob der Block am brennen ist. Welche Zustände ein Block haben kann, hängt auch von dem Blocktyp ab.\cite{minecraftBlockStates} Bei den Informationen zum Licht jedes Blocks gibt es für jede Section zwei Listen namens "BlockLight" und "SkyLight". "BlockLight" speichert wieviel Licht jeder Block ausstrahlt und "SkyLight" wieviel jeder Block an Licht abbekommt. Zusätlich gibt es noch sogenannte Block Entitys, die aber nichts mit den Entitäten des Spieles zu tun haben. Diese Speichern zusätliche Informationen zu einem Block, die in der "BlockStates"-Liste nicht gespeichert werden konnten.\cite{minecraftChunkFormat}
 %Weitere Quelle: ChunkSerializer.java:write()
@@ -24,13 +24,47 @@ Eine Entität kann ein Spieler, ein Tier oder Monster sein. Die wichtigste Infor
 %Weitere Quelle: Entity.java:writeWithoutTypeID()
 
 
-\textit{Items} bei Minecraft existieren im Inventar, in Kisten, in Item Frames oder in Armor Stands \wichtig{(Englisch)}. Wenn ein Spieler ein Item fallen lässt, dann werden diese als Entitäten in die Welt platziert und als solche gespeichert. Manche Items können in die Welt platziert werden und werden dann zu neuen Blöcken oder Entitäten. Jedes Item hat die Information "Count", "Slot", "id" und "tag". "Count" und "Slot" definieren, wieviele Items in welchem Inventarplatz liegen. Jedes Item hat dabei eine eigene Identifikationsnummer, mit der diese gespeichert werden. "tag" gibt noch zusätliche Informationen über ein Item, wie die Haltbarkeit oder ob ein Item unzerbrechlich ist.
+\textit{Items} bei Minecraft existieren im Inventar, in Kisten, in Item Frames oder in Armor Stands\todo{Englisch}. Wenn ein Spieler ein Item fallen lässt, dann werden diese als Entitäten in die Welt platziert und als solche gespeichert. Manche Items können in die Welt platziert werden und werden dann zu neuen Blöcken oder Entitäten. Jedes Item hat die Information "Count", "Slot", "id" und "tag". "Count" und "Slot" definieren, wieviele Items in welchem Inventarplatz liegen. Jedes Item hat dabei eine eigene Identifikationsnummer, mit der diese gespeichert werden. "tag" gibt noch zusätliche Informationen über ein Item, wie die Haltbarkeit oder ob ein Item unzerbrechlich ist.
 \cite{minecraftPlayerdatFormat}
 \cite{minecraftItem}
 
 %Item werdeb z.B. in player.dat gespeichert
 
 \subsection{Ordnerstruktur}
+Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt jede dieser Spielwelten einen eigenen Ordner. Wie so ein Ordner aufgebaut ist, ist in der Ordnerstruktur aus \ref{lst:ordnerStrukturMinecraft} zu sehen. 
+\cite{minecraftFolderStruc}
+
+\begin{listing}[htp]
+    \dirtree{%
+    .1 world.
+        .2 \textcolor{blue}{level.dat}.
+        .2 playerdata.
+            .3 \textcolor{blue}{<uuid>.dat}.
+        .2 stats.
+            .3 \textcolor{blue}{<uuid>.json}.
+        .2 advancements.
+            .3 \textcolor{blue}{<uuid>.json}.
+        .2 data.
+            .3 \textcolor{blue}{idcounts.dat}.
+            .3 \textcolor{blue}{map\_<\#>.dat}.
+            .3 \textcolor{blue}{villages.dat}.
+            .3 \dots.
+        .2 entities.
+        .2 region. 
+            .3 \textcolor{blue}{r.<\#>.<\#>.mca}.
+        .2 DIM-1.
+            .3 entities.
+            .3 region.
+                .4 \textcolor{blue}{r.<\#>.<\#>.mca}.
+        .2 DIM1.
+            .3 entities.
+            .3 region.
+                .4 \textcolor{blue}{r.<\#>.<\#>.mca}.
+    } 
+    \caption{Ordnerstruktur einer Spielwelt in Minecraft\cite{minecraftFolderStruc}}
+    \label{lst:ordnerStrukturMinecraft}
+\end{listing}
+
 Ordner:
 \begin{itemize}
     \item /world/data
@@ -49,8 +83,6 @@ Dateien:
     \item $[$region$]$.mca: Regionen in /region Ordner
 \end{itemize}
 
-% 1.8.2023
-\url{https://wiki.vg/Map_Format}\\
 \url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
 
 \subsection{Speicherformate}
@@ -132,7 +164,7 @@ Speicherung, wenn:
 Allgemein benutzt Factorio ein "Deterministic save load"
 \url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
 
-\wichtig{Quelle mit Email nennen}
+\todo{Quelle mit Email}
 
 \subsection{Daten}
 
