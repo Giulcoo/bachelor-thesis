@@ -31,8 +31,7 @@ Eine Entität kann ein Spieler, ein Tier oder Monster sein. Die wichtigste Infor
 %Item werdeb z.B. in player.dat gespeichert
 
 \subsection{Ordnerstruktur}
-Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt jede dieser Spielwelten einen eigenen Ordner. Wie so ein Ordner aufgebaut ist, ist in der Ordnerstruktur aus \ref{lst:ordnerStrukturMinecraft} zu sehen. 
-\cite{minecraftFolderStruc}
+Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt jede dieser Spielwelten einen eigenen Ordner. Wie so ein Ordner aufgebaut ist, ist in der Ordnerstruktur aus \ref{lst:ordnerStrukturMinecraft} zu sehen. Die nicht-markierten Knoten entsprechen einem Ordner und die blauen Knoten sind Dateien in dem Speichersystem. In dem Ordner einer Welt sind noch ein paar weitere Ordner und Dateien, diese sind aber nicht relevant für diese Arbeit. Die erste Datei in dem Ordner, die "level.dat"-Datei, speichert globale Daten über die Spielwelt ab. In den Ordnern "playerdata", "stats" und "advancements" werden Spielerinformationen abgespeichert, über eine "<uuid>.dat"- oder "<uuid>.json"-Datei. Die "uuid" wird dabei durch die Identifikationsnummer des Spielers ersetzt. Wenn alleine gespielt wird, werden viele Spielerdaten auch in der "level.dat"-Datei gespeichert. In dem "stats"- und "advancements"-Ordner werden Statistiken und Fortschritte von jedem Spieler der Welt gespeichert. Falls eine Welt im Mehrspielermodus gespielt wird, enthalten die Dateien im "playerdata"-Ordner alle restlichen Informationen eines Spielers.\cite{minecraftPlayerdatFormat}. Die restlichen Ordner und Dateien speichern den Zustand der Spielwelt. Bei Minecraft gibt es zum Beispiel Weltkarten, die Teile der Spielwelt anzeigen können. Jede Weltkarte kann dabei unterschiedliche bereiche der Welt anzeigen, deshalb gibt es für jede Weltkarte eine "map\_<\#>.dat"-Datei, die den Zustand einer Weltkarte speichert. Die "villages.dat"-Datei speichert die Zustände aller Dörfer der Spielwelt, denn jedes Dorf ist ein komplexes System aus verschiedenen zufällig generierten Entitäten und Gebäuden. Da die Spielwelt von Minecraft aus verschiedenen Dimensionen, namens "Overworld", "Nether" und "End" besteht, werden manche Daten auf verschiedenen Ordnern verteilt. Im "DIM-1"-Ordner werden Informationen zu der "Nether"-Dimension gespeichert und der "DIM1"-Ordner ist für die "End"-Dimension. Die "entities"- und "region"-Ordner zum Beispiel enthalten Informationen über die Entitäten und Regionen der Spielwelt und sind auch in den Ordnern der verschiedenen Dimensionen zu finden. Alle Entitäten und Regionen, die in keinem "DIM-1"- oder "DIM1"-Ordner gespeichert wurden, gehören zu der "Overworld"-Dimension.\cite{minecraftFolderStruc}
 
 \begin{listing}[htp]
     \dirtree{%
@@ -56,34 +55,17 @@ Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt 
             .3 entities.
             .3 region.
                 .4 \textcolor{blue}{r.<\#>.<\#>.mca}.
+            .3 \dots.
         .2 DIM1.
             .3 entities.
             .3 region.
                 .4 \textcolor{blue}{r.<\#>.<\#>.mca}.
+            .3 \dots.
+        .2 \dots.
     } 
     \caption{Ordnerstruktur einer Spielwelt in Minecraft\cite{minecraftFolderStruc}}
     \label{lst:ordnerStrukturMinecraft}
 \end{listing}
-
-Ordner:
-\begin{itemize}
-    \item /world/data
-    \item /world/players: Player Data
-    \item /world/DIM-1: Nether world
-    \item /world/DIM1: End world
-    \item /world/region: Overworld regions
-    \item /world/DIM-1/region: Nether regions
-    \item /world/DIM1/region: End regions
-\end{itemize}
-
-Dateien:
-\begin{itemize}
-    \item level.dat: Allgemeine Spieldaten (NBT Struktur)
-    \item $[$playeruuid$]$.dat: Spielerdaten
-    \item $[$region$]$.mca: Regionen in /region Ordner
-\end{itemize}
-
-\url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
 
 \subsection{Speicherformate}
 \begin{itemize}
