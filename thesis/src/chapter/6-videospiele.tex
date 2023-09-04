@@ -97,17 +97,20 @@ Das JSON-Format wird für das Speichern von Texten und kleineren Daten verwendet
 %Siehe auch: RegionFileCache.java:loadFile(), SaveFormat.java:convertRegions()
 
 \subsection{Speichervorgänge}
+In den vorherigen Abschnitten wurde detailliert erörtert, welche Daten in Minecraft gespeichert werden und in welcher Form dies geschieht. Nun stellt sich die Frage nach dem genauen Ablauf des gesamten Speicherprozesses und den Zeitpunkten, zu denen die Daten gesichert werden.
 
-Speicherung, wenn:
-\begin{itemize}
-    \item Neue Welt generiert (Minecraft.java:createWorld())
-    \item Pause-Taste wird gedrückt (IntegratedServer.java:tick())
-    \item Chunks werden entladen (Spieler zu weit weg)
-    \item Alle 5 Minuten
-\end{itemize}
+Der Spielzustand einer Welt in Minecraft wird zu verschiedenen Zeitpunkten im Spielverlauf gesichert. Zunächst wird der initiale Zustand der Spielwelt gespeichert, wenn eine Welt neu generiert wird. Doch darüber hinaus erfolgen während das Spiel gespielt wird sowohl automatische als auch manuelle Speicherprozesse.\cite{minecraftSpielstandSpeicherung}
 
-% 1.8.2023
-\url{https://minecraft.fandom.com/de/wiki/Spielstand-Speicherung}
+Manuelle Speicherungen finden statt, wenn der Spieler die Pause-Taste betätigt, die in Minecraft der "Esc"-Taste entspricht. Damit hat der Spieler die Möglichkeit, den aktuellen Zustand seiner Welt bewusst zu sichern.\cite{minecraftSpielstandSpeicherung} 
+
+Automatische Speicherungen erfolgen hingegen in regelmäßigen Intervallen. Der Spielzustand wird alle fünf Minuten automatisch gesichert, um sicherzustellen, dass selbst bei unvorhergesehenen Ereignissen oder einem möglichen Absturz des Spiels nur minimaler Fortschritt verloren geht.\cite{minecraftSpielstandSpeicherung}
+
+Chunks die zu weit weg von dem Spieler sind, werden bei Minecraft entladen, da es sehr viele Ressourcen brauchen würde, alle Chunks geladen zu lassen, auch wenn sie nicht aktiv verwendet werden. Bevor diese entladen werden, wird der Zustand des Chunks automatisch gesichert. Dies gewährleistet, dass keine relevanten Chunk-Informationen verloren gehen und diese bei Bedarf wiederhergestellt werden können.\cite{minecraftSpielstandSpeicherung}
+
+Insgesamt sorgen diese verschiedenen Speichermechanismen in Minecraft dafür, dass der Spielverlauf zuverlässig und in verschiedenen Situationen gesichert wird, um den Verlust von Fortschritt auf ein Minimum zu reduzieren.
+
+%Siehe auch: Minecraft.java:createWorld()
+%Siehe auch: IntegratedServer.java:tick()
 
 
 
