@@ -34,26 +34,13 @@ Eine Entität kann ein Spieler, ein Tier oder Monster sein. Die wichtigste Infor
 
 
 \subsection{Datenaufteilung} \label{ssec:datenaufteilung}
-Jedes Level hat seinen Ordner, in dem eine level.dat Datei ist und Ordner um Maps und Regions von diesem Level abzuspeichern. 
+Die Spielwelt von Minecraft, mit seinen Blöcken, Entitäten und Items, werden nach einem Chunk-basiertem System aufgeteilt. Dieses System unterteilt die Welt in verschiedene Gruppierungen und Untergruppen, wobei die oberste Ebene die "Welt" selbst ist. In Minecraft bezeichnet eine "Welt" die Spielwelt, die von einem Spieler erstellt werden kann, und diese Welt wird wiederum in die drei Dimensionen "Overworld", "Nether" und "End" unterteilt.\cite{minecraftWorld}
 
-\begin{itemize}
-    \item Section: Bereich von 16x16x16-Blöcken
-    \item Chunk: Bereich von 16x16x$[$Welt Höhenlimit$]$ Blöcken (Bei Minecraft 1.16 Höhenlimit = 256 $\Rightarrow{}$ Chunk = 16xSections (Chunk.java:sections))
-    \item Region: Gruppierung von Chunks in einem 32x32 Blöcke Gebiet
-    \item Level: (Theoretisch, aber nicht praktisch) unendliche Sammlung von Chunks gespeichert als regions
-\end{itemize}
+Jede Dimension bekommt seine eigenen Dateien zum Speichern der Daten (siehe \ref{ssec:ordnerstruktur}). Eine Dimension kann theoretisch aus unendlich vielen Blöcken, Entitäten und Items bestehen. Sie wird dabei auf mehrere Regionen aufgeteilt. Eine Region besteht aus 1024 Chunks, wobei sie 32 Chunks breit und 32 Chunks lang ist.\cite{minecraftRegionFile} 
 
-level.dat:
-\begin{itemize}
-    \item Globale Informationen über der Welt (Uhrzeit, Singleplayer Spieler, seed, \dots)
-    \item NBT File
-    \item level.dat$\_$old als Backup
-\end{itemize}
+Was die Größe eines Chunks betrifft, so ist sie statisch und beträgt 16 Blöcke in der Länge, 16 Blöcke in der Breite und die Höhe variiert je nach der jeweiligen Höhe der Welt. Seit der Einführung der Minecraft Version 1.18 beträgt die maximale Höhe der Spielwelt 384 Blöcke.\cite{minecraftNewestJavaEdition}\cite{minecraftNewestBedrockEdition} Um diese Struktur weiter zu verfeinern, wird jeder Chunk in Sektionen unterteilt. Eine Sektion besteht aus insgesamt 4096 Blöcken, was bedeutet, dass sie 16 Blöcke in der Länge, Breite und Höhe umfasst.\cite{minecraftChunk}
 
-% 1.8.2023
-\url{https://minecraft.fandom.com/wiki/Chunk_format}
-\url{https://wiki.vg/Region_Files}
-\url{https://minecraft.fandom.com/wiki/Java_Edition_level_format}
+%Chunk.java:sections
 
 
 
@@ -103,7 +90,7 @@ Das DAT-Format wird für jegliche Arten von Informationen verwendet, sei es Vide
 Die Daten werden dabei im eigenen Format namens Named Binary Tag (NBT)\todo{Abkürzungsverzeichnis} in diese Dateien geschrieben. Diese Format ist ähnlich zu dem JSON-Format, denn die Daten werden auch hier im Schlüssel-Wert-Prinzip behandelt. Das NBT-Format bietet eine Vielzahl an Datentypen, wie Byte, Boolean, verschiedene Zahlen Datentypen, String, List, Compound und Array. Der List-Datentyp ist zum Speichern von mehreren Werten, ohne Schlüssel. Compound ist eine geordnete Liste von Schlüssel-Wert-Paaren. Nachträglich werden in den meisten Fällen die NBT-Dateien mit GZip komprimiert.
 \cite{minecraftNBT}
 
-Minecraft Anvil (MCA)\todo{Abkürzungsverzeichnis} ist ein Dateiformat, zum Speichern von Chunk-Daten. Dabei wird in einer Datei eine Region, also eine Gebiet aus 32x32 Breite und Länge, gespeichert. Jede Datei bekommt dann den Namen "r.<x>.<z>.mca", wobei x und z mit den x und z Koordinaten der Region ersetzt wird. Falls die Koordinaten einer Region gesucht werden, in der ein Chunk drin ist, müssen die Chunk-Koordinaten durch 32 geteilt und abgerundet werden. Eine MCA-Datei fängt mit einem 8 KiB Header an, der in zwei 4 KiB Blöcken unterteilt ist. Der erste Block beschreibt die Position der Chunks in der Region und der zweite Block speichert die Zeit, wann jeder Chunk zuletzt aktualisiert wurde. Nach dem Header werden alle Zustände der Chunks einer Region gespeichert. Dabei wird für jeden Chunk erst die Länge der Daten in Bytes angegeben, dann die Art der Komprimierung und anschließend die komprimierten Daten.\cite{minecraftRegionFile}\cite{minecraftAnvilFile} Auch in diesen Dateien werden die Daten im NBT-Format in komprimiert Form gespeichert.\cite{minecraftNBT}
+Minecraft Anvil (MCA)\todo{Abkürzungsverzeichnis} ist ein Dateiformat, zum Speichern von Chunk-Daten. Dabei wird in einer Datei eine Region, also eine Gebiet aus 32x32 Chunks, gespeichert. Jede Datei bekommt dann den Namen "r.<x>.<z>.mca", wobei x und z mit den x und z Koordinaten der Region ersetzt wird. Falls die Koordinaten einer Region gesucht werden, in der ein Chunk drin ist, müssen die Chunk-Koordinaten durch 32 geteilt und abgerundet werden. Eine MCA-Datei fängt mit einem 8 KiB Header an, der in zwei 4 KiB Blöcken unterteilt ist. Der erste Block beschreibt die Position der Chunks in der Region und der zweite Block speichert die Zeit, wann jeder Chunk zuletzt aktualisiert wurde. Nach dem Header werden alle Zustände der Chunks einer Region gespeichert. Dabei wird für jeden Chunk erst die Länge der Daten in Bytes angegeben, dann die Art der Komprimierung und anschließend die komprimierten Daten.\cite{minecraftRegionFile}\cite{minecraftAnvilFile} Auch in diesen Dateien werden die Daten im NBT-Format in komprimiert Form gespeichert.\cite{minecraftNBT}
 
 Das JSON-Format wird für das Speichern von Texten und kleineren Daten verwendet. In Minecraft gibt es Bücher, Schilder und Labels, die der Spieler beschriften und mit Text füllen kann. Bücher zum Beispiel werden dann zwar im NBT-Format in den Dateien zu den Spielerdaten gespeichert, aber die Seiten der Bücher werden als serialisierten JSON-Text gespeichert.\cite{minecraftPlayerdatFormat} Die "advancements"- und "stats"-Ordner, die im Abschnitt \ref{ssec:ordnerstruktur} vorgestellt wurden, speichern die Fortschritte der einzelnen Spieler auch im JSON-Format ab. Ansonsten wird JSON hauptsächlich für statische Daten, wie das Verhalten von Entitäten, Blöcken und Items oder Anleitungen für das Bauen von Spielgegenständen.\cite{minecraftJSON}
 
@@ -129,6 +116,10 @@ Speicherung, wenn:
 
 
 \subsection{Fazit}
+\begin{itemize}
+    \item Chunk System mit fester Größe, da Limit an Elementen pro Chunk?
+\end{itemize}
+
 \todo{Irgendwie zusammenfassen, welche Strategien Minecraft verwendet?}
 %--------------------------------------------------------------------------
 
