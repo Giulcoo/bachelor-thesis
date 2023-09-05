@@ -1415,9 +1415,6 @@ INPUT chapter/2-algorithmen.aux
 INPUT ./chapter/4-gameengines.aux
 INPUT chapter/4-gameengines.aux
 INPUT chapter/4-gameengines.aux
-INPUT ./chapter/5-online.aux
-INPUT chapter/5-online.aux
-INPUT chapter/5-online.aux
 INPUT ./chapter/6-videospiele.aux
 INPUT chapter/6-videospiele.aux
 INPUT chapter/6-videospiele.aux
@@ -1852,16 +1849,6 @@ INPUT ./_minted-main/7D5FE5E7C27626599BF5969D9D29EB20C818933C69695E1E8FCE99B3BB9
 INPUT _minted-main/7D5FE5E7C27626599BF5969D9D29EB20C818933C69695E1E8FCE99B3BB94EEC9.pygtex
 INPUT ./_minted-main/7D5FE5E7C27626599BF5969D9D29EB20C818933C69695E1E8FCE99B3BB94EEC9.pygtex
 INPUT _minted-main/7D5FE5E7C27626599BF5969D9D29EB20C818933C69695E1E8FCE99B3BB94EEC9.pygtex
-INPUT ./chapter/5-online.tex
-INPUT ./chapter/5-online.tex
-INPUT ./chapter/5-online.tex
-OUTPUT chapter/5-online.aux
-INPUT ./chapter/5-online.tex
-INPUT ./chapter/5-online.tex
-INPUT ./chapter/5-online.tex
-INPUT chapter/5-online.tex
-INPUT ./chapter/5-online.tex
-INPUT chapter/5-online.tex
 INPUT ./chapter/6-videospiele.tex
 INPUT ./chapter/6-videospiele.tex
 INPUT ./chapter/6-videospiele.tex
@@ -1923,9 +1910,6 @@ INPUT chapter/2-algorithmen.aux
 INPUT ./chapter/4-gameengines.aux
 INPUT chapter/4-gameengines.aux
 INPUT chapter/4-gameengines.aux
-INPUT ./chapter/5-online.aux
-INPUT chapter/5-online.aux
-INPUT chapter/5-online.aux
 INPUT ./chapter/6-videospiele.aux
 INPUT chapter/6-videospiele.aux
 INPUT chapter/6-videospiele.aux
@@ -1939,7 +1923,6 @@ INPUT main.pyg
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
-INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb
 INPUT c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb

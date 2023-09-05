@@ -6,13 +6,12 @@ Anschauen, wie Videospiele Daten speichern und laden\dots
 %--------------------------------------------------------------------------
 \section{Minecraft}
 Minecraft ist ein Sandbox-Spiel\footnote{Ein Sandbox-Spiel lässt Spieler frei entscheiden, was mit der Spielwelt gemacht werden soll. Es gibt keine feste Geschichte im Spiel, die verfolgt werden muss.\cite{ocio2009multi}}, welches von Mojang Studio entwwickelt wurde. Minecraft gilt unter den meistverkauften Videospiele aller Zeiten und kann auf eine Vielzahl von Plattformen gespielt werden.\cite{ignBestSellingVideo} Es wird in einer dreidimensionalen Welt, die aus Blöcken besteht, gespielt und es kann mit Entitäten interagiert werden. Es gibt verschiedene Spielmodi, wie zum Beispiel ein Überlebens- und Kreativmodus. Beim Überlebensmodus geht es hauptsächlich um das Überleben in der Spielwelt, jedoch kann der Spieler frei entscheiden, was er in der Spielwelt machen wird.\cite{minecraftWikiHome}
+\todo{Jahr}
+
+In diesem Abschnitt dieser Arbeit wird das Speicher- und Ladesystem von Minecraft genauer betrachtet. Als erstes wird ausgearbeitet, aus welchen Spielobjekten die Welt in Minecraft besteht, um herauszufinden, welche verschiedenen Daten gespeichert werden müssen. Danach wird geschaut, wie diese Daten bei Minecraft aufgeteilt werden, damit nur mit einer Teilmenge der ganzen Daten gearbeitet werden muss. Anschließend wird die Ordnerstruktur einer Spielwelt angeschaut, um ein tieferes Verständnis für die Aufteilung der Daten zu sichern. Danach werden die Formate der Dateien genauer betrachtet, um zu verstehen, wie die einzelnen Daten letztendlich in den Speicher geschrieben werden. Zum Schluss wird angeschaut, wie der Ablauf des gesamten Speicherprozess ist. Es wird erklärt, zu welchen Zeitpunkten der Spielzustand gesichert wird, damit möglichst wenig Daten der Spielwelt verloren gehen. 
 
 \todo{Quelle mit Email}
-
-In diesem Kapitel wurde die Minecraft Version 1.16 angeschaut. 
-Bei neueren Versionen kann das Speichersystem bereits etwas anders aussehen. Um an den Sourcecode zu kommen wurde das Tool 
-\url{https://github.com/Hexeption/MCP-Reborn/tree/1.16} verwendet. Aus rechtlichen Gründen darf kein
-Sourcecode gezeigt werden.
+%\url{https://github.com/Hexeption/MCP-Reborn/tree/1.16}
 
 
 
@@ -130,43 +129,29 @@ Insgesamt sorgen diese verschiedenen Speichermechanismen in Minecraft dafür, da
 
 %--------------------------------------------------------------------------
 \section{Factorio}
-\begin{enumerate}
-    \item Ressourcen minen 
-    \item Technologien forschen
-    \item Infrastruktur aufbauen
-    \item Automatisieren von Produktion
-    \item Gegner bekämpfen
-    \item In Lua geschrieben
-\end{enumerate}
-\url{https://www.factorio.com/}
+Factorio ist ein Spiel, wo das Hauptziel ist, eine Fabrik aufzubauen. Als Spieler muss man sich um Ressourcen kümmern, die abgebaut werden müssen, um damit neue Technologien zu erforschen und eine Infrastruktur aufzubauen. Um eine möglichst große Ausbeute für die eigene Fabrik zu erreichen, kann die Produktion automatisiert werden. Im Spiel gibt es außerdem noch Einheimische, die die Ausbeutung der Ressourcen anhalten wollen. Deshalb muss der Spieler zusätzlich zu dem Aufbauen seiner Fabrik diese auch noch vor den Einheimischen verteidigen, damit sie nicht kaputt geht. Factorio wurde in C++ geschrieben und 2016 auf der Plattform "Steam" veröffentlicht. Mittlerweile kann Factorio auf Windows, macOS, Linux und der Nintendo Switch gespielt werden.\cite{factorioMain}\cite{factorioPressFactorio}
 
-Allgemein benutzt Factorio ein "Deterministic save load"
-\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
+% Allgemein benutzt Factorio ein "Deterministic save load"
+% \url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
 
-\todo{Quelle mit Email}
+Offizielle Wiki: \url{https://wiki.factorio.com/}\cite{factorioPressFactorio}\todo{Quelle Email und Wiki}
 
 \subsection{Daten}
+Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber verschiedene Formate zum Speichern der Daten. Welche verschiedenen Arten von Daten dann das Spiel hat, zeigt die Abbildung \ref{fig:factorioSaveStatistic}. Das Kreisdiagramm zeigt welche Arten von Daten wie viel Speicherplatz benötigen, bei 40 MB unkomprimierten Daten. Ungefähr 70\% des Speicherplatzes verbrauchen drei Kategorien der Spielobjekte, die Dekorations-Objekte, Tiles und Entitäten. Tiles sind Rechtecke, die das kleinste Stück in der Spielwelt darstellen. Die Tiles sind auch die Maßeinheiten für alle Gebiets- und Distanzabmessungen. Die Größe von Entitäten wird auch in Tiles angegeben. Zum Beispiel ist das "Rocket Silo", die größte Entität in dem Spiel, neun Tiles breit und lang. Die Spielwelt hat eine maximale Größe von zwei Millionen Tiles in der Breite und Länge, also vier Trillionen Tiles.\cite{factorioMapStructure} Die restlichen Daten sind aus der Blueprint Bibliothek, Physikalische Kräfte, Transportbänder, Oberfläche und Chunk Daten und weiteren kleineren Daten.\cite{factorioFridayFacts270} Die Blueprint Bibliothek ist ein virtuelles Inventar, welche Blueprint-artige Items speichert.\cite{factorioBlueprintLibrary} Ein Blueprint ist zum Duplizieren von Fabrikbereichen. Diese können als Blueprint gespeichert und in der Spielwelt dann eingefügt werden.\cite{factorioBlueprint}. Da ein Spieler eine Vielzahl an Blueprints erstellen kann, müssen diese beim Speicherprozess mit einbezogen werden. Transportbänder sind wichtig zum maximieren der Produktion und Automatisierung dieser. Sie transportieren die abgebauten oder hergestellten Ressourcen. Was genau in einem Chunk drin ist, ist in dem Abschnitt \ref{ssec:factorioDatenaufteilung} zu sehen. 
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/factorio_save_statistic.png}
-    \caption{Anteil der Datentypen beim Speichern}
+    \includegraphics[width=0.9\textwidth]{images/factorio_save_statistic.png}
+    \caption{Anteil der Datentypen beim Speichern\cite{factorioFridayFacts270}}
     \label{fig:factorioSaveStatistic}
 \end{figure}
-% 27.7.2023
-\url{https://www.factorio.com/blog/post/fff-270}
 
-Map Daten bestehen aus:
-\begin{itemize}
-    \item Dekorative Spielobjekte 
-    \item Tiles 
-    \item Entitäten
-    \item Blueprint Library
-    \item Physikalische Kräfte
-    \item Transportband
-    \item Oberfläche und Chunk Daten
-    \item Weitere Daten...
-\end{itemize}
+
+
+\subsection{Datenaufteilung} \label{ssec:factorioDatenaufteilung}
+Chunks (32x32 Tiles) \cite{factorioMapStructure}
+
+
 
 \subsection{Ordnerstruktur}
 User data Ordner:
@@ -183,9 +168,14 @@ User data Ordner:
 %2.8.2023
 \url{https://wiki.factorio.com/Application_directory} %Offizielle Factorio Wiki laut Seite
 
-\subsection{Speicherformate}
 
-\subsection{Datenaufteilung}
+
+\subsection{Speicherformate}
+\url{https://wiki.factorio.com/index.php?title=Achievement_file_format&oldid=179094}\\
+\url{https://wiki.factorio.com/index.php?title=Blueprint_string_format&oldid=190672}\\
+\url{https://wiki.factorio.com/index.php?title=Map_exchange_string_format&oldid=187695}\\
+
+
 
 \subsection{Speichervorgänge}
 Kurzgefasst:
