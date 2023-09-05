@@ -149,7 +149,8 @@ Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber versc
 
 
 \subsection{Datenaufteilung} \label{ssec:factorioDatenaufteilung}
-Chunks (32x32 Tiles) \cite{factorioMapStructure}
+Die Spieldaten werden auch nach einem Chunk-basierten System getrennt. Dabei besteht ein Chunk aus einer Fläche von 32 mal 32 Tiles. Chunks werden für unterschiedliche Funktionen verwendet. Zum einen für die Generierung der Spielwelt. Jedes mal, wenn der Spieler neue Gebiete entdeckt, werden die Chunks dieser Gebiete generiert und angezeigt. Außerdem werden Chunks geladen und entladen, je nach Aktivitätsstatus dieser. Wenn bei einem Chunk nichts wichtiges mehr passiert, dann wird dieser im nächsten Tick\footnote{Ein Tick ist die kleinste Zeiteinheit in Factorio\cite{factorioTime}} ausgeschaltet, um Ressourcen zu sparen. Umweltverschmutzung, die Verbreitung von Umweltverschmutzung und die Ausbreitung der Gegner wird auch Chunk-basiert gehandhabt. 
+\cite{factorioMapStructure}
 
 
 
