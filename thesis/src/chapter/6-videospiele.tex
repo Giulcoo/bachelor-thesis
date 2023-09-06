@@ -179,26 +179,32 @@ User data Ordner:
 
 
 \subsection{Speichervorgänge}
-Kurzgefasst:
-\begin{enumerate}
-    \item ID Mapping speichern (\url{https://www.factorio.com/blog/post/fff-259}) %2.8.2023
-    \item Map Daten speichern
-\end{enumerate}
+Factorio verwendet ein deterministisches Speicher- und Ladesystem. Das heißt, dass, egal welche Speicherdatei verwendet wird, der Speicher- und Ladeprozess für diesen Spielstand immer derselbe ist. Dieses System hat einige Vorteile für den Mehrspielermodus und das Wiedergabesystem von Factorio. Außerdem gibt es nicht jedes mal zufällige Veränderungen, beim erneuten Laden des letzten Spielstandes.\cite{factorioGithubSaveLoad}\todo{Github-Name als Autor?}
 
-Detaillierter:
-\begin{enumerate}
-    \item Volles leeren der Garbage Collection von allen Lua Zuständen
-    \item Löschen von temporären Map Daten, die während des Speicherprozesses entstanden sind
-    \item ID mapping speichern (ID mapping für alles was IDs benutzt)
-    \item Speichern der Prototypenmigrationen
-    \item Rest, der gespeichert weden soll, abspeichern
-    \item SaveHelpers speichern
-\end{enumerate}
-%2.8.2023
-\url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42} 
+Der Speicherprozess von Factorio besteht aus vielen kleinen Schritten. Zusammengefasst wird als erstes die ID-Abbildung des Spielstandes und danach die Map-Daten gespeichert.
+\cite{factorioFridayFacts270} Was passiert genau in diesen zwei Schritten? 
+
+Der Speicherprozess beginnt als allererstes damit, dass die Garbage Collection von allen Lua-Zuständen geleert wird. Damit kann sichergestellt werden, dass keine Objekte gespeichert werden, die eigentlich nicht gesichert werden müssen.\cite{factorioGithubSaveLoad}
+
+Als nächstes wird eine ScopedCallback-Klasse erstellt. Diese wird immer am Ende des Prozesses gelöscht und ruft dann eine "postSaveHook"-Funktion auf. Diese Funktion löscht temporäre Daten, die beim Speicherprozess entstanden sind. Der Vorteil dieser Funktion ist, dass diese immer aufgerufen wird, egal ob der Prozess erfolgreich oder mit einem Fehler terminiert hat. Damit kann sichergestellt werden, dass die Map-Daten nicht in einen beschädigten Zustand bleiben.\cite{factorioGithubSaveLoad}
+
+Anschließend werden die ID-Abbildung gespeichert.\cite{factorioGithubSaveLoad} Die ID-Abbildung ist eine Liste, die jedem Spielobjekt eine Identifikationsnummer zuweist. Die ID-Abbildung besteht dann aus der Identifikationsnummer und den zugehörigen Namen des Spielobjektes als Zeichenkette. Wie so eine ID-Abbildung aussieht ist in der Abbildung \ref{fig:factorioIdMapping} zu sehen. Jeder Spielstand kann eine unterschiedliche ID-Abbildung besitzen und diese kann sich oft verändern. Deshalb muss diese Liste jedes mal gespeichert werden.\cite{factorioFridayFacts259}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/id_mapping_factorio.png}
+    \caption{Spielobjekte und deren Identifikationsnummer eines Spielstands\cite{factorioFridayFacts259}}
+    \label{fig:factorioIdMapping}
+\end{figure}
+
+Als nächstes werden die angewandten Prototyp-Migrationen gesichert.\cite{factorioGithubSaveLoad} Ein Prototyp ist eine Vorlage für Maschinen, Rezepte und andere Spielkonzepte in der Factorio Game Engine.\cite{factorioPrototypesDocs}
+
+Anschließend werden restliche Daten, die noch gespeichert werden müssen, gesichert und die SaveHelper-Liste wird abgearbeitet. Das SaveHelper-System wird verwendet, um weitere Speicherprozesse auszuführen, nachdem alles gespeichert wurde. Dafür muss ein SaveHelper erstellt werden, der dann durch das SaveHelper-System in eine Warteschlange von SaveHelpern hinzugefügt wird. Diese Warteschlange wird am Ende des Speicherprozesses abgearbeitet und von jedem SaveHelper wird die "save"-Funktion aufgerufen.\cite{factorioGithubSaveLoad}
+
+
 
 \subsection{Ladevorgänge}
-Kurzgefasst:
+Darauf achten:
 \begin{enumerate}
     \item Map Version überprüfen
     \item Überprüfen ob Mods hinzugefügt/gelöscht/verändert wurden
