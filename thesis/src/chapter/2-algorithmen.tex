@@ -92,8 +92,8 @@ Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann 
 \textit{Serialisierung} ist der Prozess, bei dem ein Objekt zu einer Ansammlungen von Bytes umgewandelt wird oder der Zustand eines Objekts in ein Medium abgespeichert wird, um es später wiederherzustellen oder zu übertragen, wobei die Datenstruktur und der Inhalt des Objekts in einer für die Speicherung oder Übertragung geeigneten Form kodiert werden. \textit{Deserialisierung} ist der Gegenprozess von Serialisierung, der den zuvor serialisierten Zustand wieder in das ursprüngliche Objektformat zurückführt, indem die kodierten Daten aus dem Medium extrahiert werden, die ursprüngliche Datenstruktur rekonstruiert und folglich das Objekt in seinen initialen Zustand zurückversetzt.\cite{codeguruWorkingWith}
 
 \subsubsection{JSON}
-Eine sehr beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im JSON-Format\todo{Ins Abkürzungsverzeichnis}. JSON ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden. JSON-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. JSON wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
-In dem Code aus \ref{lst:jsonExp} ist zu sehen, wie ein Objekt im JSON-Format abgespeichert werden kann. Das entsprechende Klassendiagramm des zu speichernden Objektes ist in der Abbildung \ref{fig:monsterBspKlasse} zu sehen. Das Objekt "position" besteht aus den Variablen x und y, die den Typ Number speichern, und das "effects" Array ist ein String-Array. 
+Eine sehr beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im \ac{json}-Format. \ac{json} ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden. \ac{json}-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. \ac{json} wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
+In dem Code aus \ref{lst:jsonExp} ist zu sehen, wie ein Objekt im \ac{json}-Format abgespeichert werden kann. Das entsprechende Klassendiagramm des zu speichernden Objektes ist in der Abbildung \ref{fig:monsterBspKlasse} zu sehen. Das Objekt "position" besteht aus den Variablen x und y, die den Typ Number speichern, und das "effects" Array ist ein String-Array. 
 
 \begin{listing}[htp]
     \begin{minted}{javascript}
@@ -110,18 +110,18 @@ In dem Code aus \ref{lst:jsonExp} ist zu sehen, wie ein Objekt im JSON-Format ab
             ]
         }
     \end{minted}
-    \caption{Beispiel für ein JSON-Objekt}
+    \caption{Beispiel für ein \ac{json}-Objekt}
     \label{lst:jsonExp}
 \end{listing}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.18\textwidth]{images/MonsterBspKlasse.png}
-    \caption{Klassendiagramm des Beispiel JSON-Objektes aus \ref{lst:jsonExp}}
+    \caption{Klassendiagramm des Beispiel \ac{json}-Objektes aus \ref{lst:jsonExp}}
     \label{fig:monsterBspKlasse}
 \end{figure}
 
-Wenn sich für JSON entschieden wurde, gibt es drei Arten, die Daten zu verarbeiten. Die erste ist mit einer \textit{Streaming API}, mit der man direkt JSON-Objekte mit Schlüsseln und Werten erstellen kann oder direkt auf Schlüsselwerte von JSON-Objekten zugreifen kann über den  entsprechenden Schlüssel. In dem Pseudocode \ref{lst:streamingApiBsp} ist zu sehen, wie mit einer Streaming API das JSON-Objekt aus \ref{lst:jsonExp} erstellt werden kann. Die letzten drei Zeilen sollen einen Zugriff auf Werte des JSON-Objektes darstellen.\cite{tutorialspointJacksonStreaming} Das \textit{Tree Model} dagegen arbeitet mit einem JSON-Dokument, welches in dem Arbeitsspeicher als Baumstruktur gespeichert wird, wodurch das Aktualisieren von Daten sehr schnell abläuft. Diese Baumstruktur kann dann als JSON-String in einer lokalen Datei abgespeichert werden. Zuletzt gibt es noch das \textit{Data Binding}, welches die Objekte direkt zu JSON serialisiert und umgekehrt deserialisiert. In dem Pseudocode \ref{lst:dataBindingBsp} ist zu sehen, wie ein neu erstelltes Objekt direkt als JSON-Objekt in einer Datei gespeichert wird. Das Objekt ist aus der Monster-Klasse der Abbildung \ref{fig:monsterBspKlasse}. Danach wird das Objekt mit den Werten eines JSON-Objektes einer anderen Datei gesetzt.\cite{tutorialspointJacksonData}\cite{tutorialspointJacksonOverview}
+Wenn sich für \ac{json} entschieden wurde, gibt es drei Arten, die Daten zu verarbeiten. Die erste ist mit einer \textit{Streaming API}, mit der man direkt \ac{json}-Objekte mit Schlüsseln und Werten erstellen kann oder direkt auf Schlüsselwerte von \ac{json}-Objekten zugreifen kann über den  entsprechenden Schlüssel. In dem Pseudocode \ref{lst:streamingApiBsp} ist zu sehen, wie mit einer Streaming API das \ac{json}-Objekt aus \ref{lst:jsonExp} erstellt werden kann. Die letzten drei Zeilen sollen einen Zugriff auf Werte des \ac{json}-Objektes darstellen.\cite{tutorialspointJacksonStreaming} Das \textit{Tree Model} dagegen arbeitet mit einem \ac{json}-Dokument, welches in dem Arbeitsspeicher als Baumstruktur gespeichert wird, wodurch das Aktualisieren von Daten sehr schnell abläuft. Diese Baumstruktur kann dann als \ac{json}-String in einer lokalen Datei abgespeichert werden. Zuletzt gibt es noch das \textit{Data Binding}, welches die Objekte direkt zu \ac{json} serialisiert und umgekehrt deserialisiert. In dem Pseudocode \ref{lst:dataBindingBsp} ist zu sehen, wie ein neu erstelltes Objekt direkt als \ac{json}-Objekt in einer Datei gespeichert wird. Das Objekt ist aus der Monster-Klasse der Abbildung \ref{fig:monsterBspKlasse}. Danach wird das Objekt mit den Werten eines \ac{json}-Objektes einer anderen Datei gesetzt.\cite{tutorialspointJacksonData}\cite{tutorialspointJacksonOverview}
 
 \begin{listing}[htp]
     \begin{minted}{java} 
@@ -164,15 +164,15 @@ Wenn sich für JSON entschieden wurde, gibt es drei Arten, die Daten zu verarbei
 \end{listing}
 
 \subsubsection{BSON}
-\textit{BSON}\footnote{Binary JSON} ist eine binäre Kodierung von JSON-Daten und wurde für die NoSQL-Datenbank MongoDB entwickelt. Es ist mit BSON möglich, jede JSON-Dokumente zu speichern. BSON unterstützt alle Datentypen von JSON und erweitert diese noch mit weiteren Typen, wie einem Datum-Typ und ein BinData-Typ. Außerdem wird mit Zahlen anders gearbeitet. Während JSON Zahlen als Zeichenketten speichert, werden diese bei BSON als 32- oder 64-Bit Integers oder 64-Bit Gleitkommazahl gespeichert. Was BSON auch noch zusätzlich einführt, ist eine maximale Dokumenten-Größe von 16 MB. BSON hat gegenüber JSON den Vorteil, dass die Daten viel schneller durchlaufen werden können, indem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein großer Nachteil von BSON ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
+\ac{bson} ist eine binäre Kodierung von \ac{json}-Daten und wurde für die NoSQL-Datenbank MongoDB entwickelt. Es ist mit BSON möglich, jede \ac{json}-Dokumente zu speichern. BSON unterstützt alle Datentypen von \ac{json} und erweitert diese noch mit weiteren Typen, wie einem Datum-Typ und ein BinData-Typ. Außerdem wird mit Zahlen anders gearbeitet. Während \ac{json} Zahlen als Zeichenketten speichert, werden diese bei BSON als 32- oder 64-Bit Integers oder 64-Bit Gleitkommazahl gespeichert. Was BSON auch noch zusätzlich einführt, ist eine maximale Dokumenten-Größe von 16 MB. BSON hat gegenüber \ac{json} den Vorteil, dass die Daten viel schneller durchlaufen werden können, indem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein großer Nachteil von BSON ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
 
-Das JSON-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokument aus \ref{lst:bsonExp}. Die erste Zeile von dem BSON-Dokument beschreibt immer die Größe des ganzen Dokuments. In der nächsten Zeile definiert, dass es sich bei der ersten Variable des Dokuments um einen String-Typen handelt. Jeder Typ hat eine eigene Kodierung, um diesen zu identifizieren, wobei String als 0x02 kodiert wird. Die nächsten zwei Zeilen definieren den Schlüssel und Schlüsselwert des Strings. Mit 0x00 wird das Ende des Dokuments gesetzt, wie in der letzten Zeile zu sehen ist.
+Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokument aus \ref{lst:bsonExp}. Die erste Zeile von dem BSON-Dokument beschreibt immer die Größe des ganzen Dokuments. In der nächsten Zeile definiert, dass es sich bei der ersten Variable des Dokuments um einen String-Typen handelt. Jeder Typ hat eine eigene Kodierung, um diesen zu identifizieren, wobei String als 0x02 kodiert wird. Die nächsten zwei Zeilen definieren den Schlüssel und Schlüsselwert des Strings. Mit 0x00 wird das Ende des Dokuments gesetzt, wie in der letzten Zeile zu sehen ist.
 
 \begin{listing}[htp]
     \begin{minted}{javascript}
         {"hello": "world"}
     \end{minted}
-    \caption{Weiteres Beispiel eines JSON-Dokuments \cite{mongodbJSONBSON}}
+    \caption{Weiteres Beispiel eines \ac{json}-Dokuments \cite{mongodbJSONBSON}}
     \label{lst:bsonJsonObj}
 \end{listing} 
 
@@ -184,7 +184,7 @@ Das JSON-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokume
         \x06\x00\x00\x00world\x00  
         \x00                       
     \end{minted}
-    \caption{BSON Kodierung des JSON-Dokuments aus \ref{lst:bsonJsonObj} \cite{mongodbJSONBSON}}
+    \caption{BSON Kodierung des \ac{json}-Dokuments aus \ref{lst:bsonJsonObj} \cite{mongodbJSONBSON}}
     \label{lst:bsonExp}
 \end{listing}
 
@@ -205,8 +205,8 @@ Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenko
 
 Eine Möglichkeit, Daten zu komprimieren, ist mit dem populären patentfreien Kompressionsprogramm GZIP\footnote{GNU zip}. GZIP verwendet den Deflate-Algorithmus, der eine Kombination aus dem  LZ77\footnote{Lempel-Ziv 77}-Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer gzip-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 
-\subsubsection{JSON Hpack}
-JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine JSON-Komprimierung, die Arrays in JSON-Dokumenten in einer kompakteren Art darstellt und dabei das JSON-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das JSON-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von JSON Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Was darauf folgt, sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
+\subsubsection{\ac{json} Hpack}
+\ac{json} Hpack, oder auch \ac{json} Homogeneous Collections Compressor genannt, ist eine \ac{json}-Komprimierung, die Arrays in \ac{json}-Dokumenten in einer kompakteren Art darstellt und dabei das \ac{json}-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das \ac{json}-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von \ac{json} Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Was darauf folgt, sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
 \cite{webreflectionLastVersion}
 
 \begin{listing}[htp]
@@ -242,7 +242,7 @@ JSON Hpack, oder auch JSON Homogeneous Collections Compressor genannt, ist eine 
 \subsubsection{Weitere Strategien}
 Es gibt noch weitere Strategien, wie dafür gesorgt werden kann, dass die Daten kompakter gespeichert werden können. Zum einen können kürzere Attribut-Namen bei Klassen definiert werden. Beispielsweise können alle Attribute mit einem Buchstaben dargestellt werden, falls es keine Attribute gibt mit gleichem Anfangsbuchstaben. Eine weitere Art, die Menge der Daten zu verringern, ist, dass Null-Werte ausgeschlossen werden. Wenn keine Information zu einer bestimmten Variable gespeichert wurde, dann kann automatisch angenommen werden, dass diese den Wert von Null hat. Strukturen wie Vektoren lassen sich auch einfach komprimieren. Statt x, y, z oder weitere Attribute zu besitzen, können Vektoren als Array von Zahlen definiert werden. Falls es bei Klassenattributen feste Werte gibt, die gesetzt werden können, können diesen Werten eine feste ID zugeordnet werden, damit dann nur noch die Zahl und nicht der Wert gespeichert werden muss.\cite{objelean2011json}\cite{baeldungReducingJSON}
 
-In dem JSON-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \ref{lst:jsonExp} um einiges kompakter beschrieben werden kann, ohne großen Aufwand zu betreiben. Die Klassenattribute wurden alle mit dem ersten Buchstaben abgekürzt. Da es nur begrenzt viele Monsternamen und Effekte gibt, werden diese über eine ID gespeichert. Der Monstername "Vampir" bekommt die ID 1 unter den Monsternamen. Bei den Effekten hat in diesem Beispiel der Effekt "giftig" die ID 1 und der Effekt "frost" die ID 3 unter allen Effekten bekommen. Das Positions-Objekt wurde als Array dargestellt, wobei der erste Eintrag im Array die x-Position und der zweite Eintrag die y-Position darstellt. Das Resultat ist deutlich kompakter als das ursprüngliche Dokument.
+In dem \ac{json}-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \ref{lst:jsonExp} um einiges kompakter beschrieben werden kann, ohne großen Aufwand zu betreiben. Die Klassenattribute wurden alle mit dem ersten Buchstaben abgekürzt. Da es nur begrenzt viele Monsternamen und Effekte gibt, werden diese über eine ID gespeichert. Der Monstername "Vampir" bekommt die ID 1 unter den Monsternamen. Bei den Effekten hat in diesem Beispiel der Effekt "giftig" die ID 1 und der Effekt "frost" die ID 3 unter allen Effekten bekommen. Das Positions-Objekt wurde als Array dargestellt, wobei der erste Eintrag im Array die x-Position und der zweite Eintrag die y-Position darstellt. Das Resultat ist deutlich kompakter als das ursprüngliche Dokument.
 
 \begin{listing}[htp]
     \begin{minted}{javascript}
@@ -253,7 +253,7 @@ In dem JSON-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus \r
             "e": [1, 3]
         }
     \end{minted}
-    \caption{Kompaktere Version des JSON-Objekt aus \ref{lst:jsonExp}}
+    \caption{Kompaktere Version des \ac{json}-Objekt aus \ref{lst:jsonExp}}
     \label{lst:shorterJson}
 \end{listing}
 %--------------------------------------------------------------------------
@@ -351,7 +351,7 @@ In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-
 
 %--------------------------------------------------------------------------
 \subsection{Auswertung}
-Auswertung der Strategien mit Daten/einfaches Spielkonzept mit Java und JSON testen:
+Auswertung der Strategien mit Daten/einfaches Spielkonzept mit Java und \ac{json} testen:
 \begin{itemize}
     \item Spieler (HP, LVL, Ausrüstung, Position, Rotation, ...)
     \item Gegner (HP, LVL, Ausrüstung, Position, Rotation, ...)

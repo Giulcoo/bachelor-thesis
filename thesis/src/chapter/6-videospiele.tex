@@ -1,17 +1,13 @@
 \chapter{Speichersysteme in Videospielen}\label{ch:videospiele}
-Anschauen, wie Videospiele Daten speichern und laden\dots
+In diesem Kapitel wird die Praxis von Speicher- und Ladesystemen betrachtet. Dabei werden verschiedene Spiele analysiert, um deren Prozesse des Speicherns und Ladens des Spielstandes genauer zu verstehen. Als erstes wird das Sandbox-Spiel Minecraft und danach das Strategiespiel Factorio angeschaut. 
 %--------------------------------------------------------------------------
 
 
 %--------------------------------------------------------------------------
 \section{Minecraft}
 Minecraft ist ein Sandbox-Spiel\footnote{Ein Sandbox-Spiel lässt Spieler frei entscheiden, was mit der Spielwelt gemacht werden soll. Es gibt keine feste Geschichte im Spiel, die verfolgt werden muss.\cite{ocio2009multi}}, welches von Mojang Studio entwwickelt wurde. Minecraft gilt unter den meistverkauften Videospiele aller Zeiten und kann auf eine Vielzahl von Plattformen gespielt werden.\cite{ignBestSellingVideo} Es wird in einer dreidimensionalen Welt, die aus Blöcken besteht, gespielt und es kann mit Entitäten interagiert werden. Es gibt verschiedene Spielmodi, wie zum Beispiel ein Überlebens- und Kreativmodus. Beim Überlebensmodus geht es hauptsächlich um das Überleben in der Spielwelt, jedoch kann der Spieler frei entscheiden, was er in der Spielwelt machen wird.\cite{minecraftWikiHome}
-\todo{Jahr}
 
-In diesem Abschnitt dieser Arbeit wird das Speicher- und Ladesystem von Minecraft genauer betrachtet. Als erstes wird ausgearbeitet, aus welchen Spielobjekten die Welt in Minecraft besteht, um herauszufinden, welche verschiedenen Daten gespeichert werden müssen. Danach wird geschaut, wie diese Daten bei Minecraft aufgeteilt werden, damit nur mit einer Teilmenge der ganzen Daten gearbeitet werden muss. Anschließend wird die Ordnerstruktur einer Spielwelt angeschaut, um ein tieferes Verständnis für die Aufteilung der Daten zu sichern. Danach werden die Formate der Dateien genauer betrachtet, um zu verstehen, wie die einzelnen Daten letztendlich in den Speicher geschrieben werden. Zum Schluss wird angeschaut, wie der Ablauf des gesamten Speicherprozess ist. Es wird erklärt, zu welchen Zeitpunkten der Spielzustand gesichert wird, damit möglichst wenig Daten der Spielwelt verloren gehen. 
-
-\todo{Quelle mit Email}
-%\url{https://github.com/Hexeption/MCP-Reborn/tree/1.16}
+In diesem Abschnitt dieser Arbeit wird das Speicher- und Ladesystem von Minecraft genauer betrachtet. Als erstes wird ausgearbeitet, aus welchen Spielobjekten die Welt in Minecraft besteht, um herauszufinden, welche verschiedenen Daten gespeichert werden müssen. Danach wird geschaut, wie diese Daten bei Minecraft aufgeteilt werden, damit nur mit einer Teilmenge der ganzen Daten gearbeitet werden muss. Anschließend wird die Ordnerstruktur einer Spielwelt angeschaut, um ein tieferes Verständnis für die Aufteilung der Daten zu sichern. Danach werden die Formate der Dateien genauer betrachtet, um zu verstehen, wie die einzelnen Daten letztendlich in den Speicher geschrieben werden. Zum Schluss wird angeschaut, wie der Ablauf des gesamten Speicherprozess ist. Es wird erklärt, zu welchen Zeitpunkten der Spielzustand gesichert wird, damit möglichst wenig Daten der Spielwelt verloren gehen. Dabei wurde als Quelle ausschließlich die Minecraft Wiki\footnote{ Minecraft Wiki: \url{https://minecraft.fandom.com/wiki/Minecraft_Wiki}} verwendet, die von dem Minecraft Support empfohlen wurde (siehe die Abbildung \ref{fig:minecraftMail}). Sie dokumentiert alle Daten zu Minecraft, um ein tieferes Verständnis für das Spiel aufzubauen. Dadurch, dass es für Minecraft auch Modifikationen gibt, die von jeglichen Entwicklern geschrieben werden können, gibt es auch Möglichkeiten an den Quelltext von Minecraft zu kommen. Aus rechtlichen Gründen ist es jedoch leider nicht möglich, diesen freizugeben. Viele Inhalte der Minecraft Wiki wurden jedoch noch einmal geprüft, durch analysieren des Quellcodes.\todo{Autor mit einbeziehen; Ich habe den Quellcode mir angeschaut für die Arbeit}
 
 
 
@@ -86,12 +82,12 @@ Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt 
 Wie schon im vorherigen Abschnitt zu sehen ist, besitzt Minecraft eine handvoll verschiedener Formate, zum Speichern der Daten. Die Dateien haben Formate wie "dat", "mca" und "json". Natürlich existieren auch noch weitere Formate, wie PNG-Dateien für Texturen, da diese Dateien zu den statischen Daten dazugehören, werden diese nicht weiter betrachtet.   
 
 Das DAT-Format wird für jegliche Arten von Informationen verwendet, sei es Video, Audio, PDF oder jede andere Art von Daten. Ein Programm kann DAT-Dateien erstellen und spezifisch für dieses Programm Daten abspeichern und lesen. Für andere Programme sind diese Daten nicht sonderlich hilfreich, da sie für ein spezifisches Programm erstellt wurden.\cite{adobeWhatDAT} Dieses Format wird zum Beispiel für die globalen Spielwelt Informationen in der "level.dat"-Datei oder für Spielerdaten in "<player>.dat"-Dateien, falls die Spielwelt auf einem Server gehosted wird (siehe \ref{ssec:ordnerstruktur}).\cite{minecraftPlayerdatFormat}\cite{minecraftFolderStruc}. 
-Die Daten werden dabei im eigenen Format namens Named Binary Tag (NBT)\todo{Abkürzungsverzeichnis} in diese Dateien geschrieben. Diese Format ist ähnlich zu dem JSON-Format, denn die Daten werden auch hier im Schlüssel-Wert-Prinzip behandelt. Das NBT-Format bietet eine Vielzahl an Datentypen, wie Byte, Boolean, verschiedene Zahlen Datentypen, String, List, Compound und Array. Der List-Datentyp ist zum Speichern von mehreren Werten, ohne Schlüssel. Compound ist eine geordnete Liste von Schlüssel-Wert-Paaren. Nachträglich werden in den meisten Fällen die NBT-Dateien mit GZip komprimiert.
+Die Daten werden dabei im eigenen Format namens \ac{nbt} in diese Dateien geschrieben. Diese Format ist ähnlich zu dem \ac{json}-Format, denn die Daten werden auch hier im Schlüssel-Wert-Prinzip behandelt. Das \ac{nbt}-Format bietet eine Vielzahl an Datentypen, wie Byte, Boolean, verschiedene Zahlen Datentypen, String, List, Compound und Array. Der List-Datentyp ist zum Speichern von mehreren Werten, ohne Schlüssel. Compound ist eine geordnete Liste von Schlüssel-Wert-Paaren. Nachträglich werden in den meisten Fällen die \ac{nbt}-Dateien mit GZip komprimiert.
 \cite{minecraftNBT}
 
-Minecraft Anvil (MCA)\todo{Abkürzungsverzeichnis} ist ein Dateiformat, zum Speichern von Chunk-Daten. Dabei wird in einer Datei eine Region, also eine Gebiet aus 32x32 Chunks, gespeichert. Jede Datei bekommt dann den Namen "r.<x>.<z>.mca", wobei x und z mit den x und z Koordinaten der Region ersetzt wird. Falls die Koordinaten einer Region gesucht werden, in der ein Chunk drin ist, müssen die Chunk-Koordinaten durch 32 geteilt und abgerundet werden. Eine MCA-Datei fängt mit einem 8 KiB Header an, der in zwei 4 KiB Blöcken unterteilt ist. Der erste Block beschreibt die Position der Chunks in der Region und der zweite Block speichert die Zeit, wann jeder Chunk zuletzt aktualisiert wurde. Nach dem Header werden alle Zustände der Chunks einer Region gespeichert. Dabei wird für jeden Chunk erst die Länge der Daten in Bytes angegeben, dann die Art der Komprimierung und anschließend die komprimierten Daten.\cite{minecraftRegionFile}\cite{minecraftAnvilFile} Auch in diesen Dateien werden die Daten im NBT-Format in komprimiert Form gespeichert.\cite{minecraftNBT}
+\ac{mca} ist ein Dateiformat, zum Speichern von Chunk-Daten. Dabei wird in einer Datei eine Region, also eine Gebiet aus 32x32 Chunks, gespeichert. Jede Datei bekommt dann den Namen "r.<x>.<z>.mca", wobei x und z mit den x und z Koordinaten der Region ersetzt wird. Falls die Koordinaten einer Region gesucht werden, in der ein Chunk drin ist, müssen die Chunk-Koordinaten durch 32 geteilt und abgerundet werden. Eine \ac{mca}-Datei fängt mit einem 8 KiB Header an, der in zwei 4 KiB Blöcken unterteilt ist. Der erste Block beschreibt die Position der Chunks in der Region und der zweite Block speichert die Zeit, wann jeder Chunk zuletzt aktualisiert wurde. Nach dem Header werden alle Zustände der Chunks einer Region gespeichert. Dabei wird für jeden Chunk erst die Länge der Daten in Bytes angegeben, dann die Art der Komprimierung und anschließend die komprimierten Daten.\cite{minecraftRegionFile}\cite{minecraftAnvilFile} Auch in diesen Dateien werden die Daten im \ac{nbt}-Format in komprimiert Form gespeichert.\cite{minecraftNBT}
 
-Das JSON-Format wird für das Speichern von Texten und kleineren Daten verwendet. In Minecraft gibt es Bücher, Schilder und Labels, die der Spieler beschriften und mit Text füllen kann. Bücher zum Beispiel werden dann zwar im NBT-Format in den Dateien zu den Spielerdaten gespeichert, aber die Seiten der Bücher werden als serialisierten JSON-Text gespeichert.\cite{minecraftPlayerdatFormat} Die "advancements"- und "stats"-Ordner, die im Abschnitt \ref{ssec:ordnerstruktur} vorgestellt wurden, speichern die Fortschritte der einzelnen Spieler auch im JSON-Format ab. Ansonsten wird JSON hauptsächlich für statische Daten, wie das Verhalten von Entitäten, Blöcken und Items oder Anleitungen für das Bauen von Spielgegenständen.\cite{minecraftJSON}
+Das \ac{json}-Format wird für das Speichern von Texten und kleineren Daten verwendet. In Minecraft gibt es Bücher, Schilder und Labels, die der Spieler beschriften und mit Text füllen kann. Bücher zum Beispiel werden dann zwar im \ac{nbt}-Format in den Dateien zu den Spielerdaten gespeichert, aber die Seiten der Bücher werden als serialisierten \ac{json}-Text gespeichert.\cite{minecraftPlayerdatFormat} Die "advancements"- und "stats"-Ordner, die im Abschnitt \ref{ssec:ordnerstruktur} vorgestellt wurden, speichern die Fortschritte der einzelnen Spieler auch im \ac{json}-Format ab. Ansonsten wird \ac{json} hauptsächlich für statische Daten, wie das Verhalten von Entitäten, Blöcken und Items oder Anleitungen für das Bauen von Spielgegenständen.\cite{minecraftJSON}
 
 %Siehe auch: RegionFileCache.java:loadFile(), SaveFormat.java:convertRegions()
 
@@ -120,6 +116,7 @@ Insgesamt sorgen diese verschiedenen Speichermechanismen in Minecraft dafür, da
 \subsection{Fazit}
 \begin{itemize}
     \item Chunk System mit fester Größe, da Limit an Elementen pro Chunk?
+    \item Erwähnen, dass beim Spielen die Speicher- und die Ladezeiten nicht auffallen. Zu Beginn sind die Ladezeiten auch gering
 \end{itemize}
 
 \todo{Irgendwie zusammenfassen, welche Strategien Minecraft verwendet?}
@@ -129,14 +126,9 @@ Insgesamt sorgen diese verschiedenen Speichermechanismen in Minecraft dafür, da
 
 %--------------------------------------------------------------------------
 \section{Factorio}
-Factorio ist ein Spiel, wo das Hauptziel ist, eine Fabrik aufzubauen. Als Spieler muss man sich um Ressourcen kümmern, die abgebaut werden müssen, um damit neue Technologien zu erforschen und eine Infrastruktur aufzubauen. Um eine möglichst große Ausbeute für die eigene Fabrik zu erreichen, kann die Produktion automatisiert werden. Im Spiel gibt es außerdem noch Einheimische, die die Ausbeutung der Ressourcen anhalten wollen. Deshalb muss der Spieler zusätzlich zu dem Aufbauen seiner Fabrik diese auch noch vor den Einheimischen verteidigen, damit sie nicht kaputt geht. Factorio wurde in C++ geschrieben und 2016 auf der Plattform "Steam" veröffentlicht. Mittlerweile kann Factorio auf Windows, macOS, Linux und der Nintendo Switch gespielt werden.\cite{factorioMain}\cite{factorioPressFactorio}
+Factorio ist ein Spiel, wo das Hauptziel ist, eine Fabrik aufzubauen. Als Spieler muss man sich um Ressourcen kümmern, die abgebaut werden müssen, um damit neue Technologien zu erforschen und eine Infrastruktur aufzubauen. Um eine möglichst große Ausbeute für die eigene Fabrik zu erreichen, kann die Produktion automatisiert werden. Im Spiel gibt es außerdem noch Einheimische, die die Ausbeutung der Ressourcen anhalten wollen. Deshalb muss der Spieler zusätzlich zu dem Aufbauen seiner Fabrik diese auch noch vor den Einheimischen verteidigen, damit sie nicht kaputt geht. Factorio wurde von Wube Software in C++ geschrieben und 2016 auf der Plattform "Steam" veröffentlicht. Mittlerweile kann Factorio auf Windows, macOS, Linux und der Nintendo Switch gespielt werden.\cite{factorioMain}\cite{factorioPressFactorio}
 
-% Allgemein benutzt Factorio ein "Deterministic save load"
-% \url{https://gist.github.com/Rseding91/a309cf0a30782a2e96ef081c39326f42}
-
-Offizielle Wiki: \url{https://wiki.factorio.com/}\cite{factorioPressFactorio}\todo{Quelle Email und Wiki}
-
-Credits: \url{https://github.com/wube/factorio-data/blob/master/credits.txt}\todo{Namen der Autoren der Quellen finden}
+In diesem Abschnitt wird das Speicher- und Ladesystem von Factorio genauer betrachtet. Als erstes wird analysiert, welche Daten das Spiel beinhaltet, und wie diese aufgeteilt werden. Anschließend werden die einzelnen Vorgänge des gesamten Speicher- und Ladeprozess angeschaut. Als Bezugsquelle für die Informationen zu dem System von Factorio wurde hauptsächlich mit den Quellen gearbeitet, die Wube Software empfohlen hat (siehe Abbildung \ref{fig:factorioMail}). Für ein tieferes Verständnis über die Prozesse des Spieles wurde außerdem die offiziellen Wiki von Factorio\footnote{Offizielle Wiki von Factorio: \url{https://wiki.factorio.com/} \cite{factorioPressFactorio}} verwendet.
 
 \subsection{Daten}
 Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber verschiedene Formate zum Speichern der Daten. Welche verschiedenen Arten von Daten dann das Spiel hat, zeigt die Abbildung \ref{fig:factorioSaveStatistic}. Das Kreisdiagramm zeigt welche Arten von Daten wie viel Speicherplatz benötigen, bei 40 MB unkomprimierten Daten. Ungefähr 70\% des Speicherplatzes verbrauchen drei Kategorien der Spielobjekte, die Dekorations-Objekte, Tiles und Entitäten. Tiles sind Rechtecke, die das kleinste Stück in der Spielwelt darstellen. Die Tiles sind auch die Maßeinheiten für alle Gebiets- und Distanzabmessungen. Die Größe von Entitäten wird auch in Tiles angegeben. Zum Beispiel ist das "Rocket Silo", die größte Entität in dem Spiel, neun Tiles breit und lang. Die Spielwelt hat eine maximale Größe von zwei Millionen Tiles in der Breite und Länge, also vier Trillionen Tiles.\cite{factorioMapStructure} Die restlichen Daten sind aus der Blueprint Bibliothek, Physikalische Kräfte, Transportbänder, Oberfläche und Chunk Daten und weiteren kleineren Daten.\cite{factorioFridayFacts270} Die Blueprint Bibliothek ist ein virtuelles Inventar, welche Blueprint-artige Items speichert.\cite{factorioBlueprintLibrary} Ein Blueprint ist zum Duplizieren von Fabrikbereichen. Diese können als Blueprint gespeichert und in der Spielwelt dann eingefügt werden.\cite{factorioBlueprint}. Da ein Spieler eine Vielzahl an Blueprints erstellen kann, müssen diese beim Speicherprozess mit einbezogen werden. Transportbänder sind wichtig zum maximieren der Produktion und Automatisierung dieser. Sie transportieren die abgebauten oder hergestellten Ressourcen. Was genau in einem Chunk drin ist, ist in dem Abschnitt \ref{ssec:factorioDatenaufteilung} zu sehen. 
@@ -155,7 +147,7 @@ Die Spieldaten werden auch nach einem Chunk-basierten System getrennt. Dabei bes
 \cite{factorioMapStructure}
 
 
-
+\iffalse
 \subsection{Ordnerstruktur}
 User data Ordner:
 \begin{itemize}
@@ -177,20 +169,20 @@ User data Ordner:
 \url{https://wiki.factorio.com/index.php?title=Achievement_file_format&oldid=179094}\\
 \url{https://wiki.factorio.com/index.php?title=Blueprint_string_format&oldid=190672}\\
 \url{https://wiki.factorio.com/index.php?title=Map_exchange_string_format&oldid=187695}\\
-
+\fi
 
 
 \subsection{Speichervorgänge}
-Factorio verwendet ein deterministisches Speicher- und Ladesystem. Das heißt, dass, egal welche Speicherdatei verwendet wird, der Speicher- und Ladeprozess für diesen Spielstand immer derselbe ist. Dieses System hat einige Vorteile für den Mehrspielermodus und das Wiedergabesystem von Factorio. Außerdem gibt es nicht jedes mal zufällige Veränderungen, beim erneuten Laden des letzten Spielstandes.\cite{factorioGithubSaveLoad}\todo{Github-Name als Autor?}
+Factorio verwendet ein deterministisches Speicher- und Ladesystem. Das heißt, dass, egal welche Speicherdatei verwendet wird, der Speicher- und Ladeprozess für diesen Spielstand immer derselbe ist. Dieses System hat einige Vorteile für den Mehrspielermodus und das Wiedergabesystem von Factorio. Außerdem gibt es nicht jedes mal zufällige Veränderungen, beim erneuten Laden des letzten Spielstandes.\cite{factorioGithubSaveLoad}
 
-Der Speicherprozess von Factorio besteht aus vielen kleinen Schritten. Zusammengefasst wird als erstes die ID-Abbildung des Spielstandes und danach die Map-Daten gespeichert.
+Der Speicherprozess von Factorio besteht aus vielen kleinen Schritten. Zusammengefasst wird als erstes die ID-Mapping des Spielstandes und danach die Map-Daten gespeichert.
 \cite{factorioFridayFacts270} Dabei werden die einzelnen Daten binär serialisiert.\cite{factorioGithubSaveLoad} Was passiert genau in diesen zwei Schritten? 
 
 Der Speicherprozess beginnt als allererstes damit, dass die Garbage Collection von allen Lua-Zuständen geleert wird. Damit kann sichergestellt werden, dass keine Objekte gespeichert werden, die eigentlich nicht gesichert werden müssen.\cite{factorioGithubSaveLoad}
 
 Als nächstes wird eine ScopedCallback-Klasse erstellt. Diese wird immer am Ende des Prozesses gelöscht und ruft dann eine "postSaveHook"-Funktion auf. Diese Funktion löscht temporäre Daten, die beim Speicherprozess entstanden sind. Der Vorteil dieser Funktion ist, dass diese immer aufgerufen wird, egal ob der Prozess erfolgreich oder mit einem Fehler terminiert hat. Damit kann sichergestellt werden, dass die Map-Daten nicht in einen beschädigten Zustand bleiben.\cite{factorioGithubSaveLoad}
 
-Anschließend werden die ID-Abbildung\todo{ID-Mapping} gespeichert.\cite{factorioGithubSaveLoad} Die ID-Abbildung ist eine Liste, die jedem Spielobjekt eine Identifikationsnummer zuweist. Die ID-Abbildung besteht dann aus der Identifikationsnummer und den zugehörigen Namen des Spielobjektes als Zeichenkette. Wie so eine ID-Abbildung aussieht ist in der Abbildung \ref{fig:factorioIdMapping} zu sehen. Jeder Spielstand kann eine unterschiedliche ID-Abbildung besitzen und diese kann sich oft verändern. Deshalb muss diese Liste jedes mal gespeichert werden.\cite{factorioFridayFacts259}
+Anschließend werden die ID-Mapping gespeichert.\cite{factorioGithubSaveLoad} Die ID-Mapping ist eine Liste, die jedem Spielobjekt eine Identifikationsnummer zuweist. Die ID-Mapping besteht dann aus der Identifikationsnummer und den zugehörigen Namen des Spielobjektes als Zeichenkette. Wie so eine ID-Mapping aussieht ist in der Abbildung \ref{fig:factorioIdMapping} zu sehen. Jeder Spielstand kann eine unterschiedliche ID-Mapping besitzen und diese kann sich oft verändern. Deshalb muss diese Liste jedes mal gespeichert werden.\cite{factorioFridayFacts259}
 
 \begin{figure}[htp]
     \centering
@@ -211,9 +203,9 @@ Wie sieht dann der komplette Ladeprozess von Factorio aus, damit all diese Fakto
 
 Der erste Schritt beim Laden eines Spielstandes ist, dass die Map-Version der zu ladenden Map mit der Version der Map, in die die Daten geladen werden sollen, verglichen werden muss. Falls die Versionen unterschiedlich sind, muss die zu ladende Map auf der Version der Map, in die geladen wird, migriert werden. Dabei muss beachtet werden, dass nicht jede Version von Factorio unterstützt wird. Manche Versionen können zu alt oder zu neu sein und können damit nicht verwendet werden.\cite{factorioGithubSaveLoad}
 
-Als nächstes muss überprüft werden, ob die Mods, die für den zu ladenden Spielstand aktiv sind, oder die Mod-Einstellung sich geändert haben. Falls dies der Fall ist, müssen zusätzliche Vorgänge vorgenommen werden, nachdem die Daten geladen wurden. Dafür wird die Flag\todo{Englisch} "prototype data changed" in der Lade-Klasse gesetzt.\cite{factorioGithubSaveLoad}
+Als nächstes muss überprüft werden, ob die Mods, die für den zu ladenden Spielstand aktiv sind, oder die Mod-Einstellung sich geändert haben. Falls dies der Fall ist, müssen zusätzliche Vorgänge vorgenommen werden, nachdem die Daten geladen wurden. Dafür wird die Flag "prototype data changed" in der Lade-Klasse gesetzt.\cite{factorioGithubSaveLoad}
 
-Bevor irgendwas geladen wird, was eine Identifikationsnummer benutzt, muss die ID-Abbildung geladen werden. Ohne diesen Schritt weiß das Programm nicht, welches Spielobjekt mit welcher Identifikationsnummer gespeichert wurde und es könnte zu fehlerhaftes Laden des Spielstand führen. Außerdem wird über diesen Schritt dem Programm vermittelt, welche Spielobjekte sich verändert haben oder gelöscht wurden. Falls Mods die Identifikationsnummer von Spielobjekten zu anderen Identifikationsnummer ändern wollen, geschieht das auch direkt am Anfang.\cite{factorioGithubSaveLoad}
+Bevor irgendwas geladen wird, was eine Identifikationsnummer benutzt, muss die ID-Mapping geladen werden. Ohne diesen Schritt weiß das Programm nicht, welches Spielobjekt mit welcher Identifikationsnummer gespeichert wurde und es könnte zu fehlerhaftes Laden des Spielstand führen. Außerdem wird über diesen Schritt dem Programm vermittelt, welche Spielobjekte sich verändert haben oder gelöscht wurden. Falls Mods die Identifikationsnummer von Spielobjekten zu anderen Identifikationsnummer ändern wollen, geschieht das auch direkt am Anfang.\cite{factorioGithubSaveLoad}
 
 Nachdem die Identifikationsnummern erfolgreich geladen und gegebenenfalls modifiziert wurden, können die Standard-Map Daten geladen werden. Diese beinhalten Entitäten, Chunks, physikalische Kräfte und Züge.\cite{factorioGithubSaveLoad}
 
@@ -237,15 +229,41 @@ Zum Schluss werden alle Dummy-Objekte gelöscht, letzte Setup-Funktionen aufgeru
 
 Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als der Speicherprozess. Der Ladeprozess besteht noch aus ein paar weiteren Schritten, diese sind aber für das Verständnis des gesamten Ladeprozesses nicht relevant. Was auch zu erkennen ist, ist, dass der Ladeprozess aus wiederholtem laden, einrichten, beheben von Problemen und neu berechnen besteht. Da stellt sich die Frage, ob dies effizient gelöst wurde, oder ob die teilweise wiederholten Schritte gekürzt werden können. Vermutlich gibt es zu viele Abhängigkeiten bei der Reihenfolge der einzelnen Prozesse, weshalb wenig Spielraum für Optimierung vorhanden ist.\todo{Ladezeiten lang in der Realität?}
 
-\begin{enumerate}
-    \item Ruf bei allen PreFinalLoadHelper setup auf
-    \item Ruf bei allen FinalLoadHelper setup auf
-    \item Für alle Oberflächen postSetup aufrufen
-    \item Lua Daten laden und wiederherstellen
-    \item "configuration changed" Lua event ausführen
-\end{enumerate}
+
+
+\subsection{Fazit}
+\dots
 %--------------------------------------------------------------------------
 
+
+
+%--------------------------------------------------------------------------
+\section{Stardew Valley}
+Beschreibung von dem Spiel
+\url{https://www.stardewvalley.net/press/}\\
+\url{https://store.steampowered.com/app/413150/Stardew_Valley/}\\
+\url{https://www.stardewvalley.net/faq/}
+
+\subsection{Daten}
+Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
+beinhalten diese.
+
+\subsection{Ordnerstruktur}
+\url{https://www.stardewvalley.net/?s=File}
+
+\subsection{Speicherformate}
+
+\subsection{Datenaufteilung}
+
+\subsection{Speichervorgänge}
+\url{https://stardewvalleywiki.com/Saves}\\
+
+\subsection{Ladevorgänge}
+%--------------------------------------------------------------------------
+
+
+
+\iffalse
 %--------------------------------------------------------------------------
 \section{Terraria}
 
@@ -271,7 +289,7 @@ usw. werden in verschiedenen Daten gespeichert.
 %--------------------------------------------------------------------------
 
 
-\iffalse
+
 %--------------------------------------------------------------------------
 \section{Ein Spiel}
 Beschreibung von dem Spiel
