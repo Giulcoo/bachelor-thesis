@@ -191,8 +191,99 @@ Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-D
 \subsubsection{Binäre Serialisierung}
 Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
 
-\todo{Protocol Buffer}
-\url{https://protobuf.dev/}
+Eine Form der binären Serialisierung, 
+\cite{currier2022protocol}\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+
+\begin{itemize}
+    \item Über viele Programmiersprachen und Plattformen unterstützt
+    \item Von Google entwickelt und verwendet
+    \item Kompakt und schnell
+    \item Nicht leserlich, weil binär
+    \item Strukturierte Daten werden in ".proto"-Datei definiert und serialisiert
+    \item Nach definieren von Proto-Datei den Protocol Buffer Compiler (protoc) verwenden auf gewünschte Programmiersprache
+\end{itemize}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/protobuf_time.png}
+    \caption{Kodierungs- und Dekodierungszeiten im Vergleich\cite{currier2022protocol}}
+    \label{fig:protobufTime}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/protobuf_browser.png}
+    \caption{Laufzeit- und Datengrößen-Vergleich\cite{currier2022protocol}}
+    \label{fig:protobufBrowser}
+\end{figure}
+
+\begin{listing}[htp]
+    \begin{minted}{cpp} 
+        syntax = "proto3";
+        
+        message Monster {
+            uint32 id = 1;
+            string name = 2;
+
+            message Position {
+                float x = 1;
+                float y = 2;
+            }
+
+            Position position = 3;
+
+            enum Effect {
+                GIFTIG = 0;
+                PARALYSE = 1;
+                FROST = 2;
+                ...
+            }
+
+            repeated Effect effects = 4;
+        }
+    \end{minted}
+    \caption{Proto-Datei einer Monster-Klasse}
+    \label{lst:protoExp}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        protoc -I=<Pfad 1> --java_out=<Pfad 2> <Pfad 3>/data.proto
+    \end{minted}
+    \caption{Protoc Kommandozeilenbefehl für Java}
+    \label{lst:protocJava}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        Monster.Builder monster = Monster.newBuilder();
+        monster.setId(1);
+        monster.setName("Vampir");
+
+        Monster.Position.Builder position = Monster.Position.newBuilder();
+        position.setX(0.15f);
+        position.setY(2.34f);
+
+        monster.addPosition(position.build());
+        monster.addEffects(Monster.Effect.GIFTIG);
+        monster.addEffects(Monster.Effect.FROST);
+
+        FileOutputStream output = new FileOutputStream("filename");
+        monster.build().writeTo();
+        output.close();
+    \end{minted}
+    \caption{Schreiben von Daten mit den Protocol Buffer-Klassen in Java}
+    \label{lst:protobufJavaWrite}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        Monster monster = Monster.parseFrom(new FileInputStream("filename"));
+        System.out.println(monster.getName());
+    \end{minted}
+    \caption{Lesen von Daten mit den Protocol Buffer-Klassen in Java}
+    \label{lst:protobufJavaRead}
+\end{listing}
 %--------------------------------------------------------------------------
 
 

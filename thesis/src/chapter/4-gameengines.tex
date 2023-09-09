@@ -132,7 +132,7 @@ Wie das Laden der Spieldaten mit der SaveGame-Klasse funktioniert, ist in dem Bl
     \label{fig:unrealSaveGameBluePrintLoad}
 \end{figure}
 
-Falls das ganze in C++-Code geschehen soll, muss die Header-Datei "Kismet/GameplayStatics.h" zu der eigenen SaveGame-Klasse hinzugefügt werden und diese Klasse muss dann als Kind-Klasse von der USaveGame-Klasse deklariert werden. In der eigenen Klasse können dann die zu speichernden Variablen, der Slot-Name und der Benutzer-Index definiert werden. Mithilfe der Funktion SaveGameToSlot oder AsyncSaveGameToSlot und LoadGameFromSlot oder AsyncLoadGameFromSlot aus der Klasse UGameplayStatics können die Daten synchron oder asynchron gespeichert und geladen werden.\cite{unrealengineSavingLoading}
+Falls dieses Speicher- und Ladesystem in C++-Code geschrieben werden soll, muss die Header-Datei "Kismet/GameplayStatics.h" zu der eigenen SaveGame-Klasse hinzugefügt werden und diese Klasse muss dann als Kind-Klasse von der USaveGame-Klasse deklariert werden. In der eigenen Klasse können dann die zu speichernden Variablen, der Slot-Name und der Benutzer-Index definiert werden. Mithilfe der Funktion SaveGameToSlot oder AsyncSaveGameToSlot und LoadGameFromSlot oder AsyncLoadGameFromSlot aus der Klasse UGameplayStatics können die Daten synchron oder asynchron gespeichert und geladen werden.\cite{unrealengineSavingLoading}
 
 \subsection{JSON}
 Auch bei Unreal Engine ist es möglich die Spieldaten im \ac{json}-Format abzuspeichern. Bei den Blueprints ist der Entwickler etwas eingeschränkt, da es erst seit Unreal Engine 5 Blueprints zum Arbeiten mit \ac{json} gibt, und die Anzahl der Funktionen noch gering ist. Es gibt Knoten für Blueprints, bei denen ein
