@@ -60,6 +60,8 @@ Um die Anzahl der Lese- und Schreibprozesse möglichst stark zu minimieren, kann
 \subsection{Aufteilung der Daten} 
 Eine weitere Art, die Datenmenge besser zu organisieren, um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig, jedes Mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden.
 
+\todo{Ausblick}
+
 \subsubsection{Chunks} \label{sssect:chunks}
 Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht festgesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einem einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. 
 \todo{Mehr Quellen, aus Google Scholar}
@@ -90,6 +92,8 @@ Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann 
 %\url{https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats}
 
 \textit{Serialisierung} ist der Prozess, bei dem ein Objekt zu einer Ansammlungen von Bytes umgewandelt wird oder der Zustand eines Objekts in ein Medium abgespeichert wird, um es später wiederherzustellen oder zu übertragen, wobei die Datenstruktur und der Inhalt des Objekts in einer für die Speicherung oder Übertragung geeigneten Form kodiert werden. \textit{Deserialisierung} ist der Gegenprozess von Serialisierung, der den zuvor serialisierten Zustand wieder in das ursprüngliche Objektformat zurückführt, indem die kodierten Daten aus dem Medium extrahiert werden, die ursprüngliche Datenstruktur rekonstruiert und folglich das Objekt in seinen initialen Zustand zurückversetzt.\cite{codeguruWorkingWith}
+
+\todo{Ausblick}
 
 \subsubsection{JSON}
 Eine sehr beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im \ac{json}-Format. \ac{json} ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden. \ac{json}-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. \ac{json} wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
@@ -191,15 +195,13 @@ Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-D
 \subsubsection{Binäre Serialisierung}
 Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
 
-Eine Form der binären Serialisierung, 
-\cite{currier2022protocol}\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+Eine populäre Umsetzung der binären Serialisierung ist der Protocol Buffer. Dieser wurde Anfang 2001 von Google entwickelt und wird seitdem in vielen Projekten von Google, anderen Unternehmen und Entwicklern verwendet. Der\todo{Der?} Protocol Buffer verwendet kompilierte Daten, um diese zu binären Daten zu serialisieren. Das besondere dabei ist, dass der Protocol Buffer in verschiedenen Programmiersprachen und Plattformen verwendet werden kann. Es ist also möglich, dass die Programmierumgebung beim Serialisieren ganz anders ist, als die beim Deserialisieren. Da es sich um eine binäre Serialisierung handelt, sind die Daten zwar nicht für Menschen leserlich, jedoch ist Protocol Buffer eine schnelle und kompakte Art, Daten zu serialisieren. Bei den Abbildungen \ref{fig:protobufTime} und \ref{fig:protobufBrowser} ist zu sehen, wie schnell der Protocol Buffer im Vergleich zu JSON-Serialisierung ist.  In der Abbildung \ref{fig:protobufBrowser} ist auch zu sehen, dass die Protocol Buffer-Daten kompakter als die JSON-Daten sind. Welchen Vorteil dies auf die Effizienz anbieten wird, wird in dem Abschnitt \ref{ssec:kompression} diskutiert.\cite{currier2022protocol}
+
+Um mit Protocol Buffer zu arbeiten, muss als erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Der Code \ref{lst:protoExp} zeigt, wie so eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In so einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String der den Namen beschreibt, eine Position und eine Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+
+Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die Datenstrukturen in eine gewünschte Programmiersprache zu erstellen. 
 
 \begin{itemize}
-    \item Über viele Programmiersprachen und Plattformen unterstützt
-    \item Von Google entwickelt und verwendet
-    \item Kompakt und schnell
-    \item Nicht leserlich, weil binär
-    \item Strukturierte Daten werden in ".proto"-Datei definiert und serialisiert
     \item Nach definieren von Proto-Datei den Protocol Buffer Compiler (protoc) verwenden auf gewünschte Programmiersprache
 \end{itemize}
 
@@ -288,11 +290,16 @@ Eine Form der binären Serialisierung,
 
 
 %--------------------------------------------------------------------------
-\subsection{Datenkompression}
+\subsection{Datenkompression} \label{ssec:kompression}
+
+\todo{Einleitung}
+
 \subsubsection{Kompression}
 Kompression von Daten ist bei vielen Software-Projekten weit verbreitet, um die Menge der gespeicherten Daten zu reduzieren. Da es bei diesem Paper aber um Effizienz und nicht verringern des verbrauchten Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess. Wann lohnt es sich, Datenkompression anzuwenden? 
 
 Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf den Sekundärspeicher gespeichert werden. Da der Sekundärspeicher ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort, die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren.\cite{mediumWhenDataCompression}
+
+\todo{Gzip Section}
 
 Eine Möglichkeit, Daten zu komprimieren, ist mit dem populären patentfreien Kompressionsprogramm GZIP\footnote{GNU zip}. GZIP verwendet den Deflate-Algorithmus, der eine Kombination aus dem  LZ77\footnote{Lempel-Ziv 77}-Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer gzip-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 
