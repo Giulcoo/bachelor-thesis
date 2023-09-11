@@ -58,9 +58,7 @@ Um die Anzahl der Lese- und Schreibprozesse möglichst stark zu minimieren, kann
 
 %--------------------------------------------------------------------------
 \subsection{Aufteilung der Daten} 
-Eine weitere Art, die Datenmenge besser zu organisieren, um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig, jedes Mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden.
-
-\todo{Ausblick}
+Eine weitere Art, die Datenmenge besser zu organisieren, um dann Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig, jedes Mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden. In diesem Abschnitt werden zwei Möglichkeit der Aufteilung der Spieldaten betrachtet, einmal mit Chunks und einmal nach Level oder Karten der Spielwelt. Beide Strategien haben unterschiedliche Szenarien, wann es sinnvoll ist, diese einzusetzen.
 
 \subsubsection{Chunks} \label{sssect:chunks}
 Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht festgesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einem einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. 
@@ -93,10 +91,10 @@ Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann 
 
 \textit{Serialisierung} ist der Prozess, bei dem ein Objekt zu einer Ansammlungen von Bytes umgewandelt wird oder der Zustand eines Objekts in ein Medium abgespeichert wird, um es später wiederherzustellen oder zu übertragen, wobei die Datenstruktur und der Inhalt des Objekts in einer für die Speicherung oder Übertragung geeigneten Form kodiert werden. \textit{Deserialisierung} ist der Gegenprozess von Serialisierung, der den zuvor serialisierten Zustand wieder in das ursprüngliche Objektformat zurückführt, indem die kodierten Daten aus dem Medium extrahiert werden, die ursprüngliche Datenstruktur rekonstruiert und folglich das Objekt in seinen initialen Zustand zurückversetzt.\cite{codeguruWorkingWith}
 
-\todo{Ausblick}
+Es gibt verschiedene Herangehensweisen, um Daten zu Serialisieren. In diesem Abschnitt werden einige Strategien genauer betrachtet. Als erstes wird die populäre Serialisierung mit \ac{json} und der binären Version mit \ac{bson} angeschaut. Zum Schluss wird die kompakte binäre Serialisierung betrachtet und wie diese umgesetzt werden kann.
 
 \subsubsection{JSON}
-Eine sehr beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im \ac{json}-Format. \ac{json} ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden. \ac{json}-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. \ac{json} wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
+Eine sehr beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im \textit{\ac{json}-Format}. \ac{json} ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden. \ac{json}-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. \ac{json} wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, dass der Zustand eines Objektes in lokalen Dateien abgespeichert wird.\cite{mongodbJSONBSON} 
 In dem Code aus \ref{lst:jsonExp} ist zu sehen, wie ein Objekt im \ac{json}-Format abgespeichert werden kann. Das entsprechende Klassendiagramm des zu speichernden Objektes ist in der Abbildung \ref{fig:monsterBspKlasse} zu sehen. Das Objekt "position" besteht aus den Variablen x und y, die den Typ Number speichern, und das "effects" Array ist ein String-Array. 
 
 \begin{listing}[htp]
@@ -168,7 +166,7 @@ Wenn sich für \ac{json} entschieden wurde, gibt es drei Arten, die Daten zu ver
 \end{listing}
 
 \subsubsection{BSON}
-\ac{bson} ist eine binäre Kodierung von \ac{json}-Daten und wurde für die NoSQL-Datenbank MongoDB entwickelt. Es ist mit BSON möglich, jede \ac{json}-Dokumente zu speichern. BSON unterstützt alle Datentypen von \ac{json} und erweitert diese noch mit weiteren Typen, wie einem Datum-Typ und ein BinData-Typ. Außerdem wird mit Zahlen anders gearbeitet. Während \ac{json} Zahlen als Zeichenketten speichert, werden diese bei BSON als 32- oder 64-Bit Integers oder 64-Bit Gleitkommazahl gespeichert. Was BSON auch noch zusätzlich einführt, ist eine maximale Dokumenten-Größe von 16 MB. BSON hat gegenüber \ac{json} den Vorteil, dass die Daten viel schneller durchlaufen werden können, indem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein großer Nachteil von BSON ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
+\textit{\ac{bson}} ist eine binäre Kodierung von \ac{json}-Daten und wurde für die NoSQL-Datenbank MongoDB entwickelt. Es ist mit BSON möglich, jede \ac{json}-Dokumente zu speichern. BSON unterstützt alle Datentypen von \ac{json} und erweitert diese noch mit weiteren Typen, wie einem Datum-Typ und ein BinData-Typ. Außerdem wird mit Zahlen anders gearbeitet. Während \ac{json} Zahlen als Zeichenketten speichert, werden diese bei BSON als 32- oder 64-Bit Integers oder 64-Bit Gleitkommazahl gespeichert. Was BSON auch noch zusätzlich einführt, ist eine maximale Dokumenten-Größe von 16 MB. BSON hat gegenüber \ac{json} den Vorteil, dass die Daten viel schneller durchlaufen werden können, indem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein großer Nachteil von BSON ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
 
 Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-Dokument aus \ref{lst:bsonExp}. Die erste Zeile von dem BSON-Dokument beschreibt immer die Größe des ganzen Dokuments. In der nächsten Zeile definiert, dass es sich bei der ersten Variable des Dokuments um einen String-Typen handelt. Jeder Typ hat eine eigene Kodierung, um diesen zu identifizieren, wobei String als 0x02 kodiert wird. Die nächsten zwei Zeilen definieren den Schlüssel und Schlüsselwert des Strings. Mit 0x00 wird das Ende des Dokuments gesetzt, wie in der letzten Zeile zu sehen ist.
 
@@ -193,17 +191,9 @@ Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-D
 \end{listing}
 
 \subsubsection{Binäre Serialisierung}
-Bei der binären Serialisierung wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
+Bei der \textit{binären Serialisierung} wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
 
-Eine populäre Umsetzung der binären Serialisierung ist der Protocol Buffer. Dieser wurde Anfang 2001 von Google entwickelt und wird seitdem in vielen Projekten von Google, anderen Unternehmen und Entwicklern verwendet. Der\todo{Der?} Protocol Buffer verwendet kompilierte Daten, um diese zu binären Daten zu serialisieren. Das besondere dabei ist, dass der Protocol Buffer in verschiedenen Programmiersprachen und Plattformen verwendet werden kann. Es ist also möglich, dass die Programmierumgebung beim Serialisieren ganz anders ist, als die beim Deserialisieren. Da es sich um eine binäre Serialisierung handelt, sind die Daten zwar nicht für Menschen leserlich, jedoch ist Protocol Buffer eine schnelle und kompakte Art, Daten zu serialisieren. Bei den Abbildungen \ref{fig:protobufTime} und \ref{fig:protobufBrowser} ist zu sehen, wie schnell der Protocol Buffer im Vergleich zu JSON-Serialisierung ist.  In der Abbildung \ref{fig:protobufBrowser} ist auch zu sehen, dass die Protocol Buffer-Daten kompakter als die JSON-Daten sind. Welchen Vorteil dies auf die Effizienz anbieten wird, wird in dem Abschnitt \ref{ssec:kompression} diskutiert.\cite{currier2022protocol}
-
-Um mit Protocol Buffer zu arbeiten, muss als erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Der Code \ref{lst:protoExp} zeigt, wie so eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In so einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String der den Namen beschreibt, eine Position und eine Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
-
-Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die Datenstrukturen in eine gewünschte Programmiersprache zu erstellen. 
-
-\begin{itemize}
-    \item Nach definieren von Proto-Datei den Protocol Buffer Compiler (protoc) verwenden auf gewünschte Programmiersprache
-\end{itemize}
+Eine populäre Umsetzung der binären Serialisierung ist der \textit{Protocol Buffer}. Dieser wurde Anfang 2001 von Google entwickelt und wird seitdem in vielen Projekten von Google, anderen Unternehmen und Entwicklern verwendet. Der\todo{Der?} Protocol Buffer verwendet kompilierte Daten, um diese zu binären Daten zu serialisieren. Das besondere dabei ist, dass der Protocol Buffer in verschiedenen Programmiersprachen und Plattformen verwendet werden kann. Es ist also möglich, dass die Programmierumgebung beim Serialisieren ganz anders ist, als die beim Deserialisieren. Da es sich um eine binäre Serialisierung handelt, sind die Daten zwar nicht für Menschen leserlich, jedoch ist Protocol Buffer eine schnelle und kompakte Art, Daten zu serialisieren. Bei den Abbildungen \ref{fig:protobufTime} und \ref{fig:protobufBrowser} ist zu sehen, wie schnell der Protocol Buffer im Vergleich zu JSON-Serialisierung ist.  In der Abbildung \ref{fig:protobufBrowser} ist auch zu sehen, dass die Protocol Buffer-Daten kompakter als die JSON-Daten sind. Welchen Vorteil dies auf die Effizienz anbieten wird, wird in dem Abschnitt \ref{ssec:kompression} diskutiert.\cite{currier2022protocol}
 
 \begin{figure}[htp]
     \centering
@@ -218,6 +208,8 @@ Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die
     \caption{Laufzeit- und Datengrößen-Vergleich\cite{currier2022protocol}}
     \label{fig:protobufBrowser}
 \end{figure}
+
+Um mit Protocol Buffer zu arbeiten, muss als erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Der Code \ref{lst:protoExp} zeigt, wie so eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In so einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String der den Namen beschreibt, eine Position und eine Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
 
 \begin{listing}[htp]
     \begin{minted}{cpp} 
@@ -248,13 +240,75 @@ Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die
     \label{lst:protoExp}
 \end{listing}
 
+Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die Datenstrukturen in eine gewünschte Programmiersprache zu erstellen. In der Abbildung \ref{lst:protocJava} ist zu sehen, wie der \ac{protoc}-Befehl aussehen würde, wenn mit der Java-Programmiersprache gearbeitet werden würde. Dabei müssen drei Pfade angegeben werden. Als erstes den Pfad, wo sich der Quellcode der Anwendung befindet, dann der Pfad, in der die generierten Datenstrukturen gespeichert werden sollen und zum Schluss den Pfad zu der erstellten Proto-Datei. Statt Java kann \ac{protoc} seit der dritten Version die Datenstrukturen auch in C++, Kotlin, Python, Go, Ruby, Objective-C, C\# und PHP generieren lassen.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+
 \begin{listing}[htp]
     \begin{minted}{java} 
         protoc -I=<Pfad 1> --java_out=<Pfad 2> <Pfad 3>/data.proto
     \end{minted}
-    \caption{Protoc Kommandozeilenbefehl für Java}
+    \caption{Protoc Kommandozeilenbefehl für Java\cite{protobufProtocolBufferJava}}
     \label{lst:protocJava}
 \end{listing}
+
+Bei den generierten Datenstrukturen wird für jede Message eine Klasse erstellt. Jede Klasse hat seine eigene Builder-Klasse, um Instanzen dieser Klasse generieren lassen zu können. Die erstellten Klassen haben alle automatisch generierte Funktionen und Variablen, abhängig von den Variablen der Messages. In dem Code aus \ref{lst:protoJavaGeneratedMonster} und \ref{lst:protoJavaGeneratedBuilder} ist zu sehen, welche Funktionen die generierten Klassen haben, die aus der Monster-Message aus \ref{lst:protoExp} resultieren würden. 
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        // required uint32 id = 1;
+        public boolean hasId();
+        public int getId();
+
+        // required string name = 2;
+        public boolean hasName();
+        public String getName();
+
+        // required Monster.Position position = 3;
+        public boolean hasPosition();
+        public Position getPosition();
+
+        // repeated Monster.Effect effects = 4;
+        public List<Effect> getEffectsList();
+        public int getEffectsCount();
+        public Effect getEffects(int index);
+    \end{minted}
+    \caption{Generierte Monster-Klasse aus der Monster Message}
+    \label{lst:protoJavaGeneratedMonster}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        // required uint32 id = 1;
+        public boolean hasId();
+        public int getId();
+        public Builder setId(int value);
+        public Builder clearId();
+
+        // required string name = 2;
+        public boolean hasName();
+        public String getName();
+        public Builder setName(String value);
+        public Builder clearName();
+
+        // required Monster.Position position = 3;
+        public boolean hasPosition();
+        public Position getPosition();
+        public Builder setPosition(Position value);
+        public Builder clearPosition();
+
+        // repeated Monster.Effect effects = 4;
+        public List<Effect> getEffectsList();
+        public int getEffectsCount();
+        public Effect getEffects(int index);
+        public Builder setEffects(int index, Effect value);
+        public Builder addEffects(Effect value);
+        public Builder addAllEffects(Iterable<Effect> value);
+        public Builder clearEffects();
+    \end{minted}
+    \caption{Generierte Builder-Klasse für die Monster-Klasse}
+    \label{lst:protoJavaGeneratedBuilder}
+\end{listing}
+
+In den Code-Ausschnitten \ref{lst:protobufJavaWrite} und \ref{lst:protobufJavaRead} ist zu sehen, wie letztendlich in Java die Daten in einer Datei binär gespeichert und geladen werden können. Dafür wird hauptsächlich mit den generierten Buildern gearbeitet, denn diese können mit der Funktion "build" eine neue Monster-Instanz mit den gespeicherten Werten erstellen und mit "writeTo" diese Instanz serialisieren, um sie dann in eine gegebene Datei zu schreiben. Mit der Funktion "parseFrom" der Monster-Klasse wird eine neue Instanz aus einer Datei geladen. 
 
 \begin{listing}[htp]
     \begin{minted}{java} 
@@ -265,13 +319,13 @@ Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die
         Monster.Position.Builder position = Monster.Position.newBuilder();
         position.setX(0.15f);
         position.setY(2.34f);
+        monster.setPosition(position.build());
 
-        monster.addPosition(position.build());
         monster.addEffects(Monster.Effect.GIFTIG);
         monster.addEffects(Monster.Effect.FROST);
 
         FileOutputStream output = new FileOutputStream("filename");
-        monster.build().writeTo();
+        monster.build().writeTo(output);
         output.close();
     \end{minted}
     \caption{Schreiben von Daten mit den Protocol Buffer-Klassen in Java}
@@ -281,11 +335,12 @@ Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die
 \begin{listing}[htp]
     \begin{minted}{java} 
         Monster monster = Monster.parseFrom(new FileInputStream("filename"));
-        System.out.println(monster.getName());
     \end{minted}
     \caption{Lesen von Daten mit den Protocol Buffer-Klassen in Java}
     \label{lst:protobufJavaRead}
 \end{listing}
+
+\todo{XML und andere Alternativen aufzählen? Kleines Fazit?}
 %--------------------------------------------------------------------------
 
 
