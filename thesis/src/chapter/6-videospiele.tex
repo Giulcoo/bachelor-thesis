@@ -240,25 +240,141 @@ Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als de
 %--------------------------------------------------------------------------
 \section{Stardew Valley}
 Beschreibung von dem Spiel
+
+\begin{itemize}
+    \item Bauernhof aufbauen und darum kümmern 
+\end{itemize}
 \url{https://www.stardewvalley.net/press/}\\
 \url{https://store.steampowered.com/app/413150/Stardew_Valley/}\\
 \url{https://www.stardewvalley.net/faq/}
 
+\todo{Manche Daten aus Save-Datei}
+
 \subsection{Daten}
-Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
-beinhalten diese.
+\begin{itemize}
+    \item Player
+    \begin{itemize}
+        \item Name (Spielername, Farmname, Hundname, ...)
+        \item Position
+        \item Quest-Log (Quests die der Spieler offen hat)
+        \item Items
+        \item Aussehen (Klamotten, Haare, Hautfarbe, ...)
+        \item etc.
+    \end{itemize}
+    \item Location (mehrere)
+    \begin{itemize}
+        \item Charaktere (mit Typ, Name, Position, ...)
+        \item Objekte (mit Position, Name, Kategorie, Preis, ...)
+        \item Terrain-Features (mit Schlüssel (Position) und Wert (Spielobjekt))
+        \item Gebäude (mit Innenausstattung und Charaktere)
+        \item etc.
+    \end{itemize}
+    \item Mailbox (nur ID der einzelnen Mails)
+    \item Statistiken (wie viel Items gebaut wurden, wei viele Saatgut gesät wurde, ...)
+    \item etc.
+\end{itemize}
 
 \subsection{Ordnerstruktur}
-\url{https://www.stardewvalley.net/?s=File}
+Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl der Daten im Vergleich zu den vorherigen Spielen klein sind. Für jede Spielwelt, die ein Spieler erstellt, gibt es einen eigenen Ordner. Der Name von diesem Ordner setzt sich aus dem Namen des Bauernhofs zusammen und eine Identifikationsnummer. In diesem Ordner sind dann vier Dateien. Die Dateien ohne der "\_old"-Endung haben den letzten Spielstand gespeichert und die mit dieser Endung den Spielstand davor. Dabei beinhalten die SaveGameInfo-Dateien Informationen, die im "Load Game"-Menü gebraucht werden. Die Daten zu einem Spielstand sind in der "<Bauernhof Name>\_<ID>"-Datei gespeichert, wobei der Name dieser Datei identisch zu dem des Ordners ist. Den kompletten Aufbau der Ordnerstruktur ist in der Abbildung \ref{lst:ordnerStrukturStardewValley} zu sehen. Die Daten in den Dateien werden im \ac{xml}-Format gespeichert, mehr dazu im Abschnitt \ref{ssec:speicherformateStardew}.\cite{stardewvalleywikiSaves}\cite{stardewvalleyFiles}
 
-\subsection{Speicherformate}
+\begin{listing}[htp]
+    \dirtree{%
+    .1 <Bauernhof Name>\_<ID>.
+        .2 \textcolor{blue}{SaveGameInfo}.
+        .2 \textcolor{blue}{<Bauernhof Name>\_<ID>}.
+        .2 \textcolor{blue}{SaveGameInfo\_old}.
+        .2 \textcolor{blue}{<Bauernhof Name>\_<ID>\_old}.
+    } 
+    \caption{Ordnerstruktur einer Spielwelt in Stardew Valley}
+    \label{lst:ordnerStrukturStardewValley}
+\end{listing}
+
+\subsection{Speicherformate} \label{ssec:speicherformateStardew}
+
+\begin{itemize}
+    \item XML-Format, siehe Listings
+\end{itemize}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{xml} 
+        <?xml version="1.0" encoding="utf-8"?>
+        <SaveGame
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          <player>
+            <name>Spielername</name>
+            ...
+            <Position>
+              <X>123</X>
+              <Y>456</Y>
+            </Position>
+            ...
+            <questLog>
+              <Quest>...</Quest>
+              <Quest>...</Quest>
+              ...
+            <questLog>
+            ...
+            <items>
+                <Item xsi:type="Axe">...</Item>
+                <Item xsi:type="Pickaxe">...</Item>
+                ...
+            </items>
+            ...
+            <farmName>Bauernhofname</farmName>
+            ...
+            <shirt>1</shirt>
+            <hair>2</hair>
+            <skin>3</skin>
+          <player>
+          <locations>
+            <GameLocation xsi:type="FarmHouse">...</GameLocation>
+            <GameLocation xsi:type="Farm">...</GameLocation>
+            ...
+          </locations>
+          ...
+        </SaveGame>
+    \end{minted}
+    \caption{Hauptdatei zum Speichern des Spielstandes}
+    \label{lst:stardewvalleySaveGame}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{xml} 
+        <?xml version="1.0" encoding="utf-8"?>
+        <Farmer
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          <name>Spielername</name>
+          ...
+          <Position>
+            <X>123</X>
+            <Y>456</Y>
+          </Position>
+          ...
+          <questLog>
+            <Quest>...</Quest>
+            <Quest>...</Quest>
+            ...
+          <questLog>
+          ...
+            <farmName>Bauernhofname</farmName>
+          ...
+          <shirt>1</shirt>
+          <hair>2</hair>
+          <skin>3</skin>
+          ...
+        </Farmer>
+    \end{minted}
+    \caption{SaveGameInfo Datei}
+    \label{lst:stardewvalleySaveGameInfo}
+\end{listing}
 
 \subsection{Datenaufteilung}
+Alles in einer Datei, viele Spielobjekte nach GameLocation aufgeteilt (Quelle Listing)
 
 \subsection{Speichervorgänge}
-\url{https://stardewvalleywiki.com/Saves}\\
-
-\subsection{Ladevorgänge}
+Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Sobald der Spieler in dem Spiel in einem Bett, oder der Spielcharakter automatisch um zwei Uhr nachts schlafen geht, wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
 %--------------------------------------------------------------------------
 
 
