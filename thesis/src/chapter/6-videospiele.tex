@@ -239,43 +239,24 @@ Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als de
 
 %--------------------------------------------------------------------------
 \section{Stardew Valley}
-Beschreibung von dem Spiel
+Stardew Valley ist ein Indie-Simulationsspiel, welches von Eric Barone, auch bekannt als ConcernedApe, im Jahr 2016 veröffentlicht wurde. Die Hauptaufgabe des Spiels ist es, eine Farm aufzubauen und diese zu pflegen. 
+\cite{steampoweredStardewValley} 
 
-\begin{itemize}
-    \item Bauernhof aufbauen und darum kümmern 
-\end{itemize}
-\url{https://www.stardewvalley.net/press/}\\
-\url{https://store.steampowered.com/app/413150/Stardew_Valley/}\\
-\url{https://www.stardewvalley.net/faq/}
-
-\todo{Manche Daten aus Save-Datei}
+\todo{Save-Ordner auf Github und referenzieren}
 
 \subsection{Daten}
-\begin{itemize}
-    \item Player
-    \begin{itemize}
-        \item Name (Spielername, Farmname, Hundname, ...)
-        \item Position
-        \item Quest-Log (Quests die der Spieler offen hat)
-        \item Items
-        \item Aussehen (Klamotten, Haare, Hautfarbe, ...)
-        \item etc.
-    \end{itemize}
-    \item Location (mehrere)
-    \begin{itemize}
-        \item Charaktere (mit Typ, Name, Position, ...)
-        \item Objekte (mit Position, Name, Kategorie, Preis, ...)
-        \item Terrain-Features (mit Schlüssel (Position) und Wert (Spielobjekt))
-        \item Gebäude (mit Innenausstattung und Charaktere)
-        \item etc.
-    \end{itemize}
-    \item Mailbox (nur ID der einzelnen Mails)
-    \item Statistiken (wie viel Items gebaut wurden, wei viele Saatgut gesät wurde, ...)
-    \item etc.
-\end{itemize}
+Bei Stardew Valley gibt es viele verschiedene Arten von Daten. Einige Daten werden in vielen Teildaten aufgeteilt, wie zum Beispiel die Player- und Location-Daten. Außerdem gibt es noch viele weitere kleine Daten, zum Abspeichern des Spielstandes.
+
+Die \textit{Player-Daten} bestehen aus Namen, wie der Spielername und Bauernhofname, Position des Spielers, der Quest-Log, die Items des Spielers, das Aussehen und noch vielen weiteren Daten, die den Zustand des Spielers abspeichern. Das Quest-Log ist eine Liste der Aufträgen, die der Spieler befolgen kann. Für jeden Auftrag gibt es einen Titel, eine Beschreibung, ein Ziel, die Belohnung die der Spieler bekommt für das umsetzen des Auftrages und noch weiteren kleinen Daten. Die Items werden als Liste gespeichert, wobei jeder Eintrag in der Liste ein Item ist, mit seinem Namen, Kategorie, Beschreibung, \ac{etc}. 
+
+Die \textit{Locations} werden als Liste gesammelt. Die Listenelemente heißen \textit{GameLocation} und beinhalten eine Vielzahl an Informationen zu einer Ortschaft in dem Spiel. Es werden die Charaktere, Objekte, Terrain-Features, Gebäude, \ac{etc} in einer GameLocation gespeichert. Die einzelnen Charaktere bestehen aus einen Typen, Namen, deren Position und weitere relevante Daten, um Spielcharaktere abzuspeichern. Hier sind zum Beispiel Haustiere des Spielers oder \acp{npc} gespeichert. Die Objekte werden als Hashtabelle\footnote{Eine Hashtabelle ist eine Tabelle, die Schlüssel zu Werten zuordnet} gespeichert, wobei der Schlüssel ein zweidimensionaler Vektor ist, der die Position des Objektes angibt. Als Schlüsselwert werden alle Informationen zu dem Objekt aufgezählt, wie der Name, die Kategorie, der Preis, \ac{etc}. Die Terrain-Features werden auch als Hashtabelle gespeichert und beinhalte Informationen zu dem Gelände, wie zum zum Beispiel wo Bäume und Gräser platziert sind. Gebäude-Daten bestehen aus Informationen zu der Innenausstattung und den Charakteren in den Gebäuden.
+
+Die restlichen Daten sind teilweise kleinere Daten, wie die Mailbox-Daten oder Statistiken. Bei der Mailbox wird nur die Email-Identifikationsnummer, während bei den Statistiken hauptsächlich Zahlen gespeichert werden. Statistiken wären zum Beispiel, wie viele Items ein Spieler gebaut hat oder wie viel Saatgut gesät wurde. Wie die Daten letztendlich aussehen wird in dem Abschnitt \ref{ssec:speicherformateStardew} genauer behandelt.
 
 \subsection{Ordnerstruktur}
 Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl der Daten im Vergleich zu den vorherigen Spielen klein sind. Für jede Spielwelt, die ein Spieler erstellt, gibt es einen eigenen Ordner. Der Name von diesem Ordner setzt sich aus dem Namen des Bauernhofs zusammen und eine Identifikationsnummer. In diesem Ordner sind dann vier Dateien. Die Dateien ohne der "\_old"-Endung haben den letzten Spielstand gespeichert und die mit dieser Endung den Spielstand davor. Dabei beinhalten die SaveGameInfo-Dateien Informationen, die im "Load Game"-Menü gebraucht werden. Die Daten zu einem Spielstand sind in der "<Bauernhof Name>\_<ID>"-Datei gespeichert, wobei der Name dieser Datei identisch zu dem des Ordners ist. Den kompletten Aufbau der Ordnerstruktur ist in der Abbildung \ref{lst:ordnerStrukturStardewValley} zu sehen. Die Daten in den Dateien werden im \ac{xml}-Format gespeichert, mehr dazu im Abschnitt \ref{ssec:speicherformateStardew}.\cite{stardewvalleywikiSaves}\cite{stardewvalleyFiles}
+
+Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung, beim Speichern der Daten. Alle Informationen eines Spielstandes werden zusammen in einer Datei gesichert.
 
 \begin{listing}[htp]
     \dirtree{%
@@ -290,10 +271,7 @@ Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl
 \end{listing}
 
 \subsection{Speicherformate} \label{ssec:speicherformateStardew}
-
-\begin{itemize}
-    \item XML-Format, siehe Listings
-\end{itemize}
+Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Bei der Hauptdatei zum Speichern des Spielstandes, werden die Daten in einem SaveGame-Objekt geschrieben. Bei der SaveGameInfo-Datei werden die Daten in einem Farmer-Objekt gesichert.\cite{stardewvalleywikiSaves}
 
 \begin{listing}[htp]
     \begin{minted}[breaklines,frame=single]{xml} 
@@ -370,57 +348,8 @@ Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl
     \label{lst:stardewvalleySaveGameInfo}
 \end{listing}
 
-\subsection{Datenaufteilung}
-Alles in einer Datei, viele Spielobjekte nach GameLocation aufgeteilt (Quelle Listing)
-
 \subsection{Speichervorgänge}
 Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Sobald der Spieler in dem Spiel in einem Bett, oder der Spielcharakter automatisch um zwei Uhr nachts schlafen geht, wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
-%--------------------------------------------------------------------------
 
-
-
-\iffalse
-%--------------------------------------------------------------------------
-\section{Terraria}
-
-In \url{https://store.steampowered.com/news/app/105600/view/4560463273436543493} steht die neue offizielle Doku Seite für Terraria (\url{https://terraria.wiki.gg/wiki/Terraria_Wiki})
-
-
-\subsection{Daten}
-Welche Klassen gibt es bei Terraria (Blöcke, Chunks,...) und welche Daten 
-beinhalten diese.
-
-\subsection{Ordnerstruktur}
-
-\subsection{Speicherformate}
-World-Dateien, Player-Dateien, Konfigurationsdateien 
-
-\subsection{Datenaufteilung}
-Kein Chunksystem, alles in einer Datei gespeichert. Aber Inventar, Position
-usw. werden in verschiedenen Daten gespeichert.
-
-\subsection{Speichervorgänge}
-
-\subsection{Ladevorgänge} 
-%--------------------------------------------------------------------------
-
-
-
-%--------------------------------------------------------------------------
-\section{Ein Spiel}
-Beschreibung von dem Spiel
-
-\subsection{Daten}
-Welche Klassen gibt es bei <Spielname> (Blöcke, Chunks,...) und welche Daten 
-beinhalten diese.
-
-\subsection{Ordnerstruktur}
-
-\subsection{Speicherformate}
-
-\subsection{Datenaufteilung}
-
-\subsection{Speichervorgänge}
-
-\subsection{Ladevorgänge}
-\fi
+\subsection{Fazit}
+\dots
