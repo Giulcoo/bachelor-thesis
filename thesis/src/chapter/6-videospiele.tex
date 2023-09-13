@@ -152,7 +152,7 @@ Die Spieldaten werden auch nach einem Chunk-basierten System getrennt. Dabei bes
 User data Ordner:
 \begin{itemize}
     \item ./saves (Save files)
-    \item ./mods (Mods)
+    \item ./mods (\acp{mod})
     \item ./script-output (Script-output, z.B. von Spiel Screenshots)
     \item ./scenarios (Lokale Szenarien)
     \item ./config/config.ini (Lokale Einstellung)
@@ -198,14 +198,14 @@ Anschließend werden restliche Daten, die noch gespeichert werden müssen, gesic
 
 
 \subsection{Ladevorgänge}
-Der Ladeprozess für Factorio ist etwas komplizierter. Es gibt einige Dinge, die beachtet werden müssen, wie das Überprüfen der Map-Version und die Migration dieser auf andere Versionen. Außerdem muss überprüft werden, ob es bei den Mods Veränderungen gab. Factorio bietet Entwicklern an, Modifikationen des Spieles zu programmieren. Diese Modifikationen, auch "Mods" genannt, können zu einem Spielstand hinzugefügt werden. Deshalb muss bei jedem Laden des Spielstandes überprüft werden, ob Mods hinzugefügt, gelöscht oder verändert wurden. Worauf auch geachtet werden muss, ist, ob es beschädigte oder invalide Speicherdateien gibt.\cite{factorioFridayFacts270} 
+Der Ladeprozess für Factorio ist etwas komplizierter. Es gibt einige Dinge, die beachtet werden müssen, wie das Überprüfen der Map-Version und die Migration dieser auf andere Versionen. Außerdem muss überprüft werden, ob es bei den \acp{mod} Veränderungen gab. Factorio bietet Entwicklern an, \acp{mod} für das Spiel zu programmieren. Diese können dann zu einem Spielstand hinzugefügt werden. Deshalb muss bei jedem Laden des Spielstandes überprüft werden, ob \acp{mod} hinzugefügt, gelöscht oder verändert wurden. Worauf auch geachtet werden muss, ist, ob es beschädigte oder invalide Speicherdateien gibt.\cite{factorioFridayFacts270} 
 Wie sieht dann der komplette Ladeprozess von Factorio aus, damit all diese Faktoren beachtet werden?
 
 Der erste Schritt beim Laden eines Spielstandes ist, dass die Map-Version der zu ladenden Map mit der Version der Map, in die die Daten geladen werden sollen, verglichen werden muss. Falls die Versionen unterschiedlich sind, muss die zu ladende Map auf der Version der Map, in die geladen wird, migriert werden. Dabei muss beachtet werden, dass nicht jede Version von Factorio unterstützt wird. Manche Versionen können zu alt oder zu neu sein und können damit nicht verwendet werden.\cite{factorioGithubSaveLoad}
 
-Als nächstes muss überprüft werden, ob die Mods, die für den zu ladenden Spielstand aktiv sind, oder die Mod-Einstellung sich geändert haben. Falls dies der Fall ist, müssen zusätzliche Vorgänge vorgenommen werden, nachdem die Daten geladen wurden. Dafür wird die Flag "prototype data changed" in der Lade-Klasse gesetzt.\cite{factorioGithubSaveLoad}
+Als nächstes muss überprüft werden, ob die \acp{mod}, die für den zu ladenden Spielstand aktiv sind, oder die \ac{mod}-Einstellung sich geändert haben. Falls dies der Fall ist, müssen zusätzliche Vorgänge vorgenommen werden, nachdem die Daten geladen wurden. Dafür wird die Flag "prototype data changed" in der Lade-Klasse gesetzt.\cite{factorioGithubSaveLoad}
 
-Bevor irgendwas geladen wird, was eine Identifikationsnummer benutzt, muss die ID-Mapping geladen werden. Ohne diesen Schritt weiß das Programm nicht, welches Spielobjekt mit welcher Identifikationsnummer gespeichert wurde und es könnte zu fehlerhaftes Laden des Spielstand führen. Außerdem wird über diesen Schritt dem Programm vermittelt, welche Spielobjekte sich verändert haben oder gelöscht wurden. Falls Mods die Identifikationsnummer von Spielobjekten zu anderen Identifikationsnummer ändern wollen, geschieht das auch direkt am Anfang.\cite{factorioGithubSaveLoad}
+Bevor irgendwas geladen wird, was eine Identifikationsnummer benutzt, muss die ID-Mapping geladen werden. Ohne diesen Schritt weiß das Programm nicht, welches Spielobjekt mit welcher Identifikationsnummer gespeichert wurde und es könnte zu fehlerhaftes Laden des Spielstand führen. Außerdem wird über diesen Schritt dem Programm vermittelt, welche Spielobjekte sich verändert haben oder gelöscht wurden. Falls \acp{mod} die Identifikationsnummer von Spielobjekten zu anderen Identifikationsnummer ändern wollen, geschieht das auch direkt am Anfang.\cite{factorioGithubSaveLoad}
 
 Nachdem die Identifikationsnummern erfolgreich geladen und gegebenenfalls modifiziert wurden, können die Standard-Map Daten geladen werden. Diese beinhalten Entitäten, Chunks, physikalische Kräfte und Züge.\cite{factorioGithubSaveLoad}
 
