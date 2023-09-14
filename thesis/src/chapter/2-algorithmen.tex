@@ -12,8 +12,6 @@ Verschiedene Theorien/Strategien von Speicher und Ladesysteme ausarbeiten und Ze
 %--------------------------------------------------------------------------
 \section{Speichersysteme}\label{sect:speichersysteme}
 Dieser Abschnitt befasst sich ausführlich mit dem komplexen Speicherprozess eines Videospieles. Dabei wird zunächst eine gründliche Analyse der Struktur eines Spiels durchgeführt, um zu verstehen, wie es aufgebaut ist und welche vielfältigen Datentypen verwendet werden. Anschließend werden verschiedene fortschrittliche Strategien und wichtige Faktoren im Zusammenhang mit dem Speichersystem eines Spiels detailliert vorgestellt.
-
-\todo{ID-Mapping wie bei Factorio}
 %--------------------------------------------------------------------------
 
 
@@ -346,15 +344,11 @@ In den Code-Ausschnitten \ref{lst:protobufJavaWrite} und \ref{lst:protobufJavaRe
 
 %--------------------------------------------------------------------------
 \subsection{Datenkompression} \label{ssec:kompression}
+Kompression von Daten ist bei vielen Software-Projekten weit verbreitet, um die Menge der gespeicherten Daten zu reduzieren. Da es bei diesem Paper aber um Laufzeit-Effizienz und nicht um eine effiziente und kompakte Nutzung des Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess. Lohnt es sich dann, Datenkompression zum Speichern des Spielstandes anzuwenden? 
 
-\todo{Einleitung}
+Um diese Frage zu beantworten, muss erst mal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf den Sekundärspeicher gespeichert werden. Da der Sekundärspeicher ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort, die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren.\cite{mediumWhenDataCompression}
 
-\subsubsection{Kompression}
-Kompression von Daten ist bei vielen Software-Projekten weit verbreitet, um die Menge der gespeicherten Daten zu reduzieren. Da es bei diesem Paper aber um Effizienz und nicht verringern des verbrauchten Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess. Wann lohnt es sich, Datenkompression anzuwenden? 
-
-Um diese Frage zu beantworten, muss erstmal geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf den Sekundärspeicher gespeichert werden. Da der Sekundärspeicher ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort, die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren.\cite{mediumWhenDataCompression}
-
-\todo{Gzip Section}
+\subsubsection{GZIP}
 
 Eine Möglichkeit, Daten zu komprimieren, ist mit dem populären patentfreien Kompressionsprogramm GZIP\footnote{GNU zip}. GZIP verwendet den Deflate-Algorithmus, der eine Kombination aus dem  LZ77\footnote{Lempel-Ziv 77}-Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer gzip-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 

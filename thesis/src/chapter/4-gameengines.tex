@@ -2,8 +2,6 @@
 Eine \textit{Game Engine} ist ein komplexes Software-Framework, das für die Erstellung, Entwicklung und Bereitstellung interaktiver digitaler Anwendungen konzipiert ist, vor allem für Videospiele, aber auch für Simulationen, Architekturvisualisierungen und vieles mehr. Dabei ist das Hauptziel einer Game Engine, eine Abstraktion der allgemeinen Videospielfunktionen anzubieten, damit Code und Spielkomponente in verschiedenen Projekten wiederverwendet werden können. Die Funktionen einer modernen Game Engine können eine Rendering-Engine für 2D- oder 3D-Grafiken, Handhabung von Inputs, Physik-Engine, Animationen, Speichermanagement und Prozess-Threading sein. Bei vielen Game Engines heutzutage verwenden Entwickler höhere Programmiersprachen, wie Java, C++ und C\#, zum Entwickeln der Skripte für die Spiele. Außerdem werden immer mehr Plattformen angeboten, für die die Spiele entwickelt werden können, sei es für Desktop-Umgebungen, Mobilgeräte oder Konsolen.\cite{andrade2015game}
 
 In diesem Kapitel werden drei Game Engines genauer betrachtet. Es wird das populäre Game Engine Unity, das von Epic Games veröffentlichte Unreal Engine und das neuere Godot Engine angeschaut. Alle Game Engines bieten eine Vielzahl an Möglichkeiten an, den Spielstand von einem Spieler abzuspeichern und zu laden. Teilweise gibt es auch bereits fertige Speicher- und Ladesysteme, die als Entwickler verwendet werden können.
-
-\todo{Captions Grammar}
 %--------------------------------------------------------------------------
 
 
@@ -50,7 +48,7 @@ Die verbreitetste Art, mit Unity Spielstände abzuspeichern, ist mit \ac{json}. 
         bob = JsonUtility.FromJson<Player>(aliceJson);
         JsonUtility.FromJsonOverwrite(tomJson, bob);
     \end{minted}
-    \caption{JsonUtility Beispielcode}
+    \caption{Serialisieren und Deserialisieren mit JsonUtility}
     \label{lst:jsonUtilityExp}
 \end{listing}
 
@@ -63,7 +61,7 @@ Wenn für das Unity-Projekt mit \ac{json} die Spielstände gespeichert werden so
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.6\textwidth]{images/UnityJsonPerformance.png}
-    \caption{Laufzeiten der unterschiedlichen \ac{json}-Serialisierer für Unity \cite{jacksondunstanJacksonDunstancomJSON}}
+    \caption{Laufzeiten der unterschiedlichen \ac{json}-Bibliotheken für Unity \cite{jacksondunstanJacksonDunstancomJSON}}
     \label{fig:unityJsonPerformance}
 \end{figure}
 
@@ -78,7 +76,7 @@ Die .NET-Klasse \textit{BinaryFormatter} ist eine Möglichkeit, eine binäre Ser
         formatter.Serialize(bobFile,bob);
         tom = (Player) formatter.Deserialize(bobFile);
     \end{minted}
-    \caption{Beispiel für das Serialisieren und Deserialisieren mit dem BinaryFormatter}
+    \caption{Serialisieren und Deserialisieren der Objekte aus \ref{lst:jsonUtilityExp} mit dem BinaryFormatter}
     \label{lst:binaryFormatterExp}
 \end{listing}
 
@@ -105,13 +103,13 @@ Falls ein Entwickler Zeit sparen will und etwas Budget für das Projekt bereitst
         ... 
         if(ES3.KeyExists("playerLevel")) playerLevel = ES3.Load<int>("playerLevel")
     \end{minted}
-    \caption{Beispiel für das Speichern und Laden mit Easy Save}
+    \caption{Speichern und Laden eines Integers mit Easy Save}
     \label{lst:easySaveExp}
 \end{listing}
 
 
 
-\subsection{Fazit}
+\subsection{Strategie für Unity}
 Wie zu sehen ist, gibt es verschiedene Herangehensweisen für das Speichern und Laden des Spielstandes mit Unity. Da stellt sich jetzt die Frage, welche der Strategien die beste ist. Kurz gesagt gibt es kein System, das in jedem Szenario das vorteilhafteste ist. Welche Strategie verwendet werden sollte, hängt von der Situation ab. 
 
 Wenn Schnelligkeit und Kompaktheit der Daten die oberste Priorität sind, ist die binäre Serialisierung die beste Wahl (siehe \ref{fig:protobufTime} und \ref{fig:protobufBrowser}). Der Protocol Buffer wäre dabei die einfachste Art, dies umzusetzen, vor allem wenn die Datenstrukturen komplexer sind. Es gibt bereits viele Entwickler, die den Protocol Buffer in ihrem Unity-Projekt verwenden, durch die C\#-Unterstützung. 
@@ -119,8 +117,6 @@ Wenn Schnelligkeit und Kompaktheit der Daten die oberste Priorität sind, ist di
 Falls der Entwickler oder Spieler die gespeicherten Daten lesen und bearbeiten können sollten, macht die Serialisierung zu \ac{json} mehr Sinn. Wenn das Spiel zum Beispiel \acp{mod} haben soll, die von individuellen Spielern und Entwicklern erstellt werden können, dann sind Formate wie \ac{json} einfacher zu verstehen. Falls Geschwindigkeit das Wichtigste an dem Projekt ist, ist das JsonUtility-Tool von Unity die beste Wahl (siehe \ref{fig:unityJsonPerformance}). Hier muss jedoch für manche Datenstrukturen eine eigene Serialisierung zu \ac{json} entwickelt werden, was viel Zeit kosten kann. Falls die Zeit lieber gespart werden soll, ist Json.NET oder LitJSON eine gute Alternative. Beide sind im Vergleich zu JsonUtility zwar etwas langsamer, jedoch fällt dies erst bei sehr großen Datenmengen auf. Dadurch, dass beide aber mehr Datenstrukturen unterstützten, kann ein Entwickler bei der Serialisierung mit dieses Tools viel Zeit sparen. Im Durchschnitt ist Json.NET etwas schneller als LitJSON (siehe \ref{fig:unityJsonPerformance}), wenn jedoch schnelle Serialisierungszeiten wichtig sind, dann sollte LitJSON verwendet werden. Dies wäre zum Beispiel vorteilhaft, wenn es viele Serialisierungsprozesse gibt und nur am Anfang des Spieles die deserialisiert werden.  
 
 Ansonsten, wenn der Entwickler möglichst wenig Zeit für das Entwickeln des Speicherns und Ladens des Spielstandes brauchen möchte, ist das Easy Save Paket eine gute Alternative. Dieses bietet auch viele Optimierungsmöglichkeiten an, um das System effizienter laufen zu lassen. Für Unity gibt es auch noch kostenfreie Speicher- und Ladesysteme, wie zum Beispiel das Component-Save-System\footnote{https://github.com/AlexMeesters/Component-Save-System} von Alex Meesters. 
-
-\todo{Entscheidungsbaum?}
 %--------------------------------------------------------------------------
 
 
@@ -141,7 +137,7 @@ Ein Beispiel für ein Blueprint zum Speichern der Spieldaten mit der SaveGame-Kl
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
-    \caption{Blueprint zum Speichern der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \caption{Blueprint zum Speichern des Spielstandes mit der SaveGame-Klasse \cite{unrealengineSavingLoading}}
     \label{fig:unrealSaveGameBluePrintSave}
 \end{figure}
 
@@ -150,7 +146,7 @@ Wie das Laden der Spieldaten mit der SaveGame-Klasse funktioniert, ist in dem Bl
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/SaveGameBP.png}
-    \caption{Blueprint zum Laden der Daten mit der SaveGame-Klasse\cite{unrealengineSavingLoading}}
+    \caption{Blueprint zum Laden des Spielstandes mit der SaveGame-Klasse \cite{unrealengineSavingLoading}}
     \label{fig:unrealSaveGameBluePrintLoad}
 \end{figure}
 
@@ -161,7 +157,7 @@ Falls dieses Speicher- und Ladesystem in C++-Code geschrieben werden soll, muss 
 \subsection{JSON}
 Auch bei Unreal Engine ist es möglich, die Spieldaten im \ac{json}-Format abzuspeichern. Bei den Blueprints ist der Entwickler etwas eingeschränkt, da es erst seit Unreal Engine 5 Blueprints zum Arbeiten mit \ac{json} gibt und die Anzahl der Funktionen noch gering ist. Es gibt Knoten für Blueprints, bei denen ein C++-Struct zu einem \ac{json}-String umgewandelt wird, oder Knoten, bei denen bestimmte Schlüsselwerte von \ac{json}-Objekten zurückgegeben werden. Außerdem gibt es Knoten, die \ac{json}-Objekte aus Dateien speichern und laden können.\cite{unrealengineJsonBlueprint}
 
-Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu \ac{json} zu serialisieren. Dafür gibt es auch bei Unreal Engine eine \textit{JsonUtility}-Klasse. Zum Speichern der \ac{json}-Daten als C++-Objekt kann die FJsonObject-Klasse verwendet werden. Zum Serialisieren und Deserialisieren wird der FJsonSerializer benutzt. In dem Beispielcode \ref{lst:unrealFJsonSerializer} ist zu sehen, wie diese Klassen verwendet werden können. In den ersten vier Zeilen wird ein neues \ac{json}-Objekt erstellt, mit Schlüssel und Schlüsselwerten wie beim Code \ref{lst:jsonUtilityExp}. Danach wird in der Zeile 8 dieses \ac{json}-Objekt zu einem \ac{json}-String konvertiert und in dem Objekt "JsonString" gespeichert. In der Zeile 12 wird dieser String wieder deserialisiert und in einem \ac{json}-Objekt namens "JsonObject" gespeichert. Falls das Deserialisieren erfolgreich abläuft, ist die Kondition aus der Zeile 12 wahr und der Code in der Zeile 14 kann ausgeführt werden.\cite{unrealengineFJsonObject}\cite{unrealengineFJsonSerializer}\cite{wraiythUsingJson1}\cite{wraiythUsingJson2}
+Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu \ac{json} zu serialisieren. Dafür gibt es zum Beispiel bei Unreal Engine eine \textit{FJsonSerializer}-Klasse. Zum Speichern der \ac{json}-Daten als C++-Objekt kann die FJsonObject-Klasse verwendet werden. Zum Serialisieren und Deserialisieren wird dann die FJsonSerializer benutzt. In dem Beispielcode \ref{lst:unrealFJsonSerializer} ist zu sehen, wie diese Klassen verwendet werden können. In den ersten vier Zeilen wird ein neues \ac{json}-Objekt erstellt, mit Schlüssel und Schlüsselwerten wie beim Code \ref{lst:jsonUtilityExp}. Danach wird in der Zeile 8 dieses \ac{json}-Objekt zu einem \ac{json}-String konvertiert und in dem Objekt "JsonString" gespeichert. In der Zeile 12 wird dieser String wieder deserialisiert und in einem \ac{json}-Objekt namens "JsonObject" gespeichert. Falls das Deserialisieren erfolgreich abläuft, ist die Kondition aus der Zeile 12 wahr und der Code in der Zeile 14 kann ausgeführt werden.\cite{unrealengineFJsonObject}\cite{unrealengineFJsonSerializer}\cite{wraiythUsingJson1}\cite{wraiythUsingJson2}
 
 \begin{listing}[htp]
     \begin{minted}[breaklines,frame=single]{cpp}
@@ -181,7 +177,7 @@ Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu \ac{json} zu s
            ...
         }
     \end{minted}
-    \caption{Beispiel für das Serialisieren und Deserialisieren von Daten zu \ac{json}}
+    \caption{Serialisieren und Deserialisieren mit FJsonSerializer in Unreal Engine}
     \label{lst:unrealFJsonSerializer}
 \end{listing}
 
@@ -190,12 +186,12 @@ Mehr Möglichkeiten gibt es beim direkten Arbeiten mit C++, um zu \ac{json} zu s
 \subsection{Save Extension}
 Falls ein Entwickler ein fertiges Speicher- und Ladesystem sucht, welches er in sein Spiel integrieren möchte, dann ist \textit{Save Extension} geeignet. Dieses Plugin wurde für Unreal Engine 4 gemacht und bietet eine Vielzahl an Funktionen an, die sowohl in C++-Code als auch als Blueprint implementiert werden können.\cite{unrealengineSaveExtension}
 
-Die ersten Schritte zum Aufstellen des Speicher- und Ladesystems mit der Save Extension über ein Blueprint sind in der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zu sehen. Die zwei Knoten "Save Slot to Id" und "Load Slot from Id" werden verwendet, um Daten aus einem bestimmten Slot zu speichern und zu laden. Jeder Slot kann eine bestimmte Spielwelt von einem Spieler sein und wird in einer eigenen Datei gespeichert.\cite{piperiftPiperiftSaveSlot} Um einen bestimmten Slot auszuwählen, gibt es die Eingabe "Slot Id", wo die Slot-Nummer eingegeben werden kann. Beim Speichern kann auch ausgewählt werden, ob der alte Spielstand eines Slots überschrieben werden soll, falls einer existiert. Zum Auslösen des Speicherns oder Ladens gibt es eine einige Möglichkeiten. In der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zum Beispiel wird das Speichern des Spielstandes dadurch ausgelöst, dass die Taste K gedrückt wurde. Zum Laden muss in diesem Beispiel die Taste L gedrückt werden. Alternativ unterstüzt das Save-Extension-Plugin auch ein Auto-Save und Auto-Load. Beim Auto-Save wird automatisch der aktuelle Slot gespeichert und beim Auto-Load wird immer der letzte aktive Slot geladen. Ein Slot wird als aktiv markiert, wenn er geladen wird.\cite{piperiftPiperiftSaveSlot}\cite{piperiftPiperiftSaveBlueprint} 
+Die ersten Schritte zum Aufstellen des Speicher- und Ladesystems mit der Save Extension über ein Blueprint sind in der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zu sehen. Die zwei Knoten "Save Slot to Id" und "Load Slot from Id" werden verwendet, um Daten aus einem bestimmten Slot zu speichern und zu laden. Jeder Slot kann eine bestimmte Spielwelt von einem Spieler sein und wird in einer eigenen Datei gespeichert.\cite{piperiftPiperiftSaveSlot} Um einen bestimmten Slot auszuwählen, gibt es die Eingabe "Slot Id", wo die Slot-Nummer eingegeben werden kann. Beim Speichern kann auch ausgewählt werden, ob der alte Spielstand eines Slots überschrieben werden soll, falls einer existiert. Zum Auslösen des Speicherns oder Ladens gibt es eine einige Möglichkeiten. In der Abbildung \ref{fig:unrealSaveExtensionBlueprint} zum Beispiel wird das Speichern des Spielstandes dadurch ausgelöst, dass die Taste K gedrückt wurde. Zum Laden muss in diesem Beispiel die Taste L gedrückt werden. Alternativ unterstüzt das Save Extension-Plugin auch ein Auto-Save und Auto-Load. Beim Auto-Save wird automatisch der aktuelle Slot gespeichert und beim Auto-Load wird immer der letzte aktive Slot geladen. Ein Slot wird als aktiv markiert, wenn er geladen wird.\cite{piperiftPiperiftSaveSlot}\cite{piperiftPiperiftSaveBlueprint} 
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{images/SaveExtension_load_save_blueprint.png}
-    \caption{Blueprint zum Laden der Daten mit dem Save Extension Plugin\cite{piperiftPiperiftSaveBlueprint}}
+    \caption{Blueprint zum Laden der Daten mit dem Save Extension-Plugin \cite{piperiftPiperiftSaveBlueprint}}
     \label{fig:unrealSaveExtensionBlueprint}
 \end{figure}
 
@@ -203,14 +199,14 @@ Nach dieser Einrichtung werden noch keine Actor\footnote{Actors sind bei Unreal 
 
 Um zu vermeiden, dass zu viele Daten geladen werden, werden Slots in zwei Bereiche unterteilt und gespeichert. Es gibt einmal die Slot Info, die leichtgewichtete Daten über die Spielwelt speichert. Diese enthält zum Beispiel das Level des Spielers, seinen Spielername oder in welchem Bereich der Spielwelt sich der Spieler bei dem Spielstand befindet. Der Rest wird im "Slot Data"-Bereich gespeichert. Hier sind alle Informationen der serialisierten Actors und Components der Spielwelt eines Slots. Diese Unterteilung ist besonders praktisch, wenn wenige Slot-Informationen benötigt werden, aber diese nicht komplett geladen werden sollen. Falls zum Beispiel ein Menü erstellt wird, wo ausgewählt werden kann, mit welcher Spielwelt weitergespielt werden soll, kann hier bei jeder Spielwelt ein paar Informationen über diese beschrieben werden, ohne alle Slots komplett zu laden.\cite{piperiftPiperiftSaveSlot}
 
-Eine weitere Funktion, die die Effizienz des Speicherns enorm verbessern kann, ist die Möglichkeit, asynchron zu arbeiten. Bei dem Save-Extension-Plugin gibt es einmal die Multithreaded oder Frame-splitted Serialisierung, bei der die zu serialisierenden Daten auf alle verfügbaren CPU-Threads oder auf mehreren Frames verteilt und dort einzeln serialisiert werden. Außerdem gibt es noch Multithreaded-Dateien, die asynchron im Hintergrund der Anwendung komprimiert, gespeichert und geladen werden.\cite{piperiftPiperiftSaveMultithreaded}
+Eine weitere Funktion, die die Effizienz des Speicherns enorm verbessern kann, ist die Möglichkeit, asynchron zu arbeiten. Bei dem Save Extension-Plugin gibt es einmal die Multithreaded oder Frame-splitted Serialisierung, bei der die zu serialisierenden Daten auf alle verfügbaren CPU-Threads oder auf mehreren Frames verteilt und dort einzeln serialisiert werden. Außerdem gibt es noch Multithreaded-Dateien, die asynchron im Hintergrund der Anwendung komprimiert, gespeichert und geladen werden.\cite{piperiftPiperiftSaveMultithreaded}
 
 Der Speicherprozess besteht aus den folgenden Schritten: Als Erstes wird der alte Spielstand gelöscht und es wird die Funktion OnSaveBegan aufgerufen, um weiterzugeben, dass der Speicherprozess begonnen hat. Dann werden der Thumbnail des aktuellen Spieles und die Spielstatistiken abgespeichert und anschließend wird die Spielwelt serialisiert. Zum Schluss wird die Funktion OnSaveFinished aufgerufen, um weiterzugeben, dass der Speicherprozess beendet wurde. In der Abbildung \ref{fig:piperiftSaveProcess} ist der vollständige Speicherprozess zu sehen. Gestrichelte Kanten bedeuten, dass hier mehrere Prozesse parallel laufen können.\cite{piperiftSaveProcess}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/piperift_save_process.png}
-    \caption{Speicherprozess der Save Extension\cite{piperiftSaveProcess}}
+    \caption{Speicherprozess des Save Extension-Plugins \cite{piperiftSaveProcess}}
     \label{fig:piperiftSaveProcess}
 \end{figure}
 
@@ -219,16 +215,16 @@ Der Ladeprozess ist etwas komplexer. Als erstes wird die Funktion OnLoadBegan au
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.8\textwidth]{images/piperift_load_process.png}
-    \caption{Ladeprozess der Save Extension\cite{piperiftLoadProcess}}
+    \caption{Ladeprozess des Save Extension-Plugins \cite{piperiftLoadProcess}}
     \label{fig:piperiftLoadProcess}
 \end{figure}
 
 
 
-\subsection{Fazit}
+\subsection{Strategie für Unreal Engine}
 Auch bei Unreal Engine gibt es keine beste Lösung für das Speichern und Laden von Spielständen. Bei den von Unreal Engine bereitgestellten Tools eignet sich am besten die SaveGame-Klasse. Diese wird von Epic Game empfohlen, wenn ein Speicher- und Ladesystem aufgebaut werden muss. Die Serialisierung zu \ac{json} über die Blueprints, die schon in Unreal Engine eingebaut sind, scheint noch nicht ganz perfekt zu sein und kann zu umständlich für Entwickler sein. 
 
-Falls das System ohne Problem auf mehr Daten erweitert werden soll, wird das Arbeiten mit Blueprints ein großer Aufwand. Bei vielen Daten, die gespeichert werden sollen, wird es schnell unübersichtlich mit der graphischen Oberfläche der Blueprints und den vielen Verbindungen unter den Knoten. Außerdem wird bei fortgeschrittenen Entwicklern empfohlen, C++ zu verwenden, da damit effizientere Algorithmen als mit den Blueprints entwickelt werden können.\cite{epicgamesComparingBlueprints} Als Alternative zu der Blueprint-Strategie kann die JsonUtility- oder SaveGame-Klasse von Unreal Engine verwendet werden. Was hier besser ist, hängt auch von den Präferenzen des Entwicklers ab. Falls die Daten im \ac{json}-Format gespeichert werden müssen, ist die JsonUtility-Klasse angebrachter. Ansonsten kann auch hier die von Epic Games empfohlene SaveGame-Klasse verwendet werden, um mit C++-Code die Daten zu speichern.
+Falls das System ohne Problem auf mehr Daten erweitert werden soll, wird das Arbeiten mit Blueprints ein großer Aufwand. Bei vielen Daten, die gespeichert werden sollen, wird es schnell unübersichtlich mit der graphischen Oberfläche der Blueprints und den vielen Verbindungen unter den Knoten. Außerdem wird bei fortgeschrittenen Entwicklern empfohlen, C++ zu verwenden, da damit effizientere Algorithmen als mit den Blueprints entwickelt werden können.\cite{epicgamesComparingBlueprints} Als Alternative zu der Blueprint-Strategie kann die FJsonSerializer- oder SaveGame-Klasse von Unreal Engine verwendet werden. Was hier besser ist, hängt auch von den Präferenzen des Entwicklers ab. Falls die Daten im \ac{json}-Format gespeichert werden müssen, ist die FJsonSerializer-Klasse angebrachter. Ansonsten kann auch hier die von Epic Games empfohlene SaveGame-Klasse verwendet werden, um mit C++-Code die Daten zu speichern.
 
 Auch bei Unreal Engine kann ein fertiges Speicher- und Ladesystem verwendet werden, falls der Entwickler möglichst viel Zeit sparen möchte. Die Save Extension ist eine gute Alternative zu den von Epic Games bereitgestellten Tools. Sie ist auch kostenfrei und bietet einige Möglichkeiten an, den Speicher- und Ladeprozess zu beschleunigen. 
 %--------------------------------------------------------------------------
@@ -261,7 +257,7 @@ Da die Programmiersprache GDScript Dictionaries unterstützt, ist es sinnvoll, m
 
           return JSON.stringify(object_data)
     \end{minted}
-    \caption{Beispiel für das Speichern mit \ac{json} in Godot\cite{godotengineSavingGames}}
+    \caption{Konvertierung der zu speichernden Klassendaten zu \ac{json} in Godot \cite{godotengineSavingGames}}
     \label{lst:godotJsonToJsonFunc}
 \end{listing}
 
@@ -279,7 +275,7 @@ Die "to\_json"-Funktion kann zum Speichern aller Objektzustände verwendet werde
             var json_string = node.call("to_json")
             save_game.store_line(json_string)
     \end{minted}
-    \caption{Beispiel für das Speichern mit \ac{json} in Godot\cite{godotengineSavingGames}}
+    \caption{Speichern aller JSON-Daten der Knoten aus der "Save"-Gruppe \cite{godotengineSavingGames}}
     \label{lst:godotJsonSave}
 \end{listing}
 
@@ -315,7 +311,7 @@ Für das Laden der Daten müssen etwas mehr Schritte durchgeführt werden. In de
               continue
             new_object.set(i, node_data[i])
     \end{minted}
-    \caption{Beispiel für das Laden mit \ac{json} in Godot\cite{godotengineSavingGames}}
+    \caption{Laden der in \ref{lst:godotJsonSave} gespeicherten Daten \cite{godotengineSavingGames}}
     \label{lst:godotJsonLoad}
 \end{listing} 
 
@@ -354,7 +350,7 @@ Um das System aufzustellen, muss das "Savestate"-Node von diesem Plugin hinzugef
           savestate.load_game_state()
           savestate.unpack_game_state(self)
     \end{minted}
-    \caption{Beispiel für das Speichern und Laden mit Thoth\cite{stupidratstudioGodotSaveLoad}}
+    \caption{Speichern und Laden des "SaveObjects"-Knoten mit Thoth \cite{stupidratstudioGodotSaveLoad}}
     \label{lst:godotThoth}
 \end{listing} 
 
@@ -375,13 +371,13 @@ Um das System aufzustellen, muss das "Savestate"-Node von diesem Plugin hinzugef
 
         ...
     \end{minted}
-    \caption{Beispiel für die Einstellung, welche Variablen serialisiert werden sollen\cite{stupidratstudioGodotSaveLoad}}
+    \caption{Thoth-Einstellung, welche Variablen einer Klasse serialisiert werden sollen \cite{stupidratstudioGodotSaveLoad}}
     \label{lst:godotThothObject}
 \end{listing} 
 
 
 
-\subsection{Fazit}
+\subsection{Strategie für Godot Engine}
 Auch bei Godot gibt es nicht die eine Strategie für das Speichern und Laden des Spielstandes, es hängt alles vom Anwendungsfall ab. Falls das Speicher- und Ladesystem selber vom Entwickler komplett implementiert werden soll, eignet es sich, mit den eingebauten Tools von Godot Engine zu arbeiten. Hier hat die binäre Serialisierung auch mehr Vorteile. Sie ist schneller, die Daten sind kompakter und es werden deutlich mehr Datentypen unterstützt, wodurch der Entwickler weniger eigenen Code zum Serialisieren und Deserialisieren der Daten schreiben muss. Der einzige Grund, stattdessen die \ac{json}-Hilfsklasse zu verwenden, ist, dass die gespeicherten Daten im binären Format nicht von Menschen gelesen werden können. Falls dies wichtig ist, sollte mit \ac{json} gearbeitet werden.
 
 Auch bei Godot kann ein Entwickler die Möglichkeit haben, Zeit zu sparen, durch das Verwenden eines fertigen Speicher- und Ladesystems. Hier kann zum Beispiel Thoth verwendet werden, mit dem in wenigen Schritten das System implementiert werden kann. Da als Entwickler noch etwas Zeilen Code geschrieben werden muss, wo verschiedene Funktionen von Thoth aufgerufen werden, gibt es noch einige Möglichkeiten, das System anzupassen und gegebenenfalls zu optimieren.

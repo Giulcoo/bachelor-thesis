@@ -182,7 +182,7 @@ Der Speicherprozess beginnt als allererstes damit, dass die Garbage Collection v
 
 Als nächstes wird eine ScopedCallback-Klasse erstellt. Diese wird immer am Ende des Prozesses gelöscht und ruft dann eine "postSaveHook"-Funktion auf. Diese Funktion löscht temporäre Daten, die beim Speicherprozess entstanden sind. Der Vorteil dieser Funktion ist, dass diese immer aufgerufen wird, egal ob der Prozess erfolgreich oder mit einem Fehler terminiert hat. Damit kann sichergestellt werden, dass die Map-Daten nicht in einen beschädigten Zustand bleiben.\cite{factorioGithubSaveLoad}
 
-Anschließend werden die ID-Mapping gespeichert.\cite{factorioGithubSaveLoad} Die ID-Mapping ist eine Liste, die jedem Spielobjekt eine Identifikationsnummer zuweist. Die ID-Mapping besteht dann aus der Identifikationsnummer und den zugehörigen Namen des Spielobjektes als Zeichenkette. Wie so eine ID-Mapping aussieht ist in der Abbildung \ref{fig:factorioIdMapping} zu sehen. Jeder Spielstand kann eine unterschiedliche ID-Mapping besitzen und diese kann sich oft verändern. Deshalb muss diese Liste jedes mal gespeichert werden.\cite{factorioFridayFacts259}
+Anschließend werden die ID-Mapping gespeichert.\cite{factorioGithubSaveLoad} Die ID-Mapping ist eine Liste, die jedem Spielobjekt eine Identifikationsnummer zuweist. Die ID-Mapping besteht dann aus der Identifikationsnummer und den zugehörigen Namen des Spielobjektes als Zeichenkette. Wie so eine ID-Mapping aussieht ist in der Abbildung \ref{fig:factorioIdMapping} zu sehen. Jeder Spielstand kann eine unterschiedliche ID-Mapping besitzen und diese kann sich oft verändern. Deshalb muss diese Liste jedes mal gespeichert werden.\cite{factorioFridayFacts259} 
 
 \begin{figure}[htp]
     \centering
@@ -232,7 +232,10 @@ Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als de
 
 
 \subsection{Fazit}
-\dots
+\begin{itemize}
+    \item ID-Mapping um Daten einfach zu komprimieren
+    \item Aufteilung
+\end{itemize}
 %--------------------------------------------------------------------------
 
 
