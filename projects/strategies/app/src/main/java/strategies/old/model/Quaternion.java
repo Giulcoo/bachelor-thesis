@@ -1,30 +1,26 @@
-package strategies.model;
+package strategies.old.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.beans.PropertyChangeSupport;
 
-public class Vector
+public class Quaternion
 {
     @JsonIgnore public static final String PROPERTY_X = "x";
     @JsonIgnore public static final String PROPERTY_Y = "y";
     @JsonIgnore public static final String PROPERTY_Z = "z";
+    @JsonIgnore public static final String PROPERTY_W = "w";
     private double x;
     private double y;
     private double z;
+    private double w;
     @JsonIgnore protected PropertyChangeSupport listeners;
 
-    public Vector(double x, double y, double z) {
+    public Quaternion(double x, double y, double z, double w) {
         this.setX(x);
         this.setY(y);
         this.setZ(z);
-    }
-
-    public Vector(JsonNode node){
-        this.setX(node.get("x").asDouble());
-        this.setY(node.get("y").asDouble());
-        this.setZ(node.get("z").asDouble());
+        this.setW(w);
     }
 
     public double getX()
@@ -32,7 +28,7 @@ public class Vector
         return this.x;
     }
 
-    public Vector setX(double value)
+    public Quaternion setX(double value)
     {
         if (value == this.x)
         {
@@ -50,7 +46,7 @@ public class Vector
         return this.y;
     }
 
-    public Vector setY(double value)
+    public Quaternion setY(double value)
     {
         if (value == this.y)
         {
@@ -68,7 +64,7 @@ public class Vector
         return this.z;
     }
 
-    public Vector setZ(double value)
+    public Quaternion setZ(double value)
     {
         if (value == this.z)
         {
@@ -81,10 +77,21 @@ public class Vector
         return this;
     }
 
-    public Vector add(Vector other) {
-        setX(getX() + other.getX());
-        setY(getY() + other.getY());
-        setZ(getZ() + other.getZ());
+    public double getW()
+    {
+        return this.w;
+    }
+
+    public Quaternion setW(double value)
+    {
+        if (value == this.w)
+        {
+            return this;
+        }
+
+        final double oldValue = this.w;
+        this.w = value;
+        this.firePropertyChange(PROPERTY_W, oldValue, value);
         return this;
     }
 
@@ -107,16 +114,12 @@ public class Vector
         return this.listeners;
     }
 
-    public String toString2D(){
-        return "(" + x + "," + y + ")";
-    }
-
     @Override
     public String toString() {
-        return "(" + (double) Math.round(x * 10d) / 10d + ", " + (double) Math.round(y * 10d) / 10d + ", " + (double) Math.round(z * 10d) / 10d + ")";
+        return "(" + (double) Math.round(x * 10d) / 10d + ", " + (double) Math.round(y * 10d) / 10d + ", " + (double) Math.round(z * 10d) / 10d + ", " + (double) Math.round(w * 10d) / 10d + ")";
     }
 
-    public Vector copy() {
-        return new Vector(x, y, z);
+    public Quaternion copy() {
+        return new Quaternion(x, y, z, w);
     }
 }

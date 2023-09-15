@@ -1,4 +1,4 @@
-package strategies.model;
+package strategies.old.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

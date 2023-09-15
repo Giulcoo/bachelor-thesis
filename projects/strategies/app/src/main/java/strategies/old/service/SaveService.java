@@ -1,4 +1,4 @@
-package strategies.service;
+package strategies.old.service;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.*;
 import java.nio.file.*;
 
-import static strategies.Constants.CHANGES_FILE;
-import static strategies.Constants.DATA_PATH;
+import static strategies.old.Constants.CHANGES_FILE;
+import static strategies.old.Constants.DATA_PATH;
 
 public class SaveService {
     private final GameService gameService;

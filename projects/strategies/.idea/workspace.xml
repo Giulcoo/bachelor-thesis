@@ -4,12 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1240fca-5b39-427a-993c-52c63e4fc4dd" name="Changes" comment="">
+    <list default="true" id="4d3c9c26-efe7-4c39-9b7a-43ce0f69733a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/Data.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Chunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/ChunkOrBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Data.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/GameOrBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/PlayerOrBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Vector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/VectorOrBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/service/ProtoChunkSystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/service/ProtoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/4-gameengines.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/4-gameengines.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/strategies.app.jmh.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/strategies.app.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/strategies.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/jmh/java/benchmarks/Benchmarks.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/jmh/java/benchmarks/Benchmarks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Chunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Chunk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Equipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Equipment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Obstacle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Quaternion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Quaternion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/ChangeTracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/ChangeTracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/ChunkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/CompressionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/CompressionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/LoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/LoadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/MongoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/MongoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/SaveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/SaveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/TimeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,21 +59,6 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand />
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -46,36 +69,35 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="2RHjl3D7Ic89C8Q0Gg5Da5GJGLg" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2VNsf2sMJMF1Af9ab4L6Q3BQwdZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/giuli/Dokumente/GitHub/bachelor-thesis/projects/strategies",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mongo"
-    ]
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/giuli/Dokumente/GitHub/bachelor-thesis/projects/strategies&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\giuli\Dokumente\GitHub\bachelor-thesis\projects\strategies\app\src\main\java\strategies" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="App" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
       <module name="strategies.app.main" />
-      <option name="PROGRAM_PARAMETERS" value="1 1 1 1 false" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="strategies.*" />
@@ -86,33 +108,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.App" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e1240fca-5b39-427a-993c-52c63e4fc4dd" name="Changes" comment="" />
-      <created>1686914051722</created>
+      <changelist id="4d3c9c26-efe7-4c39-9b7a-43ce0f69733a" name="Changes" comment="" />
+      <created>1694687973872</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1686914051722</updated>
-      <workItem from="1686914051984" duration="747000" />
-      <workItem from="1686914811238" duration="3816000" />
-      <workItem from="1687183393677" duration="2422000" />
-      <workItem from="1687354403983" duration="4000" />
-      <workItem from="1689588405019" duration="2881000" />
-      <workItem from="1689602818202" duration="15000" />
-      <workItem from="1690551968794" duration="1662000" />
-      <workItem from="1690804570101" duration="597000" />
-      <workItem from="1694687215622" duration="42000" />
+      <updated>1694687973872</updated>
+      <workItem from="1694687974011" duration="46000" />
+      <workItem from="1694764564128" duration="4740000" />
+      <workItem from="1694770057731" duration="77000" />
+      <workItem from="1694770290898" duration="2677000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

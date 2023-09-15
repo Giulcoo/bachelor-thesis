@@ -1,8 +1,7 @@
 package benchmarks;
 
 import org.openjdk.jmh.annotations.*;
-import strategies.App;
-import strategies.model.Game;
+import strategies.old.App;
 
 import java.util.concurrent.TimeUnit;
 

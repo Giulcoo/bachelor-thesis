@@ -1,17 +1,13 @@
-package strategies.service;
+package strategies.old.service;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import strategies.model.Character;
-import strategies.model.Chunk;
-import strategies.model.Item;
-import strategies.model.Vector;
+import strategies.old.model.Chunk;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MongoService {
     private final String DB_URL = "mongodb://Giulio:bachelor2023@localhost:27017";

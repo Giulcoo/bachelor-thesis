@@ -1,17 +1,18 @@
-package strategies.service;
+package strategies.old.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import strategies.model.*;
-import strategies.model.Character;
+import strategies.old.model.*;
+import strategies.old.model.Character;
+import strategies.old.model.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static strategies.Constants.*;
+import static strategies.old.Constants.*;
 
 public class LoadService {
 

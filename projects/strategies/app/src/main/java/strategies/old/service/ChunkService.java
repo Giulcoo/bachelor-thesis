@@ -1,13 +1,14 @@
-package strategies.service;
+package strategies.old.service;
 
-import strategies.Constants;
-import strategies.model.*;
-import strategies.model.Character;
+import strategies.old.Constants;
+import strategies.old.model.*;
+import strategies.old.model.Character;
+import strategies.old.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static strategies.Constants.*;
+import static strategies.old.Constants.*;
 
 public class ChunkService {
     private final ChangeTracker changeTracker;

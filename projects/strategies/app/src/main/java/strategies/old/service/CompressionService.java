@@ -1,4 +1,4 @@
-package strategies.service;
+package strategies.old.service;
 
 import net.lingala.zip4j.ZipFile;
 
@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 
-import static strategies.Constants.DATA_PATH;
+import static strategies.old.Constants.DATA_PATH;
 
 public class CompressionService {
     public void compressData(){

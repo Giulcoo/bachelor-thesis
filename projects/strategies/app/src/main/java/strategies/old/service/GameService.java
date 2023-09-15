@@ -1,13 +1,14 @@
-package strategies.service;
-import strategies.model.*;
-import strategies.model.Character;
+package strategies.old.service;
+import strategies.old.model.*;
+import strategies.old.model.Character;
+import strategies.old.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import static strategies.Constants.*;
+import static strategies.old.Constants.*;
 
 public class GameService {
     private final ChangeTracker changeTracker;

@@ -10,6 +10,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id "me.champeau.jmh" version "0.7.1"
+    id "com.google.protobuf" version "0.9.4"
 }
 
 repositories {
@@ -32,6 +33,9 @@ dependencies {
 
     // mongodb for nosql database
     implementation 'org.mongodb:mongodb-driver-sync:4.9.1'
+
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.24.3'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

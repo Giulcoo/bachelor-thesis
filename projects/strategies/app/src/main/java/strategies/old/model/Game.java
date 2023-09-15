@@ -1,6 +1,6 @@
-package strategies.model;
+package strategies.old.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import strategies.service.ChangeTracker;
+import strategies.old.service.ChangeTracker;
 
 import java.util.ArrayList;
 import java.util.List;

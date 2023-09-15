@@ -1,4 +1,4 @@
-package strategies.model;
+package strategies.old.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,14 +10,14 @@ public class Chunk<T> {
     @JsonIgnore private final static int CHUNK_GROUP_SIZE_MIN = 0;
 
     private final String id;
-    private final Vector center;
-    private final Vector size;
+    private final strategies.old.model.Vector center;
+    private final strategies.old.model.Vector size;
     @JsonIgnore final private List<T> elements;
 
     @JsonIgnore private Chunk<T> parentChunk;
     @JsonIgnore private List<Chunk<T>> childChunks;
 
-    public Chunk(java.lang.Character type, Chunk<T> parentChunk, Vector center, Vector size) {
+    public Chunk(java.lang.Character type, Chunk<T> parentChunk, strategies.old.model.Vector center, strategies.old.model.Vector size) {
         this.id = type + "-" + UUID.randomUUID().toString();
         this.center = center;
         this.size = size;
@@ -26,7 +26,7 @@ public class Chunk<T> {
         this.childChunks = new ArrayList<>();
     }
 
-    public Chunk(String id, Vector center, Vector size){
+    public Chunk(String id, strategies.old.model.Vector center, strategies.old.model.Vector size){
         this.id = id;
         this.center = center;
         this.size = size;
@@ -63,11 +63,11 @@ public class Chunk<T> {
         return elements;
     }
 
-    public Vector getCenter() {
+    public strategies.old.model.Vector getCenter() {
         return center;
     }
 
-    public Vector getSize() {
+    public strategies.old.model.Vector getSize() {
         return size;
     }
 
@@ -134,13 +134,13 @@ public class Chunk<T> {
         List<T> elementsCopy = new ArrayList<>(this.elements);
         this.elements.clear();
 
-        Vector newSize = new Vector(size.getX()/2,size.getY()/2,0);
+        strategies.old.model.Vector newSize = new strategies.old.model.Vector(size.getX()/2,size.getY()/2,0);
 
         List<Chunk<T>> result = new ArrayList<>();
-        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
-        result.add(new Chunk<T>(id.charAt(0), this, new Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new strategies.old.model.Vector(center.getX() - newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new strategies.old.model.Vector(center.getX() + newSize.getX()/2,center.getY() - newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new strategies.old.model.Vector(center.getX() - newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
+        result.add(new Chunk<T>(id.charAt(0), this, new strategies.old.model.Vector(center.getX() + newSize.getX()/2,center.getY() + newSize.getY()/2,0), newSize));
         this.addChildren(result);
 
         //Split chunk elements in new chunks
@@ -177,7 +177,7 @@ public class Chunk<T> {
         return this.parentChunk.findChunk(o);
     }
 
-    public List<Chunk<T>> chunksInArea(Vector position, double size){
+    public List<Chunk<T>> chunksInArea(strategies.old.model.Vector position, double size){
         if(rectInChunk(position, size)){
             if(childChunks.isEmpty()) return List.of(this);
             else{
@@ -193,7 +193,7 @@ public class Chunk<T> {
     }
 
     public boolean pointInChunk(Object o){
-        Vector position = null;
+        strategies.old.model.Vector position = null;
         if (o instanceof Character) {
             position = ((Character) o).getPosition();
         } else if (o instanceof Item) {
@@ -205,14 +205,14 @@ public class Chunk<T> {
         return position != null && pointInChunk(position);
     }
 
-    public boolean pointInChunk(Vector position){
+    public boolean pointInChunk(strategies.old.model.Vector position){
         return Math.abs(position.getX() - center.getX()) <= size.getX() / 2
                 && Math.abs(position.getY() - center.getY()) <= size.getY() / 2;
     }
 
-    public boolean rectInChunk(Vector center, double size){
-        Vector leftTop = new Vector(center.getX() - size/2, center.getY() - size/2, 0);
-        Vector bottomRight = new Vector(center.getX() + size/2, center.getY() + size/2, 0);
+    public boolean rectInChunk(strategies.old.model.Vector center, double size){
+        strategies.old.model.Vector leftTop = new strategies.old.model.Vector(center.getX() - size/2, center.getY() - size/2, 0);
+        strategies.old.model.Vector bottomRight = new Vector(center.getX() + size/2, center.getY() + size/2, 0);
 
         return leftTop.getX() <= this.center.getX() + this.size.getX()/2
                 && leftTop.getY() <= this.center.getY() + this.size.getY()/2

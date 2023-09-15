@@ -1,11 +1,10 @@
-package strategies.service;
+package strategies.old.service;
 
-import strategies.model.Character;
-import strategies.model.Chunk;
-import strategies.model.Item;
-import strategies.model.Obstacle;
+import strategies.old.model.Character;
+import strategies.old.model.Chunk;
+import strategies.old.model.Item;
+import strategies.old.model.Obstacle;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
