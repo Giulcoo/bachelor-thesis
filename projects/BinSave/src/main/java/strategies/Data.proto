@@ -1,0 +1,69 @@
+syntax = "proto3";
+package strategies;
+
+import "google/protobuf/any.proto";
+
+option java_multiple_files = true;
+option java_package = "strategies.model";
+//protoc -I . --java_out=../  Data.proto
+
+message Game {
+  repeated Chunk chunks = 1;
+  GameInfo info = 2;
+}
+
+message GameInfo {
+  repeated ChunkInfo chunks = 1;
+  string rootChunk = 2;
+}
+
+message ChunkInfo {
+  string id = 1;
+  Vector position = 3;
+  Vector size = 4;
+  string parentChunk = 5;
+  repeated string childChunks = 6;
+}
+
+message Change {
+  string id = 1;
+
+  enum Type {
+    CHUNK = 0;
+    PLAYER = 1;
+  }
+  Type type = 2;
+
+  enum Event {
+    ADDED = 0;
+    REMOVED = 1;
+    UPDATED = 2;
+  }
+  Event event = 3;
+
+  string key = 4;
+  google.protobuf.Any value = 5;
+}
+
+
+message Chunk {
+  string id = 1;
+  repeated Player players = 2;
+  Vector position = 3;
+  Vector size = 4;
+  string parentChunk = 5;
+  repeated string childChunks = 6;
+}
+
+message Player {
+  string id = 1;
+  string name = 2;
+  bool isBot = 3;
+  string chunk = 4;
+  Vector position = 5;
+}
+
+message Vector {
+  float x = 1;
+  float y = 2;
+}

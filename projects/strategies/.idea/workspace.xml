@@ -5,49 +5,114 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d3c9c26-efe7-4c39-9b7a-43ce0f69733a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/Data.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Chunk.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/ChunkOrBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/GameOrBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/PlayerOrBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/Vector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/proto/VectorOrBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/service/ProtoChunkSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/strategies/service/ProtoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/strategies.app.jmh.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/strategies.app.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/strategies.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/data/changes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Data.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/GameService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/SaveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/projects.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/jmh/benchmarks/Benchmarks.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/Constants.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Character.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Chunk.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Equipment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Item.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Obstacle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Quaternion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/model/Vector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/service/ChangeTracker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/service/ChunkService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/service/GameService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/service/SaveService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/main/strategies/service/TimeService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/classes/java/test/strategies/AppTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/distributions/app.tar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/distributions/app.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-classes/benchmarks/jmh_generated/Benchmarks_jmhType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-classes/benchmarks/jmh_generated/Benchmarks_jmhType_B1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-classes/benchmarks/jmh_generated/Benchmarks_jmhType_B2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-classes/benchmarks/jmh_generated/Benchmarks_jmhType_B3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-classes/benchmarks/jmh_generated/Benchmarks_mainBenchmark_jmhTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-resources/META-INF/BenchmarkList" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-resources/META-INF/CompilerHints" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-sources/benchmarks/jmh_generated/Benchmarks_jmhType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-sources/benchmarks/jmh_generated/Benchmarks_jmhType_B1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-sources/benchmarks/jmh_generated/Benchmarks_jmhType_B2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-sources/benchmarks/jmh_generated/Benchmarks_jmhType_B3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/jmh-generated-sources/benchmarks/jmh_generated/Benchmarks_mainBenchmark_jmhTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/libs/app-jmh.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/libs/app.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/classes/strategies.AppTest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/css/base-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/js/report.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/reports/tests/test/packages/strategies.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/results/jmh/results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/scripts/app" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/scripts/app.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/test-results/test/TEST-strategies.AppTest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/test-results/test/binary/output.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/test-results/test/binary/output.bin.idx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/test-results/test/binary/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/.cache/expanded/expanded.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/App.class.uniqueId5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/ChangeTracker.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Character.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Chunk.class.uniqueId6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/ChunkService.class.uniqueId9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Equipment.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Game.class.uniqueId7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/GameService.class.uniqueId10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Item.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/Obstacle.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/compileTransaction/stash-dir/SaveService.class.uniqueId8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJmhJava/compileTransaction/stash-dir/Benchmarks.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileJmhJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/jmh/jmh.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/jmhCompileGeneratedClasses/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/build/tmp/jmhJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/characters/dcd8d3fa-a6c5-4b33-9b60-f7f64e733ce1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/game.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/items/25b8ba78-009a-4fe5-a0a1-de7a7c66a0a4.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/items/2f1429a7-61e6-4694-87bc-45102380564c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/items/6354e22f-0d7c-4c96-bf51-be2a2b81060c.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/items/bf657945-8231-41ab-8e94-7c835e8bb9e9.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/items/d8c94f7e-6abe-43ac-8fab-4e6f99387cd3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/obstacles/d882645c-6dd8-47d7-9645-421839642789.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/jmh/java/benchmarks/Benchmarks.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/jmh/java/benchmarks/Benchmarks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Chunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Chunk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Equipment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Equipment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Obstacle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Quaternion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Quaternion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/model/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/model/Vector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/ChangeTracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/ChangeTracker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/ChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/CompressionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/CompressionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/LoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/LoadService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/MongoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/MongoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/SaveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/SaveService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/strategies/service/TimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/strategies/old/service/TimeService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +185,10 @@
       <workItem from="1694687974011" duration="46000" />
       <workItem from="1694764564128" duration="4740000" />
       <workItem from="1694770057731" duration="77000" />
-      <workItem from="1694770290898" duration="2677000" />
+      <workItem from="1694770290898" duration="3003000" />
+      <workItem from="1694774470268" duration="26000" />
+      <workItem from="1694774510187" duration="16000" />
+      <workItem from="1694774831608" duration="972000" />
     </task>
     <servers />
   </component>
