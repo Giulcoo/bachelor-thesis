@@ -1,25 +1,22 @@
 package strategies.service;
 
-import strategies.Constants;
-import strategies.model.*;
+import strategies.model.Game;
+import strategies.model.Player;
+import strategies.model.Vector;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 public class GameService {
-    private final SaveService saveService;
     private final ChunkService chunkService;
     private final Game.Builder game;
     private final boolean dynamicChunkSize;
     private final boolean useChangeFile;
 
     public GameService(boolean dynamicChunkSize, boolean useChangeFile) {
-        this.saveService = new SaveService();
         this.game = Game.newBuilder();
-        this.chunkService = new ChunkService(saveService, game, dynamicChunkSize, useChangeFile);
+        //this.chunkService = new ChunkService(game, dynamicChunkSize, useChangeFile);
+        this.chunkService = new StaticChunkService(game, useChangeFile);
+
         this.dynamicChunkSize = dynamicChunkSize;
         this.useChangeFile = useChangeFile;
     }
@@ -41,16 +38,14 @@ public class GameService {
     }
 
     public void saveGame(){
-        if(!useChangeFile){
-            saveService.saveChanges();
-        }
+        chunkService.saveChunks();
     }
 
     public void loadGame(){
-        //TODO: Load game depending on useChangeFile
+        chunkService.loadChunks();
     }
 
     public void close(){
-        saveService.close();
+        chunkService.close();
     }
 }

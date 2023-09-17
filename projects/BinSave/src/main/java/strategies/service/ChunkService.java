@@ -1,21 +1,22 @@
 package strategies.service;
 
-import com.google.protobuf.Any;
 import strategies.model.*;
 import strategies.model.Vector;
 
 import java.util.*;
 
+import static strategies.Constants.*;
+
 public class ChunkService {
-    private final SaveService saveService;
-    private final Game.Builder game;
-    private final boolean dynamicChunkSize;
-    private final boolean useChangeFile;
+    protected final ChunkFileService chunkFile = new ChunkFileService();
+    protected final ChangeFileService changeFile = new ChangeFileService();
+    protected final Game.Builder game;
+    protected final boolean dynamicChunkSize;
+    protected final boolean useChangeFile;
+    protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
+    protected final Map<String, ChunkInfo.Builder> infos = new HashMap<>();
 
-    private final Map<String, Chunk.Builder> chunks = new HashMap<>();
-
-    public ChunkService(SaveService saveService, Game.Builder game, boolean dynamicChunkSize, boolean useChangeFile) {
-        this.saveService = saveService;
+    public ChunkService(Game.Builder game, boolean dynamicChunkSize, boolean useChangeFile) {
         this.game = game;
         this.dynamicChunkSize = dynamicChunkSize;
         this.useChangeFile = useChangeFile;
@@ -24,67 +25,55 @@ public class ChunkService {
     //TODO: Setup Function to load chunks from last time
     //TODO: If useChangeFile load changes
 
+    public void saveChunks(){
+
+    }
+
+    public void loadChunks(){
+
+    }
+
     public void addPlayer(Player.Builder player){
-        Chunk.Builder chunk = findChunk(player.getPosition());
-        chunk.addPlayers(player);
-
-        if(useChangeFile){
-            saveService.saveChange(Change.newBuilder()
-                    .setId(UUID.randomUUID().toString())
-                    .setType(Change.Type.PLAYER)
-                    .setEvent(Change.Event.ADDED)
-                    .setValue(Any.pack(player.build()))
-            );
-        }
-        else{
-            if(dynamicChunkSize){
-                checkChunk(chunk);
-            }
-            else{
-                saveService.addChangedChunk(chunk);
-            }
-        }
+        System.out.println("ChunkService.addPlayer");
     }
 
-    public void removePlayer(){
-        //TODO: Remove Player from correct chunk
-        //TODO: If dynamic chunk size, check chunk
-        //TODO: Add changed chunk
-        //TODO: Add change in change file
+    public void removePlayer(String chunkID, String playerID){
+        System.out.println("ChunkService.removePlayer");
     }
 
-    public void updatePlayer(){
-        //TODO: Update Player-Data
-        //TODO: Add changed chunk
-        //TODO: Add change in change file
+    public void updatePlayer(Player.Builder player){
+        System.out.println("ChunkService.updatePlayer");
     }
 
-    private void checkChunk(Chunk.Builder chunk){
-        //TODO: Check if chunk is too big/small
-        //TODO: Add chunk changes to SaveService
+    protected Chunk.Builder newChunk(float x, float y, float size, String parentChunk){
+        return Chunk.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setPosition(Vector.newBuilder().setX(x).setY(y))
+                .setSize(Vector.newBuilder().setX(size).setY(size))
+                .setParentChunk(parentChunk);
     }
 
-    private Chunk.Builder findChunk(Vector position){
-        if(dynamicChunkSize){
-            Queue<Chunk.Builder> queue = new PriorityQueue<>();
-            queue.add(chunks.get(this.game.getInfo().getRootChunk()));
-
-            Chunk.Builder chunk;
-            while (!inChunk(chunk = queue.poll(), position) && chunk.getChildChunksCount() == 0) {
-                queue.addAll(chunk.getChildChunksList().stream().map(s -> chunks.get(s)).toList());
-
-                if(queue.peek() == null) return chunks.get(this.game.getInfo().getRootChunk()); //If queue empty return root chunk
-            }
-
-            return chunk;
-        }
-        else{
-            return game.getChunksBuilderList().stream().filter(c -> inChunk(c,position)).findFirst().get();
-        }
+    protected ChunkInfo.Builder chunkToInfo(Chunk.Builder chunk){
+        return ChunkInfo.newBuilder()
+                .setId(chunk.getId())
+                .setPosition(chunk.getPosition())
+                .setSize(chunk.getSize())
+                .setParentChunk(chunk.getParentChunk())
+                .addAllChildChunks(chunk.getChildChunksList());
     }
 
-    private boolean inChunk(Chunk.Builder chunk, Vector point){
+    protected Chunk.Builder findChunk(Vector position){
+        System.out.println("ChunkService.findChunk");
+        return null;
+    }
+
+    protected boolean inChunk(Chunk.Builder chunk, Vector point){
         return Math.abs(chunk.getPosition().getX() - point.getX()) <= chunk.getSize().getX()/2
                 && Math.abs(chunk.getPosition().getY() - point.getY()) <= chunk.getSize().getY()/2;
+    }
+
+    public void close(){
+        changeFile.close();
+        chunkFile.close();
     }
 }

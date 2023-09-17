@@ -67,3 +67,11 @@ message Vector {
   float x = 1;
   float y = 2;
 }
+
+message StringWrapper{
+  string value = 1;
+}
+
+message StringArrayWrapper{
+  repeated string value = 1;
+}

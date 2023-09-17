@@ -11,6 +11,6 @@ public class Constants {
     public static final float MAP_SIZE = 100;
 
     //Chunk Settings
-    public static final int CHUNK_MIN_ELEMENTS = 10;
+    public static final int CHUNK_GROUP_MIN_ELEMENTS = 10;
     public static final int CHUNK_MAX_ELEMENTS = 100;
 }
