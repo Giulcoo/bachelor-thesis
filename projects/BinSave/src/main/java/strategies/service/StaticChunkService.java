@@ -1,17 +1,29 @@
 package strategies.service;
 
-import strategies.model.*;
+import strategies.model.Chunk;
+import strategies.model.Game;
+import strategies.model.Player;
 import strategies.model.Vector;
 
-import java.util.*;
+import java.util.stream.IntStream;
 
-import static strategies.Constants.CHUNK_GROUP_MIN_ELEMENTS;
-import static strategies.Constants.CHUNK_MAX_ELEMENTS;
+import static strategies.Constants.*;
 
 public class StaticChunkService extends ChunkService {
 
     public StaticChunkService(Game.Builder game, boolean useChangeFile) {
         super(game, false, useChangeFile);
+    }
+
+    @Override
+    public void createChunks(){
+        IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(y -> {
+            IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(x -> {
+                newChunk(x * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
+                        y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
+                        STATIC_CHUNK_SIZE, null);
+            });
+        });
     }
 
     @Override
@@ -29,16 +41,25 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     public void removePlayer(String chunkID, String playerID){
-        //TODO: Remove Player from correct chunk
-        //TODO: Add changed chunk
-        //TODO: Add change in change file
+        Chunk.Builder chunk = chunks.get(chunkID);
+
+        chunk.removePlayers(indexOfPlayer(chunkID, playerID));
+
+        if(useChangeFile){
+            changeFile.savePlayerRemove(playerID, chunkID);
+        }
+        else{
+            chunkFile.addChangedChunk(chunk);
+        }
     }
 
     @Override
     public void updatePlayer(Player.Builder player){
-        //TODO: Update Player-Data
-        //TODO: Add changed chunk
-        //TODO: Add change in change file
+        if(useChangeFile){
+            changeFile.savePlayerUpdate(player);
+        }
+
+        checkPlayerChunkChange(player);
     }
 
     @Override

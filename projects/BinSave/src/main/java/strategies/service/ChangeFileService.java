@@ -44,31 +44,41 @@ public class ChangeFileService {
 
     /** Change File: Add new player */
     public void savePlayerAdded(Player.Builder player){
-        savePlayerChange(player.getId(), Change.Event.ADDED, "", Any.pack(player.build()));
+        savePlayerChange(player.getChunk(), player.getId(), Change.Event.ADDED, "", Any.pack(player.build()));
     }
 
     /** Change File: Update chunk of player */
-    public void savePlayerUpdate(String playerID, String chunk){
-        savePlayerChange(playerID, Change.Event.UPDATED, "chunk",
-                Any.pack(StringWrapper.newBuilder().setValue(chunk).build()));
+    public void savePlayerUpdate(String playerID, String chunkID){
+        savePlayerChange(chunkID, playerID, Change.Event.UPDATED, "chunk",
+                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
+    }
+
+    /** Change File: Update chunk of all players in chunk */
+    public void savePlayerUpdates(Chunk.Builder chunk){
+        chunk.getPlayersList().forEach(p -> savePlayerUpdate(p.getId(), chunk.getId()));
+    }
+
+    /** Change File: Update chunk of all players in list */
+    public void savePlayerUpdates(List<Player> players, String chunkID){
+        players.forEach(p -> savePlayerUpdate(p.getId(), chunkID));
     }
 
     /** Change File: Remove player */
-    public void savePlayerRemove(String playerID, String chunk){
-        savePlayerChange(playerID, Change.Event.REMOVED, "chunk",
-                Any.pack(StringWrapper.newBuilder().setValue(chunk).build()));
+    public void savePlayerRemove(String playerID, String chunkID){
+        savePlayerChange(chunkID, playerID, Change.Event.REMOVED, "chunk",
+                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
     }
 
     /** Change File: Update position of player */
-    public void savePlayerUpdate(String playerID, Vector position){
-        savePlayerChange(playerID, Change.Event.UPDATED, "position",
-                Any.pack(position));
+    public void savePlayerUpdate(Player.Builder player){
+        savePlayerChange(player.getChunk(), player.getId(), Change.Event.UPDATED, "position",
+                Any.pack(player.getPosition()));
     }
 
     /** Change File: General player changes */
-    public void savePlayerChange(String playerID, Change.Event event, String key, Any any){
+    public void savePlayerChange(String chunkID, String playerID, Change.Event event, String key, Any any){
         saveChange(Change.newBuilder()
-                .setId(playerID)
+                .setId(chunkID + " " + playerID)
                 .setType(Change.Type.PLAYER)
                 .setEvent(event)
                 .setKey(key)

@@ -14,8 +14,8 @@ public class GameService {
 
     public GameService(boolean dynamicChunkSize, boolean useChangeFile) {
         this.game = Game.newBuilder();
-        //this.chunkService = new ChunkService(game, dynamicChunkSize, useChangeFile);
-        this.chunkService = new StaticChunkService(game, useChangeFile);
+
+        this.chunkService = dynamicChunkSize? new DynamicChunkService(game, useChangeFile) : new StaticChunkService(game, useChangeFile);
 
         this.dynamicChunkSize = dynamicChunkSize;
         this.useChangeFile = useChangeFile;

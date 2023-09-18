@@ -1,16 +1,23 @@
 package strategies.service;
 
+import com.google.protobuf.Any;
 import strategies.model.*;
-import strategies.model.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
-import static strategies.Constants.CHUNK_GROUP_MIN_ELEMENTS;
-import static strategies.Constants.CHUNK_MAX_ELEMENTS;
+import static strategies.Constants.*;
 
 public class DynamicChunkService extends ChunkService {
     public DynamicChunkService(Game.Builder game, boolean useChangeFile) {
         super(game, true, useChangeFile);
+    }
+
+    @Override
+    public void createChunks(){
+        newChunk(MAP_SIZE/2, MAP_SIZE/2, MAP_SIZE, null);
     }
 
     @Override
@@ -32,9 +39,8 @@ public class DynamicChunkService extends ChunkService {
     @Override
     public void removePlayer(String chunkID, String playerID){
         Chunk.Builder chunk = chunks.get(chunkID);
-        Player player = chunk.getPlayersList().stream().filter(p -> p.getId().equals(playerID)).findFirst().get();
 
-        chunk.removePlayers(chunk.getPlayersList().indexOf(player));
+        chunk.removePlayers(indexOfPlayer(chunkID, playerID));
 
         if(useChangeFile){
             changeFile.savePlayerRemove(playerID, chunkID);
@@ -49,36 +55,14 @@ public class DynamicChunkService extends ChunkService {
     @Override
     public void updatePlayer(Player.Builder player){
         if(useChangeFile){
-            changeFile.savePlayerUpdate(player.getId(), player.getPosition());
+            changeFile.savePlayerUpdate(player);
         }
 
-        String oldChunkID = player.getChunk();
-        Chunk.Builder playerChunk = findChunk(player.getPosition());
+        String oldChunkID = player.getId();
 
-        if(!oldChunkID.equals(playerChunk.getId())){
-            //Remove player from old chunk
-            Chunk.Builder oldChunk = chunks.get(oldChunkID);
-
-            Player buildPlayer = oldChunk.getPlayersList().stream().filter(p -> p.getId().equals(player.getId())).findFirst().get();
-            oldChunk.removePlayers(oldChunk.getPlayersList().indexOf(buildPlayer));
-
-            //Add player to new chunk
-            playerChunk.addPlayers(player);
-            player.setChunk(playerChunk.getId());
-
-            //Save chunk changes
-            if(useChangeFile){
-                changeFile.savePlayerUpdate(player.getId(), playerChunk.getId());
-            }
-            else{
-                chunkFile.addChangedChunk(oldChunk);
-                chunkFile.addChangedChunk(playerChunk);
-            }
-        }
-        else{
-            if(!useChangeFile){
-                chunkFile.addChangedChunk(playerChunk);
-            }
+        if(checkPlayerChunkChange(player)){
+            checkChunk(chunks.get(player.getId()));
+            checkChunk(chunks.get(oldChunkID));
         }
     }
 
@@ -96,72 +80,44 @@ public class DynamicChunkService extends ChunkService {
     }
 
     protected void mergeChunk(Chunk.Builder parentChunk){
-        if(!useChangeFile){
-            chunkFile.addChangedChunk(parentChunk);
-            chunkFile.addRemovedChunks(parentChunk.getChildChunksList().stream().map(c -> chunks.get(c)).toList());
-        }
+        parentChunk.getChildChunksList().forEach(chunkID -> {
+            Chunk.Builder chunk = chunks.get(chunkID);
 
-        parentChunk.getChildChunksList().forEach(c -> {
-            Chunk.Builder chunk = chunks.get(c);
-            ChunkInfo.Builder info = infos.get(c);
-            parentChunk.addAllPlayers(chunk.getPlayersList());
-            chunk.getPlayersBuilderList().forEach(p -> p.setChunk(info.getId()));
+            //Move all players from chunk to parent chunk
+            addPlayersToChunk(chunk.getPlayersBuilderList(), parentChunk);
 
-            if(useChangeFile){
-                changeFile.saveChunkRemoved(c);
-                chunk.getPlayersList().forEach(p -> changeFile.savePlayerUpdate(p.getId(), parentChunk.getId()));
-            }
-
-            chunk.clearPlayers();
-            chunks.remove(c);
-            infos.remove(c);
-            game.removeChunks(game.getChunksBuilderList().indexOf(chunk));
-            game.getInfoBuilder().removeChunks(game.getChunksBuilderList().indexOf(info));
+            //Remove chunk and save that
+            removeChunk(chunk);
         });
 
         parentChunk.clearChildChunks();
         infos.get(parentChunk.getId()).clearChildChunks();
+
+        if(useChangeFile){
+            changeFile.saveChunkUpdate(parentChunk.getId(), new ArrayList<>());
+        }
     }
 
-    protected void splitChunk(Chunk.Builder chunk){
+    protected void splitChunk(Chunk.Builder parentChunk){
         //Create new chunks with chunk as parent
-        float newSize = chunk.getSize().getX()/2;
-        List<Chunk.Builder> childChunks = new ArrayList<>();
-
-        childChunks.add(newChunk(chunk.getPosition().getX() - newSize/2,chunk.getPosition().getY() - newSize/2, newSize, chunk.getId()));
-        childChunks.add(newChunk(chunk.getPosition().getX() + newSize/2,chunk.getPosition().getY() - newSize/2, newSize, chunk.getId()));
-        childChunks.add(newChunk(chunk.getPosition().getX() - newSize/2,chunk.getPosition().getY() + newSize/2, newSize, chunk.getId()));
-        childChunks.add(newChunk(chunk.getPosition().getX() + newSize/2,chunk.getPosition().getY() + newSize/2, newSize, chunk.getId()));
-
-        //Add new chunks to data structures
-        childChunks.forEach(c -> {
-            ChunkInfo.Builder info = chunkToInfo(c);
-
-            game.addChunks(c);
-            game.getInfoBuilder().addChunks(info);
-            chunk.addChildChunks(c.getId());
-            chunks.put(c.getId(), c);
-            infos.put(c.getId(), info);
-        });
+        float newSize = parentChunk.getSize().getX()/2;
+        List<Chunk.Builder> childChunks = List.of(
+                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk),
+                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk),
+                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk),
+                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk)
+        );
 
         //Split Players to new chunks
-        chunk.getPlayersBuilderList().forEach(p -> {
-            childChunks.stream().filter(c -> inChunk(c, p.getPosition())).findFirst().get().addPlayers(p);
-        });
+        parentChunk.getPlayersBuilderList().forEach(p -> addPlayerToChunk(p, findChunk(p.getPosition(), childChunks)));
+        parentChunk.clearPlayers();
 
-        chunk.clearPlayers();
-
-        //Save changes
+        //Save the rest of the changes
         if(useChangeFile){
-            changeFile.saveChunkUpdate(chunk.getId(), chunk.getChildChunksList());
-
-            childChunks.forEach(c -> {
-                changeFile.saveChunkAdded(c);
-                c.getPlayersList().forEach(p -> changeFile.savePlayerUpdate(p.getId(), c.getId()));
-            });
+            changeFile.saveChunkUpdate(parentChunk.getId(), parentChunk.getChildChunksList());
         }
         else{
-
+            chunkFile.addChangedChunk(parentChunk);
         }
     }
 

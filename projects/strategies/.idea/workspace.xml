@@ -4,37 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d3c9c26-efe7-4c39-9b7a-43ce0f69733a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../BinSave/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChangeFileService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/DynamicChunkService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/StaticChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Data.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Data.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Change.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/ChangeOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Chunk.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/ChunkInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/ChunkInfoOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/ChunkOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Data.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Game.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/GameInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/GameInfoOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/GameOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/PlayerOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/Vector.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/model/VectorOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/SaveService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4d3c9c26-efe7-4c39-9b7a-43ce0f69733a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -114,6 +84,7 @@
       <workItem from="1694861264646" duration="32000" />
       <workItem from="1694884222693" duration="961000" />
       <workItem from="1694936059943" duration="599000" />
+      <workItem from="1695023850042" duration="2000" />
     </task>
     <servers />
   </component>
