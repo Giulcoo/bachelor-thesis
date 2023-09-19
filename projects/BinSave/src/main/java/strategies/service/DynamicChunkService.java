@@ -84,7 +84,7 @@ public class DynamicChunkService extends ChunkService {
             Chunk.Builder chunk = chunks.get(chunkID);
 
             //Move all players from chunk to parent chunk
-            addPlayersToChunk(chunk.getPlayersBuilderList(), parentChunk);
+            addPlayersToChunk(chunk.getPlayersBuilderList(), parentChunk, chunkID);
 
             //Remove chunk and save that
             removeChunk(chunk);
@@ -109,7 +109,7 @@ public class DynamicChunkService extends ChunkService {
         );
 
         //Split Players to new chunks
-        parentChunk.getPlayersBuilderList().forEach(p -> addPlayerToChunk(p, findChunk(p.getPosition(), childChunks)));
+        parentChunk.getPlayersBuilderList().forEach(p -> addPlayerToChunk(p, findChunk(p.getPosition(), childChunks), parentChunk.getId()));
         parentChunk.clearPlayers();
 
         //Save the rest of the changes

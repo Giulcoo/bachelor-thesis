@@ -56,59 +56,53 @@ public abstract class ChunkService {
     private void applyChunkChange(Change change){
         String chunkID = change.getId();
 
-        switch (change.getEvent().getNumber()){
+        switch (change.getEventValue()){
             case Change.Event.ADDED_VALUE -> {
-                try{
-                    Chunk.Builder chunk = change.getValue().unpack(Chunk.class).toBuilder();
-                    chunks.put(chunk.getId(), chunk);
-                }
-                catch (InvalidProtocolBufferException e){
-                    e.printStackTrace();
-                }
+                Chunk.Builder chunk = changeFile.unpackValue(change, Chunk.class).toBuilder();
+                if(chunk != null) chunks.put(chunkID, chunk);
             }
             case Change.Event.REMOVED_VALUE -> {
                 chunkFile.addRemovedChunk(chunkID);
             }
             case Change.Event.UPDATED_VALUE -> {
-                Chunk.Builder chunk;
-
-                if(chunks.containsKey(chunkID)){
-                    chunk = chunks.get(chunkID);
-                }
-                else{
-                    chunk = chunkFile.getChunk(chunkID).toBuilder();
-                    chunks.put(chunk.getId(), chunk);
-                }
+                Chunk.Builder chunk = getChunk(chunkID);
 
                 List<String> oldChildren = chunk.getChildChunksList();
                 chunk.clearChildChunks();
 
-                try{
-                    chunk.addAllChildChunks(change.getValue().unpack(StringArrayWrapper.class).getValueList());
-                }
-                catch (InvalidProtocolBufferException e){
-                    chunk.clearChildChunks();
-                    chunk.addAllChildChunks(oldChildren);
-                    e.printStackTrace();
-                }
+                chunk.addAllChildChunks(changeFile.unpackValue(change, StringArrayWrapper.class).getValueList());
             }
         }
     }
 
     private void applyPlayerChange(Change change){
-        String[] ids = change.getId().split("\\s+"); //0: Chunk ID, 1: Player ID
+        String[] ids = change.getId().split("\\s+"); //0: (Old)Chunk ID, 1: Player ID
+        Chunk.Builder chunk = getChunk(ids[0]);
 
-        Chunk.Builder chunk;
+        switch(change.getEventValue()){
+            case Change.Event.ADDED_VALUE -> {
+                Player player = changeFile.unpackValue(change, Player.class);
+                chunk.addPlayers(player);
+            }
+            case Change.Event.REMOVED_VALUE -> {
 
-        if(chunks.containsKey(ids[0])){
-            chunk = chunks.get(change.getId());
+            }
+            case Change.Event.UPDATED_VALUE -> {
+                Player.Builder player = getPlayerBuilder(chunk, ids[1]);
+
+                if(change.getKey().equals("chunk")){
+                    String newChunkID = changeFile.unpackValue(change, StringWrapper.class).getValue();
+                    Chunk.Builder newChunk = getChunk(newChunkID);
+
+                    player.setChunk(newChunkID);
+                    newChunk.addPlayers(player);
+                    chunk.removePlayers(indexOfPlayer(chunk.getId(), player.getId()));
+                }
+                else if(change.getKey().equals("position")){
+                    player.setPosition(changeFile.unpackValue(change, Vector.class));
+                }
+            }
         }
-        else{
-            chunk = chunkFile.getChunk(ids[0]).toBuilder();
-            chunks.put(ids[0], chunk);
-        }
-
-        //TODO: Check event type
     }
 
     abstract void addPlayer(Player.Builder player);
@@ -136,7 +130,7 @@ public abstract class ChunkService {
 
             //Save chunk changes
             if(useChangeFile){
-                changeFile.savePlayerUpdate(player.getId(), playerChunk.getId());
+                changeFile.savePlayerUpdate(player.getId(), oldChunkID, playerChunk.getId());
             }
             else{
                 chunkFile.addChangedChunk(oldChunk);
@@ -154,20 +148,31 @@ public abstract class ChunkService {
         }
     }
 
-    protected void addPlayerToChunk(Player.Builder player, Chunk.Builder chunk){
+    protected void addPlayerToChunk(Player.Builder player, Chunk.Builder chunk, String oldChunkID){
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
 
         if(useChangeFile){
-            changeFile.savePlayerUpdate(player.getId(), chunk.getId());
+            changeFile.savePlayerUpdate(player.getId(), oldChunkID, chunk.getId());
         }
         else{
             chunkFile.addChangedChunk(chunk);
         }
     }
 
-    protected void addPlayersToChunk(List<Player.Builder> players, Chunk.Builder chunk){
-        players.forEach(p -> addPlayerToChunk(p, chunk));
+    protected void addPlayersToChunk(List<Player.Builder> players, Chunk.Builder chunk, String oldChunkID){
+        players.forEach(p -> addPlayerToChunk(p, chunk, oldChunkID));
+    }
+
+    private Chunk.Builder getChunk(String chunkID){
+        if(chunks.containsKey(chunkID)){
+            return chunks.get(chunkID);
+        }
+        else{
+            Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
+            chunks.put(chunkID, chunk);
+            return chunk;
+        }
     }
 
     protected Chunk.Builder newChunk(float x, float y, float size, Chunk.Builder parentChunk){
@@ -238,6 +243,10 @@ public abstract class ChunkService {
         return chunks.get(chunkID).getPlayersList().stream().filter(p -> p.getId().equals(playerID)).findFirst().get();
     }
 
+    protected Player.Builder getPlayerBuilder(Chunk.Builder chunk, String playerID){
+        return chunk.getPlayersBuilderList().stream().filter(p -> p.getId().equals(playerID)).findFirst().get();
+    }
+
     protected int indexOfPlayer(String chunkID, String playerID){
         return chunks.get(chunkID).getPlayersList().indexOf(getPlayer(chunkID, playerID));
     }
@@ -249,7 +258,6 @@ public abstract class ChunkService {
     protected int indexOfChunk(ChunkInfo.Builder chunk){
         return game.getInfoBuilder().getChunksBuilderList().indexOf(chunk);
     }
-
 
     public void close(){
         changeFile.close();

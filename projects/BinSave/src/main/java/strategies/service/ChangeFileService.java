@@ -1,6 +1,7 @@
 package strategies.service;
 
 import com.google.protobuf.Any;
+import com.google.protobuf.InvalidProtocolBufferException;
 import strategies.Constants;
 import strategies.model.*;
 
@@ -48,31 +49,21 @@ public class ChangeFileService {
     }
 
     /** Change File: Update chunk of player */
-    public void savePlayerUpdate(String playerID, String chunkID){
-        savePlayerChange(chunkID, playerID, Change.Event.UPDATED, "chunk",
-                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
-    }
-
-    /** Change File: Update chunk of all players in chunk */
-    public void savePlayerUpdates(Chunk.Builder chunk){
-        chunk.getPlayersList().forEach(p -> savePlayerUpdate(p.getId(), chunk.getId()));
-    }
-
-    /** Change File: Update chunk of all players in list */
-    public void savePlayerUpdates(List<Player> players, String chunkID){
-        players.forEach(p -> savePlayerUpdate(p.getId(), chunkID));
-    }
-
-    /** Change File: Remove player */
-    public void savePlayerRemove(String playerID, String chunkID){
-        savePlayerChange(chunkID, playerID, Change.Event.REMOVED, "chunk",
-                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
+    public void savePlayerUpdate(String playerID, String oldChunkID, String newChunkID){
+        savePlayerChange(oldChunkID, playerID, Change.Event.UPDATED, "chunk",
+                Any.pack(StringWrapper.newBuilder().setValue(newChunkID).build()));
     }
 
     /** Change File: Update position of player */
     public void savePlayerUpdate(Player.Builder player){
         savePlayerChange(player.getChunk(), player.getId(), Change.Event.UPDATED, "position",
                 Any.pack(player.getPosition()));
+    }
+
+    /** Change File: Remove player */
+    public void savePlayerRemove(String playerID, String chunkID){
+        savePlayerChange(chunkID, playerID, Change.Event.REMOVED, "chunk",
+                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
     }
 
     /** Change File: General player changes */
@@ -117,6 +108,16 @@ public class ChangeFileService {
         }
 
         return changes;
+    }
+
+    public <T extends com.google.protobuf.Message> T unpackValue(Change change, Class<T> clazz){
+        try{
+            return change.getValue().unpack(clazz);
+        }
+        catch (InvalidProtocolBufferException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /** Close all active FileStreams */
