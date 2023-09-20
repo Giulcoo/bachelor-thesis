@@ -1,9 +1,14 @@
 package strategies.service;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import strategies.Constants;
 import strategies.model.*;
 import strategies.model.Vector;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static strategies.Constants.*;
@@ -12,33 +17,56 @@ public abstract class ChunkService {
     protected final ChunkFileService chunkFile = new ChunkFileService();
     protected final ChangeFileService changeFile = new ChangeFileService();
     protected final Game.Builder game;
-    protected final boolean dynamicChunkSize;
-    protected final boolean useChangeFile;
     protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
     protected final Map<String, ChunkInfo.Builder> infos = new HashMap<>();
 
-    public ChunkService(Game.Builder game, boolean dynamicChunkSize, boolean useChangeFile) {
+    public ChunkService(Game.Builder game) {
         this.game = game;
-        this.dynamicChunkSize = dynamicChunkSize;
-        this.useChangeFile = useChangeFile;
+
+        //Create data folder, if it does not exist
+        try {
+            Path dataPath = Path.of(Constants.DATA_PATH);
+            if(!Files.exists(dataPath)) Files.createDirectory(dataPath);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     abstract void createChunks();
 
     public void loadChunks(){
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             applyChanges();
         }
 
-        //TODO: Load data from chunks
+        //Load Chunk Info Data
+        this.game.setInfo(chunkFile.loadGameInfo());
+
+        //Set Chunks (without any players loaded) and add to game
+        this.game.getInfoBuilder().getChunksBuilderList().forEach(c -> {
+            if(!chunks.containsKey(c.getId())){
+                Chunk.Builder chunk = infoToChunk(c);
+                this.game.addChunks(chunk);
+                chunks.put(chunk.getId(), chunk);
+            }
+        });
+
+        //Load players of player chunk
+        checkChunkPlayers(this.game.getInfo().getPlayerChunk());
     }
 
     public void saveChunks(){
-        chunkFile.saveChanges();
+        if(!USE_CHANGE_FILE){
+            chunkFile.saveChanges();
+        }
+
+        chunkFile.saveGameInfo(game.getInfoBuilder());
     }
 
 
     private void applyChanges(){
+        //Set changes
         changeFile.getChanges().forEach(change -> {
             if(change.getType().getNumber() == Change.Type.CHUNK_VALUE){
                 applyChunkChange(change);
@@ -48,9 +76,9 @@ public abstract class ChunkService {
             }
         });
 
+        //Save changes
         chunkFile.addChangedChunks(chunks.entrySet().stream().map(entry -> entry.getValue()).toList());
         chunkFile.saveChanges();
-        chunks.clear();
     }
 
     private void applyChunkChange(Change change){
@@ -107,7 +135,7 @@ public abstract class ChunkService {
 
     abstract void addPlayer(Player.Builder player);
 
-    abstract void removePlayer(String chunkID, String playerID);
+    abstract void removePlayer(Player.Builder player);
 
     abstract void updatePlayer(Player.Builder player);
 
@@ -120,6 +148,9 @@ public abstract class ChunkService {
         Chunk.Builder playerChunk = findChunk(player.getPosition());
 
         if(!oldChunkID.equals(playerChunk.getId())){
+            //Load new chunk if needed
+            checkChunkPlayers(playerChunk.getId());
+
             //Remove player from old chunk
             Chunk.Builder oldChunk = chunks.get(oldChunkID);
             oldChunk.removePlayers(indexOfPlayer(oldChunkID, player.getId()));
@@ -129,7 +160,7 @@ public abstract class ChunkService {
             player.setChunk(playerChunk.getId());
 
             //Save chunk changes
-            if(useChangeFile){
+            if(USE_CHANGE_FILE){
                 changeFile.savePlayerUpdate(player.getId(), oldChunkID, playerChunk.getId());
             }
             else{
@@ -140,7 +171,7 @@ public abstract class ChunkService {
             return true;
         }
         else{
-            if(!useChangeFile){
+            if(!USE_CHANGE_FILE){
                 chunkFile.addChangedChunk(playerChunk);
             }
 
@@ -152,7 +183,9 @@ public abstract class ChunkService {
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
 
-        if(useChangeFile){
+        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(chunk.getId());
+
+        if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player.getId(), oldChunkID, chunk.getId());
         }
         else{
@@ -170,9 +203,16 @@ public abstract class ChunkService {
         }
         else{
             Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
+            this.game.addChunks(chunk);
             chunks.put(chunkID, chunk);
             return chunk;
         }
+    }
+
+    protected void checkChunkPlayers(String chunkID){
+        Chunk.Builder cachedChunk = chunks.get(chunkID);
+
+        if(cachedChunk.getPlayersCount() == 0) cachedChunk.addAllPlayers(chunkFile.getChunk(chunkID).getPlayersList());
     }
 
     protected Chunk.Builder newChunk(float x, float y, float size, Chunk.Builder parentChunk){
@@ -180,7 +220,7 @@ public abstract class ChunkService {
                 .setId(UUID.randomUUID().toString())
                 .setPosition(Vector.newBuilder().setX(x).setY(y))
                 .setSize(Vector.newBuilder().setX(size).setY(size))
-                .setParentChunk(parentChunk == null ? null : parentChunk.getId());
+                .setParentChunk(parentChunk == null ? "" : parentChunk.getId());
 
         ChunkInfo.Builder info = chunkToInfo(chunk);
 
@@ -193,7 +233,7 @@ public abstract class ChunkService {
         game.getInfoBuilder().addChunks(info);
         if(parentChunk != null) parentChunk.addChildChunks(chunk.getId());
 
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.saveChunkAdded(chunk);
         }
         else{
@@ -204,7 +244,7 @@ public abstract class ChunkService {
     }
 
     protected void removeChunk(Chunk.Builder chunk){
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.saveChunkRemoved(chunk.getId());
         }
         else{
@@ -226,6 +266,15 @@ public abstract class ChunkService {
                 .setSize(chunk.getSize())
                 .setParentChunk(chunk.getParentChunk())
                 .addAllChildChunks(chunk.getChildChunksList());
+    }
+
+    private Chunk.Builder infoToChunk(ChunkInfo.Builder info){
+        return Chunk.newBuilder()
+                .setId(info.getId())
+                .setPosition(info.getPosition())
+                .setSize(info.getSize())
+                .setParentChunk(info.getParentChunk())
+                .addAllChildChunks(info.getChildChunksList());
     }
 
     abstract Chunk.Builder findChunk(Vector position);

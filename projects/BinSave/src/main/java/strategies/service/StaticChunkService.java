@@ -5,14 +5,15 @@ import strategies.model.Game;
 import strategies.model.Player;
 import strategies.model.Vector;
 
+import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 import static strategies.Constants.*;
 
 public class StaticChunkService extends ChunkService {
 
-    public StaticChunkService(Game.Builder game, boolean useChangeFile) {
-        super(game, false, useChangeFile);
+    public StaticChunkService(Game.Builder game) {
+        super(game);
     }
 
     @Override
@@ -30,8 +31,11 @@ public class StaticChunkService extends ChunkService {
     public void addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
         chunk.addPlayers(player);
+        player.setChunk(chunk.getId());
 
-        if(useChangeFile){
+        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(player.getChunk());
+
+        if(USE_CHANGE_FILE){
             changeFile.savePlayerAdded(player);
         }
         else{
@@ -40,13 +44,13 @@ public class StaticChunkService extends ChunkService {
     }
 
     @Override
-    public void removePlayer(String chunkID, String playerID){
-        Chunk.Builder chunk = chunks.get(chunkID);
+    public void removePlayer(Player.Builder player){
+        Chunk.Builder chunk = chunks.get(player.getChunk());
 
-        chunk.removePlayers(indexOfPlayer(chunkID, playerID));
+        chunk.removePlayers(indexOfPlayer(player.getChunk(), player.getId()));
 
-        if(useChangeFile){
-            changeFile.savePlayerRemove(playerID, chunkID);
+        if(USE_CHANGE_FILE){
+            changeFile.savePlayerRemove(player.getId(), player.getChunk());
         }
         else{
             chunkFile.addChangedChunk(chunk);
@@ -55,7 +59,7 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     public void updatePlayer(Player.Builder player){
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player);
         }
 

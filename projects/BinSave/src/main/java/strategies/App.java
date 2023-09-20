@@ -2,16 +2,78 @@ package strategies;
 
 import strategies.service.GameService;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.stream.IntStream;
+
+import static strategies.Constants.*;
+
 public class App {
     public static void main(String[] args) {
-        createGame(10);
+        //createGame(10);
+        //loadGame();
+        createGameAndPlay(10, 10, 10, 10);
     }
 
     public static void createGame(int dataCount){
-        GameService service = new GameService(false, false);
+        deleteSave();
+        GameService service = new GameService();
         service.createGame(dataCount);
         service.saveGame();
         service.close();
+    }
+
+    public static void loadGame(){
+        GameService service = new GameService();
+        service.loadGame();
+        service.close();
+    }
+
+    public static void createGameAndPlay(int initCount, int moves, int moveChanges, int botAmountChanges){
+        deleteSave();
+        GameService service = new GameService();
+        service.createGame(initCount);
+        service.saveGame();
+
+        IntStream.range(0, moves).forEach(i -> {
+            service.randomDeleteBot(botAmountChanges);
+            service.randomNewPlayers(botAmountChanges);
+            service.randomMovePlayer(moveChanges);
+        });
+
+        service.close();
+    }
+
+    public static void loadGameAndPlay(int initCount, int moves, int moveChanges, int botAmountChanges){
+        GameService service = new GameService();
+        service.loadGame();
+
+        IntStream.range(0, moves).forEach(i -> {
+            service.randomDeleteBot(botAmountChanges);
+            service.randomNewPlayers(botAmountChanges);
+            service.randomMovePlayer(moveChanges);
+        });
+
+        service.close();
+    }
+
+    public static void deleteSave(){
+        try{
+            delete(new File(DATA_PATH));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static void delete(File f) throws IOException {
+        if (f.isDirectory()) {
+            for (File c : f.listFiles())
+                delete(c);
+        }
+
+        if (!f.delete()) throw new FileNotFoundException("Failed to delete file: " + f);
     }
 
 //    public static void protoTest(){

@@ -11,8 +11,8 @@ import java.util.Queue;
 import static strategies.Constants.*;
 
 public class DynamicChunkService extends ChunkService {
-    public DynamicChunkService(Game.Builder game, boolean useChangeFile) {
-        super(game, true, useChangeFile);
+    public DynamicChunkService(Game.Builder game) {
+        super(game);
     }
 
     @Override
@@ -26,7 +26,9 @@ public class DynamicChunkService extends ChunkService {
         chunk.addPlayers(player);
         player.setChunk(chunk.getId());
 
-        if(useChangeFile){
+        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(player.getChunk());
+
+        if(USE_CHANGE_FILE){
             changeFile.savePlayerAdded(player);
         }
         else{
@@ -37,13 +39,13 @@ public class DynamicChunkService extends ChunkService {
     }
 
     @Override
-    public void removePlayer(String chunkID, String playerID){
-        Chunk.Builder chunk = chunks.get(chunkID);
+    public void removePlayer(Player.Builder player){
+        Chunk.Builder chunk = chunks.get(player.getChunk());
 
-        chunk.removePlayers(indexOfPlayer(chunkID, playerID));
+        chunk.removePlayers(indexOfPlayer(player.getChunk(), player.getId()));
 
-        if(useChangeFile){
-            changeFile.savePlayerRemove(playerID, chunkID);
+        if(USE_CHANGE_FILE){
+            changeFile.savePlayerRemove(player.getId(), player.getChunk());
         }
         else{
            chunkFile.addChangedChunk(chunk);
@@ -54,7 +56,7 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     public void updatePlayer(Player.Builder player){
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player);
         }
 
@@ -93,7 +95,7 @@ public class DynamicChunkService extends ChunkService {
         parentChunk.clearChildChunks();
         infos.get(parentChunk.getId()).clearChildChunks();
 
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.saveChunkUpdate(parentChunk.getId(), new ArrayList<>());
         }
     }
@@ -113,7 +115,7 @@ public class DynamicChunkService extends ChunkService {
         parentChunk.clearPlayers();
 
         //Save the rest of the changes
-        if(useChangeFile){
+        if(USE_CHANGE_FILE){
             changeFile.saveChunkUpdate(parentChunk.getId(), parentChunk.getChildChunksList());
         }
         else{

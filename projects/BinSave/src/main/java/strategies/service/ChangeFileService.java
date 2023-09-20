@@ -5,9 +5,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import strategies.Constants;
 import strategies.model.*;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +78,11 @@ public class ChangeFileService {
 
     private void saveChange(Change.Builder change){
         try{
-            if(this.changeOutput == null) this.changeOutput = new FileOutputStream(Constants.CHANGE_FILE);
+            if(this.changeOutput == null) {
+                File changeFile = new File(Constants.CHANGE_FILE);
+                changeFile.createNewFile();
+                this.changeOutput = new FileOutputStream(changeFile);
+            }
 
             change.build().writeDelimitedTo(this.changeOutput);
         }
@@ -100,14 +103,26 @@ public class ChangeFileService {
                 changes.add(change);
                 change = Change.parseDelimitedFrom(this.changeInput);
             }
-
-            //TODO: Clear change file
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
+        clearChangeFile();
         return changes;
+    }
+
+    private void clearChangeFile(){
+        try{
+            tryClose(changeOutput);
+
+            PrintWriter writer = new PrintWriter(Constants.CHANGE_FILE);
+            writer.print("");
+            writer.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public <T extends com.google.protobuf.Message> T unpackValue(Change change, Class<T> clazz){
@@ -122,11 +137,15 @@ public class ChangeFileService {
 
     /** Close all active FileStreams */
     public void close(){
-        try{
-            if(this.changeOutput != null) this.changeOutput.close();
-            if(this.changeInput != null) this.changeInput.close();
+        tryClose(changeOutput);
+        tryClose(changeInput);
+    }
+
+    private void tryClose(Closeable closeable){
+        try {
+            if (closeable != null) closeable.close();
         }
-        catch(IOException e){
+        catch (IOException e){
             e.printStackTrace();
         }
     }

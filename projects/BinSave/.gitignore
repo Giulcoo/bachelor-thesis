@@ -40,3 +40,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Protocol Buffer ##
+/src/main/java/strategies/model/
+
+### Data ###
+data/
