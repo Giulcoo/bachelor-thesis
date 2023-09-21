@@ -13,15 +13,14 @@ import static strategies.Constants.*;
 public class App {
     public static void main(String[] args) {
         //createGame(2);
-        loadGame();
+        //loadGame();
         //createGameAndPlay(10, 10, 10, 10);
+        //loadGameAndPlay(10, 10, 10, 10);
     }
 
     public static void createGame(int dataCount){
         GameService service = new GameService();
         service.createGame(dataCount);
-        service.saveGame();
-        service.saveGame();
         service.saveGame();
         service.close();
     }
@@ -38,8 +37,8 @@ public class App {
         service.saveGame();
 
         IntStream.range(0, moves).forEach(i -> {
-            service.randomDeleteBot(botAmountChanges);
             service.randomNewPlayers(botAmountChanges);
+            service.randomDeleteBot(botAmountChanges);
             service.randomMovePlayer(moveChanges);
         });
 
@@ -51,8 +50,8 @@ public class App {
         service.loadGame();
 
         IntStream.range(0, moves).forEach(i -> {
-            service.randomDeleteBot(botAmountChanges);
             service.randomNewPlayers(botAmountChanges);
+            service.randomDeleteBot(botAmountChanges);
             service.randomMovePlayer(moveChanges);
         });
 

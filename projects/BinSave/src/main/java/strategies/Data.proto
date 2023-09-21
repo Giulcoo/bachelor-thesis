@@ -7,11 +7,6 @@ option java_multiple_files = true;
 option java_package = "strategies.model";
 //protoc -I . --java_out=../  Data.proto
 
-message Game {
-  repeated Chunk chunks = 1;
-  GameInfo info = 2;
-}
-
 message GameInfo {
   string rootChunk = 1;
   string playerChunk = 2;

@@ -112,11 +112,11 @@ public class ChunkFileService {
         }
     }
 
-    public void saveGameInfo(GameInfo.Builder info){
+    public void saveGameInfo(GameInfo info){
         try{
             if(this.gameInfoOutput == null) this.gameInfoOutput = new FileOutputStream(Constants.INFO_FILE);
 
-            info.build().writeTo(this.gameInfoOutput);
+            info.writeTo(this.gameInfoOutput);
         }
         catch (IOException e){
             e.printStackTrace();

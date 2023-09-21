@@ -1,13 +1,10 @@
 package strategies.service;
 
-import com.google.protobuf.Message;
 import strategies.Constants;
-import strategies.model.Game;
 import strategies.model.Player;
 import strategies.model.Vector;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,7 +41,7 @@ public class GameService {
     }
 
     public void loadGame(){
-        chunkService.loadChunks();
+        player = chunkService.loadChunks();
     }
 
     public void randomNewPlayers(int count){
@@ -57,6 +54,8 @@ public class GameService {
 
     /**Moves player once and count-1 amount of random bots randomly*/
     public void randomMovePlayer(int count){
+        if(count > 1 && bots.isEmpty()) randomNewPlayers(1);
+
         IntStream.range(0, count).forEach(i-> randomMovePlayer(i > 0));
     }
 

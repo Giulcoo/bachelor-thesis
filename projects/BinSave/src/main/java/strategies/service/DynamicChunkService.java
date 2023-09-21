@@ -1,7 +1,8 @@
 package strategies.service;
 
-import com.google.protobuf.Any;
-import strategies.model.*;
+import strategies.model.Chunk;
+import strategies.model.Player;
+import strategies.model.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +18,16 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     public void createChunks(){
-        newChunk(MAP_SIZE/2, MAP_SIZE/2, MAP_SIZE, null);
+        rootChunk = newChunk(MAP_SIZE/2, MAP_SIZE/2, MAP_SIZE, null).getId();
     }
 
     @Override
     public void addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
-        chunk.addPlayers(player);
         player.setChunk(chunk.getId());
+        chunk.addPlayers(player);
 
-        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(player.getChunk());
+        if(!player.getIsBot()) playerChunk = player.getChunk();
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerAdded(player);
@@ -93,7 +94,6 @@ public class DynamicChunkService extends ChunkService {
         });
 
         parentChunk.clearChildChunks();
-        infos.get(parentChunk.getId()).clearChildChunks();
 
         if(USE_CHANGE_FILE){
             changeFile.saveChunkUpdate(parentChunk.getId(), new ArrayList<>());
@@ -126,13 +126,13 @@ public class DynamicChunkService extends ChunkService {
     @Override
     protected Chunk.Builder findChunk(Vector position){
         Queue<Chunk.Builder> queue = new PriorityQueue<>();
-        queue.add(chunks.get(this.game.getInfo().getRootChunk()));
+        queue.add(chunks.get(rootChunk));
 
         Chunk.Builder chunk;
         while (!inChunk(chunk = queue.poll(), position) && chunk.getChildChunksCount() == 0) {
             queue.addAll(chunk.getChildChunksList().stream().map(s -> chunks.get(s)).toList());
 
-            if(queue.peek() == null) return chunks.get(this.game.getInfo().getRootChunk()); //If queue empty return root chunk
+            if(queue.peek() == null) return chunks.get(rootChunk); //If queue empty return root chunk
         }
 
         return chunk;
@@ -140,6 +140,8 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position, String currentChunkID){
+        if(currentChunkID.equals("")) return findChunk(position);
+
         Chunk.Builder currentChunk = chunks.get(currentChunkID);
 
         return inChunk(currentChunk, position) ? currentChunk : findChunk(position);

@@ -12,38 +12,39 @@ import static strategies.Constants.USE_CHANGE_FILE;
 public abstract class ChunkService {
     protected final ChunkFileService chunkFile = new ChunkFileService();
     protected final ChangeFileService changeFile = new ChangeFileService();
-    protected final Game.Builder game;
-    
-    protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
-    protected final Map<String, ChunkInfo.Builder> infos = new HashMap<>();
 
-    public ChunkService() {
-        this.game = Game.newBuilder();
-    }
+    protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
+    protected String playerChunk = "";
+    protected String rootChunk = "";
 
     abstract void createChunks();
 
-    public void loadChunks(){
+    public Player.Builder loadChunks(){
         if(USE_CHANGE_FILE){
             applyChanges();
         }
 
-        //Load Chunk Info Data
-        this.game.setInfo(chunkFile.loadGameInfo());
-
-        //Set Chunks (without any players loaded) and add to game
-        this.game.getInfoBuilder().getChunksBuilderList().forEach(c -> {
-            if(!chunks.containsKey(c.getId())){
-                Chunk.Builder chunk = infoToChunk(c);
-                this.game.addChunks(chunk);
-                chunks.put(chunk.getId(), chunk);
-            }
+        GameInfo info = chunkFile.loadGameInfo();
+        //Load Chunk Info Data to chunks
+        info.getChunksList().forEach(c -> {
+            Chunk.Builder chunk = infoToChunk(c);
+            chunks.put(chunk.getId(), chunk);
         });
 
-        //Load players of player chunk
-        checkChunkPlayers(this.game.getInfo().getPlayerChunk());
+        playerChunk = info.getPlayerChunk();
+        rootChunk = info.getRootChunk();
 
-        System.out.println(this.game.getChunksList());
+        //Load players of player chunk
+        checkChunkPlayers(playerChunk);
+
+        for (Chunk.Builder chunk : getChunks()) {
+            System.out.println("\n======================");
+            System.out.println("Save Chunk");
+            System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
+            System.out.println("Children:" + chunk.getPlayersList());
+        }
+
+        return chunks.get(playerChunk).getPlayersBuilderList().stream().filter(p -> !p.getIsBot()).findFirst().get();
     }
 
     public void saveChunks(){
@@ -51,7 +52,7 @@ public abstract class ChunkService {
             chunkFile.saveChanges();
         }
 
-        chunkFile.saveGameInfo(game.getInfoBuilder());
+        chunkFile.saveGameInfo(getGameInfo());
     }
 
 
@@ -173,7 +174,7 @@ public abstract class ChunkService {
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
 
-        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(chunk.getId());
+        if(!player.getIsBot()) playerChunk = chunk.getId();
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player.getId(), oldChunkID, chunk.getId());
@@ -193,7 +194,6 @@ public abstract class ChunkService {
         }
         else{
             Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
-            this.game.addChunks(chunk);
             chunks.put(chunkID, chunk);
             return chunk;
         }
@@ -222,11 +222,8 @@ public abstract class ChunkService {
 
         //Add to maps
         chunks.put(chunk.getId(), chunk);
-        infos.put(chunk.getId(), info);
 
         //Add to game objects
-        game.addChunks(chunk);
-        game.getInfoBuilder().addChunks(info);
         if(parentChunk != null) parentChunk.addChildChunks(chunk.getId());
 
         if(USE_CHANGE_FILE){
@@ -247,12 +244,8 @@ public abstract class ChunkService {
             chunkFile.addRemovedChunk(chunk);
         }
 
-        game.removeChunks(indexOfChunk(chunk));
-        game.getInfoBuilder().removeChunks(indexOfChunk(infos.get(chunk.getId())));
-        chunk.clearPlayers();
-
         chunks.remove(chunk.getId());
-        infos.remove(chunk.getId());
+        chunk.clearPlayers();
     }
 
     private ChunkInfo.Builder chunkToInfo(Chunk.Builder chunk){
@@ -264,7 +257,7 @@ public abstract class ChunkService {
                 .addAllChildChunks(chunk.getChildChunksList());
     }
 
-    private Chunk.Builder infoToChunk(ChunkInfo.Builder info){
+    private Chunk.Builder infoToChunk(ChunkInfo info){
         return Chunk.newBuilder()
                 .setId(info.getId())
                 .setPosition(info.getPosition())
@@ -286,10 +279,6 @@ public abstract class ChunkService {
                 && Math.abs(chunk.getPosition().getY() - point.getY()) <= chunk.getSize().getY()/2;
     }
 
-    protected Player getPlayer(String chunkID, String playerID){
-        return chunks.get(chunkID).getPlayersList().stream().filter(p -> p.getId().equals(playerID)).findFirst().get();
-    }
-
     protected Player.Builder getPlayerBuilder(Chunk.Builder chunk, String playerID){
         return chunk.getPlayersBuilderList().stream().filter(p -> p.getId().equals(playerID)).findFirst().get();
     }
@@ -304,12 +293,18 @@ public abstract class ChunkService {
         return -1;
     }
 
-    protected int indexOfChunk(Chunk.Builder chunk){
-        return game.getChunksBuilderList().indexOf(chunk);
+    protected List<Chunk.Builder> getChunks(){
+        return chunks.entrySet().stream().map(e -> e.getValue()).toList();
     }
 
-    protected int indexOfChunk(ChunkInfo.Builder chunk){
-        return game.getInfoBuilder().getChunksBuilderList().indexOf(chunk);
+    private GameInfo getGameInfo(){
+        GameInfo.Builder info = GameInfo.newBuilder()
+                .setPlayerChunk(playerChunk)
+                .setRootChunk(rootChunk);
+
+        getChunks().forEach(c -> info.addChunks(chunkToInfo(c)));
+
+        return info.build();
     }
 
     public void close(){

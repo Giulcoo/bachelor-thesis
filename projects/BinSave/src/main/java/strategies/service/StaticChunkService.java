@@ -1,11 +1,9 @@
 package strategies.service;
 
 import strategies.model.Chunk;
-import strategies.model.Game;
 import strategies.model.Player;
 import strategies.model.Vector;
 
-import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 import static strategies.Constants.*;
@@ -30,10 +28,10 @@ public class StaticChunkService extends ChunkService {
     @Override
     public void addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
-        chunk.addPlayers(player);
         player.setChunk(chunk.getId());
+        chunk.addPlayers(player);
 
-        if(!player.getIsBot()) game.getInfoBuilder().setPlayerChunk(player.getChunk());
+        if(!player.getIsBot()) playerChunk = player.getChunk();
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerAdded(player);
@@ -68,14 +66,15 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position){
-        return game.getChunksBuilderList().stream().filter(c -> inChunk(c,position)).findFirst().get();
+        return getChunks().stream().filter(c -> inChunk(c,position)).findFirst().get();
     }
 
     @Override
     protected Chunk.Builder findChunk(Vector position, String currentChunkID){
+        if(currentChunkID.equals("")) return findChunk(position);
+
         Chunk.Builder currentChunk = chunks.get(currentChunkID);
 
-        return inChunk(currentChunk, position)? currentChunk :
-                game.getChunksBuilderList().stream().filter(c -> inChunk(c,position)).findFirst().get();
+        return inChunk(currentChunk, position)? currentChunk : findChunk(position);
     }
 }
