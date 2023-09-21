@@ -11,8 +11,8 @@ import java.util.Queue;
 import static strategies.Constants.*;
 
 public class DynamicChunkService extends ChunkService {
-    public DynamicChunkService(Game.Builder game) {
-        super(game);
+    public DynamicChunkService() {
+        super();
     }
 
     @Override
@@ -136,5 +136,12 @@ public class DynamicChunkService extends ChunkService {
         }
 
         return chunk;
+    }
+
+    @Override
+    protected Chunk.Builder findChunk(Vector position, String currentChunkID){
+        Chunk.Builder currentChunk = chunks.get(currentChunkID);
+
+        return inChunk(currentChunk, position) ? currentChunk : findChunk(position);
     }
 }

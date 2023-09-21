@@ -13,9 +13,9 @@ message Game {
 }
 
 message GameInfo {
-  repeated ChunkInfo chunks = 1;
-  string rootChunk = 2;
-  string playerChunk = 3;
+  string rootChunk = 1;
+  string playerChunk = 2;
+  repeated ChunkInfo chunks = 3;
 }
 
 message ChunkInfo {

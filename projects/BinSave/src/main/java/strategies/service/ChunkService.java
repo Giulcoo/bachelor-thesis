@@ -1,36 +1,24 @@
 package strategies.service;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-import strategies.Constants;
 import strategies.model.*;
-import strategies.model.Vector;
 
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
-import static strategies.Constants.*;
+import static strategies.Constants.USE_CHANGE_FILE;
 
 public abstract class ChunkService {
     protected final ChunkFileService chunkFile = new ChunkFileService();
     protected final ChangeFileService changeFile = new ChangeFileService();
     protected final Game.Builder game;
+    
     protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
     protected final Map<String, ChunkInfo.Builder> infos = new HashMap<>();
 
-    public ChunkService(Game.Builder game) {
-        this.game = game;
-
-        //Create data folder, if it does not exist
-        try {
-            Path dataPath = Path.of(Constants.DATA_PATH);
-            if(!Files.exists(dataPath)) Files.createDirectory(dataPath);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+    public ChunkService() {
+        this.game = Game.newBuilder();
     }
 
     abstract void createChunks();
@@ -54,6 +42,8 @@ public abstract class ChunkService {
 
         //Load players of player chunk
         checkChunkPlayers(this.game.getInfo().getPlayerChunk());
+
+        System.out.println(this.game.getChunksList());
     }
 
     public void saveChunks(){
@@ -145,7 +135,7 @@ public abstract class ChunkService {
      * */
     protected boolean checkPlayerChunkChange(Player.Builder player){
         String oldChunkID = player.getChunk();
-        Chunk.Builder playerChunk = findChunk(player.getPosition());
+        Chunk.Builder playerChunk = findChunk(player.getPosition(), oldChunkID);
 
         if(!oldChunkID.equals(playerChunk.getId())){
             //Load new chunk if needed
@@ -210,9 +200,15 @@ public abstract class ChunkService {
     }
 
     protected void checkChunkPlayers(String chunkID){
+        System.out.println("Player Chunk ID");
+        System.out.println(chunkID);
         Chunk.Builder cachedChunk = chunks.get(chunkID);
 
-        if(cachedChunk.getPlayersCount() == 0) cachedChunk.addAllPlayers(chunkFile.getChunk(chunkID).getPlayersList());
+        if(cachedChunk.getPlayersCount() == 0) {
+            chunks.remove(chunkID);
+            chunks.put(chunkID, chunkFile.getChunk(chunkID).toBuilder());
+            //TODO: Remove from game
+        }
     }
 
     protected Chunk.Builder newChunk(float x, float y, float size, Chunk.Builder parentChunk){
@@ -279,6 +275,8 @@ public abstract class ChunkService {
 
     abstract Chunk.Builder findChunk(Vector position);
 
+    abstract Chunk.Builder findChunk(Vector position, String currentChunkID);
+
     Chunk.Builder findChunk(Vector position, List<Chunk.Builder> chunks){
         return chunks.stream().filter(c -> inChunk(c, position)).findFirst().get();
     }
@@ -297,7 +295,13 @@ public abstract class ChunkService {
     }
 
     protected int indexOfPlayer(String chunkID, String playerID){
-        return chunks.get(chunkID).getPlayersList().indexOf(getPlayer(chunkID, playerID));
+        int index = 0;
+        for (Player.Builder p : chunks.get(chunkID).getPlayersBuilderList()) {
+            if(p.getId().equals(playerID)) return index;
+            index++;
+        }
+
+        return -1;
     }
 
     protected int indexOfChunk(Chunk.Builder chunk){

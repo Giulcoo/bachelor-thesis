@@ -1,10 +1,16 @@
 package strategies.service;
 
 import com.google.protobuf.Message;
+import strategies.Constants;
 import strategies.model.Game;
 import strategies.model.Player;
 import strategies.model.Vector;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,20 +21,19 @@ import static strategies.Constants.*;
 
 public class GameService {
     private final ChunkService chunkService;
-    private final Game.Builder game;
     private final Random random;
-
     private Player.Builder player;
     private final List<Player.Builder> bots = new ArrayList<>();
 
     public GameService() {
-        this.game = Game.newBuilder();
         this.random = new Random(SEED);
 
-        this.chunkService = DYNAMIC_CHUNK_SIZE? new DynamicChunkService(game) : new StaticChunkService(game);
+        this.chunkService = DYNAMIC_CHUNK_SIZE? new DynamicChunkService() : new StaticChunkService();
     }
 
     public void createGame(int dataCount){
+        deleteSave();
+        createFolder();
         chunkService.createChunks();
         chunkService.addPlayer(generatePlayer(false));
         randomNewPlayers(dataCount-1);
@@ -40,12 +45,6 @@ public class GameService {
 
     public void loadGame(){
         chunkService.loadChunks();
-
-        game.getChunksList().forEach(c -> {
-            System.out.println(c);
-            System.out.println(c.getPlayersList());
-            System.out.println();
-        });
     }
 
     public void randomNewPlayers(int count){
@@ -64,7 +63,7 @@ public class GameService {
     private Player.Builder generatePlayer(boolean isBot){
         Player.Builder newPlayer = Player.newBuilder()
                 .setId(UUID.randomUUID().toString())
-                .setName(isBot ? "Player" : "Monster")
+                .setName(isBot ? "Monster" : "Player")
                 .setIsBot(isBot)
                 .setPosition(randVector());
 
@@ -150,6 +149,38 @@ public class GameService {
 
     private int randInt(int min, int max){
         return random.nextInt((max - min) + 1) + min;
+    }
+
+    private void createFolder(){
+        //Create data folder, if it does not exist
+        try {
+            Path dataPath = Path.of(Constants.DATA_PATH);
+            if(Files.notExists(dataPath)) {
+                System.out.println("Create Directory");
+                Files.createDirectory(dataPath);
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteSave(){
+        try{
+            delete(new File(DATA_PATH));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void delete(File f) throws IOException {
+        if (f.isDirectory()) {
+            for (File c : f.listFiles())
+                delete(c);
+        }
+
+        f.delete();
     }
 
     public void close(){

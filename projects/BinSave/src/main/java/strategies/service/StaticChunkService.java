@@ -12,8 +12,8 @@ import static strategies.Constants.*;
 
 public class StaticChunkService extends ChunkService {
 
-    public StaticChunkService(Game.Builder game) {
-        super(game);
+    public StaticChunkService() {
+        super();
     }
 
     @Override
@@ -69,5 +69,13 @@ public class StaticChunkService extends ChunkService {
     @Override
     protected Chunk.Builder findChunk(Vector position){
         return game.getChunksBuilderList().stream().filter(c -> inChunk(c,position)).findFirst().get();
+    }
+
+    @Override
+    protected Chunk.Builder findChunk(Vector position, String currentChunkID){
+        Chunk.Builder currentChunk = chunks.get(currentChunkID);
+
+        return inChunk(currentChunk, position)? currentChunk :
+                game.getChunksBuilderList().stream().filter(c -> inChunk(c,position)).findFirst().get();
     }
 }

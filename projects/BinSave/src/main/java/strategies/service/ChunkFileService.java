@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChunkFileService {
-    private final List<String> changedChunkIDs = new ArrayList<>();
-    private final List<Chunk.Builder> changedChunks = new ArrayList<>();
+//    private final List<String> changedChunkIDs = new ArrayList<>();
+//    private final List<Chunk.Builder> changedChunks = new ArrayList<>();
+    private final Map<String, Chunk.Builder>  changedChunks = new HashMap<>();
     private final List<String> removedChunkIDs = new ArrayList<>();
 
     private FileOutputStream gameInfoOutput;
@@ -25,10 +26,9 @@ public class ChunkFileService {
 
     /** Chunk Saving: Add changed chunk */
     public void addChangedChunk(Chunk.Builder chunk){
-        if(!changedChunkIDs.contains(chunk.getId())){
-            changedChunkIDs.add(chunk.getId());
-            changedChunks.add(chunk);
-        }
+        if(changedChunks.containsKey(chunk.getId())) changedChunks.remove(chunk.getId());
+
+        changedChunks.put(chunk.getId(), chunk);
     }
 
     public void addChangedChunks(List<Chunk.Builder> chunks){
@@ -54,11 +54,11 @@ public class ChunkFileService {
     /** Chunk Saving: Save every changed chunk and delete files of removed chunks */
     public void saveChanges(){
         createChunkFolderIfNeeded();
-        changedChunks.forEach(this::saveChunk);
+        changedChunks.entrySet().stream().map(e -> e.getValue()).forEach(this::saveChunk);
         removedChunkIDs.forEach(this::removeChunk);
 
+
         changedChunks.clear();
-        changedChunkIDs.clear();
         removedChunkIDs.clear();
     }
 
@@ -78,6 +78,11 @@ public class ChunkFileService {
                 chunkFile.createNewFile();
                 chunkOutputs.put(chunk.getId(), new FileOutputStream(chunkFile));
             }
+
+            System.out.println("\n======================");
+            System.out.println("Save Chunk");
+            System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
+            System.out.println("Children:" + chunk.getPlayersList());
 
             chunk.build().writeTo(chunkOutputs.get(chunk.getId()));
         }
