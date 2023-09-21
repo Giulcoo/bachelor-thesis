@@ -29,8 +29,7 @@ public class GameService {
     }
 
     public void createGame(int dataCount){
-        deleteSave();
-        createFolder();
+        FileManager.resetFolders();
         chunkService.createChunks();
         chunkService.addPlayer(generatePlayer(false));
         randomNewPlayers(dataCount-1);
@@ -42,6 +41,10 @@ public class GameService {
 
     public void loadGame(){
         player = chunkService.loadChunks();
+    }
+
+    public void printGame(){
+        chunkService.printGame();
     }
 
     public void randomNewPlayers(int count){
@@ -148,38 +151,6 @@ public class GameService {
 
     private int randInt(int min, int max){
         return random.nextInt((max - min) + 1) + min;
-    }
-
-    private void createFolder(){
-        //Create data folder, if it does not exist
-        try {
-            Path dataPath = Path.of(Constants.DATA_PATH);
-            if(Files.notExists(dataPath)) {
-                System.out.println("Create Directory");
-                Files.createDirectory(dataPath);
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void deleteSave(){
-        try{
-            delete(new File(DATA_PATH));
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void delete(File f) throws IOException {
-        if (f.isDirectory()) {
-            for (File c : f.listFiles())
-                delete(c);
-        }
-
-        f.delete();
     }
 
     public void close(){

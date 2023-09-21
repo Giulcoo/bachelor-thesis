@@ -37,13 +37,6 @@ public abstract class ChunkService {
         //Load players of player chunk
         checkChunkPlayers(playerChunk);
 
-        for (Chunk.Builder chunk : getChunks()) {
-            System.out.println("\n======================");
-            System.out.println("Save Chunk");
-            System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
-            System.out.println("Children:" + chunk.getPlayersList());
-        }
-
         return chunks.get(playerChunk).getPlayersBuilderList().stream().filter(p -> !p.getIsBot()).findFirst().get();
     }
 
@@ -55,6 +48,15 @@ public abstract class ChunkService {
         chunkFile.saveGameInfo(getGameInfo());
     }
 
+    public void printGame(){
+        for (Chunk.Builder chunk : getChunks()) {
+            if(chunk.getPlayersCount() > 0){
+                System.out.println("\n============================CHUNK============================");
+                System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
+                System.out.println("Children:" + chunk.getPlayersList());
+            }
+        }
+    }
 
     private void applyChanges(){
         //Set changes
@@ -200,14 +202,11 @@ public abstract class ChunkService {
     }
 
     protected void checkChunkPlayers(String chunkID){
-        System.out.println("Player Chunk ID");
-        System.out.println(chunkID);
         Chunk.Builder cachedChunk = chunks.get(chunkID);
 
         if(cachedChunk.getPlayersCount() == 0) {
             chunks.remove(chunkID);
             chunks.put(chunkID, chunkFile.getChunk(chunkID).toBuilder());
-            //TODO: Remove from game
         }
     }
 

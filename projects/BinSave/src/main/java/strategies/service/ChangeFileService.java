@@ -77,6 +77,10 @@ public class ChangeFileService {
     }
 
     private void saveChange(Change.Builder change){
+        FileManager.tryClose(changeOutput);
+        changeOutput = null;
+        FileManager.clearFile(Constants.CHANGE_FILE);
+
         try{
             if(this.changeOutput == null) {
                 File changeFile = new File(Constants.CHANGE_FILE);
@@ -103,26 +107,16 @@ public class ChangeFileService {
                 changes.add(change);
                 change = Change.parseDelimitedFrom(this.changeInput);
             }
+
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
-        clearChangeFile();
+        FileManager.tryClose(changeInput);
+        changeInput = null;
+        FileManager.clearFile(Constants.CHANGE_FILE);
         return changes;
-    }
-
-    private void clearChangeFile(){
-        try{
-            tryClose(changeOutput);
-
-            PrintWriter writer = new PrintWriter(Constants.CHANGE_FILE);
-            writer.print("");
-            writer.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
     }
 
     public <T extends com.google.protobuf.Message> T unpackValue(Change change, Class<T> clazz){
@@ -137,16 +131,7 @@ public class ChangeFileService {
 
     /** Close all active FileStreams */
     public void close(){
-        tryClose(changeOutput);
-        tryClose(changeInput);
-    }
-
-    private void tryClose(Closeable closeable){
-        try {
-            if (closeable != null) closeable.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        FileManager.tryClose(changeOutput);
+        FileManager.tryClose(changeInput);
     }
 }

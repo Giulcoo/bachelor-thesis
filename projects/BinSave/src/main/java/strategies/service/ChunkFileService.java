@@ -6,15 +6,12 @@ import strategies.model.GameInfo;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChunkFileService {
-//    private final List<String> changedChunkIDs = new ArrayList<>();
-//    private final List<Chunk.Builder> changedChunks = new ArrayList<>();
     private final Map<String, Chunk.Builder>  changedChunks = new HashMap<>();
     private final List<String> removedChunkIDs = new ArrayList<>();
 
@@ -72,17 +69,17 @@ public class ChunkFileService {
     }
 
     private void saveChunk(Chunk.Builder chunk){
-        try{
-            if(!chunkOutputs.containsKey(chunk.getId())) {
-                File chunkFile = new File(Constants.CHUNK_PATH + chunk.getId());
-                chunkFile.createNewFile();
-                chunkOutputs.put(chunk.getId(), new FileOutputStream(chunkFile));
-            }
+        String chunkPath = Constants.CHUNK_PATH + chunk.getId();
 
-            System.out.println("\n======================");
-            System.out.println("Save Chunk");
-            System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
-            System.out.println("Children:" + chunk.getPlayersList());
+        if(chunkOutputs.containsKey(chunk.getId())){
+            FileManager.tryClose(chunkOutputs.get(chunk.getId()));
+            chunkOutputs.remove(chunk.getId());
+        }
+
+        FileManager.clearFile(chunkPath);
+
+        try{
+            if(!chunkOutputs.containsKey(chunk.getId())) chunkOutputs.put(chunk.getId(), new FileOutputStream(chunkPath));
 
             chunk.build().writeTo(chunkOutputs.get(chunk.getId()));
         }
@@ -92,8 +89,7 @@ public class ChunkFileService {
     }
 
     private void removeChunk(String chunkID){
-        File chunkFile = new File(Constants.CHUNK_PATH + chunkID);
-        chunkFile.delete();
+        FileManager.deleteFile(chunkID);
     }
 
     public Chunk getChunk(String chunkID){
@@ -113,6 +109,10 @@ public class ChunkFileService {
     }
 
     public void saveGameInfo(GameInfo info){
+        FileManager.tryClose(this.gameInfoOutput);
+        this.gameInfoOutput = null;
+        FileManager.clearFile(Constants.INFO_FILE);
+
         try{
             if(this.gameInfoOutput == null) this.gameInfoOutput = new FileOutputStream(Constants.INFO_FILE);
 
@@ -137,18 +137,9 @@ public class ChunkFileService {
 
     /** Close all active FileStreams */
     public void close(){
-        tryClose(gameInfoOutput);
-        tryClose(gameInfoInput);
-        chunkOutputs.entrySet().forEach(e -> tryClose(e.getValue()));
-        chunkInputs.entrySet().forEach(e -> tryClose(e.getValue()));
-    }
-
-    private void tryClose(Closeable closeable){
-        try {
-            if (closeable != null) closeable.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        FileManager.tryClose(gameInfoOutput);
+        FileManager.tryClose(gameInfoInput);
+        chunkOutputs.entrySet().forEach(e -> FileManager.tryClose(e.getValue()));
+        chunkInputs.entrySet().forEach(e -> FileManager.tryClose(e.getValue()));
     }
 }
