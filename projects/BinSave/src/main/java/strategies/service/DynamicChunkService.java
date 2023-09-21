@@ -18,7 +18,7 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     public void createChunks(){
-        rootChunk = newChunk(MAP_SIZE/2, MAP_SIZE/2, MAP_SIZE, null).getId();
+        rootChunk = newChunk(MAP_SIZE/2, MAP_SIZE/2, MAP_SIZE, "").getId();
     }
 
     @Override
@@ -104,15 +104,17 @@ public class DynamicChunkService extends ChunkService {
         //Create new chunks with chunk as parent
         float newSize = parentChunk.getSize().getX()/2;
         List<Chunk.Builder> childChunks = List.of(
-                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk),
-                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk),
-                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk),
-                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk)
+                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk.getId()),
+                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() - newSize/2, newSize, parentChunk.getId()),
+                newChunk(parentChunk.getPosition().getX() - newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk.getId()),
+                newChunk(parentChunk.getPosition().getX() + newSize/2,parentChunk.getPosition().getY() + newSize/2, newSize, parentChunk.getId())
         );
 
         //Split Players to new chunks
         parentChunk.getPlayersBuilderList().forEach(p -> addPlayerToChunk(p, findChunk(p.getPosition(), childChunks), parentChunk.getId()));
         parentChunk.clearPlayers();
+
+        childChunks.forEach(c -> { if(c.getPlayersCount() > CHUNK_MAX_ELEMENTS) splitChunk(c); });
 
         //Save the rest of the changes
         if(USE_CHANGE_FILE){
@@ -125,14 +127,15 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position){
-        Queue<Chunk.Builder> queue = new PriorityQueue<>();
+        List<Chunk.Builder> queue = new ArrayList<>();
         queue.add(chunks.get(rootChunk));
 
         Chunk.Builder chunk;
-        while (!inChunk(chunk = queue.poll(), position) && chunk.getChildChunksCount() == 0) {
+        while (!inChunk(chunk = queue.get(0), position) && chunk.getChildChunksCount() == 0) {
+            queue.remove(0);
             queue.addAll(chunk.getChildChunksList().stream().map(s -> chunks.get(s)).toList());
 
-            if(queue.peek() == null) return chunks.get(rootChunk); //If queue empty return root chunk
+            if(queue.isEmpty()) return chunks.get(rootChunk); //If queue empty return root chunk
         }
 
         return chunk;

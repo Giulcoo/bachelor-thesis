@@ -12,7 +12,7 @@ import static strategies.Constants.*;
 
 public class App {
     public static void main(String[] args) {
-        createGame(2);
+        createGame(11);
         //loadGame();
         //createGameAndPlay(10, 10, 10, 10);
         //loadGameAndPlay(10, 10, 10, 10);

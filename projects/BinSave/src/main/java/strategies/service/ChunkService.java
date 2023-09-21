@@ -50,11 +50,7 @@ public abstract class ChunkService {
 
     public void printGame(){
         for (Chunk.Builder chunk : getChunks()) {
-            if(chunk.getPlayersCount() > 0){
-                System.out.println("\n============================CHUNK============================");
-                System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
-                System.out.println("Children:" + chunk.getPlayersList());
-            }
+            printChunk(chunk);
         }
     }
 
@@ -210,12 +206,12 @@ public abstract class ChunkService {
         }
     }
 
-    protected Chunk.Builder newChunk(float x, float y, float size, Chunk.Builder parentChunk){
+    protected Chunk.Builder newChunk(float x, float y, float size, String parentChunkID){
         Chunk.Builder chunk = Chunk.newBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setPosition(Vector.newBuilder().setX(x).setY(y))
                 .setSize(Vector.newBuilder().setX(size).setY(size))
-                .setParentChunk(parentChunk == null ? "" : parentChunk.getId());
+                .setParentChunk(parentChunkID);
 
         ChunkInfo.Builder info = chunkToInfo(chunk);
 
@@ -223,7 +219,7 @@ public abstract class ChunkService {
         chunks.put(chunk.getId(), chunk);
 
         //Add to game objects
-        if(parentChunk != null) parentChunk.addChildChunks(chunk.getId());
+        if(!parentChunkID.equals("")) chunks.get(parentChunkID).addChildChunks(chunk.getId());
 
         if(USE_CHANGE_FILE){
             changeFile.saveChunkAdded(chunk);
@@ -304,6 +300,17 @@ public abstract class ChunkService {
         getChunks().forEach(c -> info.addChunks(chunkToInfo(c)));
 
         return info.build();
+    }
+
+    protected void printChunk(Chunk.Builder chunk){
+        System.out.println("\n============================CHUNK============================");
+        System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
+        if(chunk.getParentChunk() != null || chunk.getParentChunk().equals("")) System.out.println("Parent: " + chunk.getParentChunk());
+
+        if(chunk.getPlayersCount() > 0){
+            System.out.println("Children(" + chunk.getPlayersCount() + "): ");
+            chunk.getPlayersList().stream().map(p -> p.getName() + " " + p.getId()).toList().forEach(System.out::println);
+        }
     }
 
     public void close(){

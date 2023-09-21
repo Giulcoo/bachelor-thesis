@@ -20,7 +20,7 @@ public class StaticChunkService extends ChunkService {
             IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(x -> {
                 newChunk(x * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
                         y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
-                        STATIC_CHUNK_SIZE, null);
+                        STATIC_CHUNK_SIZE, "");
             });
         });
     }
