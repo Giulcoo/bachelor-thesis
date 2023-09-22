@@ -3,10 +3,7 @@ package strategies.service;
 import strategies.model.Player;
 import strategies.model.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static strategies.Constants.*;
@@ -15,7 +12,7 @@ public class GameService {
     private final ChunkService chunkService;
     private final Random random;
     private Player.Builder player;
-    private final List<Player.Builder> bots = new ArrayList<>();
+    private final Map<String, Player.Builder> bots = new HashMap<>();
 
     public GameService() {
         this.random = new Random(SEED);
@@ -43,7 +40,10 @@ public class GameService {
     }
 
     public void randomNewPlayers(int count){
-        IntStream.range(0, count).forEach(i -> chunkService.addPlayer(generatePlayer(true)));
+        IntStream.range(0, count).forEach(i -> {
+            Player.Builder bot = generatePlayer(true);
+            bots.put(bot.getId(), chunkService.addPlayer(bot));
+        });
     }
 
     public void randomDeleteBot(int count){
@@ -65,7 +65,7 @@ public class GameService {
                 .setPosition(isBot ? randVector(this.player.getPosition(), BOT_SPAWN_DISTANCE_FROM_PLAYER) : randVector());
 
         if(isBot){
-            bots.add(newPlayer);
+            bots.put(newPlayer.getId(), newPlayer);
         }
         else{
             player = newPlayer;
@@ -75,21 +75,26 @@ public class GameService {
     }
 
     private void randomDeleteBot(){
-        int randBotIndex = randInt(0,bots.size()-1);
-        Player.Builder randPlayer = bots.get(randBotIndex);
+        Player.Builder randPlayer = randBot();
 
         chunkService.removePlayer(randPlayer);
-        bots.remove(randBotIndex);
+        bots.remove(randPlayer.getId());
     }
 
     private void randomMovePlayer(boolean bot){
         Player.Builder player = bot? randBot() : this.player;
         player.setPosition(randVector(player.getPosition(), PLAYER_MOVE_MAGNITUDE));
-        chunkService.updatePlayer(player);
+
+        if(bot){
+            bots.put(player.getId(), chunkService.updatePlayer(player));
+        }
+        else{
+            this.player = chunkService.updatePlayer(player);
+        }
     }
 
     private Player.Builder randBot(){
-        return bots.get(randInt(0,bots.size()-1));
+        return bots.values().stream().toList().get(randInt(0,bots.size()-1));
     }
 
     private Vector.Builder checkInMapBounds(Vector.Builder vector){

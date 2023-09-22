@@ -20,7 +20,7 @@ public class DynamicChunkService extends ChunkService {
     }
 
     @Override
-    public void addPlayer(Player.Builder player){
+    public Player.Builder addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
@@ -35,13 +35,19 @@ public class DynamicChunkService extends ChunkService {
         }
 
         checkChunk(chunk);
+        return player;
     }
 
     @Override
     public void removePlayer(Player.Builder player){
         Chunk.Builder chunk = chunks.get(player.getChunk());
 
-        chunk.removePlayers(indexOfPlayer(player.getChunk(), player.getId()));
+        String realChunkID = findChunk(player.getPosition()).getId();
+        if(!player.getChunk().equals(realChunkID)) System.out.println("Wrong chunk");
+
+        chunk = chunks.get(realChunkID);
+
+        chunk.removePlayers(indexOfPlayer(chunk, player.getId()));
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerRemove(player.getId(), player.getChunk());
@@ -54,7 +60,7 @@ public class DynamicChunkService extends ChunkService {
     }
 
     @Override
-    public void updatePlayer(Player.Builder player){
+    public Player.Builder updatePlayer(Player.Builder player){
         if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player);
         }
@@ -62,9 +68,15 @@ public class DynamicChunkService extends ChunkService {
         String oldChunkID = player.getId();
 
         if(checkPlayerChunkChange(player)){
-            checkChunk(chunks.get(player.getId()));
+            if(chunks.get(oldChunkID) == null) {
+                chunks.put(oldChunkID, chunkFile.getChunk(oldChunkID).toBuilder());
+            }
+
+            checkChunk(chunks.get(player.getChunk()));
             checkChunk(chunks.get(oldChunkID));
         }
+
+        return player;
     }
 
     protected void checkChunk(Chunk.Builder chunk){
@@ -129,7 +141,7 @@ public class DynamicChunkService extends ChunkService {
         queue.add(chunks.get(rootChunk));
 
         Chunk.Builder chunk;
-        while (!inChunk(chunk = queue.get(0), position) && chunk.getChildChunksCount() == 0) {
+        while (!(inChunk(chunk = queue.get(0), position) && chunk.getChildChunksCount() == 0)) {
             queue.remove(0);
             queue.addAll(chunk.getChildChunksList().stream().map(chunks::get).toList());
 

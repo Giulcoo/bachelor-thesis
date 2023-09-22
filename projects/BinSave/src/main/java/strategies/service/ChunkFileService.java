@@ -53,8 +53,6 @@ public class ChunkFileService {
     public void saveChanges(){
         createChunkFolderIfNeeded();
         changedChunks.values().forEach(this::saveChunk);
-        removedChunkIDs.forEach(this::removeChunk);
-
 
         changedChunks.clear();
         removedChunkIDs.clear();
@@ -104,7 +102,7 @@ public class ChunkFileService {
             return Chunk.parseFrom(chunkInputs.get(chunkID));
         }
         catch (IOException e){
-            e.printStackTrace();
+            System.out.println("Chunk " + chunkID + " does not exist");
             return null;
         }
     }

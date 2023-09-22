@@ -6,10 +6,11 @@ import java.util.stream.IntStream;
 
 public class App {
     public static void main(String[] args) {
-        createGame(100000);
+        //createGame(100);
         //createGameAndPlay(10, 10, 10, 10, 5);
         //loadGame();
         //loadGameAndPlay(10, 10, 10, 10);
+        createGameAndPlay(10, 100, 100,100,50);
     }
 
     public static void createGame(int dataCount){
@@ -27,12 +28,12 @@ public class App {
         service.close();
     }
 
-    public static void createGameAndPlay(int initCount, int moves, int moveChanges, int botAdd, int botRemove){
+    public static void createGameAndPlay(int initCount, int iterations, int moveChanges, int botAdd, int botRemove){
         GameService service = new GameService();
         service.createGame(initCount);
         service.saveGame();
 
-        IntStream.range(0, moves).forEach(i -> {
+        IntStream.range(0, iterations).forEach(i -> {
             service.randomNewPlayers(botAdd);
             service.randomDeleteBot(botRemove);
             service.randomMovePlayer(moveChanges);
@@ -44,13 +45,13 @@ public class App {
         service.close();
     }
 
-    public static void loadGameAndPlay(int moves, int moveChanges, int botAmountChanges){
+    public static void loadGameAndPlay(int iterations, int moveChanges, int botAdd, int botRemove){
         GameService service = new GameService();
         service.loadGame();
 
-        IntStream.range(0, moves).forEach(i -> {
-            service.randomNewPlayers(botAmountChanges);
-            service.randomDeleteBot(botAmountChanges);
+        IntStream.range(0, iterations).forEach(i -> {
+            service.randomNewPlayers(botAdd);
+            service.randomDeleteBot(botRemove);
             service.randomMovePlayer(moveChanges);
         });
 

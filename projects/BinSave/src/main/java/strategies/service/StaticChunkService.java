@@ -16,15 +16,17 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     public void createChunks(){
-        IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(y -> IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(x ->
+        for(int y = 0; y < STATIC_CHUNK_AMOUNT; y++){
+            for(int x = 0; x < STATIC_CHUNK_AMOUNT; x++){
                 newChunk(x * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
-                y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
-                STATIC_CHUNK_SIZE, "")
-        ));
+                        y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
+                        STATIC_CHUNK_SIZE, "");
+            }
+        }
     }
 
     @Override
-    public void addPlayer(Player.Builder player){
+    public Player.Builder addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
@@ -37,13 +39,17 @@ public class StaticChunkService extends ChunkService {
         else{
             chunkFile.addChangedChunk(chunk);
         }
+
+        return player;
     }
 
     @Override
     public void removePlayer(Player.Builder player){
         Chunk.Builder chunk = chunks.get(player.getChunk());
 
-        chunk.removePlayers(indexOfPlayer(player.getChunk(), player.getId()));
+        //FIXME: indexOfPlayer manchmal -1
+        int indexOfPlayer = indexOfPlayer(chunk, player.getId());
+        if(indexOfPlayer != -1) chunk.removePlayers(indexOfPlayer);
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerRemove(player.getId(), player.getChunk());
@@ -54,17 +60,22 @@ public class StaticChunkService extends ChunkService {
     }
 
     @Override
-    public void updatePlayer(Player.Builder player){
+    public Player.Builder updatePlayer(Player.Builder player){
         if(USE_CHANGE_FILE){
             changeFile.savePlayerUpdate(player);
         }
 
+        checkIfExists(1);
         checkPlayerChunkChange(player);
+
+        return player;
     }
 
     @Override
     protected Chunk.Builder findChunk(Vector position){
-        return getChunks().stream().filter(c -> inChunk(c,position)).findFirst().get();
+        checkIfExists(2);
+
+        return chunks.values().stream().filter(c -> inChunk(c, position)).findFirst().get();
     }
 
     @Override
