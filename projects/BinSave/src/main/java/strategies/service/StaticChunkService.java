@@ -16,13 +16,11 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     public void createChunks(){
-        IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(y -> {
-            IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(x -> {
+        IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(y -> IntStream.range(0, STATIC_CHUNK_AMOUNT).forEach(x ->
                 newChunk(x * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
-                        y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
-                        STATIC_CHUNK_SIZE, "");
-            });
-        });
+                y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2,
+                STATIC_CHUNK_SIZE, "")
+        ));
     }
 
     @Override
@@ -71,7 +69,7 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position, String currentChunkID){
-        if(currentChunkID.equals("")) return findChunk(position);
+        if(currentChunkID.isEmpty()) return findChunk(position);
 
         Chunk.Builder currentChunk = chunks.get(currentChunkID);
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static strategies.Constants.USE_CHANGE_FILE;
+import static strategies.Constants.*;
 
 public abstract class ChunkService {
     protected final ChunkFileService chunkFile = new ChunkFileService();
@@ -21,7 +21,7 @@ public abstract class ChunkService {
 
     public Player.Builder loadChunks(){
         if(USE_CHANGE_FILE){
-            applyChanges();
+            chunkFile.applyChanges(changeFile.getChanges());
         }
 
         GameInfo info = chunkFile.loadGameInfo();
@@ -49,76 +49,10 @@ public abstract class ChunkService {
     }
 
     public void printGame(){
+        if(!VERBOSE) return;
+
         for (Chunk.Builder chunk : getChunks()) {
             printChunk(chunk);
-        }
-    }
-
-    private void applyChanges(){
-        //Set changes
-        changeFile.getChanges().forEach(change -> {
-            if(change.getType().getNumber() == Change.Type.CHUNK_VALUE){
-                applyChunkChange(change);
-            }
-            else{
-                applyPlayerChange(change);
-            }
-        });
-
-        //Save changes
-        chunkFile.addChangedChunks(chunks.entrySet().stream().map(entry -> entry.getValue()).toList());
-        chunkFile.saveChanges();
-    }
-
-    private void applyChunkChange(Change change){
-        String chunkID = change.getId();
-
-        switch (change.getEventValue()){
-            case Change.Event.ADDED_VALUE -> {
-                Chunk.Builder chunk = changeFile.unpackValue(change, Chunk.class).toBuilder();
-                if(chunk != null) chunks.put(chunkID, chunk);
-            }
-            case Change.Event.REMOVED_VALUE -> {
-                chunkFile.addRemovedChunk(chunkID);
-            }
-            case Change.Event.UPDATED_VALUE -> {
-                Chunk.Builder chunk = getChunk(chunkID);
-
-                List<String> oldChildren = chunk.getChildChunksList();
-                chunk.clearChildChunks();
-
-                chunk.addAllChildChunks(changeFile.unpackValue(change, StringArrayWrapper.class).getValueList());
-            }
-        }
-    }
-
-    private void applyPlayerChange(Change change){
-        String[] ids = change.getId().split("\\s+"); //0: (Old)Chunk ID, 1: Player ID
-        Chunk.Builder chunk = getChunk(ids[0]);
-
-        switch(change.getEventValue()){
-            case Change.Event.ADDED_VALUE -> {
-                Player player = changeFile.unpackValue(change, Player.class);
-                chunk.addPlayers(player);
-            }
-            case Change.Event.REMOVED_VALUE -> {
-
-            }
-            case Change.Event.UPDATED_VALUE -> {
-                Player.Builder player = getPlayerBuilder(chunk, ids[1]);
-
-                if(change.getKey().equals("chunk")){
-                    String newChunkID = changeFile.unpackValue(change, StringWrapper.class).getValue();
-                    Chunk.Builder newChunk = getChunk(newChunkID);
-
-                    player.setChunk(newChunkID);
-                    newChunk.addPlayers(player);
-                    chunk.removePlayers(indexOfPlayer(chunk.getId(), player.getId()));
-                }
-                else if(change.getKey().equals("position")){
-                    player.setPosition(changeFile.unpackValue(change, Vector.class));
-                }
-            }
         }
     }
 
@@ -201,7 +135,6 @@ public abstract class ChunkService {
         Chunk.Builder cachedChunk = chunks.get(chunkID);
 
         if(cachedChunk.getPlayersCount() == 0) {
-            chunks.remove(chunkID);
             chunks.put(chunkID, chunkFile.getChunk(chunkID).toBuilder());
         }
     }
@@ -213,13 +146,12 @@ public abstract class ChunkService {
                 .setSize(Vector.newBuilder().setX(size).setY(size))
                 .setParentChunk(parentChunkID);
 
-        ChunkInfo.Builder info = chunkToInfo(chunk);
-
         //Add to maps
         chunks.put(chunk.getId(), chunk);
 
         //Add to game objects
-        if(!parentChunkID.equals("")) chunks.get(parentChunkID).addChildChunks(chunk.getId());
+        //Does not need to be added to change file or changed chunks!
+        if(!parentChunkID.isEmpty()) chunks.get(parentChunkID).addChildChunks(chunk.getId());
 
         if(USE_CHANGE_FILE){
             changeFile.saveChunkAdded(chunk);
@@ -289,7 +221,7 @@ public abstract class ChunkService {
     }
 
     protected List<Chunk.Builder> getChunks(){
-        return chunks.entrySet().stream().map(e -> e.getValue()).toList();
+        return chunks.values().stream().toList();
     }
 
     private GameInfo getGameInfo(){
@@ -303,13 +235,18 @@ public abstract class ChunkService {
     }
 
     protected void printChunk(Chunk.Builder chunk){
-        System.out.println("\n============================CHUNK============================");
-        System.out.println("ID: " + chunk.getId() + " Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() + ")");
-        if(chunk.getParentChunk() != null || chunk.getParentChunk().equals("")) System.out.println("Parent: " + chunk.getParentChunk());
+        System.out.println("\n========================CHUNK========================");
+        System.out.println("Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() +
+                ")      |        Size: (" + chunk.getSize().getX() + ", " + chunk.getSize().getY() + ")");
+        System.out.println("ID: " + chunk.getId());
+        if(!chunk.getParentChunk().isEmpty()) System.out.println("Parent: " + chunk.getParentChunk());
 
-        if(chunk.getPlayersCount() > 0){
-            System.out.println("Children(" + chunk.getPlayersCount() + "): ");
-            chunk.getPlayersList().stream().map(p -> p.getName() + " " + p.getId()).toList().forEach(System.out::println);
+        if(chunk.getPlayersCount() > 0 && chunk.getPlayersCount() <= MAX_PLAYER_PRINT){
+            System.out.println("Players (" + chunk.getPlayersCount() + "): ");
+            chunk.getPlayersList().stream().map(p -> PRINT_TAB + p.getName() + " " + p.getId()).toList().forEach(System.out::println);
+        }
+        else if(chunk.getPlayersCount() > 0){
+            System.out.println("Players (" + chunk.getPlayersCount() + ") ");
         }
     }
 

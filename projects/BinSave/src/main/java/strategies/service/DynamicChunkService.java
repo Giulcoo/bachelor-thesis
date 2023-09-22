@@ -6,8 +6,6 @@ import strategies.model.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import static strategies.Constants.*;
 
@@ -133,7 +131,7 @@ public class DynamicChunkService extends ChunkService {
         Chunk.Builder chunk;
         while (!inChunk(chunk = queue.get(0), position) && chunk.getChildChunksCount() == 0) {
             queue.remove(0);
-            queue.addAll(chunk.getChildChunksList().stream().map(s -> chunks.get(s)).toList());
+            queue.addAll(chunk.getChildChunksList().stream().map(chunks::get).toList());
 
             if(queue.isEmpty()) return chunks.get(rootChunk); //If queue empty return root chunk
         }
@@ -143,7 +141,7 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position, String currentChunkID){
-        if(currentChunkID.equals("")) return findChunk(position);
+        if(currentChunkID.isEmpty()) return findChunk(position);
 
         Chunk.Builder currentChunk = chunks.get(currentChunkID);
 

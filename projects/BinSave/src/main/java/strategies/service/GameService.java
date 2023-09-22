@@ -1,13 +1,8 @@
 package strategies.service;
 
-import strategies.Constants;
 import strategies.model.Player;
 import strategies.model.Vector;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,7 +43,7 @@ public class GameService {
     }
 
     public void randomNewPlayers(int count){
-        IntStream.range(0, count).forEach(i -> chunkService.addPlayer(generateBotNearPlayer()));
+        IntStream.range(0, count).forEach(i -> chunkService.addPlayer(generatePlayer(true)));
     }
 
     public void randomDeleteBot(int count){
@@ -67,7 +62,7 @@ public class GameService {
                 .setId(UUID.randomUUID().toString())
                 .setName(isBot ? "Monster" : "Player")
                 .setIsBot(isBot)
-                .setPosition(randVector());
+                .setPosition(isBot ? randVector(this.player.getPosition(), BOT_SPAWN_DISTANCE_FROM_PLAYER) : randVector());
 
         if(isBot){
             bots.add(newPlayer);
@@ -75,18 +70,6 @@ public class GameService {
         else{
             player = newPlayer;
         }
-
-        return newPlayer;
-    }
-
-    private Player.Builder generateBotNearPlayer(){
-        Player.Builder newPlayer = Player.newBuilder()
-                .setId(UUID.randomUUID().toString())
-                .setName("Monster")
-                .setIsBot(true)
-                .setPosition(randVector(this.player.getPosition(), BOT_SPAWN_DISTANCE_FROM_PLAYER));
-
-        bots.add(newPlayer);
 
         return newPlayer;
     }
@@ -143,10 +126,6 @@ public class GameService {
 
     private float randFloat(){
         return random.nextFloat() * MAP_SIZE;
-    }
-
-    private float randFloat(float min, float max){
-        return min + random.nextFloat() * (max - min);
     }
 
     private int randInt(int min, int max){

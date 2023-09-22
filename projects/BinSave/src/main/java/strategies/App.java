@@ -1,20 +1,14 @@
 package strategies;
 
-import strategies.model.Chunk;
-import strategies.model.Player;
-import strategies.model.Vector;
 import strategies.service.GameService;
 
-import java.io.*;
 import java.util.stream.IntStream;
-
-import static strategies.Constants.*;
 
 public class App {
     public static void main(String[] args) {
-        createGame(11);
+        createGame(100000);
+        //createGameAndPlay(10, 10, 10, 10, 5);
         //loadGame();
-        //createGameAndPlay(10, 10, 10, 10);
         //loadGameAndPlay(10, 10, 10, 10);
     }
 
@@ -33,14 +27,14 @@ public class App {
         service.close();
     }
 
-    public static void createGameAndPlay(int initCount, int moves, int moveChanges, int botAmountChanges){
+    public static void createGameAndPlay(int initCount, int moves, int moveChanges, int botAdd, int botRemove){
         GameService service = new GameService();
         service.createGame(initCount);
         service.saveGame();
 
         IntStream.range(0, moves).forEach(i -> {
-            service.randomNewPlayers(botAmountChanges);
-            service.randomDeleteBot(botAmountChanges);
+            service.randomNewPlayers(botAdd);
+            service.randomDeleteBot(botRemove);
             service.randomMovePlayer(moveChanges);
             service.saveGame();
         });
@@ -50,7 +44,7 @@ public class App {
         service.close();
     }
 
-    public static void loadGameAndPlay(int initCount, int moves, int moveChanges, int botAmountChanges){
+    public static void loadGameAndPlay(int moves, int moveChanges, int botAmountChanges){
         GameService service = new GameService();
         service.loadGame();
 

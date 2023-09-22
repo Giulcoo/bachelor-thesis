@@ -5,8 +5,10 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import strategies.Constants;
 import strategies.model.*;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,10 +79,6 @@ public class ChangeFileService {
     }
 
     private void saveChange(Change.Builder change){
-        FileManager.tryClose(changeOutput);
-        changeOutput = null;
-        FileManager.clearFile(Constants.CHANGE_FILE);
-
         try{
             if(this.changeOutput == null) {
                 File changeFile = new File(Constants.CHANGE_FILE);
@@ -117,16 +115,6 @@ public class ChangeFileService {
         changeInput = null;
         FileManager.clearFile(Constants.CHANGE_FILE);
         return changes;
-    }
-
-    public <T extends com.google.protobuf.Message> T unpackValue(Change change, Class<T> clazz){
-        try{
-            return change.getValue().unpack(clazz);
-        }
-        catch (InvalidProtocolBufferException e){
-            e.printStackTrace();
-            return null;
-        }
     }
 
     /** Close all active FileStreams */

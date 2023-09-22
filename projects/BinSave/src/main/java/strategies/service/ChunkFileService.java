@@ -1,10 +1,13 @@
 package strategies.service;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import strategies.Constants;
-import strategies.model.Chunk;
-import strategies.model.GameInfo;
+import strategies.model.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +26,6 @@ public class ChunkFileService {
 
     /** Chunk Saving: Add changed chunk */
     public void addChangedChunk(Chunk.Builder chunk){
-        if(changedChunks.containsKey(chunk.getId())) changedChunks.remove(chunk.getId());
-
         changedChunks.put(chunk.getId(), chunk);
     }
 
@@ -44,14 +45,14 @@ public class ChunkFileService {
     }
 
     /** Chunk Saving: Add multiple removed chunks */
-    public void addRemovedChunks(List<Chunk.Builder> chunks){
+    public void addRemovedChunks(List<String> chunks){
         chunks.forEach(this::addRemovedChunk);
     }
 
     /** Chunk Saving: Save every changed chunk and delete files of removed chunks */
     public void saveChanges(){
         createChunkFolderIfNeeded();
-        changedChunks.entrySet().stream().map(e -> e.getValue()).forEach(this::saveChunk);
+        changedChunks.values().forEach(this::saveChunk);
         removedChunkIDs.forEach(this::removeChunk);
 
 
@@ -135,11 +136,124 @@ public class ChunkFileService {
         }
     }
 
+    public void applyChanges(List<Change> changes){
+        changes.forEach(change -> {
+            if(change.getType().getNumber() == Change.Type.CHUNK_VALUE){
+                applyChunkChange(change);
+            }
+            else{
+                applyPlayerChange(change);
+            }
+        });
+
+        changedChunks.values().forEach(this::saveChunk);
+        changedChunks.clear();
+    }
+
+    private void applyChunkChange(Change change){
+        String chunkID = change.getId();
+
+        switch (change.getEventValue()){
+            case Change.Event.ADDED_VALUE -> {
+                Chunk.Builder chunk = unpackValue(change, Chunk.class).toBuilder();
+                if(chunk != null) changedChunks.put(chunkID, chunk);
+            }
+            case Change.Event.REMOVED_VALUE -> removeChunk(chunkID);
+            case Change.Event.UPDATED_VALUE -> {
+                Chunk.Builder chunk = getOrLoadChunk(chunkID);
+
+                List<String> oldChildren = chunk.getChildChunksList();
+
+                if(!oldChildren.isEmpty()) oldChildren.forEach(this::removeChunk);
+
+                chunk.clearChildChunks();
+
+                chunk.addAllChildChunks(unpackValue(change, StringArrayWrapper.class).getValueList());
+                changedChunks.put(chunkID, chunk);
+            }
+        }
+    }
+
+    private void applyPlayerChange(Change change){
+        String[] ids = change.getId().split("\\s+"); //0: (Old)Chunk ID, 1: Player ID
+        String chunkID = ids[0];
+        String playerID = ids[1];
+        Chunk.Builder chunk = getOrLoadChunk(chunkID);
+
+        switch(change.getEventValue()){
+            case Change.Event.ADDED_VALUE -> {
+                Player player = unpackValue(change, Player.class);
+                chunk.addPlayers(player);
+            }
+            case Change.Event.REMOVED_VALUE -> removePlayer(chunk, playerID);
+            case Change.Event.UPDATED_VALUE -> {
+                Player.Builder player = getPlayer(chunk, playerID);
+
+                if(change.getKey().equals("chunk")){
+                    String newChunkID = unpackValue(change, StringWrapper.class).getValue();
+                    Chunk.Builder newChunk = getChunk(newChunkID).toBuilder();
+
+                    //Add player to new chunk
+                    player.setChunk(newChunkID);
+                    newChunk.addPlayers(player);
+                    //Remove player from old chunk
+                    removePlayer(chunk, playerID);
+                }
+                else if(change.getKey().equals("position")){
+                    player.setPosition(unpackValue(change, Vector.class));
+                }
+            }
+        }
+    }
+
+    private <T extends com.google.protobuf.Message> T unpackValue(Change change, Class<T> clazz){
+        try{
+            return change.getValue().unpack(clazz);
+        }
+        catch (InvalidProtocolBufferException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Chunk.Builder getOrLoadChunk(String chunkID){
+        if(changedChunks.containsKey(chunkID)){
+            return changedChunks.get(chunkID);
+        }
+        else{
+            Chunk.Builder chunk = getChunk(chunkID).toBuilder();
+            changedChunks.put(chunkID, chunk);
+            return chunk;
+        }
+    }
+
+    private void removePlayer(Chunk.Builder chunk, String playerID){
+        chunk.removePlayers(indexOfPlayer(chunk, playerID));
+    }
+
+    private int indexOfPlayer(Chunk.Builder chunk, String playerID){
+        int index = 0;
+        for (Player player : chunk.getPlayersList()) {
+            if(player.getId().equals(playerID)) return index;
+            index++;
+        }
+
+        return -1;
+    }
+
+    private Player.Builder getPlayer(Chunk.Builder chunk, String playerID){
+        for (Player.Builder player : chunk.getPlayersBuilderList()) {
+            if(player.getId().equals(playerID)) return player;
+        }
+
+        return null;
+    }
+
     /** Close all active FileStreams */
     public void close(){
         FileManager.tryClose(gameInfoOutput);
         FileManager.tryClose(gameInfoInput);
-        chunkOutputs.entrySet().forEach(e -> FileManager.tryClose(e.getValue()));
-        chunkInputs.entrySet().forEach(e -> FileManager.tryClose(e.getValue()));
+        chunkOutputs.values().forEach(FileManager::tryClose);
+        chunkInputs.values().forEach(FileManager::tryClose);
     }
 }
