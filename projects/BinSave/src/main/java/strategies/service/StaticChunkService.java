@@ -47,9 +47,7 @@ public class StaticChunkService extends ChunkService {
     public void removePlayer(Player.Builder player){
         Chunk.Builder chunk = chunks.get(player.getChunk());
 
-        //FIXME: indexOfPlayer manchmal -1
-        int indexOfPlayer = indexOfPlayer(chunk, player.getId());
-        if(indexOfPlayer != -1) chunk.removePlayers(indexOfPlayer);
+        chunk.removePlayers(indexOfPlayer(chunk, player.getId()));
 
         if(USE_CHANGE_FILE){
             changeFile.savePlayerRemove(player.getId(), player.getChunk());
@@ -65,7 +63,6 @@ public class StaticChunkService extends ChunkService {
             changeFile.savePlayerUpdate(player);
         }
 
-        checkIfExists(1);
         checkPlayerChunkChange(player);
 
         return player;
@@ -73,8 +70,6 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     protected Chunk.Builder findChunk(Vector position){
-        checkIfExists(2);
-
         return chunks.values().stream().filter(c -> inChunk(c, position)).findFirst().get();
     }
 

@@ -33,6 +33,7 @@ public class GameService {
 
     public void loadGame(){
         player = chunkService.loadChunks();
+        chunkService.getBots().forEach(p -> bots.put(p.getId(), p));
     }
 
     public void printGame(){
@@ -74,6 +75,10 @@ public class GameService {
         return newPlayer;
     }
 
+
+    // ------------------
+    // Random functions |
+    // ------------------
     private void randomDeleteBot(){
         Player.Builder randPlayer = randBot();
 

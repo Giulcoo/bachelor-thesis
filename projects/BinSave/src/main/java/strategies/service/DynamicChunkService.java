@@ -22,6 +22,7 @@ public class DynamicChunkService extends ChunkService {
     @Override
     public Player.Builder addPlayer(Player.Builder player){
         Chunk.Builder chunk = findChunk(player.getPosition());
+        chunk = getChunk(chunk.getId());
         player.setChunk(chunk.getId());
         chunk.addPlayers(player);
 
@@ -40,12 +41,7 @@ public class DynamicChunkService extends ChunkService {
 
     @Override
     public void removePlayer(Player.Builder player){
-        Chunk.Builder chunk = chunks.get(player.getChunk());
-
-        String realChunkID = findChunk(player.getPosition()).getId();
-        if(!player.getChunk().equals(realChunkID)) System.out.println("Wrong chunk");
-
-        chunk = chunks.get(realChunkID);
+        Chunk.Builder chunk = getChunk(player.getChunk());
 
         chunk.removePlayers(indexOfPlayer(chunk, player.getId()));
 
@@ -65,13 +61,10 @@ public class DynamicChunkService extends ChunkService {
             changeFile.savePlayerUpdate(player);
         }
 
-        String oldChunkID = player.getId();
+        String oldChunkID = player.getChunk();
+        getChunk(oldChunkID); //Load old chunk if needed
 
         if(checkPlayerChunkChange(player)){
-            if(chunks.get(oldChunkID) == null) {
-                chunks.put(oldChunkID, chunkFile.getChunk(oldChunkID).toBuilder());
-            }
-
             checkChunk(chunks.get(player.getChunk()));
             checkChunk(chunks.get(oldChunkID));
         }
@@ -80,9 +73,15 @@ public class DynamicChunkService extends ChunkService {
     }
 
     protected void checkChunk(Chunk.Builder chunk){
+        if(chunk == null) return;
         Chunk.Builder parentChunk = chunks.get(chunk.getParentChunk());
+
         int chunkGroupSize = parentChunk == null? CHUNK_GROUP_MIN_ELEMENTS :
                 parentChunk.getChildChunksList().stream().mapToInt(c -> chunks.get(c).getPlayersCount()).sum();
+
+        if(parentChunk != null && parentChunk.getChildChunksList().stream().filter(c -> chunks.get(c).getChildChunksCount() != 0).findFirst().isPresent()){
+            chunkGroupSize = CHUNK_GROUP_MIN_ELEMENTS;
+        }
 
         if(chunkGroupSize  < CHUNK_GROUP_MIN_ELEMENTS){
             mergeChunk(parentChunk);
@@ -121,6 +120,7 @@ public class DynamicChunkService extends ChunkService {
         );
 
         //Split Players to new chunks
+        parentChunk.getPlayersBuilderList().forEach(this::checkPlayerChunkChange);
         parentChunk.getPlayersBuilderList().forEach(p -> addPlayerToChunk(p, findChunk(p.getPosition(), childChunks), parentChunk.getId()));
         parentChunk.clearPlayers();
 
@@ -143,9 +143,11 @@ public class DynamicChunkService extends ChunkService {
         Chunk.Builder chunk;
         while (!(inChunk(chunk = queue.get(0), position) && chunk.getChildChunksCount() == 0)) {
             queue.remove(0);
-            queue.addAll(chunk.getChildChunksList().stream().map(chunks::get).toList());
-
-            if(queue.isEmpty()) return chunks.get(rootChunk); //If queue empty return root chunk
+            queue.addAll(chunk.getChildChunksList().stream().map(chunks::get).filter(c -> c != null).toList());
+            if(queue.isEmpty()) {
+                chunk.clearChildChunks();
+                return chunk;
+            }
         }
 
         return chunk;
@@ -155,7 +157,8 @@ public class DynamicChunkService extends ChunkService {
     protected Chunk.Builder findChunk(Vector position, String currentChunkID){
         if(currentChunkID.isEmpty()) return findChunk(position);
 
-        Chunk.Builder currentChunk = chunks.get(currentChunkID);
+        Chunk.Builder currentChunk = getChunk(currentChunkID);
+        if(currentChunk == null)  return findChunk(position);
 
         return inChunk(currentChunk, position) ? currentChunk : findChunk(position);
     }

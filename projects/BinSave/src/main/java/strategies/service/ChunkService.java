@@ -1,11 +1,9 @@
 package strategies.service;
 
 import strategies.model.*;
+import strategies.model.Vector;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static strategies.Constants.*;
 
@@ -14,8 +12,11 @@ public abstract class ChunkService {
     protected final ChangeFileService changeFile = new ChangeFileService();
 
     protected final Map<String, Chunk.Builder> chunks = new HashMap<>();
+    protected final List<String> loadedChunks = new ArrayList<>();
     protected String playerChunk = "";
     protected String rootChunk = "";
+
+    private int chunkCount = 1;
 
     abstract void createChunks();
 
@@ -34,10 +35,7 @@ public abstract class ChunkService {
         playerChunk = info.getPlayerChunk();
         rootChunk = info.getRootChunk();
 
-        //Load players of player chunk
-        checkChunkPlayers(playerChunk);
-
-        return chunks.get(playerChunk).getPlayersBuilderList().stream().filter(p -> !p.getIsBot()).findFirst().get();
+        return getChunk(playerChunk).getPlayersBuilderList().stream().filter(p -> !p.getIsBot()).findFirst().get();
     }
 
     public void saveChunks(){
@@ -73,14 +71,13 @@ public abstract class ChunkService {
 
         if(!oldChunkID.equals(playerChunk.getId())){
             //Load new chunk if needed
-            checkChunkPlayers(playerChunk.getId());
+            playerChunk = getChunk(playerChunk.getId());
 
             //Remove player from old chunk
-            Chunk.Builder oldChunk = chunks.get(oldChunkID);
-            //FIXME Manchmal -1, weil oldChunk keine Spieler hat
-            // Bei checkChunkPlayers wird auch keine Datei zu diesem Chunk gefunden
-            int playerIndex = indexOfPlayer(oldChunk, player.getId());
-            if(playerIndex != -1) oldChunk.removePlayers(playerIndex);
+            Chunk.Builder oldChunk = getChunk(oldChunkID);
+            int index = oldChunk == null? -1 : indexOfPlayer(oldChunk, player.getId());
+
+            if(index != -1) oldChunk.removePlayers(index);
 
             //Add player to new chunk
             playerChunk.addPlayers(player);
@@ -91,7 +88,7 @@ public abstract class ChunkService {
                 changeFile.savePlayerUpdate(player.getId(), oldChunkID, playerChunk.getId());
             }
             else{
-                chunkFile.addChangedChunk(oldChunk);
+                if(oldChunk != null) chunkFile.addChangedChunk(oldChunk);
                 chunkFile.addChangedChunk(playerChunk);
             }
 
@@ -124,38 +121,31 @@ public abstract class ChunkService {
         players.forEach(p -> addPlayerToChunk(p, chunk, oldChunkID));
     }
 
-    private Chunk.Builder getChunk(String chunkID){
-        if(chunks.containsKey(chunkID)){
+    protected Chunk.Builder getChunk(String chunkID){
+        if(loadedChunks.contains(chunkID)){
             return chunks.get(chunkID);
         }
         else{
             Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
             chunks.put(chunkID, chunk);
+            loadedChunks.add(chunkID);
             return chunk;
-        }
-    }
-
-    protected void checkChunkPlayers(String chunkID){
-        Chunk.Builder cachedChunk = chunks.get(chunkID);
-
-        if(cachedChunk.getPlayersCount() == 0) {
-            Chunk savedChunk = chunkFile.getChunk(chunkID);
-            if(savedChunk == null) return;
-
-            if(!savedChunk.getId().isEmpty()) chunks.put(chunkID, savedChunk.toBuilder());
-            checkIfExists(3);
         }
     }
 
     protected Chunk.Builder newChunk(float x, float y, float size, String parentChunkID){
         Chunk.Builder chunk = Chunk.newBuilder()
-                .setId(UUID.randomUUID().toString())
+                //.setId(UUID.randomUUID().toString())
+                .setId(chunkCount + "")
                 .setPosition(Vector.newBuilder().setX(x).setY(y))
                 .setSize(Vector.newBuilder().setX(size).setY(size))
                 .setParentChunk(parentChunkID);
 
+        chunkCount++;
+
         //Add to maps
         chunks.put(chunk.getId(), chunk);
+        loadedChunks.add(chunk.getId());
 
         //Add to game objects
         //Does not need to be added to change file or changed chunks!
@@ -206,7 +196,14 @@ public abstract class ChunkService {
     abstract Chunk.Builder findChunk(Vector position, String currentChunkID);
 
     Chunk.Builder findChunk(Vector position, List<Chunk.Builder> chunks){
-        return chunks.stream().filter(c -> inChunk(c, position)).findFirst().get();
+        Optional<Chunk.Builder> opt = chunks.stream().filter(c -> inChunk(c, position)).findFirst();
+
+        if(opt.isPresent()) return opt.get();
+
+        Chunk.Builder parentChunk = chunks.get(0);
+
+        System.out.println("Position is not in the chunk list");
+        return null;
     }
 
     protected boolean inChunk(Chunk.Builder chunk, Vector point){
@@ -258,32 +255,21 @@ public abstract class ChunkService {
         }
     }
 
+    public List<Player.Builder> getBots(){
+        List<Player.Builder> bots = new ArrayList<>();
+
+        chunks.values().forEach(c ->
+            bots.addAll(
+                chunkFile.getChunk(c.getId()).toBuilder().getPlayersBuilderList()
+                    .stream().filter(Player.Builder::getIsBot).toList()
+            )
+        );
+
+        return bots;
+    }
+
     public void close(){
         changeFile.close();
         chunkFile.close();
-    }
-
-    protected void checkIfExists(Chunk.Builder oldChunk, Chunk.Builder newChunk){
-        if(chunks.values().stream().filter(c -> c.getPosition().getX() == 85.0
-                && c.getPosition().getY() == 25.0).toList().isEmpty()){
-            System.out.println("Does not exist anymore");
-
-            printChunk(oldChunk, "Old Chunk");
-            printChunk(newChunk, "New Chunk");
-        }
-    }
-
-    protected void checkIfExists(int testID){
-        for(int y = 0; y < STATIC_CHUNK_AMOUNT; y++){
-            for(int x = 0; x < STATIC_CHUNK_AMOUNT; x++){
-                final float xFinal = (x * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2);
-                final float yFinal = (y * STATIC_CHUNK_SIZE + STATIC_CHUNK_SIZE/2);
-                if(chunks.values().stream().filter(c -> c.getPosition().getX() == xFinal
-                        && c.getPosition().getY() == yFinal).toList().isEmpty()){
-                    System.out.println("Test " + testID);
-                    System.out.println("Chunk with position (" + xFinal + "," + yFinal + ") does not exist anymore");
-                }
-            }
-        }
     }
 }

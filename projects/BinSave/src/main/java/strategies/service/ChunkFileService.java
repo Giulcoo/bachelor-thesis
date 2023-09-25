@@ -3,16 +3,14 @@ package strategies.service;
 import com.google.protobuf.InvalidProtocolBufferException;
 import strategies.Constants;
 import strategies.model.*;
+import strategies.model.Vector;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChunkFileService {
     private final Map<String, Chunk.Builder>  changedChunks = new HashMap<>();
@@ -53,6 +51,7 @@ public class ChunkFileService {
     public void saveChanges(){
         createChunkFolderIfNeeded();
         changedChunks.values().forEach(this::saveChunk);
+        removedChunkIDs.forEach(this::removeChunk);
 
         changedChunks.clear();
         removedChunkIDs.clear();
@@ -69,18 +68,10 @@ public class ChunkFileService {
 
     private void saveChunk(Chunk.Builder chunk){
         String chunkPath = Constants.CHUNK_PATH + chunk.getId();
-
-        if(chunkOutputs.containsKey(chunk.getId())){
-            FileManager.tryClose(chunkOutputs.get(chunk.getId()));
-            chunkOutputs.remove(chunk.getId());
-        }
-
         FileManager.clearFile(chunkPath);
 
         try{
-            if(!chunkOutputs.containsKey(chunk.getId())) chunkOutputs.put(chunk.getId(), new FileOutputStream(chunkPath));
-
-            chunk.build().writeTo(chunkOutputs.get(chunk.getId()));
+            chunk.build().writeTo(new FileOutputStream(chunkPath));
         }
         catch (IOException e){
             e.printStackTrace();
@@ -93,16 +84,18 @@ public class ChunkFileService {
 
     public Chunk getChunk(String chunkID){
         try{
-            if(!chunkInputs.containsKey(chunkID)){
-                File chunkFile = new File(Constants.CHUNK_PATH + chunkID);
-                chunkFile.createNewFile();
-                chunkInputs.put(chunkID, new FileInputStream(chunkFile));
-            }
+            Chunk chunk = Chunk.parseFrom(new FileInputStream(Constants.CHUNK_PATH + chunkID));
 
-            return Chunk.parseFrom(chunkInputs.get(chunkID));
+            if(chunk == null) throw new NullPointerException();
+
+            return chunk;
         }
         catch (IOException e){
-            System.out.println("Chunk " + chunkID + " does not exist");
+            System.out.println("ChunkFileService.getChunk(" + chunkID + ") does not find the Chunk");
+            return null;
+        }
+        catch(NullPointerException e){
+            System.out.println("ChunkFileService.getChunk(" + chunkID + ") returns null");
             return null;
         }
     }
@@ -189,7 +182,7 @@ public class ChunkFileService {
 
                 if(change.getKey().equals("chunk")){
                     String newChunkID = unpackValue(change, StringWrapper.class).getValue();
-                    Chunk.Builder newChunk = getChunk(newChunkID).toBuilder();
+                    Chunk.Builder newChunk = getOrLoadChunk(newChunkID);
 
                     //Add player to new chunk
                     player.setChunk(newChunkID);

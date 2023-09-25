@@ -29,7 +29,8 @@ public class ChangeFileService {
 
     /** Change File: Remove chunk */
     public void saveChunkRemoved(String chunkID){
-        saveChunkChange(chunkID, Change.Event.REMOVED, "", null);
+        saveChunkChange(chunkID, Change.Event.REMOVED, "",
+                Any.pack(StringWrapper.newBuilder().setValue(chunkID).build()));
     }
 
     /** Change File: General chunk changes */
