@@ -9,13 +9,10 @@
       <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/Benchmarks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/Benchmarks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChangeFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChangeFileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Data.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Data.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/DynamicChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/DynamicChunkService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/StaticChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/StaticChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../strategies/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../strategies/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +119,8 @@
       <updated>1695364634905</updated>
       <workItem from="1695364635486" duration="7586000" />
       <workItem from="1695372279349" duration="12025000" />
-      <workItem from="1695620788404" duration="21488000" />
+      <workItem from="1695620788404" duration="24085000" />
+      <workItem from="1695711230865" duration="3039000" />
     </task>
     <servers />
   </component>

@@ -60,8 +60,8 @@ message Player {
 }
 
 message Vector {
-  float x = 1;
-  float y = 2;
+  double x = 1;
+  double y = 2;
 }
 
 message StringWrapper{

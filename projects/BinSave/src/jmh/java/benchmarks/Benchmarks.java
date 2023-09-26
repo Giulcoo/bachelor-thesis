@@ -6,8 +6,8 @@ import strategies.App;
 import java.util.concurrent.TimeUnit;
 
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 10)
+@Warmup(iterations = 0)
+@Measurement(iterations = 1)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public class Benchmarks {
@@ -30,6 +30,21 @@ public class Benchmarks {
     @Benchmark
     public static void loadGame(CreateData createData){
         App.loadGame();
+    }
+
+    @Benchmark
+    public static void createPlayers(CreateData createData){
+        App.createPlayers(dataCount);
+    }
+
+    @Benchmark
+    public static void removePlayers(CreateData createData){
+        App.removePlayers(dataCount-10);
+    }
+
+    @Benchmark
+    public static void movePlayers(CreateData createData){
+        App.movePlayers(dataCount);
     }
 
 //    @Benchmark

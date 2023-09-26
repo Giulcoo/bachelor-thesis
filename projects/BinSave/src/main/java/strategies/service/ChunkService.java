@@ -133,7 +133,7 @@ public abstract class ChunkService {
         }
     }
 
-    protected Chunk.Builder newChunk(float x, float y, float size, String parentChunkID){
+    protected Chunk.Builder newChunk(double x, double y, double size, String parentChunkID){
         Chunk.Builder chunk = Chunk.newBuilder()
                 //.setId(UUID.randomUUID().toString())
                 .setId(chunkCount + "")
@@ -199,8 +199,6 @@ public abstract class ChunkService {
         Optional<Chunk.Builder> opt = chunks.stream().filter(c -> inChunk(c, position)).findFirst();
 
         if(opt.isPresent()) return opt.get();
-
-        Chunk.Builder parentChunk = chunks.get(0);
 
         System.out.println("Position is not in the chunk list");
         return null;

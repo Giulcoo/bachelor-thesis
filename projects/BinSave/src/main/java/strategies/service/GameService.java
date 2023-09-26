@@ -111,22 +111,22 @@ public class GameService {
     }
 
     private Vector.Builder randVector(){
-        return checkInMapBounds(Vector.newBuilder().setX(randFloat()).setY(randFloat()));
+        return checkInMapBounds(Vector.newBuilder().setX(randDouble()).setY(randDouble()));
     }
 
-    private Vector.Builder randVector(float magnitude){
+    private Vector.Builder randVector(double magnitude){
         //Create random Vector
         Vector.Builder randVector = randVector();
 
         //Normalize Vector and set magnitude
         double norm = Math.sqrt(randVector.getX() * randVector.getX() + randVector.getY() * randVector.getY());
-        randVector.setX((float) ((randVector.getX() / norm) * magnitude));
-        randVector.setY((float) ((randVector.getY() / norm) * magnitude));
+        randVector.setX((randVector.getX() / norm) * magnitude);
+        randVector.setY((randVector.getY() / norm) * magnitude);
 
         return checkInMapBounds(randVector);
     }
 
-    private Vector.Builder randVector(Vector center, float magnitude) {
+    private Vector.Builder randVector(Vector center, double magnitude) {
        Vector.Builder randVector = randVector(magnitude);
 
         return checkInMapBounds(Vector.newBuilder()
@@ -134,8 +134,8 @@ public class GameService {
                 .setY(center.getY() + randVector.getY()));
     }
 
-    private float randFloat(){
-        return random.nextFloat() * MAP_SIZE;
+    private double randDouble(){
+        return random.nextDouble() * MAP_SIZE;
     }
 
     private int randInt(int min, int max){

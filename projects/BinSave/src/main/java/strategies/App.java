@@ -8,18 +8,8 @@ import java.util.stream.IntStream;
 
 public class App {
     public static void main(String[] args) {
-        //createGame(100);
-        //createGameAndPlay(10, 10, 10, 10, 5);
-        //loadGame();
-        //loadGameAndPlay(10, 10, 10, 10);
-        //createGameAndPlay(1, 100, 50,10,5);
-
-        System.out.println("==============Create Start==============");
-        createGame(10001);
-        System.out.println("==============Create End==============");
-        System.out.println("\n==============Move Start==============");
-        movePlayers(10001);
-        System.out.println("==============Move End==============");
+        createGame(20);
+        createPlayers(1000);
     }
 
     public static void createGame(int dataCount){
