@@ -1,15 +1,57 @@
 package strategies;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import strategies.model.Change;
+import strategies.model.Chunk;
+import strategies.model.Vector;
+import strategies.service.ChangeFileService;
+import strategies.service.FileManager;
 import strategies.service.GameService;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class App {
     public static void main(String[] args) {
-        createGame(20);
-        createPlayers(1000);
+//        FileManager.deleteData();
+//        FileManager.createFolders();
+//        FileManager.createFile(Constants.CHANGE_FILE);
+//
+//        ChangeFileService service = new ChangeFileService();
+//
+//        Chunk chunk1 = new Chunk()
+//                .setId("1")
+//                .setPosition(new Vector(1,2))
+//                .setSize(new Vector(3,4));
+//
+//        Chunk chunk2 = new Chunk()
+//                .setId("2")
+//                .setPosition(new Vector(1,2))
+//                .setSize(new Vector(3,4));
+//
+//        Chunk chunk3 = new Chunk()
+//                .setId("3")
+//                .setPosition(new Vector(1,2))
+//                .setSize(new Vector(3,4));
+//
+//        service.saveChunkAdded(chunk1);
+//        service.saveChunkAdded(chunk2);
+//        service.saveChunkAdded(chunk3);
+//
+//        FileManager.readChanges().forEach(n -> {
+//            try {
+//                Chunk c = new ObjectMapper().treeToValue(n.get("value"), Chunk.class);
+//                System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(c));
+//            }
+//            catch (JsonProcessingException e){
+//                System.out.println("Could not get chunk");
+//            }
+//        });
     }
 
     public static void createGame(int dataCount){
@@ -17,14 +59,12 @@ public class App {
         service.createGame(dataCount);
         service.saveGame();
         service.printGame();
-        service.close();
     }
 
     public static void loadGame(){
         GameService service = new GameService();
         service.loadGame();
         service.printGame();
-        service.close();
     }
 
     public static void createPlayers(int dataCount){
@@ -34,7 +74,6 @@ public class App {
         service.randomNewPlayers(dataCount);
 
         service.printGame();
-        service.close();
     }
 
     public static void movePlayers(int dataCount){
@@ -44,7 +83,6 @@ public class App {
         service.randomMovePlayer(dataCount);
 
         service.printGame();
-        service.close();
     }
 
     public static void removePlayers(int dataCount){
@@ -54,39 +92,5 @@ public class App {
         service.randomDeleteBot(dataCount);
 
         service.printGame();
-        service.close();
     }
-//
-//    public static void createGameAndPlay(int initCount, int iterations, int moveChanges, int botAdd, int botRemove){
-//        GameService service = new GameService();
-//        service.createGame(initCount);
-//        service.saveGame();
-//
-//        IntStream.range(0, iterations).forEach(i -> {
-//            service.randomNewPlayers(botAdd);
-//            service.randomDeleteBot(botRemove);
-//            service.randomMovePlayer(moveChanges);
-//            service.saveGame();
-//        });
-//
-//        service.printGame();
-//
-//        service.close();
-//    }
-//
-//    public static void loadGameAndPlay(int iterations, int moveChanges, int botAdd, int botRemove){
-//        GameService service = new GameService();
-//        service.loadGame();
-//
-//        IntStream.range(0, iterations).forEach(i -> {
-//            service.randomNewPlayers(botAdd);
-//            service.randomDeleteBot(botRemove);
-//            service.randomMovePlayer(moveChanges);
-//            service.saveGame();
-//        });
-//
-//        service.printGame();
-//
-//        service.close();
-//    }
 }

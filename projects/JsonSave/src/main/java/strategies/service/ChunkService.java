@@ -23,9 +23,8 @@ public abstract class ChunkService {
     abstract void createChunks();
 
     public Player loadChunks(){
-        if(USE_CHANGE_FILE){
-            chunkFile.applyChanges(changeFile.getChanges());
-        }
+        if(USE_CHANGE_FILE) chunkFile.applyChanges();
+
 
         GameInfo info = chunkFile.loadGameInfo();
         //Load Chunk Info Data to chunks
@@ -234,10 +233,5 @@ public abstract class ChunkService {
         );
 
         return bots;
-    }
-
-    public void close(){
-        changeFile.close();
-        chunkFile.close();
     }
 }

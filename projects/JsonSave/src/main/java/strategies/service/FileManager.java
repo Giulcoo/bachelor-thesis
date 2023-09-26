@@ -1,14 +1,21 @@
 package strategies.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import strategies.Constants;
+import strategies.model.Chunk;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import static strategies.Constants.*;
 
 public class FileManager {
+    private final static ObjectMapper mapper = new ObjectMapper();
+
     public static void resetFolders(){
         deleteData();
         createFolders();
@@ -76,5 +83,55 @@ public class FileManager {
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static void writeToFile(String path, Object object){
+        try{
+            mapper.writeValue(new File(path), object);
+        }
+        catch (IOException e) {
+            System.out.println("Could not serialize object");
+        }
+    }
+
+    public static void appendChanges(Object object){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(CHANGE_FILE, true))){
+            writer.write(mapper.writeValueAsString(object));
+            writer.newLine();
+        }
+        catch (IOException e){
+            System.out.println("Could not write line " + CHANGE_FILE);
+        }
+    }
+
+    public static <T> T readFile(String path, Class<T> clazz){
+        try{
+            return mapper.readValue(new File(path), clazz);
+        }
+        catch (IOException e){
+            System.out.println("Could not read file");
+        }
+
+        return null;
+    }
+
+    public static List<JsonNode> readChanges(){
+        List<JsonNode> changes = new ArrayList<>();
+
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(CHANGE_FILE)))){
+            while(reader.ready()){
+                changes.add(mapper.readTree(reader.readLine()));
+            }
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Could not find change file " + CHANGE_FILE);
+        }
+        catch(IOException e){
+            System.out.println("Could not read lines of " + CHANGE_FILE);
+        }
+
+        clearFile(Constants.CHANGE_FILE);
+
+        return changes;
     }
 }

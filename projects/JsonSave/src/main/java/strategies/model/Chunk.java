@@ -1,16 +1,20 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Chunk {
     private String id;
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     private Vector position;
     private Vector size;
     private String parentChunk;
-    private List<String> childChunks;
+    private List<String> childChunks = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -60,11 +64,24 @@ public class Chunk {
         return -1;
     }
 
+    public int indexOfPlayer(String playerID){
+        int index = 0;
+        for (Player p : this.players) {
+            if(p.getId().equals(playerID)){
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+
     public Chunk addAllPlayers(Collection<Player> players) {
         this.players.addAll(players);
         return this;
     }
 
+    @JsonIgnore
     public int getPlayersCount(){
         return players.size();
     }
@@ -110,6 +127,7 @@ public class Chunk {
         return childChunks;
     }
 
+    @JsonIgnore
     public int getChildChunksCount(){
         return childChunks.size();
     }

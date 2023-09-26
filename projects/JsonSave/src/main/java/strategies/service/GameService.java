@@ -139,8 +139,4 @@ public class GameService {
     private int randInt(int min, int max){
         return random.nextInt((max - min) + 1) + min;
     }
-
-    public void close(){
-        chunkService.close();
-    }
 }
