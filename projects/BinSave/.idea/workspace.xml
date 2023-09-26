@@ -5,14 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Change.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Chunk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/ChunkInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/GameInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Vector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChangeFileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/DynamicChunkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/GameService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/StaticChunkService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/Benchmarks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/Benchmarks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Data.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Data.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/DynamicChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/DynamicChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +127,7 @@
       <workItem from="1695364635486" duration="7586000" />
       <workItem from="1695372279349" duration="12025000" />
       <workItem from="1695620788404" duration="24085000" />
-      <workItem from="1695711230865" duration="3039000" />
+      <workItem from="1695711230865" duration="5857000" />
     </task>
     <servers />
   </component>
