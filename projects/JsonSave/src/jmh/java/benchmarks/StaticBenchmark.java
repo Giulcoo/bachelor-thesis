@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class StaticBenchmark {
     @Param({"true", "false"})
     public static boolean useChangeFile;
+    @Param({"true", "false"})
+    public static boolean useGzip;
     @Param({"1000", "10000", "100000"})
     public static int dataCount;
     @Param({"2", "10", "50"})
@@ -31,6 +33,7 @@ public class StaticBenchmark {
     public static void createGame(){
         Constants.DYNAMIC_CHUNK_SIZE = false;
         Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
         Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
         Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
 
@@ -41,6 +44,7 @@ public class StaticBenchmark {
     public static void loadGame(CreateData createData){
         Constants.DYNAMIC_CHUNK_SIZE = false;
         Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
         Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
         Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
 
@@ -51,6 +55,7 @@ public class StaticBenchmark {
     public static void createPlayers(CreateData createData){
         Constants.DYNAMIC_CHUNK_SIZE = false;
         Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
         Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
         Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
 
@@ -61,6 +66,7 @@ public class StaticBenchmark {
     public static void removePlayers(CreateData createData){
         Constants.DYNAMIC_CHUNK_SIZE = false;
         Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
         Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
         Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
 
@@ -71,6 +77,7 @@ public class StaticBenchmark {
     public static void movePlayers(CreateData createData){
         Constants.DYNAMIC_CHUNK_SIZE = false;
         Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
         Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
         Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
 

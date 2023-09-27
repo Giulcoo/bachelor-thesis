@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import static strategies.Constants.*;
 
@@ -61,15 +63,6 @@ public class FileManager {
         createFile(path);
     }
 
-    public static void tryClose(Closeable closeable){
-        try {
-            if (closeable != null) closeable.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     public static void deleteFile(String path){
         File file = new File(path);
         if(file.exists()) file.delete();
@@ -87,7 +80,13 @@ public class FileManager {
 
     public static void writeToFile(String path, Object object){
         try{
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(path), object);
+            if(USE_GZIP){
+                GZIPOutputStream output = new GZIPOutputStream(new FileOutputStream(path));
+                mapper.writerWithDefaultPrettyPrinter().writeValue(output, object);
+            }
+            else{
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(path), object);
+            }
         }
         catch (IOException e) {
             System.out.println("FileManager::writeToFile -> Could not serialize object");
@@ -106,7 +105,13 @@ public class FileManager {
 
     public static <T> T readFile(String path, Class<T> clazz){
         try{
-            return mapper.readValue(new File(path), clazz);
+            if(USE_GZIP){
+                GZIPInputStream input = new GZIPInputStream(new FileInputStream(path));
+                return mapper.readValue(input, clazz);
+            }
+            else{
+                return mapper.readValue(new File(path), clazz);
+            }
         }
         catch (IOException e){
             System.out.println("FileManager::readFile -> Could not read file " + path);

@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/misc.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +119,7 @@
       <workItem from="1695620788404" duration="24085000" />
       <workItem from="1695711230865" duration="9922000" />
       <workItem from="1695798400852" duration="4904000" />
-      <workItem from="1695816456213" duration="323000" />
+      <workItem from="1695816456213" duration="547000" />
     </task>
     <servers />
   </component>
