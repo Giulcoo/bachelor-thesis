@@ -45,7 +45,7 @@ public class StaticChunkService extends ChunkService {
 
     @Override
     public void removePlayer(Player.Builder player){
-        Chunk.Builder chunk = chunks.get(player.getChunk());
+        Chunk.Builder chunk = getChunk(player.getChunk());
 
         chunk.removePlayers(indexOfPlayer(chunk, player.getId()));
 

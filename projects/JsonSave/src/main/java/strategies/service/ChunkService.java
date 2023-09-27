@@ -207,7 +207,7 @@ public abstract class ChunkService {
     }
 
     protected void printChunk(Chunk chunk, String title){
-        System.out.println("\n========================" + title + "========================");
+        System.out.println("\n==========================" + title + "==========================");
         System.out.println("Center: (" + chunk.getPosition().getX() + ", " + chunk.getPosition().getY() +
                 ")      |        Size: (" + chunk.getSize().getX() + ", " + chunk.getSize().getY() + ")");
         System.out.println("ID: " + chunk.getId());

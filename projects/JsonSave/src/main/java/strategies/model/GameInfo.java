@@ -1,12 +1,15 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class GameInfo {
     private String rootChunk;
     private String playerChunk;
-    private List<ChunkInfo> chunks;
+    private List<ChunkInfo> chunks = new ArrayList<>();
 
     public String getRootChunk() {
         return rootChunk;
@@ -30,6 +33,7 @@ public class GameInfo {
         return chunks;
     }
 
+    @JsonIgnore
     public int getChunksCount(){
         return this.chunks.size();
     }

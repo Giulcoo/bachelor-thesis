@@ -64,7 +64,7 @@ public class ChunkFileService {
     }
 
     private void saveChunk(Chunk chunk){
-        String chunkPath = Constants.CHUNK_PATH + chunk.getId();
+        String chunkPath = Constants.CHUNK_PATH + chunk.getId() + ".json";
         FileManager.writeToFile(chunkPath, chunk);
     }
 

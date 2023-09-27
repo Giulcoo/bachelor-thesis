@@ -1,5 +1,7 @@
 package strategies.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,6 +53,7 @@ public class ChunkInfo {
         return childChunks;
     }
 
+    @JsonIgnore
     public int getChildChunksCount(){
         return childChunks.size();
     }

@@ -13,7 +13,7 @@ public class Chunk {
     private List<Player> players = new ArrayList<>();
     private Vector position;
     private Vector size;
-    private String parentChunk;
+    private String parentChunk = "";
     private List<String> childChunks = new ArrayList<>();
 
     public String getId() {
@@ -61,6 +61,8 @@ public class Chunk {
             }
             index++;
         }
+
+        System.out.println("Chunk::indexOfPlayer -> could not find player " + player.getId());
         return -1;
     }
 
@@ -115,11 +117,11 @@ public class Chunk {
     }
 
     public String getParentChunk() {
-        return parentChunk;
+        return parentChunk == null? "" : parentChunk;
     }
 
     public Chunk setParentChunk(String parentChunk) {
-        this.parentChunk = parentChunk;
+        this.parentChunk = parentChunk == null? "" : parentChunk;
         return this;
     }
 

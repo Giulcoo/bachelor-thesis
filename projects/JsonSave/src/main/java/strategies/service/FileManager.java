@@ -87,10 +87,10 @@ public class FileManager {
 
     public static void writeToFile(String path, Object object){
         try{
-            mapper.writeValue(new File(path), object);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(path), object);
         }
         catch (IOException e) {
-            System.out.println("Could not serialize object");
+            System.out.println("FileManager::writeToFile -> Could not serialize object");
         }
     }
 
@@ -100,7 +100,7 @@ public class FileManager {
             writer.newLine();
         }
         catch (IOException e){
-            System.out.println("Could not write line " + CHANGE_FILE);
+            System.out.println("FileManager::appendChanges -> Could not write line " + CHANGE_FILE);
         }
     }
 
@@ -109,7 +109,7 @@ public class FileManager {
             return mapper.readValue(new File(path), clazz);
         }
         catch (IOException e){
-            System.out.println("Could not read file");
+            System.out.println("FileManager::readFile -> Could not read file " + path);
         }
 
         return null;
@@ -124,10 +124,10 @@ public class FileManager {
             }
         }
         catch(FileNotFoundException e){
-            System.out.println("Could not find change file " + CHANGE_FILE);
+            System.out.println("FileManager::readChanges -> Could not find change file " + CHANGE_FILE);
         }
         catch(IOException e){
-            System.out.println("Could not read lines of " + CHANGE_FILE);
+            System.out.println("FileManager::readChanges -> Could not read lines of " + CHANGE_FILE);
         }
 
         clearFile(Constants.CHANGE_FILE);

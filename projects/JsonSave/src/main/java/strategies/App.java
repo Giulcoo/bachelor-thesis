@@ -1,20 +1,6 @@
 package strategies;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import strategies.model.Change;
-import strategies.model.Chunk;
-import strategies.model.Vector;
-import strategies.service.ChangeFileService;
-import strategies.service.FileManager;
 import strategies.service.GameService;
-
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 public class App {
     public static void main(String[] args) {
@@ -52,6 +38,9 @@ public class App {
 //                System.out.println("Could not get chunk");
 //            }
 //        });
+
+        createGame(100);
+        removePlayers(10);
     }
 
     public static void createGame(int dataCount){

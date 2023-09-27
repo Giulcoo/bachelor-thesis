@@ -6,7 +6,7 @@ public class Constants {
     //Scenario settings
     public static final int SEED = 1;
     public static final boolean VERBOSE = false;
-    public static final int MAX_PLAYER_PRINT = 100;
+    public static final int MAX_PLAYER_PRINT = 10;
     public static final String PRINT_TAB = "    ";
 
     //Data paths
@@ -22,10 +22,10 @@ public class Constants {
     public static final float BOT_SPAWN_DISTANCE_FROM_PLAYER = MAP_SIZE/10;
 
     //Chunk Settings
-    public static final boolean DYNAMIC_CHUNK_SIZE = true;
-    public static final boolean USE_CHANGE_FILE = true;
-    public static final int STATIC_CHUNK_AMOUNT = 10; //Real amount will be STATIC_CHUNK_AMOUNT * STATIC_CHUNK_AMOUNT
-    public static final float STATIC_CHUNK_SIZE = MAP_SIZE/STATIC_CHUNK_AMOUNT;
-    public static final int CHUNK_GROUP_MIN_ELEMENTS = 100;
-    public static final int CHUNK_MAX_ELEMENTS = 1000;
+    public static boolean DYNAMIC_CHUNK_SIZE = false;
+    public static boolean USE_CHANGE_FILE = false;
+    public static int STATIC_CHUNK_AMOUNT = 2; //Real amount will be STATIC_CHUNK_AMOUNT * STATIC_CHUNK_AMOUNT
+    public static float STATIC_CHUNK_SIZE = MAP_SIZE/STATIC_CHUNK_AMOUNT;
+    public static int CHUNK_GROUP_MIN_ELEMENTS = 100;
+    public static int CHUNK_MAX_ELEMENTS = 1000;
 }
