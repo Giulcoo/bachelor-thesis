@@ -5,23 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/Benchmarks.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/StaticChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/StaticChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Chunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/Chunk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/ChunkInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/ChunkInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/GameInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/model/GameInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/StaticChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/service/StaticChunkService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,21 +51,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/giuli/Dokumente/GitHub/bachelor-thesis/projects/BinSave",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/giuli/Dokumente/GitHub/bachelor-thesis/projects/BinSave&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="benchmarks" />
@@ -137,6 +125,7 @@
       <workItem from="1695620788404" duration="24085000" />
       <workItem from="1695711230865" duration="9922000" />
       <workItem from="1695798400852" duration="4904000" />
+      <workItem from="1695816456213" duration="323000" />
     </task>
     <servers />
   </component>
