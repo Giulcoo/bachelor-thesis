@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="" />
+    <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/vcs.xml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,24 +37,37 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BinSave" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BinSave" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BinSave" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="jmh" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="2Vk0B9z3Xkg4kPkR3sRmQFuVEV6" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2W1bWKgjVu4nNL93SVRT2DTJM7x" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -51,22 +78,12 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/giuli/Dokumente/GitHub/bachelor-thesis/projects/BinSave&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;last_opened_file_path&quot;: &quot;D:/Documents/Github Projects/bachelor-thesis/projects/BinSave&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="benchmarks" />
-    </key>
-  </component>
   <component name="RunManager" selected="Gradle.Benchmark">
-    <configuration name="Main" type="Application" factoryName="Application">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
       <module name="BinSave.main" />
       <extension name="coverage">
@@ -79,7 +96,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Benchmark" type="GradleRunConfiguration" factoryName="Gradle">
+    <configuration name="Benchmark" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -98,28 +115,29 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.App" />
       <item itemvalue="Gradle.Benchmark" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Benchmark" />
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3cb9a63b-a58d-4eb6-b2b7-eeba8ce028ca" name="Changes" comment="" />
-      <created>1695364634905</created>
+      <changelist id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="" />
+      <created>1695903064016</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1695364634905</updated>
-      <workItem from="1695364635486" duration="7586000" />
-      <workItem from="1695372279349" duration="12025000" />
-      <workItem from="1695620788404" duration="24085000" />
-      <workItem from="1695711230865" duration="9922000" />
-      <workItem from="1695798400852" duration="4904000" />
-      <workItem from="1695816456213" duration="547000" />
+      <updated>1695903064016</updated>
+      <workItem from="1695903065180" duration="142000" />
+      <workItem from="1695903247216" duration="1533000" />
     </task>
     <servers />
   </component>

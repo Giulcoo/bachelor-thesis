@@ -7,8 +7,8 @@ import strategies.Constants;
 import java.util.concurrent.TimeUnit;
 
 @Fork(1)
-@Warmup(iterations = 0)
-@Measurement(iterations = 1)
+@Warmup(iterations = 5)
+@Measurement(iterations = 10)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public class StaticBenchmark {
@@ -23,6 +23,11 @@ public class StaticBenchmark {
     public static class CreateData {
         @Setup(Level.Iteration)
         public void setUp() {
+            Constants.DYNAMIC_CHUNK_SIZE = false;
+            Constants.USE_CHANGE_FILE = useChangeFile;
+            Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+            Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+
             App.createGame(dataCount);
         }
     }
@@ -47,34 +52,34 @@ public class StaticBenchmark {
         App.loadGame();
     }
 
-    @Benchmark
-    public static void createPlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.createPlayers(dataCount);
-    }
-
-    @Benchmark
-    public static void removePlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.removePlayers(dataCount-10);
-    }
-
-    @Benchmark
-    public static void movePlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.movePlayers(dataCount);
-    }
+//    @Benchmark
+//    public static void createPlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.createPlayers(dataCount);
+//    }
+//
+//    @Benchmark
+//    public static void removePlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.removePlayers(dataCount-10);
+//    }
+//
+//    @Benchmark
+//    public static void movePlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.movePlayers(dataCount);
+//    }
 
 }
