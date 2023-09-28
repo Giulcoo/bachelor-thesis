@@ -1,8 +1,8 @@
-PWD c:/Users/giuli/Dokumente/GitHub/bachelor-thesis/thesis/src
+PWD d:/Documents/Github Projects/bachelor-thesis/thesis/src
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/giuli/Dokumente/GitHub/bachelor-thesis/thesis/src/main.tex
+INPUT d:/Documents/Github Projects/bachelor-thesis/thesis/src/main.tex
 OUTPUT main.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/koma-script/scrreprt.cls
@@ -829,6 +829,7 @@ INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifluatex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
+INPUT ./nul
 INPUT ./nul
 INPUT ./nul
 INPUT nul
@@ -1899,6 +1900,7 @@ INPUT ./_minted-main/F3ADD027DD47FBA1592F3C3C37D9AAC6C818933C69695E1E8FCE99B3BB9
 INPUT _minted-main/F3ADD027DD47FBA1592F3C3C37D9AAC6C818933C69695E1E8FCE99B3BB94EEC9.pygtex
 INPUT ./_minted-main/F3ADD027DD47FBA1592F3C3C37D9AAC6C818933C69695E1E8FCE99B3BB94EEC9.pygtex
 INPUT _minted-main/F3ADD027DD47FBA1592F3C3C37D9AAC6C818933C69695E1E8FCE99B3BB94EEC9.pygtex
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ectt0900.tfm
 OUTPUT main.pyg
 INPUT ./main.pyg
 INPUT ./_minted-main/A9D186552DEBE1DE1AADC89F353943DEC818933C69695E1E8FCE99B3BB94EEC9.pygtex
@@ -1929,7 +1931,6 @@ INPUT ./chapter/6-videospiele.tex
 INPUT chapter/6-videospiele.tex
 INPUT ./chapter/6-videospiele.tex
 INPUT chapter/6-videospiele.tex
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ectt0900.tfm
 INPUT ./images/factorio_save_statistic.png
 INPUT ./images/factorio_save_statistic.png
 INPUT images/factorio_save_statistic.png
