@@ -7,8 +7,8 @@ import strategies.Constants;
 import java.util.concurrent.TimeUnit;
 
 @Fork(1)
-@Warmup(iterations = 0)
-@Measurement(iterations = 1)
+@Warmup(iterations = 5)
+@Measurement(iterations = 10)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public class DynamicBenchmark {
@@ -27,6 +27,12 @@ public class DynamicBenchmark {
     public static class CreateData {
         @Setup(Level.Iteration)
         public void setUp() {
+            Constants.DYNAMIC_CHUNK_SIZE = true;
+            Constants.USE_CHANGE_FILE = useChangeFile;
+            Constants.USE_GZIP = useGzip;
+            Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+            Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+
             App.createGame(dataCount);
         }
     }
@@ -53,36 +59,36 @@ public class DynamicBenchmark {
         App.loadGame();
     }
 
-    @Benchmark
-    public static void createPlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = true;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-
-        App.createPlayers(dataCount);
-    }
-
-    @Benchmark
-    public static void removePlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = true;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-
-        App.removePlayers(dataCount-10);
-    }
-
-    @Benchmark
-    public static void movePlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = true;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-
-        App.movePlayers(dataCount);
-    }
+//    @Benchmark
+//    public static void createPlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = true;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+//
+//        App.createPlayers(dataCount);
+//    }
+//
+//    @Benchmark
+//    public static void removePlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = true;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+//
+//        App.removePlayers(dataCount-10);
+//    }
+//
+//    @Benchmark
+//    public static void movePlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = true;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+//
+//        App.movePlayers(dataCount);
+//    }
 }
