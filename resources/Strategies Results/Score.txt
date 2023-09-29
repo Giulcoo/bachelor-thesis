@@ -1,0 +1,10 @@
+Create Game     | Strategie                                                                              | ops/s
+==================================================================================================================
+1K   data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 214.846 
+	        | Static Chunk without change file (2x2 Chunks)                                          | 139.841  
+==================================================================================================================	
+10K  data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 63.119  
+================================================================================================================== 
+100K data count | Static Chunk without change file (2x2 Chunks)                                          | 6494    
+	        | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 1070    
+	
