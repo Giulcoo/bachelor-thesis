@@ -1,10 +1,42 @@
-Create Game     | Strategie                                                                              | ops/s
-==================================================================================================================
-1K   data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 214.846 
-	        | Static Chunk without change file (2x2 Chunks)                                          | 139.841  
-==================================================================================================================	
-10K  data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 63.119  
-================================================================================================================== 
-100K data count | Static Chunk without change file (2x2 Chunks)                                          | 6494    
-	        | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group) | 1070    
+===================
+| Protocol Buffer |
+===================
+
+Create Game     | Strategie                                                                               | ops/s
+====================================================================================================================
+1K   data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group)  | 214.846
+                | ...                               (Max 5K Elements per chunk, min 50 per chunk group)   | 214.773 
+ 		| ...                               (Max 10K Elements per chunk, min 100 per chunk group) | 213.279 !!!
+ 		| ...                               (Max 10K Elements per chunk, min 5K per chunk group)  | 211.015
+                | ...                                                                                     | ...
+	        | Static Chunk without change file (2x2 Chunks)                                           | 139.841  
+====================================================================================================================	
+10K  data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group)  | 63.119  
+                | ...                                                                5K per chunk group)  | 62.375
+                | ...                                                                100 per chunk group) | 61.780  !!!
+	        | Static Chunk without change file (2x2 Chunks)                                           | 49.423
+==================================================================================================================== 
+100K data count | Static Chunk without change file (2x2 Chunks)                                           | 6494   
+                | Static Chunk without change file (10x10 Chunks)                                         | 3054    
+	        | Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group) | 1148    !!!    
+	        | ...                                                                5K per chunk group)  | 1145   
+	        | ...                                                                1K per chunk group)  | 1070    
 	
+
+
+Load Game       | Strategie                                                                               | ops/s
+===================================================================================================================
+1K   data count | Dynamic Chunk without change file (Max 1K Elements per chunk, min 100 per chunk group) | 798.272
+                | ...                               (Max 5K Elements per chunk, min 500 per chunk group) | 795.178 		
+                | ...                               (Max 10K Elements per chunk, min 100 per chunk group)| 790.932 !!!
+
+===================================================================================================================	
+10K  data count | Dynamic Chunk without change file (Max 5K Elements per chunk, min 500 per chunk group) | 128.150
+
+=================================================================================================================== 
+100K data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group)| 15.249  !!!
+
+
+Bei Create und Load Game ist Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group) im Durchschnitt am besten
+   
+
