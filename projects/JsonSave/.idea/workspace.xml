@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9531a49a-838d-44b7-9f3d-0b7c31664792" name="Changes" comment="" />
+    <list default="true" id="9531a49a-838d-44b7-9f3d-0b7c31664792" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../BinSave/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +51,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2VvRHKwxS8QkYxdPlEk6ygFqD9o" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -64,7 +78,7 @@
       <recent name="C:\Users\giuli\Dokumente\GitHub\bachelor-thesis\projects\JsonSave\src\jmh\java\benchmarks" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Gradle.Benchmark">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
       <module name="JsonSave.main" />
@@ -97,7 +111,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
@@ -124,6 +137,9 @@
       <workItem from="1695798478327" duration="5323000" />
       <workItem from="1695816462068" duration="1577000" />
       <workItem from="1695830354018" duration="26000" />
+      <workItem from="1696063035148" duration="80000" />
+      <workItem from="1696064401788" duration="1036000" />
+      <workItem from="1696065479598" duration="4110000" />
     </task>
     <servers />
   </component>
