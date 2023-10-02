@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Full/BinSave.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +108,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
@@ -141,6 +135,7 @@
       <workItem from="1695983731559" duration="941000" />
       <workItem from="1696063116072" duration="1950000" />
       <workItem from="1696112205560" duration="1546000" />
+      <workItem from="1696234662079" duration="251000" />
     </task>
     <servers />
   </component>

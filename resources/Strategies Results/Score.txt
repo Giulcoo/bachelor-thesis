@@ -1,42 +1,1220 @@
-===================
-| Protocol Buffer |
-===================
+Top 10:
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 373
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 364
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 361
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 346
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 346
 
-Create Game     | Strategie                                                                               | ops/s
-====================================================================================================================
-1K   data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group)  | 214.846
-                | ...                               (Max 5K Elements per chunk, min 50 per chunk group)   | 214.773 
- 		| ...                               (Max 10K Elements per chunk, min 100 per chunk group) | 213.279 !!!
- 		| ...                               (Max 10K Elements per chunk, min 5K per chunk group)  | 211.015
-                | ...                                                                                     | ...
-	        | Static Chunk without change file (2x2 Chunks)                                           | 139.841  
-====================================================================================================================	
-10K  data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 1K per chunk group)  | 63.119  
-                | ...                                                                5K per chunk group)  | 62.375
-                | ...                                                                100 per chunk group) | 61.780  !!!
-	        | Static Chunk without change file (2x2 Chunks)                                           | 49.423
-==================================================================================================================== 
-100K data count | Static Chunk without change file (2x2 Chunks)                                           | 6494   
-                | Static Chunk without change file (10x10 Chunks)                                         | 3054    
-	        | Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group) | 1148    !!!    
-	        | ...                                                                5K per chunk group)  | 1145   
-	        | ...                                                                1K per chunk group)  | 1070    
-	
+Top 5 with function createGame:
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 373 | 203
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 203
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395 | 202
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382 | 193
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 346 | 190
 
+Top 5 with function loadGame:
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 0
 
-Load Game       | Strategie                                                                               | ops/s
-===================================================================================================================
-1K   data count | Dynamic Chunk without change file (Max 1K Elements per chunk, min 100 per chunk group) | 798.272
-                | ...                               (Max 5K Elements per chunk, min 500 per chunk group) | 795.178 		
-                | ...                               (Max 10K Elements per chunk, min 100 per chunk group)| 790.932 !!!
+Top 5 with function createPlayers:
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 0
 
-===================================================================================================================	
-10K  data count | Dynamic Chunk without change file (Max 5K Elements per chunk, min 500 per chunk group) | 128.150
+Top 5 with function movePlayers:
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391 | 204
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395 | 193
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 192
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382 | 189
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 321 | 188
 
-=================================================================================================================== 
-100K data count | Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group)| 15.249  !!!
+Top 5 with function removePlayers:
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 0
 
+Top 5 with ('createGame', '1000'):
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 214.846 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391 | 214.773 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 373 | 213.279 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395 | 211.015 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 300 | 203.722 ops/s
 
-Bei Create und Load Game ist Dynamic Chunk without change file (Max 10K Elements per chunk, min 100 per chunk group) im Durchschnitt am besten
-   
+Top 5 with ('createGame', '10000'):
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 63.119 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395 | 62.375 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 373 | 61.780 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382 | 49.423 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 346 | 35.782 ops/s
 
+Top 5 with ('createGame', '100000'):
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382 | 6.494 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 344 | 4.049 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 266 | 3.054 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 2.328 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 303 | 1.485 ops/s
+
+Top 5 with ('loadGame', '1000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 2.185 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.890 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 2.009 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 1.620 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 50.023 ops/s
+
+Top 5 with ('loadGame', '10000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 2.098 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.758 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 1.792 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 1.555 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 27.210 ops/s
+
+Top 5 with ('loadGame', '100000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 1.536 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.194 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.908 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.678 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 4.552 ops/s
+
+Top 5 with ('createPlayers', '1000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 2.174 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.852 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.477 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.413 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 49.982 ops/s
+
+Top 5 with ('createPlayers', '10000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 1.689 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.480 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.195 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.205 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 28.610 ops/s
+
+Top 5 with ('createPlayers', '100000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0.554 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0.500 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.017 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.018 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 5.292 ops/s
+
+Top 5 with ('movePlayers', '1000'):
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395 | 596.102 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 553.609 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391 | 552.695 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 316 | 550.083 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 300 | 541.088 ops/s
+
+Top 5 with ('movePlayers', '10000'):
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 364 | 88.715 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382 | 87.362 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 335 | 87.034 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 321 | 86.285 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 315 | 86.141 ops/s
+
+Top 5 with ('movePlayers', '100000'):
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391 | 10.007 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 344 | 9.952 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395 | 9.686 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 335 | 9.487 ops/s
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 361 | 9.252 ops/s
+
+Top 5 with ('removePlayers', '1000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 2.065 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 1.789 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.403 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.368 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 31.002 ops/s
+
+Top 5 with ('removePlayers', '10000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0.768 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0.713 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.177 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.159 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 1.074 ops/s
+
+Top 5 with ('removePlayers', '100000'):
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124 | 0.006 ops/s
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117 | 0.006 ops/s
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52 | 0.004 ops/s
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49 | 0.004 ops/s
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260 | 0.004 ops/s
+
+All results:
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 395
+('createGame', '1000') => (214.846, 71/72)
+('createGame', '10000') => (63.119, 71/72)
+('createGame', '100000') => (1.070, 61/72)
+('loadGame', '1000') => (780.721, 0/72)
+('loadGame', '10000') => (118.107, 0/72)
+('loadGame', '100000') => (14.829, 0/72)
+('createPlayers', '1000') => (750.828, 0/72)
+('createPlayers', '10000') => (93.502, 0/72)
+('createPlayers', '100000') => (0.504, 0/72)
+('movePlayers', '1000') => (553.609, 70/72)
+('movePlayers', '10000') => (72.174, 53/72)
+('movePlayers', '100000') => (9.686, 69/72)
+('removePlayers', '1000') => (69.624, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 395
+('createGame', '1000') => (211.015, 68/72)
+('createGame', '10000') => (62.375, 70/72)
+('createGame', '100000') => (1.145, 64/72)
+('loadGame', '1000') => (789.454, 0/72)
+('loadGame', '10000') => (116.154, 0/72)
+('loadGame', '100000') => (14.997, 0/72)
+('createPlayers', '1000') => (753.239, 0/72)
+('createPlayers', '10000') => (93.293, 0/72)
+('createPlayers', '100000') => (0.513, 0/72)
+('movePlayers', '1000') => (596.102, 71/72)
+('movePlayers', '10000') => (76.319, 61/72)
+('movePlayers', '100000') => (8.265, 61/72)
+('removePlayers', '1000') => (73.775, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 391
+('createGame', '1000') => (214.773, 70/72)
+('createGame', '10000') => (20.223, 63/72)
+('createGame', '100000') => (0.644, 54/72)
+('loadGame', '1000') => (777.610, 0/72)
+('loadGame', '10000') => (128.035, 0/72)
+('loadGame', '100000') => (13.298, 0/72)
+('createPlayers', '1000') => (752.991, 0/72)
+('createPlayers', '10000') => (26.000, 0/72)
+('createPlayers', '100000') => (0.226, 0/72)
+('movePlayers', '1000') => (552.695, 69/72)
+('movePlayers', '10000') => (83.665, 64/72)
+('movePlayers', '100000') => (10.007, 71/72)
+('removePlayers', '1000') => (64.814, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 382
+('createGame', '1000') => (139.841, 54/72)
+('createGame', '10000') => (49.423, 68/72)
+('createGame', '100000') => (6.494, 71/72)
+('loadGame', '1000') => (613.734, 0/72)
+('loadGame', '10000') => (121.076, 0/72)
+('loadGame', '100000') => (12.161, 0/72)
+('createPlayers', '1000') => (561.354, 0/72)
+('createPlayers', '10000') => (107.830, 0/72)
+('createPlayers', '100000') => (10.773, 0/72)
+('movePlayers', '1000') => (421.187, 53/72)
+('movePlayers', '10000') => (87.362, 70/72)
+('movePlayers', '100000') => (9.242, 66/72)
+('removePlayers', '1000') => (79.807, 0/72)
+('removePlayers', '10000') => (1.014, 0/72)
+('removePlayers', '100000') => (0.003, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 373
+('createGame', '1000') => (213.279, 69/72)
+('createGame', '10000') => (61.780, 69/72)
+('createGame', '100000') => (1.148, 65/72)
+('loadGame', '1000') => (790.932, 0/72)
+('loadGame', '10000') => (117.283, 0/72)
+('loadGame', '100000') => (15.249, 0/72)
+('createPlayers', '1000') => (750.916, 0/72)
+('createPlayers', '10000') => (95.468, 0/72)
+('createPlayers', '100000') => (0.442, 0/72)
+('movePlayers', '1000') => (490.623, 65/72)
+('movePlayers', '10000') => (73.650, 54/72)
+('movePlayers', '100000') => (7.270, 51/72)
+('removePlayers', '1000') => (70.827, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 364
+('createGame', '1000') => (162.673, 63/72)
+('createGame', '10000') => (35.213, 65/72)
+('createGame', '100000') => (1.096, 62/72)
+('loadGame', '1000') => (288.776, 0/72)
+('loadGame', '10000') => (30.219, 0/72)
+('loadGame', '100000') => (5.489, 0/72)
+('createPlayers', '1000') => (633.908, 0/72)
+('createPlayers', '10000') => (107.646, 0/72)
+('createPlayers', '100000') => (0.568, 0/72)
+('movePlayers', '1000') => (465.625, 59/72)
+('movePlayers', '10000') => (88.715, 71/72)
+('movePlayers', '100000') => (7.194, 44/72)
+('removePlayers', '1000') => (77.432, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 361
+('createGame', '1000') => (191.975, 65/72)
+('createGame', '10000') => (19.245, 62/72)
+('createGame', '100000') => (0.541, 49/72)
+('loadGame', '1000') => (775.537, 0/72)
+('loadGame', '10000') => (126.270, 0/72)
+('loadGame', '100000') => (12.593, 0/72)
+('createPlayers', '1000') => (753.313, 0/72)
+('createPlayers', '10000') => (24.831, 0/72)
+('createPlayers', '100000') => (0.199, 0/72)
+('movePlayers', '1000') => (532.465, 66/72)
+('movePlayers', '10000') => (67.701, 52/72)
+('movePlayers', '100000') => (9.252, 67/72)
+('removePlayers', '1000') => (75.146, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 346
+('createGame', '1000') => (159.244, 60/72)
+('createGame', '10000') => (35.782, 67/72)
+('createGame', '100000') => (1.137, 63/72)
+('loadGame', '1000') => (285.132, 0/72)
+('loadGame', '10000') => (31.369, 0/72)
+('loadGame', '100000') => (5.590, 0/72)
+('createPlayers', '1000') => (627.281, 0/72)
+('createPlayers', '10000') => (105.570, 0/72)
+('createPlayers', '100000') => (0.543, 0/72)
+('movePlayers', '1000') => (460.610, 57/72)
+('movePlayers', '10000') => (65.022, 46/72)
+('movePlayers', '100000') => (7.356, 53/72)
+('removePlayers', '1000') => (65.591, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 346
+('createGame', '1000') => (158.778, 59/72)
+('createGame', '10000') => (16.378, 59/72)
+('createGame', '100000') => (0.622, 51/72)
+('loadGame', '1000') => (283.507, 0/72)
+('loadGame', '10000') => (50.217, 0/72)
+('loadGame', '100000') => (5.211, 0/72)
+('createPlayers', '1000') => (631.386, 0/72)
+('createPlayers', '10000') => (29.033, 0/72)
+('createPlayers', '100000') => (0.259, 0/72)
+('movePlayers', '1000') => (467.394, 60/72)
+('movePlayers', '10000') => (83.889, 65/72)
+('movePlayers', '100000') => (7.318, 52/72)
+('removePlayers', '1000') => (70.070, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 344
+('createGame', '1000') => (104.632, 53/72)
+('createGame', '10000') => (31.181, 64/72)
+('createGame', '100000') => (4.049, 70/72)
+('loadGame', '1000') => (270.584, 0/72)
+('loadGame', '10000') => (35.907, 0/72)
+('loadGame', '100000') => (3.617, 0/72)
+('createPlayers', '1000') => (469.721, 0/72)
+('createPlayers', '10000') => (109.094, 0/72)
+('createPlayers', '100000') => (11.411, 0/72)
+('movePlayers', '1000') => (358.673, 45/72)
+('movePlayers', '10000') => (58.330, 42/72)
+('movePlayers', '100000') => (9.952, 70/72)
+('removePlayers', '1000') => (65.718, 0/72)
+('removePlayers', '10000') => (1.142, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 344
+('createGame', '1000') => (161.003, 61/72)
+('createGame', '10000') => (35.704, 66/72)
+('createGame', '100000') => (1.017, 59/72)
+('loadGame', '1000') => (284.955, 0/72)
+('loadGame', '10000') => (31.455, 0/72)
+('loadGame', '100000') => (5.415, 0/72)
+('createPlayers', '1000') => (621.234, 0/72)
+('createPlayers', '10000') => (110.397, 0/72)
+('createPlayers', '100000') => (0.595, 0/72)
+('movePlayers', '1000') => (424.816, 54/72)
+('movePlayers', '10000') => (65.724, 49/72)
+('movePlayers', '100000') => (7.919, 55/72)
+('removePlayers', '1000') => (70.584, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 338
+('createGame', '1000') => (154.070, 57/72)
+('createGame', '10000') => (17.056, 61/72)
+('createGame', '100000') => (0.640, 52/72)
+('loadGame', '1000') => (282.019, 0/72)
+('loadGame', '10000') => (51.372, 0/72)
+('loadGame', '100000') => (5.190, 0/72)
+('createPlayers', '1000') => (627.851, 0/72)
+('createPlayers', '10000') => (30.036, 0/72)
+('createPlayers', '100000') => (0.262, 0/72)
+('movePlayers', '1000') => (447.450, 56/72)
+('movePlayers', '10000') => (84.890, 66/72)
+('movePlayers', '100000') => (7.227, 46/72)
+('removePlayers', '1000') => (77.551, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 335
+('createGame', '1000') => (90.938, 51/72)
+('createGame', '10000') => (14.081, 56/72)
+('createGame', '100000') => (0.745, 57/72)
+('loadGame', '1000') => (180.143, 0/72)
+('loadGame', '10000') => (20.224, 0/72)
+('loadGame', '100000') => (3.636, 0/72)
+('createPlayers', '1000') => (527.378, 0/72)
+('createPlayers', '10000') => (104.433, 0/72)
+('createPlayers', '100000') => (0.548, 0/72)
+('movePlayers', '1000') => (404.375, 52/72)
+('movePlayers', '10000') => (87.034, 69/72)
+('movePlayers', '100000') => (7.253, 50/72)
+('removePlayers', '1000') => (57.088, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 335
+('createGame', '1000') => (90.864, 50/72)
+('createGame', '10000') => (14.064, 55/72)
+('createGame', '100000') => (0.716, 55/72)
+('loadGame', '1000') => (181.390, 0/72)
+('loadGame', '10000') => (19.584, 0/72)
+('loadGame', '100000') => (3.606, 0/72)
+('createPlayers', '1000') => (525.735, 0/72)
+('createPlayers', '10000') => (104.465, 0/72)
+('createPlayers', '100000') => (0.547, 0/72)
+('movePlayers', '1000') => (383.722, 49/72)
+('movePlayers', '10000') => (75.073, 58/72)
+('movePlayers', '100000') => (9.487, 68/72)
+('removePlayers', '1000') => (57.689, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 329
+('createGame', '1000') => (161.217, 62/72)
+('createGame', '10000') => (16.594, 60/72)
+('createGame', '100000') => (0.641, 53/72)
+('loadGame', '1000') => (284.794, 0/72)
+('loadGame', '10000') => (51.473, 0/72)
+('loadGame', '100000') => (5.243, 0/72)
+('createPlayers', '1000') => (641.119, 0/72)
+('createPlayers', '10000') => (28.714, 0/72)
+('createPlayers', '100000') => (0.264, 0/72)
+('movePlayers', '1000') => (465.224, 58/72)
+('movePlayers', '10000') => (65.024, 47/72)
+('movePlayers', '100000') => (7.248, 49/72)
+('removePlayers', '1000') => (65.672, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 325
+('createGame', '1000') => (59.149, 33/72)
+('createGame', '10000') => (14.872, 58/72)
+('createGame', '100000') => (0.585, 50/72)
+('loadGame', '1000') => (795.178, 0/72)
+('loadGame', '10000') => (128.150, 0/72)
+('loadGame', '100000') => (12.789, 0/72)
+('createPlayers', '1000') => (749.214, 0/72)
+('createPlayers', '10000') => (23.806, 0/72)
+('createPlayers', '100000') => (0.238, 0/72)
+('movePlayers', '1000') => (483.508, 63/72)
+('movePlayers', '10000') => (75.768, 59/72)
+('movePlayers', '100000') => (8.299, 62/72)
+('removePlayers', '1000') => (70.063, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 321
+('createGame', '1000') => (153.246, 56/72)
+('createGame', '10000') => (6.051, 42/72)
+('createGame', '100000') => (0.178, 35/72)
+('loadGame', '1000') => (286.810, 0/72)
+('loadGame', '10000') => (32.790, 0/72)
+('loadGame', '100000') => (3.437, 0/72)
+('createPlayers', '1000') => (560.534, 0/72)
+('createPlayers', '10000') => (5.581, 0/72)
+('createPlayers', '100000') => (0.064, 0/72)
+('movePlayers', '1000') => (438.453, 55/72)
+('movePlayers', '10000') => (86.285, 68/72)
+('movePlayers', '100000') => (8.354, 65/72)
+('removePlayers', '1000') => (72.603, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 316
+('createGame', '1000') => (171.159, 64/72)
+('createGame', '10000') => (5.278, 37/72)
+('createGame', '100000') => (0.170, 33/72)
+('loadGame', '1000') => (782.666, 0/72)
+('loadGame', '10000') => (59.724, 0/72)
+('loadGame', '100000') => (6.299, 0/72)
+('createPlayers', '1000') => (582.507, 0/72)
+('createPlayers', '10000') => (4.919, 0/72)
+('createPlayers', '100000') => (0.062, 0/72)
+('movePlayers', '1000') => (550.083, 68/72)
+('movePlayers', '10000') => (67.513, 50/72)
+('movePlayers', '100000') => (8.347, 64/72)
+('removePlayers', '1000') => (71.936, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 315
+('createGame', '1000') => (90.813, 49/72)
+('createGame', '10000') => (14.203, 57/72)
+('createGame', '100000') => (0.734, 56/72)
+('loadGame', '1000') => (179.069, 0/72)
+('loadGame', '10000') => (20.286, 0/72)
+('loadGame', '100000') => (3.665, 0/72)
+('createPlayers', '1000') => (528.439, 0/72)
+('createPlayers', '10000') => (104.710, 0/72)
+('createPlayers', '100000') => (0.563, 0/72)
+('movePlayers', '1000') => (352.456, 43/72)
+('movePlayers', '10000') => (86.141, 67/72)
+('movePlayers', '100000') => (7.145, 43/72)
+('removePlayers', '1000') => (73.541, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 309
+('createGame', '1000') => (203.195, 66/72)
+('createGame', '10000') => (5.875, 39/72)
+('createGame', '100000') => (0.151, 29/72)
+('loadGame', '1000') => (789.105, 0/72)
+('loadGame', '10000') => (60.481, 0/72)
+('loadGame', '100000') => (6.706, 0/72)
+('createPlayers', '1000') => (585.895, 0/72)
+('createPlayers', '10000') => (4.942, 0/72)
+('createPlayers', '100000') => (0.063, 0/72)
+('movePlayers', '1000') => (478.492, 61/72)
+('movePlayers', '10000') => (67.538, 51/72)
+('movePlayers', '100000') => (8.321, 63/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 303
+('createGame', '1000') => (69.711, 39/72)
+('createGame', '10000') => (13.297, 54/72)
+('createGame', '100000') => (1.485, 67/72)
+('loadGame', '1000') => (180.474, 0/72)
+('loadGame', '10000') => (22.768, 0/72)
+('loadGame', '100000') => (2.291, 0/72)
+('createPlayers', '1000') => (394.037, 0/72)
+('createPlayers', '10000') => (105.080, 0/72)
+('createPlayers', '100000') => (11.521, 0/72)
+('movePlayers', '1000') => (307.857, 42/72)
+('movePlayers', '10000') => (75.847, 60/72)
+('movePlayers', '100000') => (6.700, 41/72)
+('removePlayers', '1000') => (64.707, 0/72)
+('removePlayers', '10000') => (1.046, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 300
+('createGame', '1000') => (203.722, 67/72)
+('createGame', '10000') => (6.129, 43/72)
+('createGame', '100000') => (0.160, 31/72)
+('loadGame', '1000') => (798.272, 0/72)
+('loadGame', '10000') => (59.843, 0/72)
+('loadGame', '100000') => (5.617, 0/72)
+('createPlayers', '1000') => (592.903, 0/72)
+('createPlayers', '10000') => (4.822, 0/72)
+('createPlayers', '100000') => (0.063, 0/72)
+('movePlayers', '1000') => (541.088, 67/72)
+('movePlayers', '10000') => (64.824, 45/72)
+('movePlayers', '100000') => (7.236, 47/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 299
+('createGame', '1000') => (155.399, 58/72)
+('createGame', '10000') => (5.985, 41/72)
+('createGame', '100000') => (0.177, 34/72)
+('loadGame', '1000') => (287.776, 0/72)
+('loadGame', '10000') => (33.641, 0/72)
+('loadGame', '100000') => (3.471, 0/72)
+('createPlayers', '1000') => (491.736, 0/72)
+('createPlayers', '10000') => (5.538, 0/72)
+('createPlayers', '100000') => (0.067, 0/72)
+('movePlayers', '1000') => (479.620, 62/72)
+('movePlayers', '10000') => (64.784, 44/72)
+('movePlayers', '100000') => (8.260, 60/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 296
+('createGame', '1000') => (88.341, 47/72)
+('createGame', '10000') => (9.710, 48/72)
+('createGame', '100000') => (0.496, 46/72)
+('loadGame', '1000') => (180.479, 0/72)
+('loadGame', '10000') => (33.994, 0/72)
+('loadGame', '100000') => (3.449, 0/72)
+('createPlayers', '1000') => (460.741, 0/72)
+('createPlayers', '10000') => (27.142, 0/72)
+('createPlayers', '100000') => (0.254, 0/72)
+('movePlayers', '1000') => (382.914, 48/72)
+('movePlayers', '10000') => (79.537, 62/72)
+('movePlayers', '100000') => (7.195, 45/72)
+('removePlayers', '1000') => (58.703, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 292
+('createGame', '1000') => (86.270, 45/72)
+('createGame', '10000') => (9.536, 46/72)
+('createGame', '100000') => (0.522, 48/72)
+('loadGame', '1000') => (182.252, 0/72)
+('loadGame', '10000') => (34.046, 0/72)
+('loadGame', '100000') => (3.440, 0/72)
+('createPlayers', '1000') => (522.519, 0/72)
+('createPlayers', '10000') => (29.299, 0/72)
+('createPlayers', '100000') => (0.260, 0/72)
+('movePlayers', '1000') => (375.631, 47/72)
+('movePlayers', '10000') => (65.131, 48/72)
+('movePlayers', '100000') => (8.173, 58/72)
+('removePlayers', '1000') => (58.128, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 292
+('createGame', '1000') => (150.837, 55/72)
+('createGame', '10000') => (5.950, 40/72)
+('createGame', '100000') => (0.153, 30/72)
+('loadGame', '1000') => (289.799, 0/72)
+('loadGame', '10000') => (33.954, 0/72)
+('loadGame', '100000') => (3.486, 0/72)
+('createPlayers', '1000') => (537.083, 0/72)
+('createPlayers', '10000') => (5.532, 0/72)
+('createPlayers', '100000') => (0.066, 0/72)
+('movePlayers', '1000') => (487.799, 64/72)
+('movePlayers', '10000') => (73.710, 55/72)
+('movePlayers', '100000') => (7.243, 48/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 288
+('createGame', '1000') => (90.397, 48/72)
+('createGame', '10000') => (9.735, 49/72)
+('createGame', '100000') => (0.511, 47/72)
+('loadGame', '1000') => (176.851, 0/72)
+('loadGame', '10000') => (33.791, 0/72)
+('loadGame', '100000') => (3.462, 0/72)
+('createPlayers', '1000') => (531.940, 0/72)
+('createPlayers', '10000') => (29.102, 0/72)
+('createPlayers', '100000') => (0.269, 0/72)
+('movePlayers', '1000') => (372.038, 46/72)
+('movePlayers', '10000') => (73.949, 56/72)
+('movePlayers', '100000') => (7.144, 42/72)
+('removePlayers', '1000') => (59.123, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 288
+('createGame', '1000') => (91.112, 52/72)
+('createGame', '10000') => (4.572, 36/72)
+('createGame', '100000') => (0.149, 28/72)
+('loadGame', '1000') => (180.693, 0/72)
+('loadGame', '10000') => (23.867, 0/72)
+('loadGame', '100000') => (2.461, 0/72)
+('createPlayers', '1000') => (412.919, 0/72)
+('createPlayers', '10000') => (4.983, 0/72)
+('createPlayers', '100000') => (0.065, 0/72)
+('movePlayers', '1000') => (386.315, 50/72)
+('movePlayers', '10000') => (80.311, 63/72)
+('movePlayers', '100000') => (8.231, 59/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 268
+('createGame', '1000') => (80.971, 44/72)
+('createGame', '10000') => (4.489, 35/72)
+('createGame', '100000') => (0.167, 32/72)
+('loadGame', '1000') => (179.000, 0/72)
+('loadGame', '10000') => (23.749, 0/72)
+('loadGame', '100000') => (2.453, 0/72)
+('createPlayers', '1000') => (461.037, 0/72)
+('createPlayers', '10000') => (5.420, 0/72)
+('createPlayers', '100000') => (0.065, 0/72)
+('movePlayers', '1000') => (357.489, 44/72)
+('movePlayers', '10000') => (74.697, 57/72)
+('movePlayers', '100000') => (8.068, 56/72)
+('removePlayers', '1000') => (61.574, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 266
+('createGame', '1000') => (12.191, 29/72)
+('createGame', '10000') => (9.594, 47/72)
+('createGame', '100000') => (3.054, 69/72)
+('loadGame', '1000') => (63.948, 0/72)
+('loadGame', '10000') => (48.210, 0/72)
+('loadGame', '100000') => (13.300, 0/72)
+('createPlayers', '1000') => (59.349, 0/72)
+('createPlayers', '10000') => (31.967, 0/72)
+('createPlayers', '100000') => (5.146, 0/72)
+('movePlayers', '1000') => (62.530, 41/72)
+('movePlayers', '10000') => (37.890, 41/72)
+('movePlayers', '100000') => (6.065, 39/72)
+('removePlayers', '1000') => (40.963, 0/72)
+('removePlayers', '10000') => (1.120, 0/72)
+('removePlayers', '100000') => (0.006, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 263
+('createGame', '1000') => (8.493, 27/72)
+('createGame', '10000') => (5.381, 38/72)
+('createGame', '100000') => (1.161, 66/72)
+('loadGame', '1000') => (40.334, 0/72)
+('loadGame', '10000') => (18.648, 0/72)
+('loadGame', '100000') => (3.019, 0/72)
+('createPlayers', '1000') => (42.659, 0/72)
+('createPlayers', '10000') => (26.943, 0/72)
+('createPlayers', '100000') => (4.964, 0/72)
+('movePlayers', '1000') => (40.057, 39/72)
+('movePlayers', '10000') => (28.051, 39/72)
+('movePlayers', '100000') => (7.603, 54/72)
+('removePlayers', '1000') => (27.214, 0/72)
+('removePlayers', '10000') => (1.075, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 260
+('createGame', '1000') => (9.070, 28/72)
+('createGame', '10000') => (7.021, 44/72)
+('createGame', '100000') => (2.328, 68/72)
+('loadGame', '1000') => (50.023, 0/72)
+('loadGame', '10000') => (27.210, 0/72)
+('loadGame', '100000') => (4.552, 0/72)
+('createPlayers', '1000') => (49.982, 0/72)
+('createPlayers', '10000') => (28.610, 0/72)
+('createPlayers', '100000') => (5.292, 0/72)
+('movePlayers', '1000') => (47.086, 40/72)
+('movePlayers', '10000') => (28.841, 40/72)
+('movePlayers', '100000') => (6.201, 40/72)
+('removePlayers', '1000') => (31.002, 0/72)
+('removePlayers', '10000') => (1.074, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 258
+('createGame', '1000') => (87.759, 46/72)
+('createGame', '10000') => (4.488, 34/72)
+('createGame', '100000') => (0.143, 27/72)
+('loadGame', '1000') => (181.821, 0/72)
+('loadGame', '10000') => (23.341, 0/72)
+('loadGame', '100000') => (2.489, 0/72)
+('createPlayers', '1000') => (454.138, 0/72)
+('createPlayers', '10000') => (5.553, 0/72)
+('createPlayers', '100000') => (0.065, 0/72)
+('movePlayers', '1000') => (390.293, 51/72)
+('movePlayers', '10000') => (64.546, 43/72)
+('movePlayers', '100000') => (8.130, 57/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 238
+('createGame', '1000') => (71.226, 43/72)
+('createGame', '10000') => (10.118, 53/72)
+('createGame', '100000') => (0.293, 43/72)
+('loadGame', '1000') => (420.867, 0/72)
+('loadGame', '10000') => (94.792, 0/72)
+('loadGame', '100000') => (8.044, 0/72)
+('createPlayers', '1000') => (71.424, 0/72)
+('createPlayers', '10000') => (4.015, 0/72)
+('createPlayers', '100000') => (0.191, 0/72)
+('movePlayers', '1000') => (35.069, 37/72)
+('movePlayers', '10000') => (4.203, 34/72)
+('movePlayers', '100000') => (0.425, 28/72)
+('removePlayers', '1000') => (20.297, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 237
+('createGame', '1000') => (69.874, 40/72)
+('createGame', '10000') => (9.834, 51/72)
+('createGame', '100000') => (0.290, 42/72)
+('loadGame', '1000') => (427.015, 0/72)
+('loadGame', '10000') => (95.723, 0/72)
+('loadGame', '100000') => (7.485, 0/72)
+('createPlayers', '1000') => (71.115, 0/72)
+('createPlayers', '10000') => (4.014, 0/72)
+('createPlayers', '100000') => (0.194, 0/72)
+('movePlayers', '1000') => (34.557, 32/72)
+('movePlayers', '10000') => (4.223, 38/72)
+('movePlayers', '100000') => (0.431, 34/72)
+('removePlayers', '1000') => (19.781, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 236
+('createGame', '1000') => (69.989, 41/72)
+('createGame', '10000') => (9.924, 52/72)
+('createGame', '100000') => (0.293, 44/72)
+('loadGame', '1000') => (428.183, 0/72)
+('loadGame', '10000') => (98.485, 0/72)
+('loadGame', '100000') => (7.610, 0/72)
+('createPlayers', '1000') => (71.260, 0/72)
+('createPlayers', '10000') => (3.894, 0/72)
+('createPlayers', '100000') => (0.183, 0/72)
+('movePlayers', '1000') => (35.260, 38/72)
+('movePlayers', '10000') => (4.179, 32/72)
+('movePlayers', '100000') => (0.426, 29/72)
+('removePlayers', '1000') => (19.744, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 231
+('createGame', '1000') => (60.127, 34/72)
+('createGame', '10000') => (8.911, 45/72)
+('createGame', '100000') => (0.931, 58/72)
+('loadGame', '1000') => (60.098, 0/72)
+('loadGame', '10000') => (42.987, 0/72)
+('loadGame', '100000') => (9.111, 0/72)
+('createPlayers', '1000') => (12.667, 0/72)
+('createPlayers', '10000') => (5.787, 0/72)
+('createPlayers', '100000') => (0.896, 0/72)
+('movePlayers', '1000') => (11.754, 28/72)
+('movePlayers', '10000') => (4.171, 31/72)
+('movePlayers', '100000') => (0.542, 35/72)
+('removePlayers', '1000') => (9.347, 0/72)
+('removePlayers', '10000') => (0.705, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 228
+('createGame', '1000') => (68.778, 36/72)
+('createGame', '10000') => (9.763, 50/72)
+('createGame', '100000') => (1.029, 60/72)
+('loadGame', '1000') => (365.879, 0/72)
+('loadGame', '10000') => (103.579, 0/72)
+('loadGame', '100000') => (9.126, 0/72)
+('createPlayers', '1000') => (62.391, 0/72)
+('createPlayers', '10000') => (10.160, 0/72)
+('createPlayers', '100000') => (1.063, 0/72)
+('movePlayers', '1000') => (32.713, 29/72)
+('movePlayers', '10000') => (4.113, 28/72)
+('movePlayers', '100000') => (0.394, 25/72)
+('removePlayers', '1000') => (19.570, 0/72)
+('removePlayers', '10000') => (0.678, 0/72)
+('removePlayers', '100000') => (0.003, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 215
+('createGame', '1000') => (71.209, 42/72)
+('createGame', '10000') => (2.714, 31/72)
+('createGame', '100000') => (0.249, 40/72)
+('loadGame', '1000') => (422.583, 0/72)
+('loadGame', '10000') => (94.807, 0/72)
+('loadGame', '100000') => (6.620, 0/72)
+('createPlayers', '1000') => (72.115, 0/72)
+('createPlayers', '10000') => (2.742, 0/72)
+('createPlayers', '100000') => (0.134, 0/72)
+('movePlayers', '1000') => (35.055, 36/72)
+('movePlayers', '10000') => (4.204, 35/72)
+('movePlayers', '100000') => (0.427, 31/72)
+('removePlayers', '1000') => (19.620, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 197
+('createGame', '1000') => (48.794, 32/72)
+('createGame', '10000') => (2.186, 27/72)
+('createGame', '100000') => (0.246, 38/72)
+('loadGame', '1000') => (425.862, 0/72)
+('loadGame', '10000') => (102.837, 0/72)
+('loadGame', '100000') => (6.881, 0/72)
+('createPlayers', '1000') => (71.949, 0/72)
+('createPlayers', '10000') => (2.740, 0/72)
+('createPlayers', '100000') => (0.138, 0/72)
+('movePlayers', '1000') => (34.277, 31/72)
+('movePlayers', '10000') => (4.213, 36/72)
+('movePlayers', '100000') => (0.428, 33/72)
+('removePlayers', '1000') => (20.495, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 195
+('createGame', '1000') => (47.946, 31/72)
+('createGame', '10000') => (2.626, 29/72)
+('createGame', '100000') => (0.204, 36/72)
+('loadGame', '1000') => (415.025, 0/72)
+('loadGame', '10000') => (101.224, 0/72)
+('loadGame', '100000') => (7.024, 0/72)
+('createPlayers', '1000') => (72.050, 0/72)
+('createPlayers', '10000') => (2.743, 0/72)
+('createPlayers', '100000') => (0.133, 0/72)
+('movePlayers', '1000') => (34.074, 30/72)
+('movePlayers', '10000') => (4.223, 37/72)
+('movePlayers', '100000') => (0.428, 32/72)
+('removePlayers', '1000') => (19.905, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 187
+('createGame', '1000') => (69.669, 38/72)
+('createGame', '10000') => (2.746, 32/72)
+('createGame', '100000') => (0.127, 26/72)
+('loadGame', '1000') => (428.667, 0/72)
+('loadGame', '10000') => (52.909, 0/72)
+('loadGame', '100000') => (2.582, 0/72)
+('createPlayers', '1000') => (32.888, 0/72)
+('createPlayers', '10000') => (2.216, 0/72)
+('createPlayers', '100000') => (0.053, 0/72)
+('movePlayers', '1000') => (34.977, 35/72)
+('movePlayers', '10000') => (4.152, 30/72)
+('movePlayers', '100000') => (0.398, 26/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 185
+('createGame', '1000') => (68.871, 37/72)
+('createGame', '10000') => (2.693, 30/72)
+('createGame', '100000') => (0.115, 25/72)
+('loadGame', '1000') => (415.266, 0/72)
+('loadGame', '10000') => (53.859, 0/72)
+('loadGame', '100000') => (2.631, 0/72)
+('createPlayers', '1000') => (33.351, 0/72)
+('createPlayers', '10000') => (2.196, 0/72)
+('createPlayers', '100000') => (0.052, 0/72)
+('movePlayers', '1000') => (34.586, 33/72)
+('movePlayers', '10000') => (4.194, 33/72)
+('movePlayers', '100000') => (0.399, 27/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 180
+('createGame', '1000') => (64.801, 35/72)
+('createGame', '10000') => (2.537, 28/72)
+('createGame', '100000') => (0.113, 24/72)
+('loadGame', '1000') => (434.550, 0/72)
+('loadGame', '10000') => (51.506, 0/72)
+('loadGame', '100000') => (2.753, 0/72)
+('createPlayers', '1000') => (33.020, 0/72)
+('createPlayers', '10000') => (2.213, 0/72)
+('createPlayers', '100000') => (0.053, 0/72)
+('movePlayers', '1000') => (34.783, 34/72)
+('movePlayers', '10000') => (4.138, 29/72)
+('movePlayers', '100000') => (0.427, 30/72)
+('removePlayers', '1000') => (15.705, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 135
+('createGame', '1000') => (0.534, 2/72)
+('createGame', '10000') => (0.501, 26/72)
+('createGame', '100000') => (0.255, 41/72)
+('loadGame', '1000') => (2.687, 0/72)
+('loadGame', '10000') => (2.663, 0/72)
+('loadGame', '100000') => (2.411, 0/72)
+('createPlayers', '1000') => (0.283, 0/72)
+('createPlayers', '10000') => (1.953, 0/72)
+('createPlayers', '100000') => (0.252, 0/72)
+('movePlayers', '1000') => (0.303, 1/72)
+('movePlayers', '10000') => (2.495, 27/72)
+('movePlayers', '100000') => (1.854, 38/72)
+('removePlayers', '1000') => (2.830, 0/72)
+('removePlayers', '10000') => (0.291, 0/72)
+('removePlayers', '100000') => (0.007, 0/72)
+=================================================================================================================================================
+Serialization: Binary | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 133
+('createGame', '1000') => (17.888, 30/72)
+('createGame', '10000') => (3.275, 33/72)
+('createGame', '100000') => (0.364, 45/72)
+('loadGame', '1000') => (2.514, 0/72)
+('loadGame', '10000') => (2.289, 0/72)
+('loadGame', '100000') => (1.153, 0/72)
+('createPlayers', '1000') => (0.195, 0/72)
+('createPlayers', '10000') => (0.192, 0/72)
+('createPlayers', '100000') => (0.131, 0/72)
+('movePlayers', '1000') => (0.194, 0/72)
+('movePlayers', '10000') => (0.205, 1/72)
+('movePlayers', '100000') => (0.147, 24/72)
+('removePlayers', '1000') => (0.218, 0/72)
+('removePlayers', '10000') => (0.161, 0/72)
+('removePlayers', '100000') => (0.009, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 124
+('createGame', '1000') => (0.370, 1/72)
+('createGame', '10000') => (0.343, 16/72)
+('createGame', '100000') => (0.246, 39/72)
+('loadGame', '1000') => (2.185, 0/72)
+('loadGame', '10000') => (2.098, 0/72)
+('loadGame', '100000') => (1.536, 0/72)
+('createPlayers', '1000') => (2.174, 0/72)
+('createPlayers', '10000') => (1.689, 0/72)
+('createPlayers', '100000') => (0.554, 0/72)
+('movePlayers', '1000') => (2.174, 5/72)
+('movePlayers', '10000') => (2.023, 26/72)
+('movePlayers', '100000') => (1.453, 37/72)
+('removePlayers', '1000') => (2.065, 0/72)
+('removePlayers', '10000') => (0.768, 0/72)
+('removePlayers', '100000') => (0.006, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: False | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 117
+('createGame', '1000') => (0.356, 0/72)
+('createGame', '10000') => (0.343, 15/72)
+('createGame', '100000') => (0.218, 37/72)
+('loadGame', '1000') => (1.890, 0/72)
+('loadGame', '10000') => (1.758, 0/72)
+('loadGame', '100000') => (1.194, 0/72)
+('createPlayers', '1000') => (1.852, 0/72)
+('createPlayers', '10000') => (1.480, 0/72)
+('createPlayers', '100000') => (0.500, 0/72)
+('movePlayers', '1000') => (1.884, 4/72)
+('movePlayers', '10000') => (1.781, 25/72)
+('movePlayers', '100000') => (1.341, 36/72)
+('removePlayers', '1000') => (1.789, 0/72)
+('removePlayers', '10000') => (0.713, 0/72)
+('removePlayers', '100000') => (0.006, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 108
+('createGame', '1000') => (3.609, 11/72)
+('createGame', '10000') => (0.349, 18/72)
+('createGame', '100000') => (0.019, 21/72)
+('loadGame', '1000') => (212.781, 0/72)
+('loadGame', '10000') => (30.884, 0/72)
+('loadGame', '100000') => (2.393, 0/72)
+('createPlayers', '1000') => (3.674, 0/72)
+('createPlayers', '10000') => (0.288, 0/72)
+('createPlayers', '100000') => (0.019, 0/72)
+('movePlayers', '1000') => (3.734, 18/72)
+('movePlayers', '10000') => (0.337, 18/72)
+('movePlayers', '100000') => (0.015, 22/72)
+('removePlayers', '1000') => (3.367, 0/72)
+('removePlayers', '10000') => (0.193, 0/72)
+('removePlayers', '100000') => (0.003, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 105
+('createGame', '1000') => (3.794, 24/72)
+('createGame', '10000') => (0.366, 21/72)
+('createGame', '100000') => (0.008, 10/72)
+('loadGame', '1000') => (149.963, 0/72)
+('loadGame', '10000') => (17.986, 0/72)
+('createPlayers', '1000') => (3.834, 0/72)
+('createPlayers', '10000') => (0.072, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.859, 25/72)
+('movePlayers', '10000') => (0.346, 20/72)
+('movePlayers', '100000') => (0.014, 5/72)
+('removePlayers', '1000') => (3.257, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 101
+('createGame', '1000') => (3.728, 20/72)
+('createGame', '10000') => (0.371, 24/72)
+('createGame', '100000') => (0.008, 12/72)
+('loadGame', '1000') => (151.823, 0/72)
+('loadGame', '10000') => (17.869, 0/72)
+('createPlayers', '1000') => (3.852, 0/72)
+('createPlayers', '10000') => (0.068, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.834, 23/72)
+('movePlayers', '10000') => (0.328, 15/72)
+('movePlayers', '100000') => (0.014, 7/72)
+('removePlayers', '1000') => (3.262, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 99
+('createGame', '1000') => (3.656, 15/72)
+('createGame', '10000') => (0.366, 22/72)
+('createGame', '100000') => (0.019, 20/72)
+('loadGame', '1000') => (147.557, 0/72)
+('loadGame', '10000') => (20.084, 0/72)
+('loadGame', '100000') => (1.558, 0/72)
+('createPlayers', '1000') => (3.668, 0/72)
+('createPlayers', '10000') => (0.364, 0/72)
+('createPlayers', '100000') => (0.019, 0/72)
+('movePlayers', '1000') => (3.411, 8/72)
+('movePlayers', '10000') => (0.359, 24/72)
+('movePlayers', '100000') => (0.014, 10/72)
+('removePlayers', '1000') => (3.097, 0/72)
+('removePlayers', '10000') => (0.186, 0/72)
+('removePlayers', '100000') => (0.003, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 94
+('createGame', '1000') => (3.753, 23/72)
+('createGame', '10000') => (0.367, 23/72)
+('createGame', '100000') => (0.008, 14/72)
+('loadGame', '1000') => (149.467, 0/72)
+('loadGame', '10000') => (17.967, 0/72)
+('createPlayers', '1000') => (3.774, 0/72)
+('createPlayers', '10000') => (0.069, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.641, 12/72)
+('movePlayers', '10000') => (0.322, 14/72)
+('movePlayers', '100000') => (0.014, 8/72)
+('removePlayers', '1000') => (3.211, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 94
+('createGame', '1000') => (3.738, 21/72)
+('createGame', '10000') => (0.373, 25/72)
+('createGame', '100000') => (0.008, 11/72)
+('loadGame', '1000') => (219.328, 0/72)
+('loadGame', '10000') => (27.340, 0/72)
+('createPlayers', '1000') => (3.701, 0/72)
+('createPlayers', '10000') => (0.067, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.751, 21/72)
+('movePlayers', '10000') => (0.275, 10/72)
+('movePlayers', '100000') => (0.014, 6/72)
+('removePlayers', '1000') => (3.496, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 93
+('createGame', '1000') => (3.285, 6/72)
+('createGame', '10000') => (0.361, 19/72)
+('createGame', '100000') => (0.019, 22/72)
+('loadGame', '1000') => (38.608, 0/72)
+('loadGame', '10000') => (17.108, 0/72)
+('loadGame', '100000') => (1.995, 0/72)
+('createPlayers', '1000') => (2.764, 0/72)
+('createPlayers', '10000') => (0.363, 0/72)
+('createPlayers', '100000') => (0.019, 0/72)
+('movePlayers', '1000') => (2.686, 6/72)
+('movePlayers', '10000') => (0.335, 17/72)
+('movePlayers', '100000') => (0.015, 23/72)
+('removePlayers', '1000') => (2.792, 0/72)
+('removePlayers', '10000') => (0.240, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 92
+('createGame', '1000') => (3.748, 22/72)
+('createGame', '10000') => (0.041, 3/72)
+('createGame', '100000') => (0.008, 8/72)
+('loadGame', '1000') => (149.588, 0/72)
+('createPlayers', '1000') => (3.915, 0/72)
+('createPlayers', '10000') => (0.042, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.809, 22/72)
+('movePlayers', '10000') => (0.344, 19/72)
+('movePlayers', '100000') => (0.015, 18/72)
+('removePlayers', '1000') => (3.282, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 89
+('createGame', '1000') => (3.667, 16/72)
+('createGame', '10000') => (0.043, 5/72)
+('createGame', '100000') => (0.008, 9/72)
+('loadGame', '1000') => (149.924, 0/72)
+('createPlayers', '1000') => (3.910, 0/72)
+('createPlayers', '10000') => (0.042, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.716, 16/72)
+('movePlayers', '10000') => (0.358, 23/72)
+('movePlayers', '100000') => (0.015, 20/72)
+('removePlayers', '1000') => (3.288, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 86
+('createGame', '1000') => (3.649, 14/72)
+('createGame', '10000') => (0.302, 14/72)
+('createGame', '100000') => (0.008, 13/72)
+('loadGame', '1000') => (222.085, 0/72)
+('loadGame', '10000') => (27.801, 0/72)
+('createPlayers', '1000') => (3.695, 0/72)
+('createPlayers', '10000') => (0.071, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.712, 15/72)
+('movePlayers', '10000') => (0.270, 9/72)
+('movePlayers', '100000') => (0.015, 21/72)
+('removePlayers', '1000') => (3.215, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 80
+('createGame', '1000') => (3.712, 19/72)
+('createGame', '10000') => (0.041, 1/72)
+('createGame', '100000') => (0.008, 7/72)
+('loadGame', '1000') => (148.504, 0/72)
+('createPlayers', '1000') => (3.800, 0/72)
+('createPlayers', '10000') => (0.044, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.665, 14/72)
+('movePlayers', '10000') => (0.347, 22/72)
+('movePlayers', '100000') => (0.015, 17/72)
+('removePlayers', '1000') => (3.380, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 79
+('createGame', '1000') => (3.676, 17/72)
+('createGame', '10000') => (0.363, 20/72)
+('createGame', '100000') => (0.008, 15/72)
+('loadGame', '1000') => (216.577, 0/72)
+('loadGame', '10000') => (27.140, 0/72)
+('createPlayers', '1000') => (3.725, 0/72)
+('createPlayers', '10000') => (0.069, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.616, 11/72)
+('movePlayers', '10000') => (0.264, 7/72)
+('movePlayers', '100000') => (0.014, 9/72)
+('removePlayers', '1000') => (3.438, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 75
+('createGame', '1000') => (3.989, 26/72)
+('createGame', '10000') => (0.045, 6/72)
+('createGame', '100000') => (0.008, 1/72)
+('loadGame', '1000') => (151.239, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.890, 26/72)
+('movePlayers', '10000') => (0.335, 16/72)
+('movePlayers', '100000') => (0.014, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 73
+('createGame', '1000') => (3.649, 13/72)
+('createGame', '10000') => (0.041, 4/72)
+('createGame', '100000') => (0.009, 17/72)
+('loadGame', '1000') => (219.598, 0/72)
+('createPlayers', '1000') => (3.742, 0/72)
+('createPlayers', '10000') => (0.040, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.836, 24/72)
+('movePlayers', '10000') => (0.278, 11/72)
+('movePlayers', '100000') => (0.014, 4/72)
+('removePlayers', '1000') => (3.232, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 71
+('createGame', '1000') => (3.250, 5/72)
+('createGame', '10000') => (0.347, 17/72)
+('createGame', '100000') => (0.019, 23/72)
+('loadGame', '1000') => (47.213, 0/72)
+('loadGame', '10000') => (23.090, 0/72)
+('loadGame', '100000') => (2.794, 0/72)
+('createPlayers', '1000') => (3.081, 0/72)
+('createPlayers', '10000') => (0.360, 0/72)
+('createPlayers', '100000') => (0.019, 0/72)
+('movePlayers', '1000') => (2.995, 7/72)
+('movePlayers', '10000') => (0.264, 8/72)
+('movePlayers', '100000') => (0.014, 11/72)
+('removePlayers', '1000') => (2.763, 0/72)
+('removePlayers', '10000') => (0.221, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 67
+('createGame', '1000') => (3.623, 12/72)
+('createGame', '10000') => (0.046, 8/72)
+('createGame', '100000') => (0.008, 3/72)
+('loadGame', '1000') => (149.694, 0/72)
+('createPlayers', '1000') => (1.839, 0/72)
+('createPlayers', '10000') => (0.046, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.595, 9/72)
+('movePlayers', '10000') => (0.347, 21/72)
+('movePlayers', '100000') => (0.015, 14/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 66
+('createGame', '1000') => (3.604, 10/72)
+('createGame', '10000') => (0.046, 11/72)
+('createGame', '100000') => (0.008, 6/72)
+('loadGame', '1000') => (215.427, 0/72)
+('createPlayers', '1000') => (1.854, 0/72)
+('createPlayers', '10000') => (0.048, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.750, 20/72)
+('movePlayers', '10000') => (0.256, 3/72)
+('movePlayers', '100000') => (0.015, 16/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 66
+('createGame', '1000') => (3.829, 25/72)
+('createGame', '10000') => (0.046, 7/72)
+('createGame', '100000') => (0.008, 2/72)
+('loadGame', '1000') => (216.027, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.745, 19/72)
+('movePlayers', '10000') => (0.281, 12/72)
+('movePlayers', '100000') => (0.014, 1/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 64
+('createGame', '1000') => (3.543, 8/72)
+('createGame', '10000') => (0.039, 0/72)
+('createGame', '100000') => (0.009, 16/72)
+('loadGame', '1000') => (215.870, 0/72)
+('createPlayers', '1000') => (3.646, 0/72)
+('createPlayers', '10000') => (0.042, 0/72)
+('createPlayers', '100000') => (0.009, 0/72)
+('movePlayers', '1000') => (3.726, 17/72)
+('movePlayers', '10000') => (0.262, 4/72)
+('movePlayers', '100000') => (0.015, 19/72)
+('removePlayers', '1000') => (3.485, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 56
+('createGame', '1000') => (3.710, 18/72)
+('createGame', '10000') => (0.041, 2/72)
+('createGame', '100000') => (0.007, 0/72)
+('loadGame', '1000') => (217.530, 0/72)
+('createPlayers', '1000') => (3.788, 0/72)
+('createPlayers', '10000') => (0.042, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.891, 27/72)
+('movePlayers', '10000') => (0.263, 6/72)
+('movePlayers', '100000') => (0.014, 3/72)
+('removePlayers', '1000') => (3.228, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 55
+('createGame', '1000') => (3.594, 9/72)
+('createGame', '10000') => (0.046, 9/72)
+('createGame', '100000') => (0.008, 4/72)
+('loadGame', '1000') => (208.890, 0/72)
+('createPlayers', '1000') => (1.831, 0/72)
+('createPlayers', '10000') => (0.048, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.643, 13/72)
+('movePlayers', '10000') => (0.263, 5/72)
+('movePlayers', '100000') => (0.015, 15/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 52
+('createGame', '1000') => (1.037, 4/72)
+('createGame', '10000') => (0.151, 12/72)
+('createGame', '100000') => (0.018, 19/72)
+('loadGame', '1000') => (2.009, 0/72)
+('loadGame', '10000') => (1.792, 0/72)
+('loadGame', '100000') => (0.908, 0/72)
+('createPlayers', '1000') => (0.477, 0/72)
+('createPlayers', '10000') => (0.195, 0/72)
+('createPlayers', '100000') => (0.017, 0/72)
+('movePlayers', '1000') => (0.368, 2/72)
+('movePlayers', '10000') => (0.207, 2/72)
+('movePlayers', '100000') => (0.014, 13/72)
+('removePlayers', '1000') => (0.403, 0/72)
+('removePlayers', '10000') => (0.177, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: False | Chunk Amount: 50x50 | Score: 49
+('createGame', '1000') => (1.025, 3/72)
+('createGame', '10000') => (0.276, 13/72)
+('createGame', '100000') => (0.018, 18/72)
+('loadGame', '1000') => (1.620, 0/72)
+('loadGame', '10000') => (1.555, 0/72)
+('loadGame', '100000') => (0.678, 0/72)
+('createPlayers', '1000') => (0.413, 0/72)
+('createPlayers', '10000') => (0.205, 0/72)
+('createPlayers', '100000') => (0.018, 0/72)
+('movePlayers', '1000') => (0.392, 3/72)
+('movePlayers', '10000') => (0.165, 0/72)
+('movePlayers', '100000') => (0.014, 12/72)
+('removePlayers', '1000') => (0.368, 0/72)
+('removePlayers', '10000') => (0.159, 0/72)
+('removePlayers', '100000') => (0.004, 0/72)
+=================================================================================================================================================
+Serialization: Json | Change File: True | Gzip: True | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 47
+('createGame', '1000') => (3.527, 7/72)
+('createGame', '10000') => (0.046, 10/72)
+('createGame', '100000') => (0.008, 5/72)
+('loadGame', '1000') => (148.765, 0/72)
+('createPlayers', '1000') => (1.855, 0/72)
+('createPlayers', '10000') => (0.048, 0/72)
+('createPlayers', '100000') => (0.008, 0/72)
+('movePlayers', '1000') => (3.616, 10/72)
+('movePlayers', '10000') => (0.322, 13/72)
+('movePlayers', '100000') => (0.014, 2/72)

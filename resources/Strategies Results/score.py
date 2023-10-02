@@ -1,98 +1,8 @@
 import os
+from strategy import Strategy
 
 PATH = os.path.realpath(os.path.dirname(__file__))
-
-class Strategie:
-    def __init__(self, serialization, line):
-        self.serialization = serialization
-
-        words = line.split()
-
-        benchmark = words[0].split(".")
-        chunkMaxElements = words[1]
-        chunkMinElements = words[2]
-        dataCount = words[3]
-        staticChunkAmount = words[4]
-        useChangeFile = words[5]
-        useGzip = words[6]
-        score = ""
-
-        if serialization == "Json":
-            score = words[9]
-            
-            if useGzip == "true":
-                self.gzip = True
-            else:
-                self.gzip = False
-        else:
-            score = words[8]
-            self.gzip = False
-
-        if useChangeFile == "true":
-            self.changefile = True
-        else:
-            self.changefile = False
-
-        if benchmark[0] == "DynamicBenchmark":
-            self.dynamic = True
-            self.maxchunkelements = int(chunkMaxElements)
-            self.mingroupelements = int(chunkMinElements)
-            self.chunkamount = 0
-        else:
-            self.dynamic = False
-            self.chunkamount = staticChunkAmount
-            self.maxchunkelements = 0
-            self.mingroupelements = 0
-
-        self.results = {
-            (benchmark[1], dataCount): score
-        }
-
-        self.score = 0
-
-    def __str__(self):
-        result = f"Serialization: {self.serialization} | Change File: {self.changefile} | "
-        if self.gzip:
-            result += f"Gzip: {self.gzip} | "
-        
-        result += f"Dynamic Chunk: {self.dynamic} | "
-
-        if self.dynamic:
-            result += f"Max Elements/Chunk: {self.maxchunkelements} | Min Elements/Group: {self.mingroupelements}"
-        else:
-            result += f"Chunk Amount: {self.chunkamount}x{self.chunkamount}"
-
-        return result
-    
-    def __eq__(self, other):
-        """Overrides the default implementation"""
-        if isinstance(other, Strategie):
-            result = self.serialization == other.serialization
-            result = result and self.changefile == other.changefile
-            result = result and self.gzip == other.gzip
-            result = result and self.dynamic == other.dynamic
-            result = result and self.maxchunkelements == other.maxchunkelements
-            result = result and self.mingroupelements == other.mingroupelements
-            result = result and self.chunkamount == other.chunkamount
-            return result
-        return False
-    
-    def add(self, list):
-        in_list = False
-        index = 0
-        for strategie in list:
-            if strategie == self:
-                in_list = True
-            index += 1
-
-        if in_list:
-            list[index].results.update(self.results)
-        else:
-            list.append(self)
-
-        return list
-
-
+SCORE_FILE = PATH + "\\Score.txt"
 
 def get_txt():
     result = []
@@ -116,14 +26,138 @@ def file_to_strategies(strategies, file_path):
     with open(file_path, "r") as f:
         lines = f.readlines()
         for line in lines[1:]:
-            print(line)
-            strategie = Strategie(serialization, line)
-            strategies = strategie.add(strategies)
+            strategy = Strategy(serialization, line)
+            strategies = strategy.add(strategies)
 
     return strategies
 
+def is_sorted(list):
+    for i in range(len(list)-1):
+        if list[i][1] > list[i+1][1]:
+            return False
+    return True
+
+def sort(list):
+    while not is_sorted(list):
+        for i in range(len(list)-1):
+            if list[i][1] > list[i+1][1]:
+                (list[i], list[i+1]) = (list[i+1], list[i])
+
+    return list
+
+def get_keys(strategies):
+    keys = []
+    for s in strategies:
+        for key in s.results.keys():
+            if not key in keys:
+                keys.append(key)
+    return keys
+
+def get_functions(strategies):
+    functions = []
+
+    for key in get_keys(strategies):
+        if not key[0] in functions:
+            functions.append(key[0])
+    
+    return functions
+
+def calc_score(strategies):
+    for key in get_keys(strategies):
+        if(key[0] in ["removePlayers", "loadGame", "createPlayers"]): #TODO: Remove this
+            continue
+        i = 0
+        results = []
+
+        for s in strategies:
+            if key in s.results:
+                results.append((i, float(s.results[key][0])))
+            else:
+                print(str(key) + " not in " + str(s)) #TODO: Get missing benchmarks
+            i += 1
+        
+       
+        results = sort(results)
+        i = 0
+
+        for result in results:
+            strategies[result[0]].set_score(key, i)
+            i += 1
+
+    return strategies
+
+def get_sorted(strategies):
+    results = []
+    i = 0
+
+    for s in strategies:
+        results.append((i, s.score()))
+        i += 1
+
+    return list(reversed(sort(results)))
+
+def get_sorted_key(strategies, key):
+    results = []
+    i = 0
+
+    for s in strategies:
+        if key in s.results:
+            results.append((i, s.results[key][1]))
+        else:
+            results.append((i, 0))
+        i += 1
+
+    return list(reversed(sort(results)))
+
+def get_sorted_function(strategies, function):
+    results = []
+    i = 0
+    keys = [(function, "1000"), (function, "10000"), (function, "100000")]
+
+    for s in strategies:
+        value = 0
+        for key in keys: 
+            if key in s.results:
+                value += s.results[key][1]
+        results.append((i, value))
+        i += 1
+
+    return list(reversed(sort(results)))
+
+def write_sorted(strategies):
+    with open(SCORE_FILE, "w") as f:
+        results = get_sorted(strategies)
+        f.write("Top 10:\n")
+        for result in results[:9]:
+            s = strategies[result[0]]
+            f.write(str(s) + "\n")
+
+        for function in get_functions(strategies):
+            f.write(f"\nTop 5 with function {function}:\n")
+            for result in get_sorted_function(strategies, function)[:5]:
+                s = strategies[result[0]]
+                f.write(str(s) + " | " + str(result[1]) + "\n")
+
+        for key in get_keys(strategies):
+            f.write(f"\nTop 5 with {key}:\n")
+            for result in get_sorted_key(strategies, key)[:5]:
+                s = strategies[result[0]]
+                f.write(str(s) + " | " + str(s.results[key][0]) + " ops/s\n")
+
+        f.write("\nAll results:\n")
+        for result in results:
+            s = strategies[result[0]]
+            f.write("="*145 + "\n")
+            f.write(str(s) + "\n")
+            for (key, value) in s.results.items():
+                f.write(f"{key} => ({value[0]}, {value[1]}/{len(results)})\n")
+
 
 if __name__ == "__main__":
+    #Convert file data to strategy objects
     strategies = []
     for file in get_txt():
         strategies = file_to_strategies(strategies, file)
+
+    #Calculate score and print to file
+    write_sorted( calc_score(strategies))
