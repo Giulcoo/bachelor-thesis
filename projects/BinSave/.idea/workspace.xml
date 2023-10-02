@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Full/BinSave.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,19 +62,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Documents/Github Projects/bachelor-thesis/projects/BinSave&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Documents/Github Projects/bachelor-thesis/projects/BinSave",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Gradle.Benchmark">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
@@ -136,6 +138,7 @@
       <workItem from="1696063116072" duration="1950000" />
       <workItem from="1696112205560" duration="1546000" />
       <workItem from="1696234662079" duration="251000" />
+      <workItem from="1696246860999" duration="2057000" />
     </task>
     <servers />
   </component>

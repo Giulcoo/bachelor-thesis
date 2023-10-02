@@ -1,5 +1,5 @@
 \chapter{Speichersysteme in Videospielen}\label{ch:videospiele}
-In diesem Kapitel wird die Praxis von Speicher- und Ladesystemen betrachtet. Dabei werden verschiedene Spiele analysiert, um deren Prozesse des Speicherns und Ladens des Spielstandes genauer zu verstehen. Als erstes wird das Sandbox-Spiel Minecraft und danach das Strategiespiel Factorio angeschaut. Zum Schluss wird die Strategie des Simulationsspiel Stardew Valley betrachtet.
+In diesem Kapitel wird die Praxis von Speicher- und Ladesystemen betrachtet. Dabei werden verschiedene Spiele analysiert, um deren Prozesse des Speicherns und Ladens des Spielstandes genauer zu verstehen. Als erstes wird das Sandbox-Spiel Minecraft und danach das Strategiespiel Factorio angeschaut. Zum Schluss wird die Strategie des Simulationsspiel Stardew Valley betrachtet.\todo{Weg mit angeschaut}
 %--------------------------------------------------------------------------
 
 
@@ -14,7 +14,7 @@ In diesem Abschnitt dieser Arbeit wird das Speicher- und Ladesystem von Minecraf
 \subsection{Daten}
 Bevor sich das Speicher- und Ladesystem von Minecraft genauer betrachtet werden kann, ist es wichtig zu verstehen, mit welchen Arten von Daten das Spiel arbeitet. Die Spielwelt in Minecraft besteht aus verschiedenen Blöcken, Entitäten und Items. 
 
-\textit{Blöcke} werden in Minecraft nicht einzeln behandelt, sondern als Section, ein Bereich von 16x16x16-Block, gespeichert. Mehr zu dieser Aufteilung bei Minecraft gibt es im Abschnitt \ref{ssec:datenaufteilung}. Informationen, die zu so einem Block gehören, sind die Position, BlockID, Block Zustände und Informationen zum Licht. Die Position eines Blocks wird in der Reihenfolge y-, z- und x-Koordinate gespeichert, für bessere Komprimierung\todo{Herausfinden, ansonsten löschen}. Jeder Blocktyp hat eine eigene BlockID, die diesen Block genau identifiziert. Der Zustand eines Blocks wird für jede Section in einer Liste namens "BlockStates" abgespeichert. Informationen dessen Zustands können zum Beispiel sein, in welcher Himmelsrichtung der Block platziert wurde, welche Rotation der Block hat und ob der Block brennt. Welche Zustände ein Block haben kann, hängt auch von dem Blocktyp ab.\cite{minecraftBlockStates} Bei den Informationen zum Licht jedes Blocks gibt es für jede Section zwei Listen namens "BlockLight" und "SkyLight". "BlockLight" speichert wie viel Licht jeder Block ausstrahlt und "SkyLight" wie viel Licht jeder Block von der Sonne abbekommt. Zusätzlich gibt es noch sogenannte Block Entitys, welche zusätzliche Informationen zu einem Block, die in der "BlockStates"-Liste nicht gespeichert werden konnten, speichern.\cite{minecraftChunkFormat} Dies kann zum Beispiel der Inhalt einer Kiste oder die Farbe eines Bettes sein.\cite{minecraftBlockEntity}
+\textit{Blöcke} werden in Minecraft nicht einzeln behandelt, sondern als Section, ein Bereich von 16x16x16-Block, gespeichert. Mehr zu dieser Aufteilung bei Minecraft gibt es im Abschnitt \ref{ssec:datenaufteilung}. Informationen, die zu so einem Block gehören, sind die Position, BlockID, Block Zustände und Informationen zum Licht. Die Position eines Blocks wird in der Reihenfolge y-, z- und x-Koordinate gespeichert. Jeder Blocktyp hat eine eigene BlockID, die diesen Block genau identifiziert. Der Zustand eines Blocks wird für jede Section in einer Liste namens "BlockStates" abgespeichert. Informationen dessen Zustands können zum Beispiel sein, in welcher Himmelsrichtung der Block platziert wurde, welche Rotation der Block hat und ob der Block brennt. Welche Zustände ein Block haben kann, hängt auch von dem Blocktyp ab.\cite{minecraftBlockStates} Bei den Informationen zum Licht jedes Blocks gibt es für jede Section zwei Listen namens "BlockLight" und "SkyLight". "BlockLight" speichert wie viel Licht jeder Block ausstrahlt und "SkyLight" wie viel Licht jeder Block von der Sonne abbekommt. Zusätzlich gibt es noch sogenannte Block Entitys, welche zusätzliche Informationen zu einem Block, die in der "BlockStates"-Liste nicht gespeichert werden konnten, speichern.\cite{minecraftChunkFormat} Dies kann zum Beispiel der Inhalt einer Kiste oder die Farbe eines Bettes sein.\cite{minecraftBlockEntity}
 %Weitere Quelle: ChunkSerializer.java:write()
 
 Eine Entität kann ein Spieler, ein Tier oder Monster sein. Die wichtigste Information einer Entität ist deren Position, Geschwindigkeit und Rotation. Des Weiteren gibt es viele weitere Informationen zu einer Entität, wie die Luft die die Entität noch übrig hat zum Überleben, die Distanz die eine Entität schon gefallen ist oder wie lange eine Entität noch brennen wird.\cite{minecraftEntityFormat}
@@ -114,9 +114,13 @@ Insgesamt sorgen diese verschiedenen Speichermechanismen in Minecraft dafür, da
 Zusammenfassend verwendet Minecraft einen Chunk-basierten Ansatz für das Speichern und Laden des Spielstandes. Dabei wird jeder Chunk in kleinere Bereiche unterteilt und mehrere Chunks in Regionen gruppiert. Diese einzelnen Bereiche der Spielwelt haben eine feste Größe, was zu einer Verlangsamung des Spieles führen könnte, wenn sich zu viele Entitäten und Items in einem Bereich befinden. Eine weitere Unterteilung, die zu einer Verbesserung der Laufzeit führen kann, ist in den Speicherdateien zu den Spielständen zu sehen. Dadurch kann der delta-basierte Ansatz aus \ref{ssect:deltasave} besser umgesetzt werden, um die Schreibprozesse zu reduzieren. Durch die Komprimierung mit GZip wird die Anzahl der zu schreibenden Daten auch um einiges verringert. Trotz der Menge an Daten, die gespeichert und geladen werden müssen, ist die Spielerfahrung reibungslos und benötigt keinen schnellen Computer.\cite{minecraftHardware}
 \todo{ID-Verwendung wie bei Factorio}
 %--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 
 
 
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 \section{Factorio}
 Factorio ist ein Spiel, mit dem Hauptziel, eine Fabrik aufzubauen. Als Spieler muss man sich um Ressourcen kümmern, die abgebaut werden müssen, um damit neue Technologien zu erforschen und eine Infrastruktur aufzubauen. Um eine möglichst große Ausbeute für die eigene Fabrik zu erreichen, kann die Produktion automatisiert werden. Im Spiel gibt es außerdem noch Einheimische, die die Ausbeutung der Ressourcen anhalten wollen. Deshalb muss der Spieler zusätzlich zu dem Aufbauen seiner Fabrik diese auch noch vor den Einheimischen verteidigen, damit sie nicht zerstört wird. Factorio wurde von Wube Software in C++ geschrieben und 2016 auf der Plattform "Steam" veröffentlicht. Mittlerweile kann Factorio auf Windows, macOS, Linux und der Nintendo Switch gespielt werden.\cite{factorioMain}\cite{factorioPressFactorio}
@@ -202,28 +206,36 @@ Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als de
 \subsection{Fazit}
 Zum Reduzieren der Speicherprozesse ist Factorios Ansatz mit der ID-Mapping sehr effizient. Dies ist eine einfache Art die Daten zu komprimieren, denn Zahlen lassen sich schneller als Namen der Spielobjekte speichern. Außerdem wird auch bei Factorio eine Aufteilung der Daten über Chunks vorgenommen. Damit lassen sich die Spielwelten auch bis zu einer Größe von vier Billionen Tiles spielen, ohne dass es zu Problemen mit dem Speichern und Laden gibt.\todo{Meine eigene Wahrnehmung, wie das Speichersystem ist; Nicht so gut, wegen vielen Wiederholungen und Überkomplizierung}
 %--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 
 \newpage
 
 %--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 \section{Stardew Valley}
-Stardew Valley ist ein Indie-Simulationsspiel, welches von Eric Barone, auch bekannt als ConcernedApe, im Jahr 2016 veröffentlicht wurde. Die Hauptaufgabe des Spiels ist es, eine Farm aufzubauen und diese zu pflegen. Dabei können Pflanzen angebaut, Tiere gezüchtet, Maschinen und vieles mehr aufgebaut werden. Außerhalb der Farm ist es auch möglich Minen zu entdecken, gegen Gegner zu kämpfen und an Seen und am Meer Fische zu fangen.\cite{steampoweredStardewValley} 
+Stardew Valley ist ein Indie-Simulationsspiel, welches von Eric Barone, auch bekannt als ConcernedApe, im Jahr 2016 veröffentlicht wurde. Die Hauptaufgabe des Spiels ist es, eine Farm aufzubauen und diese zu pflegen. Dabei können Pflanzen angebaut, Tiere gezüchtet, Maschinen und vieles mehr aufgebaut werden. Außerhalb der Farm ist es auch möglich, Minen zu entdecken, gegen Gegner zu kämpfen und an Seen und am Meer Fische zu fangen.\cite{steampoweredStardewValley} 
 
-\todo{Save-Ordner auf Github und referenzieren}
+In diesem Abschnitt wird das Speicher- und Ladesystem von Stardew Valley analysiert. Dabei wird ausgearbeitet, welche Datentypen dieses Spiel hat und wie diese gespeichert werden. Außerdem werden die Speicherprozesse von Stardew Valley genauer betrachtet. Als Quelle wird mit der Stardew Valley Wiki gearbeitet, die auf der Hauptseite\footnote{Hauptseite von Stardew Valley: \url{https://www.stardewvalley.net/}} zu finden ist. Außerdem wurden von einem Spielstand die Speicherdateien des Spieles\footnote{\label{stardewvalleySavefiles}Speicherdateien von Stardew Valley: \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/resources/BeispielFarm_355642609}} analysiert.
+
+
 
 \subsection{Daten}
-Bei Stardew Valley gibt es viele verschiedene Arten von Daten. Einige Daten werden in vielen Teildaten aufgeteilt, wie zum Beispiel die Player- und Location-Daten. Außerdem gibt es noch viele weitere kleine Daten, zum Abspeichern des Spielstandes.
+Bei Stardew Valley gibt es viele verschiedene Arten von Daten. Einige Daten werden in vielen Teildaten aufgeteilt, wie zum Beispiel die Player- und Location-Daten. Außerdem gibt es noch viele weitere kleine Daten zum Abspeichern des Spielstandes.
 
-Die \textit{Player-Daten} bestehen aus Namen, wie der Spielername und Bauernhofname, Position des Spielers, der Quest-Log, die Items des Spielers, das Aussehen und noch vielen weiteren Daten, die den Zustand des Spielers abspeichern. Das Quest-Log ist eine Liste der Aufträgen, die der Spieler befolgen kann. Für jeden Auftrag gibt es einen Titel, eine Beschreibung, ein Ziel, die Belohnung die der Spieler bekommt für das umsetzen des Auftrages und noch weiteren kleinen Daten. Die Items werden als Liste gespeichert, wobei jeder Eintrag in der Liste ein Item ist, mit seinem Namen, Kategorie, Beschreibung, \ac{etc}. 
+Die \textit{Player-Daten} bestehen aus Namen, wie der Spielername und Bauernhofname, Position des Spielers, der Quest-Log, die Items des Spielers, das Aussehen und noch vielen weiteren Daten, die den Zustand des Spielers abspeichern. Das Quest-Log ist eine Liste der Aufträge, die der Spieler befolgen kann. Für jeden Auftrag gibt es einen Titel, eine Beschreibung, ein Ziel, die Belohnung, die der Spieler bekommt für das Umsetzen des Auftrages und noch weitere Daten. Die Items werden als Liste gespeichert, wobei jeder Eintrag in der Liste ein Item ist, mit seinem Namen, Kategorie, Beschreibung, \ac{etc}. 
 
-Die \textit{Locations} werden als Liste gesammelt. Die Listenelemente heißen \textit{GameLocation} und beinhalten eine Vielzahl an Informationen zu einer Ortschaft in dem Spiel. Es werden die Charaktere, Objekte, Terrain-Features, Gebäude, \ac{etc} in einer GameLocation gespeichert. Die einzelnen Charaktere bestehen aus einen Typen, Namen, deren Position und weitere relevante Daten, um Spielcharaktere abzuspeichern. Hier sind zum Beispiel Haustiere des Spielers oder \acp{npc} gespeichert. Die Objekte werden als Hashtabelle\footnote{Eine Hashtabelle ist eine Tabelle, die Schlüssel zu Werten zuordnet} gespeichert, wobei der Schlüssel ein zweidimensionaler Vektor ist, der die Position des Objektes angibt. Als Schlüsselwert werden alle Informationen zu dem Objekt aufgezählt, wie der Name, die Kategorie, der Preis, \ac{etc}. Die Terrain-Features werden auch als Hashtabelle gespeichert und beinhalte Informationen zu dem Gelände, wie zum zum Beispiel wo Bäume und Gräser platziert sind. Gebäude-Daten bestehen aus Informationen zu der Innenausstattung und den Charakteren in den Gebäuden.
+Die \textit{Locations} werden als Liste gesammelt. Die Listenelemente heißen \textit{GameLocation} und beinhalten eine Vielzahl an Informationen zu einer Ortschaft in dem Spiel. Es werden die Charaktere, Objekte, Terrain-Features, Gebäude, \ac{etc} in einer GameLocation gespeichert. Die einzelnen Charaktere bestehen aus einem Typen, Namen, deren Position und weiteren relevanten Daten, um Spielcharaktere abzuspeichern. Hier sind zum Beispiel Haustiere des Spielers oder \acp{npc} gespeichert. Die Objekte werden als Hashtabelle\footnote{Eine Hashtabelle ist eine Tabelle, die Schlüssel zu Werten zuordnet} gespeichert, wobei der Schlüssel ein zweidimensionaler Vektor ist, der die Position des Objektes angibt. Als Schlüsselwert werden alle Informationen zu dem Objekt aufgezählt, wie der Name, die Kategorie, der Preis, \ac{etc}. Die Terrain-Features werden auch als Hashtabelle gespeichert und beinhalte Informationen zu dem Gelände, wie zum Beispiel wo Bäume und Gräser platziert sind. Gebäude-Daten bestehen aus Informationen zur Innenausstattung und den Charakteren in den Gebäuden.
 
-Die restlichen Daten sind teilweise kleinere Daten, wie die Mailbox-Daten oder Statistiken. Bei der Mailbox wird nur die Email-Identifikationsnummer, während bei den Statistiken hauptsächlich Zahlen gespeichert werden. Statistiken wären zum Beispiel, wie viele Items ein Spieler gebaut hat oder wie viel Saatgut gesät wurde. Wie die Daten letztendlich aussehen wird in dem Abschnitt \ref{ssec:speicherformateStardew} genauer behandelt.
+Die restlichen Daten sind teilweise kleinere Daten, wie die Mailbox-Daten oder Statistiken. Bei der Mailbox wird nur die E-Mail-Identifikationsnummer, während bei den Statistiken hauptsächlich Zahlen gespeichert werden. Statistiken wären zum Beispiel, wie viele Items ein Spieler gebaut hat oder wie viel Saatgut gesät wurde. Wie die Daten letztendlich aussehen wird in dem Abschnitt \ref{ssec:speicherformateStardew} genauer behandelt.
+
+
 
 \subsection{Ordnerstruktur}
-Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl der Daten im Vergleich zu den vorherigen Spielen klein sind. Für jede Spielwelt, die ein Spieler erstellt, gibt es einen eigenen Ordner. Der Name von diesem Ordner setzt sich aus dem Namen des Bauernhofs zusammen und eine Identifikationsnummer. In diesem Ordner sind dann vier Dateien. Die Dateien ohne der "\_old"-Endung haben den letzten Spielstand gespeichert und die mit dieser Endung den Spielstand davor. Dabei beinhalten die SaveGameInfo-Dateien Informationen, die im "Load Game"-Menü gebraucht werden. Die Daten zu einem Spielstand sind in der "<Bauernhof Name>\_<ID>"-Datei gespeichert, wobei der Name dieser Datei identisch zu dem des Ordners ist. Den kompletten Aufbau der Ordnerstruktur ist in der Abbildung \ref{lst:ordnerStrukturStardewValley} zu sehen. Die Daten in den Dateien werden im \ac{xml}-Format gespeichert, mehr dazu im Abschnitt \ref{ssec:speicherformateStardew}.\cite{stardewvalleywikiSaves}\cite{stardewvalleyFiles}
+Die Ordnerstruktur von Stardew Valley ist recht schlicht gehalten, da die Anzahl der Daten im Vergleich zu den vorherigen Spielen klein ist. Für jede Spielwelt, die ein Spieler erstellt, gibt es einen eigenen Ordner. Der Name von diesem Ordner setzt sich aus dem Namen des Bauernhofs zusammen und einer Identifikationsnummer. In diesem Ordner sind dann vier Dateien. Die Dateien ohne die "\_old"-Endung haben den letzten Spielstand gespeichert und die mit dieser Endung den Spielstand davor. Dabei beinhalten die SaveGameInfo-Dateien Informationen, die im "Load Game"-Menü gebraucht werden. Die Daten zu einem Spielstand sind in der "<Bauernhof Name>\_<ID>"-Datei gespeichert, wobei der Name dieser Datei identisch zu dem des Ordners ist. Den kompletten Aufbau der Ordnerstruktur ist in der Abbildung \ref{lst:ordnerStrukturStardewValley} zu sehen. Die Daten in den Dateien werden im \ac{xml}-Format gespeichert, mehr dazu im Abschnitt \ref{ssec:speicherformateStardew}.\cite{stardewvalleywikiSaves}\cite{stardewvalleyFiles}
 
-Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung, beim Speichern der Daten. Alle Informationen eines Spielstandes werden zusammen in einer Datei gesichert.
+Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung beim Speichern der Daten. Alle Informationen eines Spielstandes werden zusammen in einer Datei gesichert.
 
 \begin{listing}[htp]
     \dirtree{%
@@ -233,25 +245,25 @@ Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung, bei
         .2 \textcolor{blue}{SaveGameInfo\_old}.
         .2 \textcolor{blue}{<Bauernhof Name>\_<ID>\_old}.
     } 
-    \caption{Ordnerstruktur einer Spielwelt in Stardew Valley}
+    \caption{Ordnerstruktur einer Spielwelt in Stardew Valley\footref{stardewvalleySavefiles}}
     \label{lst:ordnerStrukturStardewValley}
 \end{listing}
 
 \subsection{Speicherformate} \label{ssec:speicherformateStardew}
-Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Bei der Hauptdatei zum Speichern des Spielstandes, werden die Daten in einem SaveGame-Objekt geschrieben. Bei der SaveGameInfo-Datei werden die Daten in einem Farmer-Objekt gesichert.\cite{stardewvalleywikiSaves}
+Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Bei der Hauptdatei zum Speichern des Spielstandes werden die Daten in einem SaveGame-Objekt geschrieben. Bei der SaveGameInfo-Datei werden die Daten in einem Farmer-Objekt gesichert.\cite{stardewvalleywikiSaves}
 
 \begin{listing}[htp]
     \begin{minted}[breaklines,frame=single]{xml} 
         <?xml version="1.0" encoding="utf-8"?>
         <SaveGame
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
           <player>
-            <name>Spielername</name>
+            <name>Beispiel Name</name>
             ...
             <Position>
-              <X>123</X>
-              <Y>456</Y>
+              <X>576</X>
+              <Y>608</Y>
             </Position>
             ...
             <questLog>
@@ -262,25 +274,27 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
             ...
             <items>
                 <Item xsi:type="Axe">...</Item>
+                <Item xsi:type="Hoe">...</Item>
+                <Item xsi:type="WateringCan">...</Item>
                 <Item xsi:type="Pickaxe">...</Item>
                 ...
             </items>
             ...
-            <farmName>Bauernhofname</farmName>
+            <farmName>Beispiel Farm</farmName>
             ...
-            <shirt>1</shirt>
-            <hair>2</hair>
-            <skin>3</skin>
+            <shirt>-1</shirt>
+            <hair>13</hair>
+            <skin>2</skin>
           <player>
           <locations>
-            <GameLocation xsi:type="FarmHouse">...</GameLocation>
             <GameLocation xsi:type="Farm">...</GameLocation>
+            <GameLocation xsi:type="FarmHouse">...</GameLocation>
             ...
           </locations>
           ...
         </SaveGame>
     \end{minted}
-    \caption{Hauptdatei zum Speichern des Spielstandes}
+    \caption{Hauptdatei zum Speichern des Spielstandes\footref{stardewvalleySavefiles}}
     \label{lst:stardewvalleySaveGame}
 \end{listing}
 
@@ -288,13 +302,13 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
     \begin{minted}{xml} 
         <?xml version="1.0" encoding="utf-8"?>
         <Farmer
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-          <name>Spielername</name>
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          <name>Beispiel Name</name>
           ...
           <Position>
-            <X>123</X>
-            <Y>456</Y>
+            <X>576</X>
+            <Y>608</Y>
           </Position>
           ...
           <questLog>
@@ -303,20 +317,22 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
             ...
           <questLog>
           ...
-            <farmName>Bauernhofname</farmName>
+          <farmName>Beispiel Farm</farmName>
           ...
-          <shirt>1</shirt>
-          <hair>2</hair>
-          <skin>3</skin>
+          <shirt>-1</shirt>
+          <hair>13</hair>
+          <skin>2</skin>
           ...
         </Farmer>
     \end{minted}
-    \caption{SaveGameInfo Datei}
+    \caption{SaveGameInfo-Datei\footref{stardewvalleySavefiles}}
     \label{lst:stardewvalleySaveGameInfo}
 \end{listing}
 
 \subsection{Speichervorgänge}
-Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Sobald der Spieler in dem Spiel in einem Bett, oder der Spielcharakter automatisch um zwei Uhr nachts schlafen geht, wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
+Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Sobald der Spieler in dem Spiel in einem Bett oder der Spielcharakter automatisch um zwei Uhr nachts schlafen geht, wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
 
 \subsection{Fazit}
-\dots
+Das Speicher- und Ladesystem von Stardew Valley ist sehr einfach gehalten, wahrscheinlich da das Spiel von einer Person entwickelt wurde und der Fokus auf anderen Teilen des Spieles lag. Trotz der Einfachheit stört das System nicht beim Spielen durch lange Speicher- und Ladezeiten. Die Anzahl der Daten scheint jedoch weniger zu sein als bei Minecraft und Factorio. 
+
+Statt \ac{xml} hätte jedoch \ac{json} verwendet werden können. Beide Formate sind recht ähnlich, da sie von Menschen lesbar sind, ähnliche Datentypen unterstützten, und dadurch, dass beide in verschiedenen Programmiersprachen verwendet werden können. Jedoch ist JSON deutlich kompakter, da das Format keinen End-Tag verwendet. Dadurch ist JSON schneller zu lesen und schreiben und könnte dem Spiel eine Leistungssteigerung geben.\cite{w3schoolsJSONvsXML}
