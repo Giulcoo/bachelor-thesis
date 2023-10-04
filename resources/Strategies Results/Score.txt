@@ -1,153 +1,219 @@
-Top 10:
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 748
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732
+Top 10
+Strategy                  | Chunks                                                            | Score 
+------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 748   
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   
 
-Top 5 with function createGame:
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 203
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 203
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 202
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 193
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 708 | 190
+========================================================================================================================
+Top 5 with function createGame
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 203
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 203
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 202
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 193
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 708   | 190
 
-Top 5 with function loadGame:
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775 | 207
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 206
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 203
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 201
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 201
+========================================================================================================================
+Top 5 with function loadGame
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   | 207
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 206
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 203
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 201
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 201
 
-Top 5 with function createPlayers:
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 719 | 190
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 748 | 190
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 190
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 183
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 182
+========================================================================================================================
+Top 5 with function createPlayers
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 719   | 190
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 748   | 190
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 190
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 183
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 182
 
-Top 5 with function movePlayers:
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 204
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 193
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 192
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 189
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 624 | 188
+========================================================================================================================
+Top 5 with function movePlayers
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 204
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 193
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 192
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 189
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 624   | 188
 
-Top 5 with function removePlayers:
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 708 | 99
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 94
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 90
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775 | 88
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 86
+========================================================================================================================
+Top 5 with function removePlayers
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 708   | 99
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 94
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 90
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   | 88
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 86
 
-Top 5 with ('createGame', '1000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 214.846 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 214.773 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 213.279 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 211.015 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 686 | 203.722 ops/s
+========================================================================================================================
+Top 5 with ('createGame', '1000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 69
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)   | 686   | 67
 
-Top 5 with ('createGame', '10000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 63.119 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 62.375 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 61.780 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 49.423 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 708 | 35.782 ops/s
+========================================================================================================================
+Top 5 with ('createGame', '10000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 69
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 68
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 708   | 67
 
-Top 5 with ('createGame', '100000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 6.494 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 4.049 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 616 | 3.054 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 10x10 | Score: 561 | 2.328 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: True | Chunk Amount: 2x2 | Score: 624 | 1.485 ops/s
+========================================================================================================================
+Top 5 with ('createGame', '100000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 71
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 70
+Binary + Change File      | Static size (Amount of chunk: 10x10)                              | 616   | 69
+Json + GZip + Change File | Static size (Amount of chunk: 10x10)                              | 561   | 68
+Json + Change File        | Static size (Amount of chunk: 2x2)                                | 624   | 67
 
-Top 5 with ('loadGame', '1000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 686 | 798.272 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775 | 795.178 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 790.932 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 789.454 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 692 | 789.105 ops/s
+========================================================================================================================
+Top 5 with ('loadGame', '1000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)   | 686   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 69
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 2)    | 692   | 67
 
-Top 5 with ('loadGame', '10000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775 | 128.150 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 128.035 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 126.270 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 121.076 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 118.107 ops/s
+========================================================================================================================
+Top 5 with ('loadGame', '10000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 69
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 67
 
-Top 5 with ('loadGame', '100000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 15.249 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 14.997 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 14.829 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 616 | 13.300 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 13.298 ops/s
+========================================================================================================================
+Top 5 with ('loadGame', '100000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 69
+Binary + Change File      | Static size (Amount of chunk: 10x10)                              | 616   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 67
 
-Top 5 with ('createPlayers', '1000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 753.313 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 753.239 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 752.991 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 750.916 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 750.828 ops/s
+========================================================================================================================
+Top 5 with ('createPlayers', '1000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 69
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 67
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 66
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 65
 
-Top 5 with ('createPlayers', '10000'):
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 719 | 110.397 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 109.094 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 107.830 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 748 | 107.646 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 708 | 105.570 ops/s
+========================================================================================================================
+Top 5 with ('createPlayers', '10000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 719   | 69
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 68
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 67
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 748   | 66
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 708   | 65
 
-Top 5 with ('createPlayers', '100000'):
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: True | Chunk Amount: 2x2 | Score: 624 | 11.521 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 11.411 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 10.773 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 10x10 | Score: 561 | 5.292 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 10x10 | Score: 616 | 5.146 ops/s
+========================================================================================================================
+Top 5 with ('createPlayers', '100000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Json + Change File        | Static size (Amount of chunk: 2x2)                                | 624   | 71
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 70
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 69
+Json + GZip + Change File | Static size (Amount of chunk: 10x10)                              | 561   | 68
+Binary + Change File      | Static size (Amount of chunk: 10x10)                              | 616   | 67
 
-Top 5 with ('movePlayers', '1000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 596.102 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 553.609 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 552.695 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 708 | 550.083 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 686 | 541.088 ops/s
+========================================================================================================================
+Top 5 with ('movePlayers', '1000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 71
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 69
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 708   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)   | 686   | 67
 
-Top 5 with ('movePlayers', '10000'):
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 748 | 88.715 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 87.362 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 635 | 87.034 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 624 | 86.285 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 641 | 86.141 ops/s
+========================================================================================================================
+Top 5 with ('movePlayers', '10000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 748   | 71
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 70
+Json + Change File        | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 635   | 69
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 624   | 68
+Json + Change File        | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 641   | 67
 
-Top 5 with ('movePlayers', '100000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 10.007 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 9.952 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 9.686 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 635 | 9.487 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 9.252 ops/s
+========================================================================================================================
+Top 5 with ('movePlayers', '100000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 71
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 70
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 69
+Json + Change File        | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 635   | 68
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 67
 
-Top 5 with ('removePlayers', '1000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: False | Chunk Amount: 2x2 | Score: 843 | 79.807 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 702 | 77.551 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: True | Gzip: False | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 748 | 77.432 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 75.146 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 2 | Score: 864 | 73.775 ops/s
+========================================================================================================================
+Top 5 with ('removePlayers', '1000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Static size (Amount of chunk: 2x2)                                | 843   | 59
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 702   | 58
+Json + GZip + Change File | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 748   | 57
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 56
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 2)   | 864   | 55
 
-Top 5 with ('removePlayers', '10000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 2 | Score: 692 | 1.279 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 708 | 1.217 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 10 | Score: 686 | 1.185 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 100 | Score: 834 | 1.155 ops/s
-Serialization: Json | Change File: False | Dynamic Chunk: False | Gzip: False | Chunk Amount: 2x2 | Score: 732 | 1.142 ops/s
+========================================================================================================================
+Top 5 with ('removePlayers', '10000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 2)    | 692   | 26
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 708   | 25
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)   | 686   | 24
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 100)  | 834   | 23
+Json + GZip + Change File | Static size (Amount of chunk: 2x2)                                | 732   | 22
 
-Top 5 with ('removePlayers', '100000'):
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 100 | Score: 848 | 0.010 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 10000 | Min Elements/Group: 10 | Score: 861 | 0.010 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 10 | Score: 775 | 0.010 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 5000 | Min Elements/Group: 2 | Score: 811 | 0.010 ops/s
-Serialization: Binary | Change File: False | Dynamic Chunk: True | Max Elements/Chunk: 1000 | Min Elements/Group: 100 | Score: 708 | 0.010 ops/s
+========================================================================================================================
+Top 5 with ('removePlayers', '100000')
+Strategy                  | Chunks                                                            | Score  | Category Score 
+------------------------------------------------------------------------------------------------------------------------
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100) | 848   | 26
+Binary + Change File      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 10)  | 861   | 25
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 10)   | 775   | 24
+Binary + Change File      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2)    | 811   | 23
+Binary + Change File      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)  | 708   | 22
+
+
+
+
 
 All results:
 =================================================================================================================================================

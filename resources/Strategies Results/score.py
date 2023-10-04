@@ -130,26 +130,50 @@ def get_sorted_function(strategies, function):
 
     return list(reversed(sort(results)))
 
+def create_table(title, strategies, results, use_extra_column):
+    table = "Strategy" + " " * 18 + "| " + "Chunks" + " " * 60 + "| Score "
+
+    equal = ""
+    if use_extra_column:
+        table += " | Category Score "
+        equal = "="*120 + "\n"
+
+    table += "\n" + "-" * len(table) + "\n"
+    for result in results:
+        s = strategies[result[0]]
+        table += s.str_short()
+
+        if use_extra_column:
+            table += "| " + str(result[1])
+        
+        table += "\n"
+
+    return equal + title + "\n" + table + "\n"
+
 def write_sorted(strategies):
     with open(SCORE_FILE, "w") as f:
         results = get_sorted(strategies)
-        f.write("Top 10:\n")
-        for result in results[:9]:
-            s = strategies[result[0]]
-            f.write(str(s) + "\n")
+        # f.write("Top 10:\n")
+        # for result in results[:9]:
+        #     s = strategies[result[0]]
+        #     f.write(str(s) + "\n")
+        f.write(create_table("Top 10", strategies, results[:9], False))
 
         for function in get_functions(strategies):
-            f.write(f"\nTop 5 with function {function}:\n")
-            for result in get_sorted_function(strategies, function)[:5]:
-                s = strategies[result[0]]
-                f.write(str(s) + " | " + str(result[1]) + "\n")
+            f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True))
+            # f.write(f"\nTop 5 with function {function}:\n")
+            # for result in get_sorted_function(strategies, function)[:5]:
+            #     s = strategies[result[0]]
+            #     f.write(str(s) + " | " + str(result[1]) + "\n")
 
         for key in get_keys(strategies):
-            f.write(f"\nTop 5 with {key}:\n")
-            for result in get_sorted_key(strategies, key)[:5]:
-                s = strategies[result[0]]
-                f.write(str(s) + " | " + str(s.results[key][0]) + " ops/s\n")
+            f.write(create_table(f"Top 5 with {key}", strategies, get_sorted_key(strategies, key)[:5], True))
+            # f.write(f"\nTop 5 with {key}:\n")
+            # for result in get_sorted_key(strategies, key)[:5]:
+            #     s = strategies[result[0]]
+            #     f.write(str(s) + " | " + str(s.results[key][0]) + " ops/s\n")
 
+        f.write("\n"*3)
         f.write("\nAll results:\n")
         for result in results:
             s = strategies[result[0]]
@@ -197,4 +221,4 @@ if __name__ == "__main__":
     write_sorted( calc_score(strategies))
 
     #Plot results
-    plot(strategies)
+    #plot(strategies)

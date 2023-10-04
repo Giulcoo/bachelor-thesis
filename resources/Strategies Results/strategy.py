@@ -82,6 +82,41 @@ class Strategy:
 
         return result
     
+    def str_short(self):
+        result = ""
+
+        len_serrialization = len("Strategy" + " " * 18)
+        len_chunk = len("Chunks" + " " * 60)
+        len_score = len("Score ")
+
+        strat = ""
+        if self.serialization == "Json" and not self.gzip:
+            strat = "Json + GZip"
+        else:
+            strat = self.serialization
+
+        if not self.changefile:
+            strat += " + Change File"
+
+        result += strat + " " * (len_serrialization - len(strat))
+        result += "| "
+
+        chunk = ""
+
+        if self.dynamic:
+            chunk += f"Dynamic size (Max elements/chunk: {self.maxchunkelements}, "
+            chunk += f"Min elements/group: {self.mingroupelements})"
+        else:
+            chunk += f"Static size (Amount of chunk: {self.chunkamount}x{self.chunkamount})"
+
+        result += chunk + " " * (len_chunk - len(chunk))
+        result += "| "
+
+        score_val = str(self.score()) 
+        result += score_val + " " * (len_score - len(score_val))
+
+        return result
+    
     def label(self):
         result = f"{self.serialization}\n"
         
