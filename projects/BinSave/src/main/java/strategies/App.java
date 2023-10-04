@@ -46,6 +46,7 @@ public class App {
     public static void removePlayers(int dataCount){
         GameService service = new GameService();
         service.loadGame();
+        service.printGame();
 
         service.randomDeleteBot(dataCount);
 

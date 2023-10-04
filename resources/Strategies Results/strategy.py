@@ -16,6 +16,10 @@ class Strategy:
         if serialization == "Json":
             if words[9] == "ops/s":
                 result = words[8]
+            elif words[11] == "ops/s":
+                result = words[8]
+                useChangeFile = words[4]
+                useGzip = words[5]
             else:
                 result = words[9]
             
@@ -24,12 +28,16 @@ class Strategy:
             else:
                 self.gzip = False
         else:
-            result = words[8]
-
-            if words[8] == "ops/s":
-                result = words[7]
+            if len(words) == 8:
+                result = words[6]
+                useChangeFile = words[4]
             else:
                 result = words[8]
+
+                if words[8] == "ops/s":
+                    result = words[7]
+                else:
+                    result = words[8]
 
             self.gzip = False
 
@@ -56,11 +64,10 @@ class Strategy:
         }
 
     def __str__(self):
-        result = f"Serialization: {self.serialization} | Change File: {self.changefile} | "
-        if self.gzip:
+        result = f"Serialization: {self.serialization} | Change File: {self.changefile} | Dynamic Chunk: {self.dynamic} | "
+
+        if self.serialization == "Json":
             result += f"Gzip: {self.gzip} | "
-        
-        result += f"Dynamic Chunk: {self.dynamic} | "
 
         if self.dynamic:
             result += f"Max Elements/Chunk: {self.maxchunkelements} | Min Elements/Group: {self.mingroupelements}"

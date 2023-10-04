@@ -71,37 +71,37 @@ public class StaticBenchmark {
 //        App.loadGame();
 //    }
 
-    @Benchmark
-    public static void createPlayers(CreateSmallData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.createPlayers(dataCount);
-    }
-
-    @Benchmark
-    public static void removePlayers(CreateData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.removePlayers(dataCount);
-    }
-
-    @Benchmark
-    public static void movePlayers(CreateSmallData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = false;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.USE_GZIP = useGzip;
-        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
-        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
-
-        App.movePlayers(dataCount);
-    }
+//    @Benchmark
+//    public static void createPlayers(CreateSmallData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.createPlayers(dataCount);
+//    }
+//
+//    @Benchmark
+//    public static void removePlayers(CreateData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.removePlayers(dataCount);
+//    }
+//
+//    @Benchmark
+//    public static void movePlayers(CreateSmallData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = false;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.USE_GZIP = useGzip;
+//        Constants.STATIC_CHUNK_AMOUNT = staticChunkAmount;
+//        Constants.STATIC_CHUNK_SIZE = Constants.MAP_SIZE/staticChunkAmount;
+//
+//        App.movePlayers(dataCount);
+//    }
 
 }

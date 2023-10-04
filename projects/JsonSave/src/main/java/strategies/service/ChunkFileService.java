@@ -201,7 +201,7 @@ public class ChunkFileService {
 
     private List<String> nodeToStringList(JsonNode node){
         List<String> values = new ArrayList<>();
-        node.get("value").forEach(n -> values.add(n.asText()));
+        node.forEach(n -> values.add(n.asText()));
         return values;
     }
 }

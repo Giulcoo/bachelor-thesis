@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9531a49a-838d-44b7-9f3d-0b7c31664792" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../BinSave/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BinSave/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BinSave/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/strategy.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +142,7 @@
       <workItem from="1696063035148" duration="80000" />
       <workItem from="1696064401788" duration="1036000" />
       <workItem from="1696065479598" duration="4110000" />
+      <workItem from="1696329006241" duration="4188000" />
     </task>
     <servers />
   </component>

@@ -64,8 +64,6 @@ def get_functions(strategies):
 
 def calc_score(strategies):
     for key in get_keys(strategies):
-        if(key[0] in ["removePlayers", "loadGame", "createPlayers"]): #TODO: Remove this
-            continue
         i = 0
         results = []
 
@@ -75,7 +73,6 @@ def calc_score(strategies):
             else:
                 print(str(key) + " not in " + str(s)) #TODO: Get missing benchmarks
             i += 1
-        
        
         results = sort(results)
         i = 0

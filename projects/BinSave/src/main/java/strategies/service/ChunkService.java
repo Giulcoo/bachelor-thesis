@@ -123,10 +123,21 @@ public abstract class ChunkService {
 
     protected Chunk.Builder getChunk(String chunkID){
         if(loadedChunks.contains(chunkID)){
+            if(chunks.get(chunkID) == null){
+                Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
+
+                if(chunk == null) return null;
+                chunks.put(chunkID, chunk);
+                loadedChunks.add(chunkID);
+                return chunk;
+            }
+
             return chunks.get(chunkID);
         }
         else{
             Chunk.Builder chunk = chunkFile.getChunk(chunkID).toBuilder();
+
+            if(chunk == null) return null;
             chunks.put(chunkID, chunk);
             loadedChunks.add(chunkID);
             return chunk;

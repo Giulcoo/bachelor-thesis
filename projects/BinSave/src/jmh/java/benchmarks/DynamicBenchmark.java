@@ -67,15 +67,15 @@ public class DynamicBenchmark {
 //        App.loadGame();
 //    }
 
-    @Benchmark
-    public static void createPlayers(CreateSmallData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = true;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-
-        App.createPlayers(dataCount);
-    }
+//    @Benchmark
+//    public static void createPlayers(CreateSmallData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = true;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+//
+//        App.createPlayers(dataCount);
+//    }
 
     @Benchmark
     public static void removePlayers(CreateData createData){
@@ -87,13 +87,13 @@ public class DynamicBenchmark {
         App.removePlayers(dataCount);
     }
 
-    @Benchmark
-    public static void movePlayers(CreateSmallData createData){
-        Constants.DYNAMIC_CHUNK_SIZE = true;
-        Constants.USE_CHANGE_FILE = useChangeFile;
-        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-
-        App.movePlayers(dataCount);
-    }
+//    @Benchmark
+//    public static void movePlayers(CreateSmallData createData){
+//        Constants.DYNAMIC_CHUNK_SIZE = true;
+//        Constants.USE_CHANGE_FILE = useChangeFile;
+//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+//
+//        App.movePlayers(dataCount);
+//    }
 }
