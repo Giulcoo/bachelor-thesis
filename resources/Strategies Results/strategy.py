@@ -16,6 +16,10 @@ class Strategy:
         if serialization == "Json":
             if words[9] == "ops/s":
                 result = words[8]
+
+                if benchmark[0] == "DynamicBenchmark":
+                    useChangeFile = words[4]
+                    useGzip = words[5]
             elif words[10] == "ops/s":
                 result = words[9]
                 useChangeFile = words[5]
@@ -32,8 +36,8 @@ class Strategy:
             else:
                 self.gzip = False
         else:
-            if len(words) == 8:
-                result = words[6]
+            if len(words) == 9:
+                result = words[7]
                 useChangeFile = words[4]
             else:
                 result = words[8]
@@ -66,6 +70,7 @@ class Strategy:
         self.results = {
             (benchmark[1], dataCount): (result, 0)
         }
+        
 
     def __str__(self):
         result = f"Serialization: {self.serialization} | Change File: {self.changefile} | Dynamic Chunk: {self.dynamic} | "
@@ -90,12 +95,12 @@ class Strategy:
         len_score = len("Score ")
 
         strat = ""
-        if self.serialization == "Json" and not self.gzip:
+        if self.serialization == "Json" and self.gzip:
             strat = "Json + GZip"
         else:
             strat = self.serialization
 
-        if not self.changefile:
+        if self.changefile:
             strat += " + Change File"
 
         result += strat + " " * (len_serrialization - len(strat))
