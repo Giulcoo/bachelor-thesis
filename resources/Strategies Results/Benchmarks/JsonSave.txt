@@ -1,0 +1,646 @@
+Benchmark                    (chunkMaxElements)  (chunkMinElements)  (dataCount)  (staticChunkAmount)  (useChangeFile)  (useGzip)   Mode  Cnt    Score    Error  Units
+DynamicBenchmark.createGame                1000                   2         1000                  N/A             true       true  thrpt   10    3,989 ±  0,133  ops/s
+DynamicBenchmark.createGame                1000                   2         1000                  N/A             true      false  thrpt   10    3,829 ±  0,112  ops/s
+DynamicBenchmark.createGame                1000                   2         1000                  N/A            false       true  thrpt   10   91,112 ±  1,449  ops/s
+DynamicBenchmark.createGame                1000                   2         1000                  N/A            false      false  thrpt   10  155,399 ±  2,356  ops/s
+DynamicBenchmark.createGame                1000                   2        10000                  N/A             true       true  thrpt   10    0,045 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                   2        10000                  N/A             true      false  thrpt   10    0,046 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                   2        10000                  N/A            false       true  thrpt   10    4,572 ±  0,104  ops/s
+DynamicBenchmark.createGame                1000                   2        10000                  N/A            false      false  thrpt   10    5,985 ±  0,235  ops/s
+DynamicBenchmark.createGame                1000                   2       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                   2       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                   2       100000                  N/A            false       true  thrpt   10    0,149 ±  0,004  ops/s
+DynamicBenchmark.createGame                1000                   2       100000                  N/A            false      false  thrpt   10    0,177 ±  0,009  ops/s
+DynamicBenchmark.createGame                1000                  10         1000                  N/A             true       true  thrpt   10    3,623 ±  0,171  ops/s
+DynamicBenchmark.createGame                1000                  10         1000                  N/A             true      false  thrpt   10    3,594 ±  0,120  ops/s
+DynamicBenchmark.createGame                1000                  10         1000                  N/A            false       true  thrpt   10   87,759 ±  5,327  ops/s
+DynamicBenchmark.createGame                1000                  10         1000                  N/A            false      false  thrpt   10  150,837 ±  4,913  ops/s
+DynamicBenchmark.createGame                1000                  10        10000                  N/A             true       true  thrpt   10    0,046 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                  10        10000                  N/A             true      false  thrpt   10    0,046 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                  10        10000                  N/A            false       true  thrpt   10    4,488 ±  0,227  ops/s
+DynamicBenchmark.createGame                1000                  10        10000                  N/A            false      false  thrpt   10    5,950 ±  0,293  ops/s
+DynamicBenchmark.createGame                1000                  10       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                  10       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                  10       100000                  N/A            false       true  thrpt   10    0,143 ±  0,005  ops/s
+DynamicBenchmark.createGame                1000                  10       100000                  N/A            false      false  thrpt   10    0,153 ±  0,003  ops/s
+DynamicBenchmark.createGame                1000                 100         1000                  N/A             true       true  thrpt   10    3,527 ±  0,137  ops/s
+DynamicBenchmark.createGame                1000                 100         1000                  N/A             true      false  thrpt   10    3,604 ±  0,126  ops/s
+DynamicBenchmark.createGame                1000                 100         1000                  N/A            false       true  thrpt   10   80,971 ±  6,439  ops/s
+DynamicBenchmark.createGame                1000                 100         1000                  N/A            false      false  thrpt   10  153,246 ±  5,564  ops/s
+DynamicBenchmark.createGame                1000                 100        10000                  N/A             true       true  thrpt   10    0,046 ±  0,002  ops/s
+DynamicBenchmark.createGame                1000                 100        10000                  N/A             true      false  thrpt   10    0,046 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                 100        10000                  N/A            false       true  thrpt   10    4,489 ±  0,502  ops/s
+DynamicBenchmark.createGame                1000                 100        10000                  N/A            false      false  thrpt   10    6,051 ±  0,413  ops/s
+DynamicBenchmark.createGame                1000                 100       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                 100       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                1000                 100       100000                  N/A            false       true  thrpt   10    0,167 ±  0,003  ops/s
+DynamicBenchmark.createGame                1000                 100       100000                  N/A            false      false  thrpt   10    0,178 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                   2         1000                  N/A             true       true  thrpt   10    3,712 ±  0,096  ops/s
+DynamicBenchmark.createGame                5000                   2         1000                  N/A             true      false  thrpt   10    3,710 ±  0,089  ops/s
+DynamicBenchmark.createGame                5000                   2         1000                  N/A            false       true  thrpt   10   88,341 ±  1,288  ops/s
+DynamicBenchmark.createGame                5000                   2         1000                  N/A            false      false  thrpt   10  158,778 ±  2,858  ops/s
+DynamicBenchmark.createGame                5000                   2        10000                  N/A             true       true  thrpt   10    0,041 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                   2        10000                  N/A             true      false  thrpt   10    0,041 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                   2        10000                  N/A            false       true  thrpt   10    9,710 ±  0,165  ops/s
+DynamicBenchmark.createGame                5000                   2        10000                  N/A            false      false  thrpt   10   16,378 ±  0,332  ops/s
+DynamicBenchmark.createGame                5000                   2       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                   2       100000                  N/A             true      false  thrpt   10    0,007 ±  0,003  ops/s
+DynamicBenchmark.createGame                5000                   2       100000                  N/A            false       true  thrpt   10    0,496 ±  0,013  ops/s
+DynamicBenchmark.createGame                5000                   2       100000                  N/A            false      false  thrpt   10    0,622 ±  0,007  ops/s
+DynamicBenchmark.createGame                5000                  10         1000                  N/A             true       true  thrpt   10    3,748 ±  0,142  ops/s
+DynamicBenchmark.createGame                5000                  10         1000                  N/A             true      false  thrpt   10    3,543 ±  0,236  ops/s
+DynamicBenchmark.createGame                5000                  10         1000                  N/A            false       true  thrpt   10   86,270 ±  1,916  ops/s
+DynamicBenchmark.createGame                5000                  10         1000                  N/A            false      false  thrpt   10  154,070 ±  3,925  ops/s
+DynamicBenchmark.createGame                5000                  10        10000                  N/A             true       true  thrpt   10    0,041 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                  10        10000                  N/A             true      false  thrpt   10    0,039 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                  10        10000                  N/A            false       true  thrpt   10    9,536 ±  0,439  ops/s
+DynamicBenchmark.createGame                5000                  10        10000                  N/A            false      false  thrpt   10   17,056 ±  1,048  ops/s
+DynamicBenchmark.createGame                5000                  10       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                  10       100000                  N/A             true      false  thrpt   10    0,009 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                  10       100000                  N/A            false       true  thrpt   10    0,522 ±  0,020  ops/s
+DynamicBenchmark.createGame                5000                  10       100000                  N/A            false      false  thrpt   10    0,640 ±  0,013  ops/s
+DynamicBenchmark.createGame                5000                 100         1000                  N/A             true       true  thrpt   10    3,667 ±  0,236  ops/s
+DynamicBenchmark.createGame                5000                 100         1000                  N/A             true      false  thrpt   10    3,649 ±  0,066  ops/s
+DynamicBenchmark.createGame                5000                 100         1000                  N/A            false       true  thrpt   10   90,397 ±  2,936  ops/s
+DynamicBenchmark.createGame                5000                 100         1000                  N/A            false      false  thrpt   10  161,217 ±  4,113  ops/s
+DynamicBenchmark.createGame                5000                 100        10000                  N/A             true       true  thrpt   10    0,043 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                 100        10000                  N/A             true      false  thrpt   10    0,041 ±  0,002  ops/s
+DynamicBenchmark.createGame                5000                 100        10000                  N/A            false       true  thrpt   10    9,735 ±  0,402  ops/s
+DynamicBenchmark.createGame                5000                 100        10000                  N/A            false      false  thrpt   10   16,594 ±  0,818  ops/s
+DynamicBenchmark.createGame                5000                 100       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                 100       100000                  N/A             true      false  thrpt   10    0,009 ±  0,001  ops/s
+DynamicBenchmark.createGame                5000                 100       100000                  N/A            false       true  thrpt   10    0,511 ±  0,010  ops/s
+DynamicBenchmark.createGame                5000                 100       100000                  N/A            false      false  thrpt   10    0,641 ±  0,034  ops/s
+DynamicBenchmark.createGame               10000                   2         1000                  N/A             true       true  thrpt   10    3,794 ±  0,138  ops/s
+DynamicBenchmark.createGame               10000                   2         1000                  N/A             true      false  thrpt   10    3,738 ±  0,101  ops/s
+DynamicBenchmark.createGame               10000                   2         1000                  N/A            false       true  thrpt   10   90,864 ±  2,526  ops/s
+DynamicBenchmark.createGame               10000                   2         1000                  N/A            false      false  thrpt   10  162,673 ±  2,993  ops/s
+DynamicBenchmark.createGame               10000                   2        10000                  N/A             true       true  thrpt   10    0,366 ±  0,016  ops/s
+DynamicBenchmark.createGame               10000                   2        10000                  N/A             true      false  thrpt   10    0,373 ±  0,015  ops/s
+DynamicBenchmark.createGame               10000                   2        10000                  N/A            false       true  thrpt   10   14,064 ±  0,499  ops/s
+DynamicBenchmark.createGame               10000                   2        10000                  N/A            false      false  thrpt   10   35,213 ±  1,152  ops/s
+DynamicBenchmark.createGame               10000                   2       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                   2       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                   2       100000                  N/A            false       true  thrpt   10    0,716 ±  0,034  ops/s
+DynamicBenchmark.createGame               10000                   2       100000                  N/A            false      false  thrpt   10    1,096 ±  0,049  ops/s
+DynamicBenchmark.createGame               10000                  10         1000                  N/A             true       true  thrpt   10    3,728 ±  0,098  ops/s
+DynamicBenchmark.createGame               10000                  10         1000                  N/A             true      false  thrpt   10    3,649 ±  0,180  ops/s
+DynamicBenchmark.createGame               10000                  10         1000                  N/A            false       true  thrpt   10   90,938 ±  3,463  ops/s
+DynamicBenchmark.createGame               10000                  10         1000                  N/A            false      false  thrpt   10  161,003 ±  5,466  ops/s
+DynamicBenchmark.createGame               10000                  10        10000                  N/A             true       true  thrpt   10    0,371 ±  0,014  ops/s
+DynamicBenchmark.createGame               10000                  10        10000                  N/A             true      false  thrpt   10    0,302 ±  0,110  ops/s
+DynamicBenchmark.createGame               10000                  10        10000                  N/A            false       true  thrpt   10   14,081 ±  0,325  ops/s
+DynamicBenchmark.createGame               10000                  10        10000                  N/A            false      false  thrpt   10   35,704 ±  0,929  ops/s
+DynamicBenchmark.createGame               10000                  10       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                  10       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                  10       100000                  N/A            false       true  thrpt   10    0,745 ±  0,048  ops/s
+DynamicBenchmark.createGame               10000                  10       100000                  N/A            false      false  thrpt   10    1,017 ±  0,015  ops/s
+DynamicBenchmark.createGame               10000                 100         1000                  N/A             true       true  thrpt   10    3,753 ±  0,128  ops/s
+DynamicBenchmark.createGame               10000                 100         1000                  N/A             true      false  thrpt   10    3,676 ±  0,116  ops/s
+DynamicBenchmark.createGame               10000                 100         1000                  N/A            false       true  thrpt   10   90,813 ±  3,080  ops/s
+DynamicBenchmark.createGame               10000                 100         1000                  N/A            false      false  thrpt   10  159,244 ±  3,000  ops/s
+DynamicBenchmark.createGame               10000                 100        10000                  N/A             true       true  thrpt   10    0,367 ±  0,025  ops/s
+DynamicBenchmark.createGame               10000                 100        10000                  N/A             true      false  thrpt   10    0,363 ±  0,020  ops/s
+DynamicBenchmark.createGame               10000                 100        10000                  N/A            false       true  thrpt   10   14,203 ±  0,316  ops/s
+DynamicBenchmark.createGame               10000                 100        10000                  N/A            false      false  thrpt   10   35,782 ±  0,779  ops/s
+DynamicBenchmark.createGame               10000                 100       100000                  N/A             true       true  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                 100       100000                  N/A             true      false  thrpt   10    0,008 ±  0,001  ops/s
+DynamicBenchmark.createGame               10000                 100       100000                  N/A            false       true  thrpt   10    0,734 ±  0,028  ops/s
+DynamicBenchmark.createGame               10000                 100       100000                  N/A            false      false  thrpt   10    1,137 ±  0,034  ops/s
+DynamicBenchmark.loadGame                  1000                   2         1000                  N/A             true       true  thrpt   10  151,239 ±  1,380  ops/s
+DynamicBenchmark.loadGame                  1000                   2         1000                  N/A             true      false  thrpt   10  216,027 ±  5,314  ops/s
+DynamicBenchmark.loadGame                  1000                   2         1000                  N/A            false       true  thrpt   10  180,693 ±  1,833  ops/s
+DynamicBenchmark.loadGame                  1000                   2         1000                  N/A            false      false  thrpt   10  287,776 ±  4,432  ops/s
+DynamicBenchmark.loadGame                  1000                   2        10000                  N/A            false       true  thrpt   10   23,867 ±  0,149  ops/s
+DynamicBenchmark.loadGame                  1000                   2        10000                  N/A            false      false  thrpt   10   33,641 ±  0,438  ops/s
+DynamicBenchmark.loadGame                  1000                   2       100000                  N/A            false       true  thrpt   10    2,461 ±  0,059  ops/s
+DynamicBenchmark.loadGame                  1000                   2       100000                  N/A            false      false  thrpt   10    3,471 ±  0,060  ops/s
+DynamicBenchmark.loadGame                  1000                  10         1000                  N/A             true       true  thrpt   10  149,694 ±  3,365  ops/s
+DynamicBenchmark.loadGame                  1000                  10         1000                  N/A             true      false  thrpt   10  208,890 ±  1,808  ops/s
+DynamicBenchmark.loadGame                  1000                  10         1000                  N/A            false       true  thrpt   10  181,821 ±  2,639  ops/s
+DynamicBenchmark.loadGame                  1000                  10         1000                  N/A            false      false  thrpt   10  289,799 ±  4,604  ops/s
+DynamicBenchmark.loadGame                  1000                  10        10000                  N/A            false       true  thrpt   10   23,341 ±  0,305  ops/s
+DynamicBenchmark.loadGame                  1000                  10        10000                  N/A            false      false  thrpt   10   33,954 ±  0,072  ops/s
+DynamicBenchmark.loadGame                  1000                  10       100000                  N/A            false       true  thrpt   10    2,489 ±  0,061  ops/s
+DynamicBenchmark.loadGame                  1000                  10       100000                  N/A            false      false  thrpt   10    3,486 ±  0,086  ops/s
+DynamicBenchmark.loadGame                  1000                 100         1000                  N/A             true       true  thrpt   10  148,765 ±  1,762  ops/s
+DynamicBenchmark.loadGame                  1000                 100         1000                  N/A             true      false  thrpt   10  215,427 ±  3,119  ops/s
+DynamicBenchmark.loadGame                  1000                 100         1000                  N/A            false       true  thrpt   10  179,000 ±  4,759  ops/s
+DynamicBenchmark.loadGame                  1000                 100         1000                  N/A            false      false  thrpt   10  286,810 ±  4,602  ops/s
+DynamicBenchmark.loadGame                  1000                 100        10000                  N/A            false       true  thrpt   10   23,749 ±  0,034  ops/s
+DynamicBenchmark.loadGame                  1000                 100        10000                  N/A            false      false  thrpt   10   32,790 ±  0,067  ops/s
+DynamicBenchmark.loadGame                  1000                 100       100000                  N/A            false       true  thrpt   10    2,453 ±  0,067  ops/s
+DynamicBenchmark.loadGame                  1000                 100       100000                  N/A            false      false  thrpt   10    3,437 ±  0,069  ops/s
+DynamicBenchmark.loadGame                  5000                   2         1000                  N/A             true       true  thrpt   10  148,504 ±  5,302  ops/s
+DynamicBenchmark.loadGame                  5000                   2         1000                  N/A             true      false  thrpt   10  217,530 ±  2,914  ops/s
+DynamicBenchmark.loadGame                  5000                   2         1000                  N/A            false       true  thrpt   10  180,479 ±  3,924  ops/s
+DynamicBenchmark.loadGame                  5000                   2         1000                  N/A            false      false  thrpt   10  283,507 ±  3,980  ops/s
+DynamicBenchmark.loadGame                  5000                   2        10000                  N/A            false       true  thrpt   10   33,994 ±  0,182  ops/s
+DynamicBenchmark.loadGame                  5000                   2        10000                  N/A            false      false  thrpt   10   50,217 ±  1,417  ops/s
+DynamicBenchmark.loadGame                  5000                   2       100000                  N/A            false       true  thrpt   10    3,449 ±  0,034  ops/s
+DynamicBenchmark.loadGame                  5000                   2       100000                  N/A            false      false  thrpt   10    5,211 ±  0,074  ops/s
+DynamicBenchmark.loadGame                  5000                  10         1000                  N/A             true       true  thrpt   10  149,588 ±  2,550  ops/s
+DynamicBenchmark.loadGame                  5000                  10         1000                  N/A             true      false  thrpt   10  215,870 ±  3,708  ops/s
+DynamicBenchmark.loadGame                  5000                  10         1000                  N/A            false       true  thrpt   10  182,252 ±  2,298  ops/s
+DynamicBenchmark.loadGame                  5000                  10         1000                  N/A            false      false  thrpt   10  282,019 ±  3,969  ops/s
+DynamicBenchmark.loadGame                  5000                  10        10000                  N/A            false       true  thrpt   10   34,046 ±  0,119  ops/s
+DynamicBenchmark.loadGame                  5000                  10        10000                  N/A            false      false  thrpt   10   51,372 ±  0,522  ops/s
+DynamicBenchmark.loadGame                  5000                  10       100000                  N/A            false       true  thrpt   10    3,440 ±  0,004  ops/s
+DynamicBenchmark.loadGame                  5000                  10       100000                  N/A            false      false  thrpt   10    5,190 ±  0,029  ops/s
+DynamicBenchmark.loadGame                  5000                 100         1000                  N/A             true       true  thrpt   10  149,924 ±  2,984  ops/s
+DynamicBenchmark.loadGame                  5000                 100         1000                  N/A             true      false  thrpt   10  219,598 ±  5,428  ops/s
+DynamicBenchmark.loadGame                  5000                 100         1000                  N/A            false       true  thrpt   10  176,851 ±  1,910  ops/s
+DynamicBenchmark.loadGame                  5000                 100         1000                  N/A            false      false  thrpt   10  284,794 ±  7,439  ops/s
+DynamicBenchmark.loadGame                  5000                 100        10000                  N/A            false       true  thrpt   10   33,791 ±  0,411  ops/s
+DynamicBenchmark.loadGame                  5000                 100        10000                  N/A            false      false  thrpt   10   51,473 ±  0,114  ops/s
+DynamicBenchmark.loadGame                  5000                 100       100000                  N/A            false       true  thrpt   10    3,462 ±  0,013  ops/s
+DynamicBenchmark.loadGame                  5000                 100       100000                  N/A            false      false  thrpt   10    5,243 ±  0,036  ops/s
+DynamicBenchmark.loadGame                 10000                   2         1000                  N/A             true       true  thrpt   10  149,963 ±  3,244  ops/s
+DynamicBenchmark.loadGame                 10000                   2         1000                  N/A             true      false  thrpt   10  219,328 ±  3,410  ops/s
+DynamicBenchmark.loadGame                 10000                   2         1000                  N/A            false       true  thrpt   10  181,390 ±  2,528  ops/s
+DynamicBenchmark.loadGame                 10000                   2         1000                  N/A            false      false  thrpt   10  288,776 ±  4,073  ops/s
+DynamicBenchmark.loadGame                 10000                   2        10000                  N/A             true       true  thrpt   10   17,986 ±  0,049  ops/s
+DynamicBenchmark.loadGame                 10000                   2        10000                  N/A             true      false  thrpt   10   27,340 ±  0,197  ops/s
+DynamicBenchmark.loadGame                 10000                   2        10000                  N/A            false       true  thrpt   10   19,584 ±  0,300  ops/s
+DynamicBenchmark.loadGame                 10000                   2        10000                  N/A            false      false  thrpt   10   30,219 ±  0,760  ops/s
+DynamicBenchmark.loadGame                 10000                   2       100000                  N/A            false       true  thrpt   10    3,606 ±  0,011  ops/s
+DynamicBenchmark.loadGame                 10000                   2       100000                  N/A            false      false  thrpt   10    5,489 ±  0,036  ops/s
+DynamicBenchmark.loadGame                 10000                  10         1000                  N/A             true       true  thrpt   10  151,823 ±  1,889  ops/s
+DynamicBenchmark.loadGame                 10000                  10         1000                  N/A             true      false  thrpt   10  222,085 ±  1,468  ops/s
+DynamicBenchmark.loadGame                 10000                  10         1000                  N/A            false       true  thrpt   10  180,143 ±  2,274  ops/s
+DynamicBenchmark.loadGame                 10000                  10         1000                  N/A            false      false  thrpt   10  284,955 ±  6,664  ops/s
+DynamicBenchmark.loadGame                 10000                  10        10000                  N/A             true       true  thrpt   10   17,869 ±  0,111  ops/s
+DynamicBenchmark.loadGame                 10000                  10        10000                  N/A             true      false  thrpt   10   27,801 ±  0,143  ops/s
+DynamicBenchmark.loadGame                 10000                  10        10000                  N/A            false       true  thrpt   10   20,224 ±  0,170  ops/s
+DynamicBenchmark.loadGame                 10000                  10        10000                  N/A            false      false  thrpt   10   31,455 ±  0,578  ops/s
+DynamicBenchmark.loadGame                 10000                  10       100000                  N/A            false       true  thrpt   10    3,636 ±  0,015  ops/s
+DynamicBenchmark.loadGame                 10000                  10       100000                  N/A            false      false  thrpt   10    5,415 ±  0,020  ops/s
+DynamicBenchmark.loadGame                 10000                 100         1000                  N/A             true       true  thrpt   10  149,467 ±  2,263  ops/s
+DynamicBenchmark.loadGame                 10000                 100         1000                  N/A             true      false  thrpt   10  216,577 ±  4,656  ops/s
+DynamicBenchmark.loadGame                 10000                 100         1000                  N/A            false       true  thrpt   10  179,069 ±  1,957  ops/s
+DynamicBenchmark.loadGame                 10000                 100         1000                  N/A            false      false  thrpt   10  285,132 ±  3,792  ops/s
+DynamicBenchmark.loadGame                 10000                 100        10000                  N/A             true       true  thrpt   10   17,967 ±  0,286  ops/s
+DynamicBenchmark.loadGame                 10000                 100        10000                  N/A             true      false  thrpt   10   27,140 ±  0,219  ops/s
+DynamicBenchmark.loadGame                 10000                 100        10000                  N/A            false       true  thrpt   10   20,286 ±  0,176  ops/s
+DynamicBenchmark.loadGame                 10000                 100        10000                  N/A            false      false  thrpt   10   31,369 ±  0,539  ops/s
+DynamicBenchmark.loadGame                 10000                 100       100000                  N/A            false       true  thrpt   10    3,665 ±  0,028  ops/s
+DynamicBenchmark.loadGame                 10000                 100       100000                  N/A            false      false  thrpt   10    5,590 ±  0,067  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                    2             true       true  thrpt   10    3,656 ±  0,139  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                    2             true      false  thrpt   10    3,609 ±  0,159  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                    2            false       true  thrpt   10   69,711 ±  1,395  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                    2            false      false  thrpt   10  104,632 ±  4,072  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   10             true       true  thrpt   10    3,285 ±  0,087  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   10             true      false  thrpt   10    3,250 ±  0,164  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   10            false       true  thrpt   10    8,493 ±  0,551  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   10            false      false  thrpt   10    9,070 ±  0,483  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   50             true       true  thrpt   10    1,025 ±  0,041  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   50             true      false  thrpt   10    1,037 ±  0,042  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   50            false       true  thrpt   10    0,356 ±  0,015  ops/s
+StaticBenchmark.createGame                  N/A                 N/A         1000                   50            false      false  thrpt   10    0,370 ±  0,020  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                    2             true       true  thrpt   10    0,366 ±  0,022  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                    2             true      false  thrpt   10    0,349 ±  0,083  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                    2            false       true  thrpt   10   13,297 ±  0,306  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                    2            false      false  thrpt   10   31,181 ±  0,746  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   10             true       true  thrpt   10    0,361 ±  0,019  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   10             true      false  thrpt   10    0,347 ±  0,079  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   10            false       true  thrpt   10    5,381 ±  0,293  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   10            false      false  thrpt   10    7,021 ±  0,647  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   50             true       true  thrpt   10    0,276 ±  0,016  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   50             true      false  thrpt   10    0,151 ±  0,007  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   50            false       true  thrpt   10    0,343 ±  0,018  ops/s
+StaticBenchmark.createGame                  N/A                 N/A        10000                   50            false      false  thrpt   10    0,343 ±  0,026  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                    2             true       true  thrpt   10    0,019 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                    2             true      false  thrpt   10    0,019 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                    2            false       true  thrpt   10    1,485 ±  0,035  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                    2            false      false  thrpt   10    4,049 ±  0,074  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   10             true       true  thrpt   10    0,019 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   10             true      false  thrpt   10    0,019 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   10            false       true  thrpt   10    1,161 ±  0,058  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   10            false      false  thrpt   10    2,328 ±  0,161  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   50             true       true  thrpt   10    0,018 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   50             true      false  thrpt   10    0,018 ±  0,001  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   50            false       true  thrpt   10    0,218 ±  0,014  ops/s
+StaticBenchmark.createGame                  N/A                 N/A       100000                   50            false      false  thrpt   10    0,246 ±  0,012  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                    2             true       true  thrpt   10  147,557 ±  1,643  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                    2             true      false  thrpt   10  212,781 ±  2,154  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                    2            false       true  thrpt   10  180,474 ±  1,862  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                    2            false      false  thrpt   10  270,584 ±  0,193  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   10             true       true  thrpt   10   38,608 ±  0,315  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   10             true      false  thrpt   10   47,213 ±  0,358  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   10            false       true  thrpt   10   40,334 ±  0,110  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   10            false      false  thrpt   10   50,023 ±  0,341  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   50             true       true  thrpt   10    1,620 ±  0,100  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   50             true      false  thrpt   10    2,009 ±  0,053  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   50            false       true  thrpt   10    1,890 ±  0,086  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A         1000                   50            false      false  thrpt   10    2,185 ±  0,044  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                    2             true       true  thrpt   10   20,084 ±  0,352  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                    2             true      false  thrpt   10   30,884 ±  1,551  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                    2            false       true  thrpt   10   22,768 ±  0,112  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                    2            false      false  thrpt   10   35,907 ±  0,273  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   10             true       true  thrpt   10   17,108 ±  0,139  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   10             true      false  thrpt   10   23,090 ±  0,270  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   10            false       true  thrpt   10   18,648 ±  0,069  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   10            false      false  thrpt   10   27,210 ±  0,158  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   50             true       true  thrpt   10    1,555 ±  0,023  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   50             true      false  thrpt   10    1,792 ±  0,087  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   50            false       true  thrpt   10    1,758 ±  0,074  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A        10000                   50            false      false  thrpt   10    2,098 ±  0,011  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                    2             true       true  thrpt   10    1,558 ±  0,059  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                    2             true      false  thrpt   10    2,393 ±  0,126  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                    2            false       true  thrpt   10    2,291 ±  0,021  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                    2            false      false  thrpt   10    3,617 ±  0,050  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   10             true       true  thrpt   10    1,995 ±  0,109  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   10             true      false  thrpt   10    2,794 ±  0,132  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   10            false       true  thrpt   10    3,019 ±  0,055  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   10            false      false  thrpt   10    4,552 ±  0,022  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   50             true       true  thrpt   10    0,678 ±  0,125  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   50             true      false  thrpt   10    0,908 ±  0,207  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   50            false       true  thrpt   10    1,194 ±  0,034  ops/s
+StaticBenchmark.loadGame                    N/A                 N/A       100000                   50            false      false  thrpt   10    1,536 ±  0,025  ops/s
+
+Benchmark                  (chunkMaxElements)  (chunkMinElements)  (dataCount)  (useChangeFile)  (useGzip)   Mode  Cnt  Score   Error  Units
+DynamicBenchmark.loadGame                1000                   2        10000             true       true  thrpt   10  2,206 ± 0,620  ops/s
+DynamicBenchmark.loadGame                1000                   2        10000             true      false  thrpt   10  2,222 ± 0,522  ops/s
+DynamicBenchmark.loadGame                1000                   2       100000             true       true  thrpt   10  0,221 ± 0,022  ops/s
+DynamicBenchmark.loadGame                1000                   2       100000             true      false  thrpt   10  0,256 ± 0,009  ops/s
+DynamicBenchmark.loadGame                1000                  10        10000             true       true  thrpt   10  2,225 ± 0,178  ops/s
+DynamicBenchmark.loadGame                1000                  10        10000             true      false  thrpt   10  2,496 ± 0,215  ops/s
+DynamicBenchmark.loadGame                1000                  10       100000             true       true  thrpt   10  0,219 ± 0,023  ops/s
+DynamicBenchmark.loadGame                1000                  10       100000             true      false  thrpt   10  0,259 ± 0,023  ops/s
+DynamicBenchmark.loadGame                1000                 100        10000             true       true  thrpt   10  2,166 ± 0,492  ops/s
+DynamicBenchmark.loadGame                1000                 100        10000             true      false  thrpt   10  2,648 ± 0,106  ops/s
+DynamicBenchmark.loadGame                1000                 100       100000             true       true  thrpt   10  0,230 ± 0,009  ops/s
+DynamicBenchmark.loadGame                1000                 100       100000             true      false  thrpt   10  0,258 ± 0,010  ops/s
+DynamicBenchmark.loadGame                5000                   2        10000             true       true  thrpt   10  2,431 ± 0,119  ops/s
+DynamicBenchmark.loadGame                5000                   2        10000             true      false  thrpt   10  2,698 ± 0,141  ops/s
+DynamicBenchmark.loadGame                5000                   2       100000             true       true  thrpt   10  0,275 ± 0,007  ops/s
+DynamicBenchmark.loadGame                5000                   2       100000             true      false  thrpt   10  0,285 ± 0,022  ops/s
+DynamicBenchmark.loadGame                5000                  10        10000             true       true  thrpt   10  2,507 ± 0,109  ops/s
+DynamicBenchmark.loadGame                5000                  10        10000             true      false  thrpt   10  2,633 ± 0,363  ops/s
+DynamicBenchmark.loadGame                5000                  10       100000             true       true  thrpt   10  0,271 ± 0,009  ops/s
+DynamicBenchmark.loadGame                5000                  10       100000             true      false  thrpt   10  0,277 ± 0,019  ops/s
+DynamicBenchmark.loadGame                5000                 100        10000             true       true  thrpt   10  2,288 ± 0,313  ops/s
+DynamicBenchmark.loadGame                5000                 100        10000             true      false  thrpt   10  2,589 ± 0,804  ops/s
+DynamicBenchmark.loadGame                5000                 100       100000             true       true  thrpt   10  0,273 ± 0,014  ops/s
+DynamicBenchmark.loadGame                5000                 100       100000             true      false  thrpt   10  0,292 ± 0,008  ops/s
+DynamicBenchmark.loadGame               10000                   2        10000             true       true  thrpt   10  2,498 ± 0,620  ops/s
+DynamicBenchmark.loadGame               10000                   2        10000             true      false  thrpt   10  2,683 ± 0,183  ops/s
+DynamicBenchmark.loadGame               10000                   2       100000             true       true  thrpt   10  0,268 ± 0,019  ops/s
+DynamicBenchmark.loadGame               10000                   2       100000             true      false  thrpt   10  0,271 ± 0,024  ops/s
+DynamicBenchmark.loadGame               10000                  10        10000             true       true  thrpt   10  2,632 ± 0,542  ops/s
+DynamicBenchmark.loadGame               10000                  10        10000             true      false  thrpt   10  2,800 ± 0,142  ops/s
+DynamicBenchmark.loadGame               10000                  10       100000             true       true  thrpt   10  0,266 ± 0,014  ops/s
+DynamicBenchmark.loadGame               10000                  10       100000             true      false  thrpt   10  0,272 ± 0,013  ops/s
+DynamicBenchmark.loadGame               10000                 100        10000             true       true  thrpt   10  2,838 ± 0,154  ops/s
+DynamicBenchmark.loadGame               10000                 100        10000             true      false  thrpt   10  2,421 ± 0,823  ops/s
+DynamicBenchmark.loadGame               10000                 100       100000             true       true  thrpt   10  0,269 ± 0,010  ops/s
+DynamicBenchmark.loadGame               10000                 100       100000             true      false  thrpt   10  0,276 ± 0,010  ops/s
+
+Benchmark                       (chunkMaxElements)  (chunkMinElements)  (dataCount)  (staticChunkAmount)  (useChangeFile)  (useGzip)   Mode  Cnt    Score   Error  Units
+DynamicBenchmark.createPlayers                1000                   2         1000                  N/A            false       true  thrpt   10  412,919          ops/s
+DynamicBenchmark.createPlayers                1000                   2         1000                  N/A            false      false  thrpt   10  491,736          ops/s
+DynamicBenchmark.createPlayers                1000                   2        10000                  N/A            false       true  thrpt   10    4,983          ops/s
+DynamicBenchmark.createPlayers                1000                   2        10000                  N/A            false      false  thrpt   10    5,538          ops/s
+DynamicBenchmark.createPlayers                1000                   2       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                   2       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                   2       100000                  N/A            false       true  thrpt   10    0,065          ops/s
+DynamicBenchmark.createPlayers                1000                   2       100000                  N/A            false      false  thrpt   10    0,067          ops/s
+DynamicBenchmark.createPlayers                1000                  10         1000                  N/A             true       true  thrpt   10    1,839          ops/s
+DynamicBenchmark.createPlayers                1000                  10         1000                  N/A             true      false  thrpt   10    1,831          ops/s
+DynamicBenchmark.createPlayers                1000                  10         1000                  N/A            false       true  thrpt   10  454,138          ops/s
+DynamicBenchmark.createPlayers                1000                  10         1000                  N/A            false      false  thrpt   10  537,083          ops/s
+DynamicBenchmark.createPlayers                1000                  10        10000                  N/A             true       true  thrpt   10    0,046          ops/s
+DynamicBenchmark.createPlayers                1000                  10        10000                  N/A             true      false  thrpt   10    0,048          ops/s
+DynamicBenchmark.createPlayers                1000                  10        10000                  N/A            false       true  thrpt   10    5,553          ops/s
+DynamicBenchmark.createPlayers                1000                  10        10000                  N/A            false      false  thrpt   10    5,532          ops/s
+DynamicBenchmark.createPlayers                1000                  10       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                  10       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                  10       100000                  N/A            false       true  thrpt   10    0,065          ops/s
+DynamicBenchmark.createPlayers                1000                  10       100000                  N/A            false      false  thrpt   10    0,066          ops/s
+DynamicBenchmark.createPlayers                1000                 100         1000                  N/A             true       true  thrpt   10    1,855          ops/s
+DynamicBenchmark.createPlayers                1000                 100         1000                  N/A             true      false  thrpt   10    1,854          ops/s
+DynamicBenchmark.createPlayers                1000                 100         1000                  N/A            false       true  thrpt   10  461,037          ops/s
+DynamicBenchmark.createPlayers                1000                 100         1000                  N/A            false      false  thrpt   10  560,534          ops/s
+DynamicBenchmark.createPlayers                1000                 100        10000                  N/A             true       true  thrpt   10    0,048          ops/s
+DynamicBenchmark.createPlayers                1000                 100        10000                  N/A             true      false  thrpt   10    0,048          ops/s
+DynamicBenchmark.createPlayers                1000                 100        10000                  N/A            false       true  thrpt   10    5,420          ops/s
+DynamicBenchmark.createPlayers                1000                 100        10000                  N/A            false      false  thrpt   10    5,581          ops/s
+DynamicBenchmark.createPlayers                1000                 100       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                 100       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                1000                 100       100000                  N/A            false       true  thrpt   10    0,065          ops/s
+DynamicBenchmark.createPlayers                1000                 100       100000                  N/A            false      false  thrpt   10    0,064          ops/s
+DynamicBenchmark.createPlayers                5000                   2         1000                  N/A             true       true  thrpt   10    3,800          ops/s
+DynamicBenchmark.createPlayers                5000                   2         1000                  N/A             true      false  thrpt   10    3,788          ops/s
+DynamicBenchmark.createPlayers                5000                   2         1000                  N/A            false       true  thrpt   10  460,741          ops/s
+DynamicBenchmark.createPlayers                5000                   2         1000                  N/A            false      false  thrpt   10  631,386          ops/s
+DynamicBenchmark.createPlayers                5000                   2        10000                  N/A             true       true  thrpt   10    0,044          ops/s
+DynamicBenchmark.createPlayers                5000                   2        10000                  N/A             true      false  thrpt   10    0,042          ops/s
+DynamicBenchmark.createPlayers                5000                   2        10000                  N/A            false       true  thrpt   10   27,142          ops/s
+DynamicBenchmark.createPlayers                5000                   2        10000                  N/A            false      false  thrpt   10   29,033          ops/s
+DynamicBenchmark.createPlayers                5000                   2       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                5000                   2       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                5000                   2       100000                  N/A            false       true  thrpt   10    0,254          ops/s
+DynamicBenchmark.createPlayers                5000                   2       100000                  N/A            false      false  thrpt   10    0,259          ops/s
+DynamicBenchmark.createPlayers                5000                  10         1000                  N/A             true       true  thrpt   10    3,915          ops/s
+DynamicBenchmark.createPlayers                5000                  10         1000                  N/A             true      false  thrpt   10    3,646          ops/s
+DynamicBenchmark.createPlayers                5000                  10         1000                  N/A            false       true  thrpt   10  522,519          ops/s
+DynamicBenchmark.createPlayers                5000                  10         1000                  N/A            false      false  thrpt   10  627,851          ops/s
+DynamicBenchmark.createPlayers                5000                  10        10000                  N/A             true       true  thrpt   10    0,042          ops/s
+DynamicBenchmark.createPlayers                5000                  10        10000                  N/A             true      false  thrpt   10    0,042          ops/s
+DynamicBenchmark.createPlayers                5000                  10        10000                  N/A            false       true  thrpt   10   29,299          ops/s
+DynamicBenchmark.createPlayers                5000                  10        10000                  N/A            false      false  thrpt   10   30,036          ops/s
+DynamicBenchmark.createPlayers                5000                  10       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                5000                  10       100000                  N/A             true      false  thrpt   10    0,009          ops/s
+DynamicBenchmark.createPlayers                5000                  10       100000                  N/A            false       true  thrpt   10    0,260          ops/s
+DynamicBenchmark.createPlayers                5000                  10       100000                  N/A            false      false  thrpt   10    0,262          ops/s
+DynamicBenchmark.createPlayers                5000                 100         1000                  N/A             true       true  thrpt   10    3,910          ops/s
+DynamicBenchmark.createPlayers                5000                 100         1000                  N/A             true      false  thrpt   10    3,742          ops/s
+DynamicBenchmark.createPlayers                5000                 100         1000                  N/A            false       true  thrpt   10  531,940          ops/s
+DynamicBenchmark.createPlayers                5000                 100         1000                  N/A            false      false  thrpt   10  641,119          ops/s
+DynamicBenchmark.createPlayers                5000                 100        10000                  N/A             true       true  thrpt   10    0,042          ops/s
+DynamicBenchmark.createPlayers                5000                 100        10000                  N/A             true      false  thrpt   10    0,040          ops/s
+DynamicBenchmark.createPlayers                5000                 100        10000                  N/A            false       true  thrpt   10   29,102          ops/s
+DynamicBenchmark.createPlayers                5000                 100        10000                  N/A            false      false  thrpt   10   28,714          ops/s
+DynamicBenchmark.createPlayers                5000                 100       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                5000                 100       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers                5000                 100       100000                  N/A            false       true  thrpt   10    0,269          ops/s
+DynamicBenchmark.createPlayers                5000                 100       100000                  N/A            false      false  thrpt   10    0,264          ops/s
+DynamicBenchmark.createPlayers               10000                   2         1000                  N/A             true       true  thrpt   10    3,834          ops/s
+DynamicBenchmark.createPlayers               10000                   2         1000                  N/A             true      false  thrpt   10    3,701          ops/s
+DynamicBenchmark.createPlayers               10000                   2         1000                  N/A            false       true  thrpt   10  525,735          ops/s
+DynamicBenchmark.createPlayers               10000                   2         1000                  N/A            false      false  thrpt   10  633,908          ops/s
+DynamicBenchmark.createPlayers               10000                   2        10000                  N/A             true       true  thrpt   10    0,072          ops/s
+DynamicBenchmark.createPlayers               10000                   2        10000                  N/A             true      false  thrpt   10    0,067          ops/s
+DynamicBenchmark.createPlayers               10000                   2        10000                  N/A            false       true  thrpt   10  104,465          ops/s
+DynamicBenchmark.createPlayers               10000                   2        10000                  N/A            false      false  thrpt   10  107,646          ops/s
+DynamicBenchmark.createPlayers               10000                   2       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                   2       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                   2       100000                  N/A            false       true  thrpt   10    0,547          ops/s
+DynamicBenchmark.createPlayers               10000                   2       100000                  N/A            false      false  thrpt   10    0,568          ops/s
+DynamicBenchmark.createPlayers               10000                  10         1000                  N/A             true       true  thrpt   10    3,852          ops/s
+DynamicBenchmark.createPlayers               10000                  10         1000                  N/A             true      false  thrpt   10    3,695          ops/s
+DynamicBenchmark.createPlayers               10000                  10         1000                  N/A            false       true  thrpt   10  527,378          ops/s
+DynamicBenchmark.createPlayers               10000                  10         1000                  N/A            false      false  thrpt   10  621,234          ops/s
+DynamicBenchmark.createPlayers               10000                  10        10000                  N/A             true       true  thrpt   10    0,068          ops/s
+DynamicBenchmark.createPlayers               10000                  10        10000                  N/A             true      false  thrpt   10    0,071          ops/s
+DynamicBenchmark.createPlayers               10000                  10        10000                  N/A            false       true  thrpt   10  104,433          ops/s
+DynamicBenchmark.createPlayers               10000                  10        10000                  N/A            false      false  thrpt   10  110,397          ops/s
+DynamicBenchmark.createPlayers               10000                  10       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                  10       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                  10       100000                  N/A            false       true  thrpt   10    0,548          ops/s
+DynamicBenchmark.createPlayers               10000                  10       100000                  N/A            false      false  thrpt   10    0,595          ops/s
+DynamicBenchmark.createPlayers               10000                 100         1000                  N/A             true       true  thrpt   10    3,774          ops/s
+DynamicBenchmark.createPlayers               10000                 100         1000                  N/A             true      false  thrpt   10    3,725          ops/s
+DynamicBenchmark.createPlayers               10000                 100         1000                  N/A            false       true  thrpt   10  528,439          ops/s
+DynamicBenchmark.createPlayers               10000                 100         1000                  N/A            false      false  thrpt   10  627,281          ops/s
+DynamicBenchmark.createPlayers               10000                 100        10000                  N/A             true       true  thrpt   10    0,069          ops/s
+DynamicBenchmark.createPlayers               10000                 100        10000                  N/A             true      false  thrpt   10    0,069          ops/s
+DynamicBenchmark.createPlayers               10000                 100        10000                  N/A            false       true  thrpt   10  104,710          ops/s
+DynamicBenchmark.createPlayers               10000                 100        10000                  N/A            false      false  thrpt   10  105,570          ops/s
+DynamicBenchmark.createPlayers               10000                 100       100000                  N/A             true       true  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                 100       100000                  N/A             true      false  thrpt   10    0,008          ops/s
+DynamicBenchmark.createPlayers               10000                 100       100000                  N/A            false       true  thrpt   10    0,563          ops/s
+DynamicBenchmark.createPlayers               10000                 100       100000                  N/A            false      false  thrpt   10    0,543          ops/s
+DynamicBenchmark.movePlayers                  1000                   2         1000                  N/A             true       true  thrpt   10    3,890          ops/s
+DynamicBenchmark.movePlayers                  1000                   2         1000                  N/A             true      false  thrpt   10    3,745          ops/s
+DynamicBenchmark.movePlayers                  1000                   2         1000                  N/A            false       true  thrpt   10  386,315          ops/s
+DynamicBenchmark.movePlayers                  1000                   2         1000                  N/A            false      false  thrpt   10  479,620          ops/s
+DynamicBenchmark.movePlayers                  1000                   2        10000                  N/A             true       true  thrpt   10    0,335          ops/s
+DynamicBenchmark.movePlayers                  1000                   2        10000                  N/A             true      false  thrpt   10    0,281          ops/s
+DynamicBenchmark.movePlayers                  1000                   2        10000                  N/A            false       true  thrpt   10   80,311          ops/s
+DynamicBenchmark.movePlayers                  1000                   2        10000                  N/A            false      false  thrpt   10   64,784          ops/s
+DynamicBenchmark.movePlayers                  1000                   2       100000                  N/A             true       true  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                  1000                   2       100000                  N/A             true      false  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                  1000                   2       100000                  N/A            false       true  thrpt   10    8,231          ops/s
+DynamicBenchmark.movePlayers                  1000                   2       100000                  N/A            false      false  thrpt   10    8,260          ops/s
+DynamicBenchmark.movePlayers                  1000                  10         1000                  N/A             true       true  thrpt   10    3,595          ops/s
+DynamicBenchmark.movePlayers                  1000                  10         1000                  N/A             true      false  thrpt   10    3,643          ops/s
+DynamicBenchmark.movePlayers                  1000                  10         1000                  N/A            false       true  thrpt   10  390,293          ops/s
+DynamicBenchmark.movePlayers                  1000                  10         1000                  N/A            false      false  thrpt   10  487,799          ops/s
+DynamicBenchmark.movePlayers                  1000                  10        10000                  N/A             true       true  thrpt   10    0,347          ops/s
+DynamicBenchmark.movePlayers                  1000                  10        10000                  N/A             true      false  thrpt   10    0,263          ops/s
+DynamicBenchmark.movePlayers                  1000                  10        10000                  N/A            false       true  thrpt   10   64,546          ops/s
+DynamicBenchmark.movePlayers                  1000                  10        10000                  N/A            false      false  thrpt   10   73,710          ops/s
+DynamicBenchmark.movePlayers                  1000                  10       100000                  N/A             true       true  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  1000                  10       100000                  N/A             true      false  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  1000                  10       100000                  N/A            false       true  thrpt   10    8,130          ops/s
+DynamicBenchmark.movePlayers                  1000                  10       100000                  N/A            false      false  thrpt   10    7,243          ops/s
+DynamicBenchmark.movePlayers                  1000                 100         1000                  N/A             true       true  thrpt   10    3,616          ops/s
+DynamicBenchmark.movePlayers                  1000                 100         1000                  N/A             true      false  thrpt   10    3,750          ops/s
+DynamicBenchmark.movePlayers                  1000                 100         1000                  N/A            false       true  thrpt   10  357,489          ops/s
+DynamicBenchmark.movePlayers                  1000                 100         1000                  N/A            false      false  thrpt   10  438,453          ops/s
+DynamicBenchmark.movePlayers                  1000                 100        10000                  N/A             true       true  thrpt   10    0,322          ops/s
+DynamicBenchmark.movePlayers                  1000                 100        10000                  N/A             true      false  thrpt   10    0,256          ops/s
+DynamicBenchmark.movePlayers                  1000                 100        10000                  N/A            false       true  thrpt   10   74,697          ops/s
+DynamicBenchmark.movePlayers                  1000                 100        10000                  N/A            false      false  thrpt   10   86,285          ops/s
+DynamicBenchmark.movePlayers                  1000                 100       100000                  N/A             true       true  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                  1000                 100       100000                  N/A             true      false  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  1000                 100       100000                  N/A            false       true  thrpt   10    8,068          ops/s
+DynamicBenchmark.movePlayers                  1000                 100       100000                  N/A            false      false  thrpt   10    8,354          ops/s
+DynamicBenchmark.movePlayers                  5000                   2         1000                  N/A             true       true  thrpt   10    3,665          ops/s
+DynamicBenchmark.movePlayers                  5000                   2         1000                  N/A             true      false  thrpt   10    3,891          ops/s
+DynamicBenchmark.movePlayers                  5000                   2         1000                  N/A            false       true  thrpt   10  382,914          ops/s
+DynamicBenchmark.movePlayers                  5000                   2         1000                  N/A            false      false  thrpt   10  467,394          ops/s
+DynamicBenchmark.movePlayers                  5000                   2        10000                  N/A             true       true  thrpt   10    0,347          ops/s
+DynamicBenchmark.movePlayers                  5000                   2        10000                  N/A             true      false  thrpt   10    0,263          ops/s
+DynamicBenchmark.movePlayers                  5000                   2        10000                  N/A            false       true  thrpt   10   79,537          ops/s
+DynamicBenchmark.movePlayers                  5000                   2        10000                  N/A            false      false  thrpt   10   83,889          ops/s
+DynamicBenchmark.movePlayers                  5000                   2       100000                  N/A             true       true  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  5000                   2       100000                  N/A             true      false  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                  5000                   2       100000                  N/A            false       true  thrpt   10    7,195          ops/s
+DynamicBenchmark.movePlayers                  5000                   2       100000                  N/A            false      false  thrpt   10    7,318          ops/s
+DynamicBenchmark.movePlayers                  5000                  10         1000                  N/A             true       true  thrpt   10    3,809          ops/s
+DynamicBenchmark.movePlayers                  5000                  10         1000                  N/A             true      false  thrpt   10    3,726          ops/s
+DynamicBenchmark.movePlayers                  5000                  10         1000                  N/A            false       true  thrpt   10  375,631          ops/s
+DynamicBenchmark.movePlayers                  5000                  10         1000                  N/A            false      false  thrpt   10  447,450          ops/s
+DynamicBenchmark.movePlayers                  5000                  10        10000                  N/A             true       true  thrpt   10    0,344          ops/s
+DynamicBenchmark.movePlayers                  5000                  10        10000                  N/A             true      false  thrpt   10    0,262          ops/s
+DynamicBenchmark.movePlayers                  5000                  10        10000                  N/A            false       true  thrpt   10   65,131          ops/s
+DynamicBenchmark.movePlayers                  5000                  10        10000                  N/A            false      false  thrpt   10   84,890          ops/s
+DynamicBenchmark.movePlayers                  5000                  10       100000                  N/A             true       true  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  5000                  10       100000                  N/A             true      false  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  5000                  10       100000                  N/A            false       true  thrpt   10    8,173          ops/s
+DynamicBenchmark.movePlayers                  5000                  10       100000                  N/A            false      false  thrpt   10    7,227          ops/s
+DynamicBenchmark.movePlayers                  5000                 100         1000                  N/A             true       true  thrpt   10    3,716          ops/s
+DynamicBenchmark.movePlayers                  5000                 100         1000                  N/A             true      false  thrpt   10    3,836          ops/s
+DynamicBenchmark.movePlayers                  5000                 100         1000                  N/A            false       true  thrpt   10  372,038          ops/s
+DynamicBenchmark.movePlayers                  5000                 100         1000                  N/A            false      false  thrpt   10  465,224          ops/s
+DynamicBenchmark.movePlayers                  5000                 100        10000                  N/A             true       true  thrpt   10    0,358          ops/s
+DynamicBenchmark.movePlayers                  5000                 100        10000                  N/A             true      false  thrpt   10    0,278          ops/s
+DynamicBenchmark.movePlayers                  5000                 100        10000                  N/A            false       true  thrpt   10   73,949          ops/s
+DynamicBenchmark.movePlayers                  5000                 100        10000                  N/A            false      false  thrpt   10   65,024          ops/s
+DynamicBenchmark.movePlayers                  5000                 100       100000                  N/A             true       true  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                  5000                 100       100000                  N/A             true      false  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                  5000                 100       100000                  N/A            false       true  thrpt   10    7,144          ops/s
+DynamicBenchmark.movePlayers                  5000                 100       100000                  N/A            false      false  thrpt   10    7,248          ops/s
+DynamicBenchmark.movePlayers                 10000                   2         1000                  N/A             true       true  thrpt   10    3,859          ops/s
+DynamicBenchmark.movePlayers                 10000                   2         1000                  N/A             true      false  thrpt   10    3,751          ops/s
+DynamicBenchmark.movePlayers                 10000                   2         1000                  N/A            false       true  thrpt   10  383,722          ops/s
+DynamicBenchmark.movePlayers                 10000                   2         1000                  N/A            false      false  thrpt   10  465,625          ops/s
+DynamicBenchmark.movePlayers                 10000                   2        10000                  N/A             true       true  thrpt   10    0,346          ops/s
+DynamicBenchmark.movePlayers                 10000                   2        10000                  N/A             true      false  thrpt   10    0,275          ops/s
+DynamicBenchmark.movePlayers                 10000                   2        10000                  N/A            false       true  thrpt   10   75,073          ops/s
+DynamicBenchmark.movePlayers                 10000                   2        10000                  N/A            false      false  thrpt   10   88,715          ops/s
+DynamicBenchmark.movePlayers                 10000                   2       100000                  N/A             true       true  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                 10000                   2       100000                  N/A             true      false  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                 10000                   2       100000                  N/A            false       true  thrpt   10    9,487          ops/s
+DynamicBenchmark.movePlayers                 10000                   2       100000                  N/A            false      false  thrpt   10    7,194          ops/s
+DynamicBenchmark.movePlayers                 10000                  10         1000                  N/A             true       true  thrpt   10    3,834          ops/s
+DynamicBenchmark.movePlayers                 10000                  10         1000                  N/A             true      false  thrpt   10    3,712          ops/s
+DynamicBenchmark.movePlayers                 10000                  10         1000                  N/A            false       true  thrpt   10  404,375          ops/s
+DynamicBenchmark.movePlayers                 10000                  10         1000                  N/A            false      false  thrpt   10  424,816          ops/s
+DynamicBenchmark.movePlayers                 10000                  10        10000                  N/A             true       true  thrpt   10    0,328          ops/s
+DynamicBenchmark.movePlayers                 10000                  10        10000                  N/A             true      false  thrpt   10    0,270          ops/s
+DynamicBenchmark.movePlayers                 10000                  10        10000                  N/A            false       true  thrpt   10   87,034          ops/s
+DynamicBenchmark.movePlayers                 10000                  10        10000                  N/A            false      false  thrpt   10   65,724          ops/s
+DynamicBenchmark.movePlayers                 10000                  10       100000                  N/A             true       true  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                 10000                  10       100000                  N/A             true      false  thrpt   10    0,015          ops/s
+DynamicBenchmark.movePlayers                 10000                  10       100000                  N/A            false       true  thrpt   10    7,253          ops/s
+DynamicBenchmark.movePlayers                 10000                  10       100000                  N/A            false      false  thrpt   10    7,919          ops/s
+DynamicBenchmark.movePlayers                 10000                 100         1000                  N/A             true       true  thrpt   10    3,641          ops/s
+DynamicBenchmark.movePlayers                 10000                 100         1000                  N/A             true      false  thrpt   10    3,616          ops/s
+DynamicBenchmark.movePlayers                 10000                 100         1000                  N/A            false       true  thrpt   10  352,456          ops/s
+DynamicBenchmark.movePlayers                 10000                 100         1000                  N/A            false      false  thrpt   10  460,610          ops/s
+DynamicBenchmark.movePlayers                 10000                 100        10000                  N/A             true       true  thrpt   10    0,322          ops/s
+DynamicBenchmark.movePlayers                 10000                 100        10000                  N/A             true      false  thrpt   10    0,264          ops/s
+DynamicBenchmark.movePlayers                 10000                 100        10000                  N/A            false       true  thrpt   10   86,141          ops/s
+DynamicBenchmark.movePlayers                 10000                 100        10000                  N/A            false      false  thrpt   10   65,022          ops/s
+DynamicBenchmark.movePlayers                 10000                 100       100000                  N/A             true       true  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                 10000                 100       100000                  N/A             true      false  thrpt   10    0,014          ops/s
+DynamicBenchmark.movePlayers                 10000                 100       100000                  N/A            false       true  thrpt   10    7,145          ops/s
+DynamicBenchmark.movePlayers                 10000                 100       100000                  N/A            false      false  thrpt   10    7,356          ops/s
+DynamicBenchmark.removePlayers                1000                 100         1000                  N/A            false       true  thrpt   10   61,574          ops/s
+DynamicBenchmark.removePlayers                1000                 100         1000                  N/A            false      false  thrpt   10   72,603          ops/s
+DynamicBenchmark.removePlayers                5000                   2         1000                  N/A             true       true  thrpt   10    3,380          ops/s
+DynamicBenchmark.removePlayers                5000                   2         1000                  N/A             true      false  thrpt   10    3,228          ops/s
+DynamicBenchmark.removePlayers                5000                   2         1000                  N/A            false       true  thrpt   10   58,703          ops/s
+DynamicBenchmark.removePlayers                5000                   2         1000                  N/A            false      false  thrpt   10   70,070          ops/s
+DynamicBenchmark.removePlayers                5000                  10         1000                  N/A             true       true  thrpt   10    3,282          ops/s
+DynamicBenchmark.removePlayers                5000                  10         1000                  N/A             true      false  thrpt   10    3,485          ops/s
+DynamicBenchmark.removePlayers                5000                  10         1000                  N/A            false       true  thrpt   10   58,128          ops/s
+DynamicBenchmark.removePlayers                5000                  10         1000                  N/A            false      false  thrpt   10   77,551          ops/s
+DynamicBenchmark.removePlayers                5000                 100         1000                  N/A             true       true  thrpt   10    3,288          ops/s
+DynamicBenchmark.removePlayers                5000                 100         1000                  N/A             true      false  thrpt   10    3,232          ops/s
+DynamicBenchmark.removePlayers                5000                 100         1000                  N/A            false       true  thrpt   10   59,123          ops/s
+DynamicBenchmark.removePlayers                5000                 100         1000                  N/A            false      false  thrpt   10   65,672          ops/s
+DynamicBenchmark.removePlayers               10000                   2         1000                  N/A             true       true  thrpt   10    3,257          ops/s
+DynamicBenchmark.removePlayers               10000                   2         1000                  N/A             true      false  thrpt   10    3,496          ops/s
+DynamicBenchmark.removePlayers               10000                   2         1000                  N/A            false       true  thrpt   10   57,689          ops/s
+DynamicBenchmark.removePlayers               10000                   2         1000                  N/A            false      false  thrpt   10   77,432          ops/s
+DynamicBenchmark.removePlayers               10000                  10         1000                  N/A             true       true  thrpt   10    3,262          ops/s
+DynamicBenchmark.removePlayers               10000                  10         1000                  N/A             true      false  thrpt   10    3,215          ops/s
+DynamicBenchmark.removePlayers               10000                  10         1000                  N/A            false       true  thrpt   10   57,088          ops/s
+DynamicBenchmark.removePlayers               10000                  10         1000                  N/A            false      false  thrpt   10   70,584          ops/s
+DynamicBenchmark.removePlayers               10000                 100         1000                  N/A             true       true  thrpt   10    3,211          ops/s
+DynamicBenchmark.removePlayers               10000                 100         1000                  N/A             true      false  thrpt   10    3,438          ops/s
+DynamicBenchmark.removePlayers               10000                 100         1000                  N/A            false       true  thrpt   10   73,541          ops/s
+DynamicBenchmark.removePlayers               10000                 100         1000                  N/A            false      false  thrpt   10   65,591          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                    2             true       true  thrpt   10    3,668          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                    2             true      false  thrpt   10    3,674          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                    2            false       true  thrpt   10  394,037          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                    2            false      false  thrpt   10  469,721          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   10             true       true  thrpt   10    2,764          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   10             true      false  thrpt   10    3,081          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   10            false       true  thrpt   10   42,659          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   10            false      false  thrpt   10   49,982          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   50             true       true  thrpt   10    0,413          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   50             true      false  thrpt   10    0,477          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   50            false       true  thrpt   10    1,852          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A         1000                   50            false      false  thrpt   10    2,174          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                    2             true       true  thrpt   10    0,364          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                    2             true      false  thrpt   10    0,288          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                    2            false       true  thrpt   10  105,080          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                    2            false      false  thrpt   10  109,094          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   10             true       true  thrpt   10    0,363          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   10             true      false  thrpt   10    0,360          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   10            false       true  thrpt   10   26,943          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   10            false      false  thrpt   10   28,610          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   50             true       true  thrpt   10    0,205          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   50             true      false  thrpt   10    0,195          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   50            false       true  thrpt   10    1,480          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A        10000                   50            false      false  thrpt   10    1,689          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                    2             true       true  thrpt   10    0,019          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                    2             true      false  thrpt   10    0,019          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                    2            false       true  thrpt   10   11,521          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                    2            false      false  thrpt   10   11,411          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   10             true       true  thrpt   10    0,019          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   10             true      false  thrpt   10    0,019          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   10            false       true  thrpt   10    4,964          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   10            false      false  thrpt   10    5,292          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   50             true       true  thrpt   10    0,018          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   50             true      false  thrpt   10    0,017          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   50            false       true  thrpt   10    0,500          ops/s
+StaticBenchmark.createPlayers                  N/A                 N/A       100000                   50            false      false  thrpt   10    0,554          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                    2             true       true  thrpt   10    3,411          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                    2             true      false  thrpt   10    3,734          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                    2            false       true  thrpt   10  307,857          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                    2            false      false  thrpt   10  358,673          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   10             true       true  thrpt   10    2,686          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   10             true      false  thrpt   10    2,995          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   10            false       true  thrpt   10   40,057          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   10            false      false  thrpt   10   47,086          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   50             true       true  thrpt   10    0,392          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   50             true      false  thrpt   10    0,368          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   50            false       true  thrpt   10    1,884          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A         1000                   50            false      false  thrpt   10    2,174          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                    2             true       true  thrpt   10    0,359          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                    2             true      false  thrpt   10    0,337          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                    2            false       true  thrpt   10   75,847          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                    2            false      false  thrpt   10   58,330          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   10             true       true  thrpt   10    0,335          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   10             true      false  thrpt   10    0,264          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   10            false       true  thrpt   10   28,051          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   10            false      false  thrpt   10   28,841          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   50             true       true  thrpt   10    0,165          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   50             true      false  thrpt   10    0,207          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   50            false       true  thrpt   10    1,781          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A        10000                   50            false      false  thrpt   10    2,023          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                    2             true       true  thrpt   10    0,014          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                    2             true      false  thrpt   10    0,015          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                    2            false       true  thrpt   10    6,700          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                    2            false      false  thrpt   10    9,952          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   10             true       true  thrpt   10    0,015          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   10             true      false  thrpt   10    0,014          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   10            false       true  thrpt   10    7,603          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   10            false      false  thrpt   10    6,201          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   50             true       true  thrpt   10    0,014          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   50             true      false  thrpt   10    0,014          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   50            false       true  thrpt   10    1,341          ops/s
+StaticBenchmark.movePlayers                    N/A                 N/A       100000                   50            false      false  thrpt   10    1,453          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                    2             true       true  thrpt   10    3,097          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                    2             true      false  thrpt   10    3,367          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                    2            false       true  thrpt   10   64,707          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                    2            false      false  thrpt   10   65,718          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   10             true       true  thrpt   10    2,792          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   10             true      false  thrpt   10    2,763          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   10            false       true  thrpt   10   27,214          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   10            false      false  thrpt   10   31,002          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   50             true       true  thrpt   10    0,368          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   50             true      false  thrpt   10    0,403          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   50            false       true  thrpt   10    1,789          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A         1000                   50            false      false  thrpt   10    2,065          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                    2             true       true  thrpt   10    0,186          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                    2             true      false  thrpt   10    0,193          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                    2            false       true  thrpt   10    1,046          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                    2            false      false  thrpt   10    1,142          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   10             true       true  thrpt   10    0,240          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   10             true      false  thrpt   10    0,221          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   10            false       true  thrpt   10    1,075          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   10            false      false  thrpt   10    1,074          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   50             true       true  thrpt   10    0,159          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   50             true      false  thrpt   10    0,177          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   50            false       true  thrpt   10    0,713          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A        10000                   50            false      false  thrpt   10    0,768          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                    2             true       true  thrpt   10    0,003          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                    2             true      false  thrpt   10    0,003          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                    2            false       true  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                    2            false      false  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   10             true       true  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   10             true      false  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   10            false       true  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   10            false      false  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   50             true       true  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   50             true      false  thrpt   10    0,004          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   50            false       true  thrpt   10    0,006          ops/s
+StaticBenchmark.removePlayers                  N/A                 N/A       100000                   50            false      false  thrpt   10    0,006          ops/s
+

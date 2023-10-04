@@ -16,6 +16,10 @@ class Strategy:
         if serialization == "Json":
             if words[9] == "ops/s":
                 result = words[8]
+            elif words[10] == "ops/s":
+                result = words[9]
+                useChangeFile = words[5]
+                useGzip = words[6]
             elif words[11] == "ops/s":
                 result = words[8]
                 useChangeFile = words[4]
@@ -97,6 +101,34 @@ class Strategy:
         else:
             result += f" ({self.chunkamount}x{self.chunkamount})"
 
+        return result
+    
+    def results_str(self, results_len):
+        function = "function      "
+        dcount = "data count" 
+        opsresult = "ops/s   "
+        score = "score"
+        wall = " | "
+
+        result = function + wall + dcount + wall + opsresult + wall + score + "\n"
+        result += "-" * len(result) + "\n"
+        for (key, value) in self.results.items():
+            (fun,cnt) = key
+            (ops,sco) = value
+
+            sco = str(sco) + "/" + str(results_len)
+
+            fun_len = len(function) - len(fun)
+            cnt_len = len(dcount) - len(cnt)
+            ops_len = len(opsresult) - len(ops)
+            
+            result += fun + " " * fun_len + wall
+            result += cnt + " " * cnt_len + wall
+            result += ops + " " * ops_len + wall
+            result += sco
+            result += "\n" 
+
+            #result += f"{key} => ({value[0]}ops/s, {value[1]}/{results_len})\n"
         return result
     
     def __eq__(self, other):

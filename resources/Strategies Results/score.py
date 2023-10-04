@@ -5,14 +5,17 @@ import numpy as np
 
 PATH = os.path.realpath(os.path.dirname(__file__))
 SCORE_FILE = PATH + "\\Score.txt"
+BENCHMARK = PATH + "\\Benchmarks"
 
 def get_txt():
     result = []
-    for root, dirs, files in os.walk(PATH, topdown=False):
+    for root, dirs, files in os.walk(BENCHMARK, topdown=False):
         for name in files:
             file = os.path.join(root, name)
             if not os.path.dirname(file) == PATH and file[-3:] == 'txt':
                 result.append(file)
+
+    print(result)
     return result
 
 def file_to_strategies(strategies, file_path):
@@ -27,7 +30,11 @@ def file_to_strategies(strategies, file_path):
 
     with open(file_path, "r") as f:
         lines = f.readlines()
-        for line in lines[1:]:
+        for line in lines:
+            words = line.split()
+            if len(words) < 3 or words[0] == "Benchmark":
+                continue
+            
             strategy = Strategy(serialization, line)
             strategies = strategy.add(strategies)
 
@@ -148,8 +155,7 @@ def write_sorted(strategies):
             s = strategies[result[0]]
             f.write("="*145 + "\n")
             f.write(str(s) + "\n")
-            for (key, value) in s.results.items():
-                f.write(f"{key} => ({value[0]}, {value[1]}/{len(results)})\n")
+            f.write(s.results_str(len(results)))
 
 def plot_func(strateigies, function):
     x = []
