@@ -1,5 +1,7 @@
 import os
 from strategy import Strategy
+import matplotlib.pyplot as plt
+import numpy as np
 
 PATH = os.path.realpath(os.path.dirname(__file__))
 SCORE_FILE = PATH + "\\Score.txt"
@@ -149,6 +151,35 @@ def write_sorted(strategies):
             for (key, value) in s.results.items():
                 f.write(f"{key} => ({value[0]}, {value[1]}/{len(results)})\n")
 
+def plot_func(strateigies, function):
+    x = []
+    y1 = []
+    y2 = []
+    y3 = []
+
+    for result in get_sorted_function(strategies, function)[:10]:
+        s = strategies[result[0]]
+        x.append(s.label())
+        y1.append(float(s.results[(function, "1000")][0]))
+        y2.append(float(s.results[(function, "10000")][0]))
+        y3.append(float(s.results[(function, "100000")][0]))
+
+    x_axis = np.arange(len(x))
+
+    plt.bar(x_axis -0.2, y1, 0.2, label = '1000')
+    plt.bar(x_axis, y2, 0.2, label = '10000')
+    plt.bar(x_axis + 0.2, y3, 0.2, label = '100000')
+    plt.xticks(x_axis, x)
+    plt.legend()
+    plt.xlabel("Strategien")
+    plt.ylabel("ops/s")
+    plt.title("Top 5 " + function)
+    plt.yscale('log',base=2) 
+    plt.show()
+
+def plot(strategies):
+    plot_func(strategies, "createGame")
+
 
 if __name__ == "__main__":
     #Convert file data to strategy objects
@@ -158,3 +189,6 @@ if __name__ == "__main__":
 
     #Calculate score and print to file
     write_sorted( calc_score(strategies))
+
+    #Plot results
+    plot(strategies)

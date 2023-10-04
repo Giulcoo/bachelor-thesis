@@ -78,6 +78,27 @@ class Strategy:
 
         return result
     
+    def label(self):
+        result = f"{self.serialization}\n"
+        
+        if self.dynamic:
+            result += " Dynamic\n"
+        else:
+            result += " Static\n"
+        
+        if self.changefile:
+            result += " Change File\n"
+
+        if self.gzip:
+            result += " GZip\n"
+
+        if self.dynamic:
+            result += f" ({self.maxchunkelements}, {self.mingroupelements})"
+        else:
+            result += f" ({self.chunkamount}x{self.chunkamount})"
+
+        return result
+    
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, Strategy):
