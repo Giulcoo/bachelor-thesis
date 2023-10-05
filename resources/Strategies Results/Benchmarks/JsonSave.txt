@@ -753,5 +753,9 @@ DynamicBenchmark.removePlayers               10000                 100       100
 DynamicBenchmark.removePlayers               10000                 100       100000             true      false  thrpt   10   0,004          ops/s
 DynamicBenchmark.removePlayers               10000                 100       100000            false       true  thrpt   10   0,006          ops/s
 DynamicBenchmark.removePlayers               10000                 100       100000            false      false  thrpt   10   0,006          ops/s
+DynamicBenchmark.createPlayers                1000                   2         1000             true       true  thrpt   10  1,817          ops/s
+DynamicBenchmark.createPlayers                1000                   2         1000             true      false  thrpt   10  1,819          ops/s
+DynamicBenchmark.createPlayers                1000                   2        10000             true       true  thrpt   10  0,044          ops/s
+DynamicBenchmark.createPlayers                1000                   2        10000             true      false  thrpt   10  0,049          ops/s
 
 
