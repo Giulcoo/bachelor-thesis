@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fls" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fls" afterDir="false" />
-    </list>
+    <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +136,7 @@
       <workItem from="1696234662079" duration="251000" />
       <workItem from="1696246860999" duration="2057000" />
       <workItem from="1696321334261" duration="4323000" />
-      <workItem from="1696496559829" duration="1821000" />
+      <workItem from="1696496559829" duration="1933000" />
     </task>
     <servers />
   </component>

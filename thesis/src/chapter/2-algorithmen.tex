@@ -501,8 +501,9 @@ In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-
 %--------------------------------------------------------------------------
 \subsection{Auswertung}
 Kleines Java Projekt zum Auswerten verschiedener Speicher- und Ladestrategien
+\footnote{Code zu den Strategien und Benchmarks: \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/projects}}
 
-\subsubsection{Daten und Szenario}
+\subsubsection{Daten und Szenario} \label{sssec:dataAndSce}
 Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen von Spielen simulieren soll. Um den Test einfach zu halten wurde nur mit einem Spielobjekt, der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selber sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. Die Player-Objekte werden in Chunks gruppiert und auch im Zusammenhang mit diesen gespeichert oder geladen. Die Chunks sind nach der Klasse der Abbildung \ref{fig:chunkClass} strukturiert.
 
 \begin{figure}[htp]
@@ -515,28 +516,15 @@ Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen v
 Um diese Datenstruktur und Parameter dieser richtig zu testen, wurden fünf verschiedene Szenarien erstellt, die die Basisaktionen in einem Spiel simulieren sollen. Die Funktion \textit{"createGame"} stellt das Szenario da, bei dem ein neues Spiel erstellt wird und die komplette Datenstruktur eines Spieles aufgebaut werden muss. Die Funktion \textit{"loadGame"} stellt das Szenario da, bei dem ein Spieler den letzten Spielstand wieder weiterspielen will. Hier müssen die alte Datenstruktur und Spieldaten geladen werden. Die Funktionen \textit{"creatPlayers"}, \textit{"movePlayers"} und \textit{"removePlayers"} simulieren verschiedene Szenarien während das Spiel gespielt wird. Bei diesen Funktionen wird ein alter Spielstand geladen und dieser wird danach bearbeitet. Bei "createPlayers" wird simuliert, dass während des Spielens neue Gegner erstellt werden. Bei "movePlayers" werden zufällige \acp{npc} und der Spieler selber verschoben und bei der Funktion "removePlayers" werden Gegner gelöscht, weil diese zum Beispiel von dem Spieler besiegt wurden. Alle Änderungen werden am Ende jeder dieser Funktionen gespeichert.  
 
 \subsubsection{Parameter}
-Als Speicher- und Ladesystem wurden die zwei Systeme der Abbildungen \ref{fig:chunkBasedSystem} und \ref{fig:altchunkBasedSystem} verwendet. Dabei gibt es einen Parameter, mit dem eingestellt werden kann, ob eine sogenannte Change-Datei verwendet werden soll, die alle Änderungen der Spielobjekte so kompakt wie möglich speichert. Ein weiterer Parameter des Systems ist, mit welcher Art von Serialisierung gearbeitet werden soll. Es gibt die Wahl zwischen der binären Serialisierung und der Serialisierung zu JSON. Für die binäre Serialisierung wurde der Protocol Buffer verwendet, da dieser auch für Java unterstützt wird. Für die Serialisierung zu JSON wurde die Bibliothek Jackson verwendet. Jackson bietet eine Vielzahl an Funktionen an, um Java-Objekte als JSON-String zu formatieren und abzuspeichern.\cite{githubGitHubFasterXMLjackson} Die Strategien mit Protocol Buffer und Jackson laufen außerhalb des Serialisierungsprozesses exakt gleich ab. Bei der Serialisierung mit JSON gibt es noch die Option GZip zu verwenden. Diese Option ist bei der Strategie mit dem Protocol Buffer nicht vorhanden, denn 
+Als Speicher- und Ladesystem wurden die zwei Systeme der Abbildungen \ref{fig:chunkBasedSystem} und \ref{fig:altchunkBasedSystem} verwendet. Dabei gibt es einen Parameter, mit dem eingestellt werden kann, ob eine sogenannte Change-Datei verwendet werden soll, die alle Änderungen der Spielobjekte so kompakt wie möglich speichert. Ein weiterer Parameter des Systems ist, mit welcher Art von Serialisierung gearbeitet werden soll. Es gibt die Wahl zwischen der binären Serialisierung und der Serialisierung zu JSON. Für die binäre Serialisierung wurde der Protocol Buffer verwendet, da dieser auch für Java unterstützt wird. Für die Serialisierung zu JSON wurde die Bibliothek Jackson verwendet. Jackson bietet eine Vielzahl an Funktionen an, um Java-Objekte als JSON-String zu formatieren und abzuspeichern.\cite{githubGitHubFasterXMLjackson} Die Strategien mit Protocol Buffer und Jackson laufen außerhalb des Serialisierungsprozesses exakt gleich ab. Bei der Serialisierung gibt es auch die Option danach GZip auf die Daten anzuwenden, um die Schreib- und Leseprozesse im Sekundärspeicher zu reduzieren. Nach diesen Parametern gibt es noch Einstellungen für das Chunk-System. Wenn für Chunks mit dynamischer Größe entschieden wird, muss eingestellt werden, wie viele Player-Objekte ein Chunk maximal haben kann, bevor er in kleinere Chunks aufgeteilt wird. Außerdem muss eingestellt werden, unter welcher Anzahl von Player-Objekten in einer Gruppe von vier Chunks diese wieder vereinigt werden. Dafür wird die Summe deren Player-Objekte berechnet und wenn diese unter der festgelegten Grenze liegt, werden die Chunks wieder vereinigt. Bei einer statischen Chunkgröße muss eingestellt werden, wie viele Chunks die Spielwelt haben soll. Die Spielwelt hat dabei eine feste Größe, aber es können theoretisch unendlich viele Spieler an einer Position sein. 
 
-Parameter die getestet wurden:
-\begin{itemize}
-    \item Binäre vs JSON-Serialisierung
-    \item GZip (bei JSON)
-    \item Change File
-    \item Dynamische Chunk Größe oder Statische Chunk Größe
-    \item Dynamisch -> Max Elemente pro Chunk und Min Element pro Chunk-Gruppe
-    \item Statisch -> Anzahl von Chunks 
-    \item Für alles unterschiedliche Anzahl der Daten getestet 
-\end{itemize}
-Getestet mit JMH
+Zum Testen der Parameter werden die verschiedenen Funktionen aus \ref{sssec:dataAndSce} ausgeführt. Dabei werden den Funktionen unterschiedliche Größen von Daten übergeben. Als Größen gibt es einmal 1000 Daten, 10000 Daten und 100000 Daten. Zum Beispiel stellt der Parameter von der Funktion "createGame" ein, wie viele Player beim neuen Spiel erstellt werden sollen. Dies können dann 1000, 10000 oder 100000 Player-Objekte sein.  
 
 \subsubsection{Ergebnisse}
-JMH erwähnen
+Die verschiedenen Parameter und Größen der Daten wurden mit JMH getestet. JMH ist ein Java-Harness zum Erstellen von Benchmarks. In diesen Benchmarks können die Laufzeiten von Funktionen und Programmen gemessen werden, indem diese über mehrere Durchläufe ausgeführt werden und am Ende eine durchschnittliche Laufzeit zurückgegeben wird. Diese wird bei JMH in "ops/s" (Operationen pro Sekunde), also wie oft die zu testende Funktion pro Sekunde ausgeführt werden kann.\cite{githubGitHubOpenjdkjmh}
 
-\footnote{Genaue Ergebnisse bei den Messungen der verschiedenen Strategien: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies\%20Results/Score.txt}}
-
-
-
-
+Bei den Ergebnissen\footnote{Alle Ergebnisse der Messungen der verschiedenen Strategien: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies\%20Results/Score.txt}} in der Abbildung \ref{fig:topStrat} sind die zehn besten Strategien aufgezählt. Der Score-Wert wurde berechnet, indem \dots
+\todo{Continue}
 
 \begin{figure}[htp]
     \centering
