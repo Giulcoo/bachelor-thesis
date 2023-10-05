@@ -24,6 +24,7 @@ public class Constants {
     //Chunk Settings
     public static boolean DYNAMIC_CHUNK_SIZE = false;
     public static boolean USE_CHANGE_FILE = true;
+    public static boolean USE_GZIP = true;
     public static int STATIC_CHUNK_AMOUNT = 2; //Real amount will be STATIC_CHUNK_AMOUNT * STATIC_CHUNK_AMOUNT
     public static float STATIC_CHUNK_SIZE = MAP_SIZE/STATIC_CHUNK_AMOUNT;
     public static int CHUNK_GROUP_MIN_ELEMENTS = 100;

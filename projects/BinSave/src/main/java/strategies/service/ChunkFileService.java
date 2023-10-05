@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class ChunkFileService {
     private final Map<String, Chunk.Builder>  changedChunks = new HashMap<>();
@@ -71,7 +73,14 @@ public class ChunkFileService {
         FileManager.clearFile(chunkPath);
 
         try{
-            chunk.build().writeTo(new FileOutputStream(chunkPath));
+            if(Constants.USE_GZIP){
+                GZIPOutputStream stream = new GZIPOutputStream(new FileOutputStream(chunkPath));
+                chunk.build().writeTo(stream);
+                stream.close();
+            }
+            else{
+                chunk.build().writeTo(new FileOutputStream(chunkPath));
+            }
         }
         catch (IOException e){
             e.printStackTrace();
@@ -84,7 +93,13 @@ public class ChunkFileService {
 
     public Chunk getChunk(String chunkID){
         try{
-            Chunk chunk = Chunk.parseFrom(new FileInputStream(Constants.CHUNK_PATH + chunkID));
+            Chunk chunk;
+            if(Constants.USE_GZIP){
+                chunk = Chunk.parseFrom(new GZIPInputStream(new FileInputStream(Constants.CHUNK_PATH + chunkID)));
+            }
+            else{
+                chunk = Chunk.parseFrom(new FileInputStream(Constants.CHUNK_PATH + chunkID));
+            }
 
             if(chunk == null) throw new NullPointerException();
 
@@ -108,7 +123,14 @@ public class ChunkFileService {
         try{
             if(this.gameInfoOutput == null) this.gameInfoOutput = new FileOutputStream(Constants.INFO_FILE);
 
-            info.writeTo(this.gameInfoOutput);
+            if(Constants.USE_GZIP){
+                GZIPOutputStream stream = new GZIPOutputStream(this.gameInfoOutput);
+                info.writeTo(stream);
+                stream.close();
+            }
+            else{
+                info.writeTo(this.gameInfoOutput);
+            }
         }
         catch (IOException e){
             e.printStackTrace();
@@ -119,7 +141,12 @@ public class ChunkFileService {
         try{
             if(this.gameInfoInput == null) this.gameInfoInput = new FileInputStream(Constants.INFO_FILE);
 
-            return GameInfo.parseFrom(this.gameInfoInput);
+            if(Constants.USE_GZIP){
+                return GameInfo.parseFrom(new GZIPInputStream(this.gameInfoInput));
+            }
+            else{
+                return GameInfo.parseFrom(this.gameInfoInput);
+            }
         }
         catch (IOException e){
             e.printStackTrace();

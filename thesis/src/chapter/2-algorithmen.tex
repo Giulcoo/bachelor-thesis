@@ -500,10 +500,10 @@ In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-
 
 %--------------------------------------------------------------------------
 \subsection{Auswertung}
-Im folgenden Abschnitt 
+Kleines Java Projekt zum Auswerten verschiedener Speicher- und Ladestrategien
 
 \subsubsection{Daten und Szenario}
-Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen von Spielen simulieren soll. Um den Test einfach zu halten wurde nur mit einem Spielobjekt, der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selber sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. 
+Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen von Spielen simulieren soll. Um den Test einfach zu halten wurde nur mit einem Spielobjekt, der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selber sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. Die Player-Objekte werden in Chunks gruppiert und auch im Zusammenhang mit diesen gespeichert oder geladen. Die Chunks sind nach der Klasse der Abbildung \ref{fig:chunkClass} strukturiert.
 
 \begin{figure}[htp]
     \centering
@@ -512,12 +512,10 @@ Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen v
     \label{fig:playerClass}
 \end{figure}
 
+Um diese Datenstruktur und Parameter dieser richtig zu testen, wurden fünf verschiedene Szenarien erstellt, die die Basisaktionen in einem Spiel simulieren sollen. Die Funktion \textit{"createGame"} stellt das Szenario da, bei dem ein neues Spiel erstellt wird und die komplette Datenstruktur eines Spieles aufgebaut werden muss. Die Funktion \textit{"loadGame"} stellt das Szenario da, bei dem ein Spieler den letzten Spielstand wieder weiterspielen will. Hier müssen die alte Datenstruktur und Spieldaten geladen werden. Die Funktionen \textit{"creatPlayers"}, \textit{"movePlayers"} und \textit{"removePlayers"} simulieren verschiedene Szenarien während das Spiel gespielt wird. Bei diesen Funktionen wird ein alter Spielstand geladen und dieser wird danach bearbeitet. Bei "createPlayers" wird simuliert, dass während des Spielens neue Gegner erstellt werden. Bei "movePlayers" werden zufällige \acp{npc} und der Spieler selber verschoben und bei der Funktion "removePlayers" werden Gegner gelöscht, weil diese zum Beispiel von dem Spieler besiegt wurden. Alle Änderungen werden am Ende jeder dieser Funktionen gespeichert.  
+
 \subsubsection{Parameter}
-
-\subsubsection{Ergebnisse}
-
-
-%\footnote{Genaue Ergebnisse bei den Messungen der verschiedenen Strategien: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies%20Results/Score.txt}}
+Als Speicher- und Ladesystem wurden die zwei Systeme der Abbildungen \ref{fig:chunkBasedSystem} und \ref{fig:altchunkBasedSystem} verwendet. Dabei gibt es einen Parameter, mit dem eingestellt werden kann, ob eine sogenannte Change-Datei verwendet werden soll, die alle Änderungen der Spielobjekte so kompakt wie möglich speichert. Ein weiterer Parameter des Systems ist, mit welcher Art von Serialisierung gearbeitet werden soll. Es gibt die Wahl zwischen der binären Serialisierung und der Serialisierung zu JSON. Für die binäre Serialisierung wurde der Protocol Buffer verwendet, da dieser auch für Java unterstützt wird. Für die Serialisierung zu JSON wurde die Bibliothek Jackson verwendet. Jackson bietet eine Vielzahl an Funktionen an, um Java-Objekte als JSON-String zu formatieren und abzuspeichern.\cite{githubGitHubFasterXMLjackson} Die Strategien mit Protocol Buffer und Jackson laufen außerhalb des Serialisierungsprozesses exakt gleich ab. Bei der Serialisierung mit JSON gibt es noch die Option GZip zu verwenden. Diese Option ist bei der Strategie mit dem Protocol Buffer nicht vorhanden, denn 
 
 Parameter die getestet wurden:
 \begin{itemize}
@@ -530,6 +528,13 @@ Parameter die getestet wurden:
     \item Für alles unterschiedliche Anzahl der Daten getestet 
 \end{itemize}
 Getestet mit JMH
+
+\subsubsection{Ergebnisse}
+JMH erwähnen
+
+\footnote{Genaue Ergebnisse bei den Messungen der verschiedenen Strategien: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies\%20Results/Score.txt}}
+
+
 
 
 

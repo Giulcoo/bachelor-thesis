@@ -6,12 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/service/ChunkFileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.bib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fls" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +82,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.Benchmark">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
       <module name="BinSave.main" />
@@ -123,8 +124,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Benchmark" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Gradle.Benchmark" />
       </list>
     </recent_temporary>
   </component>
@@ -144,6 +145,7 @@
       <workItem from="1696234662079" duration="251000" />
       <workItem from="1696246860999" duration="2057000" />
       <workItem from="1696321334261" duration="4323000" />
+      <workItem from="1696496559829" duration="1821000" />
     </task>
     <servers />
   </component>
