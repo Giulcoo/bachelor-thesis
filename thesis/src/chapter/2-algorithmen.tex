@@ -500,26 +500,42 @@ In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-
 
 %--------------------------------------------------------------------------
 \subsection{Auswertung}
-Auswertung der Strategien mit Daten/einfaches Spielkonzept mit Java und \ac{json} testen:
-\begin{itemize}
-    \item Spieler (HP, LVL, Ausrüstung, Position, Rotation, ...)
-    \item Gegner (HP, LVL, Ausrüstung, Position, Rotation, ...)
-    \item Ausrüstung (Beschreibung/ID, Verteidigung, Angriff)
-    \item Hindernisse (Beschreibung/ID, Position, Rotation)
-    \item Items (Beschreibung/ID, Position, Rotation)
-\end{itemize}
+Im folgenden Abschnitt 
+
+\subsubsection{Daten und Szenario}
+Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen von Spielen simulieren soll. Um den Test einfach zu halten wurde nur mit einem Spielobjekt, der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selber sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. 
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/Klassendiagramm.png}
-    \caption{Klassendiagramm des Spieles}
-    \label{fig:classDia}
+    \includegraphics[width=0.2\textwidth]{images/PlayerKlasse.png}
+    \caption{Spieler-Klasse}
+    \label{fig:playerClass}
 \end{figure}
 
-Klassendiagramm zeigen, um Daten des Spieles zu visualisieren. Testen der Effizienz mit JMH (Erklären was JMH ist und warum das gut dafür ist)
+\subsubsection{Parameter}
 
-Zu beachtende Faktoren:
+\subsubsection{Ergebnisse}
+
+
+%\footnote{Genaue Ergebnisse bei den Messungen der verschiedenen Strategien: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies%20Results/Score.txt}}
+
+Parameter die getestet wurden:
 \begin{itemize}
-    \item Chunk size
-    \item Veränderungen
+    \item Binäre vs JSON-Serialisierung
+    \item GZip (bei JSON)
+    \item Change File
+    \item Dynamische Chunk Größe oder Statische Chunk Größe
+    \item Dynamisch -> Max Elemente pro Chunk und Min Element pro Chunk-Gruppe
+    \item Statisch -> Anzahl von Chunks 
+    \item Für alles unterschiedliche Anzahl der Daten getestet 
 \end{itemize}
+Getestet mit JMH
+
+
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/plots/top.png}
+    \caption{Beste Strategien in allen Kategorien}
+    \label{fig:topStrat}
+\end{figure}

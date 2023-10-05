@@ -112,7 +112,7 @@ class Strategy:
             chunk += f"Dynamic size (Max elements/chunk: {self.maxchunkelements}, "
             chunk += f"Min elements/group: {self.mingroupelements})"
         else:
-            chunk += f"Static size (Amount of chunk: {self.chunkamount}x{self.chunkamount})"
+            chunk += f"Static size (Chunk amount: {self.chunkamount}x{self.chunkamount})"
 
         result += chunk + " " * (len_chunk - len(chunk))
         result += "| "

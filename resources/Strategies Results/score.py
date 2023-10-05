@@ -6,6 +6,7 @@ import numpy as np
 PATH = os.path.realpath(os.path.dirname(__file__))
 SCORE_FILE = PATH + "\\Score.txt"
 BENCHMARK = PATH + "\\Benchmarks"
+PLOT = PATH + "\\Plots"
 
 def get_txt():
     result = []
@@ -115,8 +116,23 @@ def get_sorted_key(strategies, key):
 
 def get_sorted_function(strategies, function):
     results = []
-    i = 0
     keys = [(function, "1000"), (function, "10000"), (function, "100000")]
+    i = 0
+
+    for s in strategies:
+        value = 0
+        for key in keys: 
+            if key in s.results:
+                value += s.results[key][1]
+        results.append((i, value))
+        i += 1
+
+    return list(reversed(sort(results)))
+
+def get_sorted_datacount(strategies, datacount):
+    results = []
+    keys = [(func, datacount) for func in get_functions(strategies)]
+    i = 0
 
     for s in strategies:
         value = 0
@@ -159,24 +175,51 @@ def write_sorted(strategies):
         for function in get_functions(strategies):
             f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True))
 
+        for datacount in ['1000', '10000', '100000']:
+            f.write(create_table(f"Top 5 with {datacount} data count", strategies, get_sorted_datacount(strategies, datacount)[:5], True))
+
         for key in get_keys(strategies):
             f.write(create_table(f"Top 5 with {key}", strategies, get_sorted_key(strategies, key)[:5], True))
 
+
         f.write("\n"*3)
-        f.write("\nAll results:\n")
+        f.write("\nAll results (ordered by best average performing):\n")
         for result in results:
             s = strategies[result[0]]
             f.write("="*145 + "\n")
             f.write(str(s) + "\n")
             f.write(s.results_str(len(results)))
 
-def plot_func(strateigies, function):
+def plot_top(strategies):
+    x = []
+    y = []
+
+    for result in get_sorted(strategies)[:10]:
+        s = strategies[result[0]]
+        x.append(s.label())
+        y.append(s.score())
+
+    x_axis = np.arange(len(x))
+
+    fig = plt.figure()
+    plt.bar(x,y)
+    plt.xlabel("Strategien")
+    plt.ylabel("Score")
+    plt.xticks(x_axis, x)
+    plt.yticks([100*x for x in range(0,10)]) 
+    plt.title("Top 10 Strategien")
+    plt.gcf().set_size_inches(12.5, 5)
+    plt.savefig(PLOT + "//top.png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+
+def plot_func(strategies, function):
     x = []
     y1 = []
     y2 = []
     y3 = []
 
-    for result in get_sorted_function(strategies, function)[:10]:
+    for result in get_sorted_function(strategies, function)[:5]:
         s = strategies[result[0]]
         x.append(s.label())
         y1.append(float(s.results[(function, "1000")][0]))
@@ -185,19 +228,59 @@ def plot_func(strateigies, function):
 
     x_axis = np.arange(len(x))
 
-    plt.bar(x_axis -0.2, y1, 0.2, label = '1000')
-    plt.bar(x_axis, y2, 0.2, label = '10000')
-    plt.bar(x_axis + 0.2, y3, 0.2, label = '100000')
+    fig = plt.figure()
+    plt.bar(x_axis -0.2, y1, 0.2, label = 'Data count 1000')
+    plt.bar(x_axis, y2, 0.2, label = 'Data count 10000')
+    plt.bar(x_axis + 0.2, y3, 0.2, label = 'Data count 100000')
     plt.xticks(x_axis, x)
-    plt.legend()
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.xlabel("Strategien")
     plt.ylabel("ops/s")
-    plt.title("Top 5 " + function)
+    plt.title("Top 5 bei der Funktion " + function)
     plt.yscale('log',base=2) 
-    plt.show()
+    plt.savefig(PLOT + "//" + function + ".png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+def plot_datacount(strategies, datacount):
+    x = []
+    y = [[], [], [], [], []]
+
+    functions = get_functions(strategies)
+
+    for result in get_sorted_datacount(strategies, datacount)[:5]:
+        s = strategies[result[0]]
+        x.append(s.label())
+        i = 0
+        for function in functions:
+            y[i].append(float(s.results[(function, datacount)][0]))
+            i += 1
+
+    x_axis = np.arange(len(x))
+
+    fig = plt.figure()
+
+    i = 0
+    for yVal in y:
+        plt.bar(x_axis + (i - 2) * 0.1, yVal, 0.1, label = functions[i])
+        i += 1
+
+    plt.xticks(x_axis, x)
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.xlabel("Strategien")
+    plt.ylabel("ops/s")
+    plt.title("Top 5 mit " + datacount + " data count")
+    plt.yscale('log',base=2) 
+    plt.savefig(PLOT + "//" + datacount + ".png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
 
 def plot(strategies):
-    plot_func(strategies, "createGame")
+    plot_top(strategies)
+
+    for function in get_functions(strategies):
+        plot_func(strategies, function)
+    
+    for datacount in ['1000','10000', '100000']:
+        plot_datacount(strategies, datacount)
 
 
 if __name__ == "__main__":
@@ -210,4 +293,4 @@ if __name__ == "__main__":
     write_sorted( calc_score(strategies))
 
     #Plot results
-    #plot(strategies)
+    plot(strategies)
