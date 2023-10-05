@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="" />
+    <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,7 +78,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Gradle.Benchmark">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="strategies.App" />
       <module name="BinSave.main" />
@@ -106,7 +111,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
@@ -115,8 +119,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
         <item itemvalue="Gradle.Benchmark" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -137,6 +141,7 @@
       <workItem from="1696246860999" duration="2057000" />
       <workItem from="1696321334261" duration="4323000" />
       <workItem from="1696496559829" duration="1933000" />
+      <workItem from="1696511705749" duration="7202000" />
     </task>
     <servers />
   </component>
