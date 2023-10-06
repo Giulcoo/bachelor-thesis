@@ -206,12 +206,38 @@ def plot_top(strategies):
     plt.xlabel("Strategien")
     plt.ylabel("Score")
     plt.xticks(x_axis, x)
-    plt.yticks([100*x for x in range(0,10)]) 
+    plt.yticks([100*x for x in range(0,14)]) 
     plt.title("Top 10 Strategien")
-    plt.gcf().set_size_inches(12.5, 5)
+    plt.gcf().set_size_inches(14, 5)
     plt.savefig(PLOT + "//top.png", dpi=300, bbox_inches='tight')
     plt.close(fig)
 
+def plot_serialization(strategies, serialization):
+    x = []
+    y = []
+
+    i = 0
+    for result in get_sorted(strategies):
+        s = strategies[result[0]]
+        if s.serialization == serialization: 
+            x.append(s.label())
+            y.append(s.score())
+            i += 1
+        
+        if i >= 10:
+            break
+
+    x_axis = np.arange(len(x))
+
+    fig = plt.figure()
+    plt.bar(x,y)
+    plt.xlabel("Strategien")
+    plt.ylabel("Score")
+    plt.xticks(x_axis, x)
+    plt.title("Top 10 Strategien mit " + serialization + "-Serialisierung")
+    plt.gcf().set_size_inches(14, 5)
+    plt.savefig(PLOT + "//" + serialization + ".png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
 
 def plot_func(strategies, function):
     x = []
@@ -268,13 +294,15 @@ def plot_datacount(strategies, datacount):
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.xlabel("Strategien")
     plt.ylabel("ops/s")
-    plt.title("Top 5 mit " + datacount + " data count")
+    plt.title("Top 5 mit " + datacount + " Datengröße")
     plt.yscale('log',base=2) 
     plt.savefig(PLOT + "//" + datacount + ".png", dpi=300, bbox_inches='tight')
     plt.close(fig)
 
 def plot(strategies):
     plot_top(strategies)
+    plot_serialization(strategies, "Json")
+    plot_serialization(strategies, "Binary")
 
     for function in get_functions(strategies):
         plot_func(strategies, function)

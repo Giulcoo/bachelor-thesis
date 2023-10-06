@@ -1990,6 +1990,16 @@ INPUT ./appendix.tex
 INPUT appendix.tex
 INPUT ./appendix.tex
 INPUT appendix.tex
+INPUT ./images/plots/Binary.png
+INPUT ./images/plots/Binary.png
+INPUT images/plots/Binary.png
+INPUT ./images/plots/Binary.png
+INPUT ./images/plots/Binary.png
+INPUT ./images/plots/Json.png
+INPUT ./images/plots/Json.png
+INPUT images/plots/Json.png
+INPUT ./images/plots/Json.png
+INPUT ./images/plots/Json.png
 INPUT ./images/plots/1000.png
 INPUT ./images/plots/1000.png
 INPUT images/plots/1000.png
