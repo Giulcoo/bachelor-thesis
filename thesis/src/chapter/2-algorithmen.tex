@@ -61,6 +61,7 @@ Eine weitere Art, die Datenmenge besser zu organisieren, um dann Speicherprozess
 \subsubsection{Chunks} \label{sssect:chunks}
 Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig von deren Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten bei dem aktuellen Spielstand relevant sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich sein, die Größe muss nicht festgesetzt sein. Es gibt auch Variationen von Chunk-Systemen. Es kann zum Beispiel entschieden werden, ob ein \textit{statisches} oder \textit{dynamisches Chunk-System} verwendet werden soll. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn zu wenig Daten in einem Chunk sind, dann werden benachbarte Chunks wieder vereinigt, um sich die Daten zu teilen. Die Abbildung \ref{fig:chunkJoining} demonstriert den Fall, dass vier benachbarte Chunks zu wenig Inhalt haben und deshalb zu einem einzelnen Chunk vereint werden. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. 
 \todo{Mehr Quellen, aus Google Scholar}
+\todo{Chunk-Anzahl}
 
 \begin{figure}[htp]
     \centering
@@ -415,6 +416,9 @@ In dem \ac{json}-Dokument \ref{lst:shorterJson} ist zu sehen, wie das Dokument a
 %--------------------------------------------------------------------------
 \section{Ladesysteme}\label{sect:ladesysteme}
 Strategien vom Laden der Spieldaten
+
+Warum so wenig hier erwähnen (Speichern deutlich komplexer und manche Speicherstrategien beeinflussen Laden(???)) 
+\todo{Einleitung}
 %--------------------------------------------------------------------------
 
 
@@ -502,6 +506,7 @@ In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-
 \subsection{Auswertung}
 Kleines Java Projekt zum Auswerten verschiedener Speicher- und Ladestrategien
 \footnote{Code zu den Strategien und Benchmarks: \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/projects}}
+\todo{Einleitung}
 
 \subsubsection{Daten und Szenario} \label{sssec:dataAndSce}
 Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Aktionen von Spielen simulieren soll. Um den Test einfach zu halten wurde nur mit einem Spielobjekt, der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selber sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. Die Player-Objekte werden in Chunks gruppiert und auch im Zusammenhang mit diesen gespeichert oder geladen. Die Chunks sind nach der Klasse der Abbildung \ref{fig:chunkClass} strukturiert.
@@ -540,4 +545,17 @@ Wenn die besten Strategien von der binären- und JSON-Serialisierung betrachtet 
 
 Außerdem scheinen Strategien mit dynamischer Chunk-Anzahl im allgemeinen besser abzuschneiden, die diese anpassungsfähiger sind und somit die Daten effizienter gruppieren. Die Strategie mit statischer Chunk-Anzahl, bei der die Spielwelt in zwei mal zwei, also vier Chunks, aufgeteilt wird, ist unter den besten zehn Strategien die einzige mit statischer Chunk-Anzahl. Es ist also effizienter, bei einer statischen Chunk-Anzahl, mit weniger Chunks zu arbeiten, statt die Spielwelt in vielen kleinen Chunks aufzuteilen. Dies fällt auch bei den Ergebnissen der Strategien mit dynamischer Chunk-Anzahl auf. Je mehr Player-Objekte ein Chunk beinhalten kann, desto effizienter läuft der Algorithmus.
 
-Kein Change File\dots
+Ein weiteres Ergebnis, welches unerwartet ist, ist, dass bei den besten Strategien keine dabei ist, die eine Change-Datei verwendet. Durch die minimierte Größe an Daten, die geschrieben werden müssen, ist eigentlich zu erwarten, dass dieser Ansatz besonders effizient läuft. Jedoch gibt es durch diesen Ansatz mehr Schreibprozesse. Und wenn die Daten der Schreibprozesse aufsummiert werden, ist die Größe dieser etwas größer als bei den Strategien ohne Change-Datei. Jedes Objekt der Change-Klasse bringt nämlich noch weitere Attribute mit, die gespeichert werden müssen.
+
+\subsubsection{Fazit}
+\begin{itemize}
+    \item Für ein anpassungsfähiges System dynamische Chunk-Anzahl
+    \begin{itemize}
+        \item Jedoch aufwendiger zu programmieren!
+        \item Alternative Statisch mit wenig Chunks (z.B. 2x2)
+    \end{itemize}
+    \item Wenn beste Effizienz erreicht werden soll -> Binary + Dynamic
+    \item Wenn Effizienz, aber lesbare Daten -> Json + Dynamic
+    \item Wenn Datengröße gering gehalten werden soll -> Binary + Gzip + Dynamic
+\end{itemize}
+\todo{Finish}
