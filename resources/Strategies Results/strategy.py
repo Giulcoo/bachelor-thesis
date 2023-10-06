@@ -70,27 +70,39 @@ class Strategy:
             self.maxchunkelements = 0
             self.mingroupelements = 0
 
+        if self.dynamic:
+            self.mingroupelements = int(self.maxchunkelements/self.mingroupelements)
+
         self.results = {
             (benchmark[1], dataCount): (result, 0)
         }
 
     def __str__(self):
-        result = f"Serialization: {self.serialization} | Change File: {self.changefile} | GZip: {self.gzip} | Dynamic Chunk: {self.dynamic} | "
+        result = self.serialization
+
+        if self.gzip:
+            result += " + GZip"
+
+        if self.changefile:
+            result += " + Change File"
+
+        result += " | "
 
         if self.dynamic:
-            result += f"Max Elements/Chunk: {self.maxchunkelements} | Min Elements/Group: {self.mingroupelements}"
+            result += f"Dynamic size (Max elements/chunk: {self.maxchunkelements}, "
+            result += f"Min elements/group: {self.mingroupelements})"
         else:
-            result += f"Chunk Amount: {self.chunkamount}x{self.chunkamount}"
-
+            result += f"Static size (Chunk amount: {self.chunkamount}x{self.chunkamount})"
+        
         result += f" | Score: {self.score()}"
 
         return result
     
-    def str_short(self):
+    def table(self):
         result = ""
 
         len_serrialization = len("Strategy" + " " * 18)
-        len_chunk = len("Chunks" + " " * 60)
+        len_chunk = len("Chunks" + " " * 61)
         len_score = len("Score ")
 
         strat = self.serialization
@@ -123,16 +135,16 @@ class Strategy:
     def label(self):
         result = f"{self.serialization}\n"
         
-        if self.dynamic:
-            result += " Dynamic\n"
-        else:
-            result += " Static\n"
-        
         if self.changefile:
             result += " Change File\n"
 
         if self.gzip:
             result += " GZip\n"
+
+        if self.dynamic:
+            result += " Dynamic\n"
+        else:
+            result += " Static\n"
 
         if self.dynamic:
             result += f" ({self.maxchunkelements}, {self.mingroupelements})"
@@ -146,25 +158,28 @@ class Strategy:
         dcount = "data count" 
         opsresult = "ops/s   "
         score = "score"
+        placement = "placement"
         wall = " | "
 
-        result = function + wall + dcount + wall + opsresult + wall + score + "\n"
+        result = function + wall + dcount + wall + opsresult + wall + score + wall + placement + "\n"
         result += "-" * len(result) + "\n"
         for (key, value) in self.results.items():
             (fun,cnt) = key
             (ops,sco) = value
 
-            sco = str(sco) + "/" + str(results_len)
+            pla = str(results_len - sco) 
+            sco = str(sco) + "/" + str(results_len-1)
 
             fun_len = len(function) - len(fun)
             cnt_len = len(dcount) - len(cnt)
             ops_len = len(opsresult) - len(ops)
+            sco_len = len(score) - len(sco)
             
             result += fun + " " * fun_len + wall
             result += cnt + " " * cnt_len + wall
             result += ops + " " * ops_len + wall
-            result += sco
-            result += "\n" 
+            result += sco + " " * sco_len + wall
+            result += pla + "\n" 
 
             #result += f"{key} => ({value[0]}ops/s, {value[1]}/{results_len})\n"
         return result

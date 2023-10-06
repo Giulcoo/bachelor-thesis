@@ -145,7 +145,7 @@ def get_sorted_datacount(strategies, datacount):
     return list(reversed(sort(results)))
 
 def create_table(title, strategies, results, use_extra_column):
-    table = "Strategy" + " " * 18 + "| " + "Chunks" + " " * 60 + "| Score "
+    table = "Strategy" + " " * 18 + "| " + "Chunks" + " " * 61 + "| Score "
 
     equal = "="*102 + "\n"
     if use_extra_column:
@@ -158,7 +158,7 @@ def create_table(title, strategies, results, use_extra_column):
     table = "="*(len(title)+2) + "\n" + title + " ║\n" + equal + table
     for result in results:
         s = strategies[result[0]]
-        table += s.str_short()
+        table += s.table()
 
         if use_extra_column:
             table += "| " + str(result[1])
@@ -170,7 +170,7 @@ def create_table(title, strategies, results, use_extra_column):
 def write_sorted(strategies):
     with open(SCORE_FILE, "w", encoding="utf-8") as f:
         results = get_sorted(strategies)
-        f.write(create_table("Top 10", strategies, results[:9], False))
+        f.write(create_table("Top 10", strategies, results[:10], False))
 
         for function in get_functions(strategies):
             f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True))
@@ -186,8 +186,8 @@ def write_sorted(strategies):
         f.write("\nAll results (ordered by best average performing):\n")
         for result in results:
             s = strategies[result[0]]
-            f.write("="*145 + "\n")
-            f.write(str(s) + "\n")
+            f.write("="*110 + "\n")
+            f.write(str(s) + "\n\n")
             f.write(s.results_str(len(results)))
 
 def plot_top(strategies):
@@ -285,12 +285,16 @@ def plot(strategies):
 
 if __name__ == "__main__":
     #Convert file data to strategy objects
+    print("> Getting Data")
     strategies = []
     for file in get_txt():
         strategies = file_to_strategies(strategies, file)
 
+    print("> Calculate and write score")
     #Calculate score and print to file
-    write_sorted( calc_score(strategies))
+    write_sorted(calc_score(strategies))
 
+    print("> Create Plots")
     #Plot results
     plot(strategies)
+    print("> Finished")
