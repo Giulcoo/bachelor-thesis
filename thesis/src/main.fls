@@ -1804,8 +1804,6 @@ INPUT ./images/plots/top.png
 INPUT images/plots/top.png
 INPUT ./images/plots/top.png
 INPUT ./images/plots/top.png
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
-INPUT c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./chapter/4-gameengines.tex
 INPUT ./chapter/4-gameengines.tex
 INPUT ./chapter/4-gameengines.tex
