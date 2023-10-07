@@ -2,6 +2,7 @@
 Verschiedene Theorien/Strategien von Speicher und Ladesysteme ausarbeiten und Zeiten messen (Mit Java und JSON hauptsächlich). Verschiedene Spielarten und Speichersysteme für diese ausarbeiten (Chunk Systeme machen vielleicht nicht überall Sinn, aber allgemein Daten aufteilen müsste gut sein)
 
 \todo{Speicher und Ladezeiten vs Speicherverbrauch Zusammenhang}
+\todo{Listing statt Code}
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
@@ -190,7 +191,8 @@ Das \ac{json}-Dokument aus \ref{lst:bsonJsonObj} wäre äquivalent zu dem BSON-D
 \subsubsection{Binäre Serialisierung} \label{sssec:binSerialisierung}
 Bei der \textit{binären Serialisierung} wird ein Objekt als Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Jedoch hat die Leistung seinen Preis, denn das Ergebnis der Serialisierung ist nicht für Menschen lesbar. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
 
-Eine große Herausforderung mit dem Arbeiten von binärer Serialisierung ist wenn sich die Datenstrukturen der zu speichernden Daten verändern. \todo{Warum im Vergleich zu JSON?}
+Eine große Herausforderung mit dem Arbeiten von binärer Serialisierung ist wenn sich die Datenstrukturen der zu speichernden Daten verändern. Wenn keine weiteren Maßnahmen gewählt werden, ist es komplex alte Daten in neueren Versionen der Anwendung mit anderen Klassen-Strukturen zu deserialisieren. Es gibt jedoch einige Herangehensweisen, die bei der binären Serialisierung Probleme mit unterschiedlichen Versionen von Daten verhindern können. Zum Beispiel gibt es die \ac{vts}-Funktion, die von Microsoft für verschiedene Arten von Serialisierungen in C\# und Visual Basic entwickelt wurde. Mit \ac{vts} werden neue Attribute von neuen Daten bei älteren Versionen der Anwendung ignoriert. Neuen Attribute können auch so gekennzeichnet werden, dass diese zu einer Version der Anwendung zugeordnet werden können. Außerdem können Standardwerte definiert werden, die Attribute zugeordnet werden, wenn diese beim Deserialisieren nicht gefunden wurden. Diese Funktionen können für das binäre Serialisieren verwendet werden, jedoch wird empfohlen, keine Attribute zu löschen oder deren Namen oder Typen zu verändern.\cite{microsoftVersiontolerantBinary}
+Also ist der Entwickler in den meisten Fällen doch noch etwas eingeschränkt, wenn er die Datenstruktur der zu speichernden Daten anpassen möchte. Für mehr Freiheit sollte der Entwickler vor dem Deserialisieren der Daten immer eine Versionskontrolle durchführen. Falls die Versionen der Daten nicht mit der Version der Anwendung übereinstimmen, muss ein Migrationsalgorithmus geschrieben werden, der die alten Daten auf die neuen Datenstrukturen anpasst.
 
 Eine populäre Umsetzung der binären Serialisierung ist der \textit{Protocol Buffer}. Dieser wurde Anfang 2001 von Google entwickelt und wird seitdem in vielen Projekten von Google, anderen Unternehmen und Entwicklern verwendet. Der Protocol Buffer verwendet kompilierte Daten, um diese zu binären Daten zu serialisieren. Das besondere dabei ist, dass der Protocol Buffer in verschiedenen Programmiersprachen und Plattformen verwendet werden kann. Es ist also möglich, dass die Programmierumgebung beim Serialisieren ganz anders ist, als die beim Deserialisieren. Da es sich um eine binäre Serialisierung handelt, sind die Daten zwar nicht für Menschen leserlich, jedoch ist Protocol Buffer eine schnelle und kompakte Art, Daten zu serialisieren. Bei den Abbildungen \ref{fig:protobufTime} und \ref{fig:protobufBrowser} ist zu sehen, wie schnell der Protocol Buffer im Vergleich zu JSON-Serialisierung ist.  In der Abbildung \ref{fig:protobufBrowser} ist auch zu sehen, dass die Protocol Buffer-Daten kompakter als die JSON-Daten sind. Welchen Vorteil dies auf die Effizienz anbieten wird, wird in dem Abschnitt \ref{ssec:kompression} diskutiert.\cite{currier2022protocol}
 
@@ -208,7 +210,7 @@ Eine populäre Umsetzung der binären Serialisierung ist der \textit{Protocol Bu
     \label{fig:protobufBrowser}
 \end{figure}
 
-Um mit Protocol Buffer zu arbeiten, muss als erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Der Code \ref{lst:protoExp} zeigt, wie so eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In so einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String der den Namen beschreibt, eine Position und eine Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+Um mit Protocol Buffer zu arbeiten, muss als erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Der Code \ref{lst:protoExp} zeigt, wie eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus dem Listing \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String der den Namen beschreibt, eine Position und eine Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert. Jedes Attribut bekommt eine Attribut-Nummer, für ein besseres zuordnen der Werte beim Deserialisieren.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava} Die Attribut-Nummer gibt auch mehr Sicherheit beim Verändern der Datenstruktur, eine genauere Erklärung dazu gibt es am Ende dieses Abschnittes. 
 
 \begin{listing}[htp]
     \begin{minted}{cpp} 
@@ -339,7 +341,24 @@ In den Code-Ausschnitten \ref{lst:protobufJavaWrite} und \ref{lst:protobufJavaRe
     \label{lst:protobufJavaRead}
 \end{listing}
 
-\todo{Updaten von Datenstruktur Protocol Buffer}
+Zu Beginn von diesem Abschnitt der binären Serialisierung wurde erwähnt, dass Veränderungen der Datenstruktur zu großen Problemen beim Deserialisieren von binären Daten führen können. Protocol Buffer hat Funktionen um dieses Problem zu verhindern. Veränderungen der Datenstruktur, durch Hinzufügen von neuen Attributen kann problemlos gemacht werden. Bei Veränderungen wie das Löschen oder Verändern von Attributen müssen einige Schritte beachtet werden. Jedes Attribut hat eine Attribut-Nummer. Wenn ein Attribut gelöscht wird, sollte die Attribut-Nummer nicht weiter verwendet werden, denn dies könnte zu Problemen führen, wie Parse/Merge-Fehler und Daten-Korruption, denn es würden Attribute mit einer Definition serialisiert und nach der Veränderung mit einer anderen Definition deserialisiert werden. Aus diesem Grund sollten Attribut-Nummern von gelöschten Attributen reserviert werden, damit diese Nummern nicht mehr verwendet werden. Mit der "reversed"-Liste, die in einer Message in der Proto-Datei definiert wird, werden die Attribut-Nummern, die nicht mehr verwendet werden sollen, aufgezählt. Diese Liste ist besonders hilfreich, wenn mit mehreren Entwicklern gearbeitet wird, da alle direkt Bescheid wissen, mit welchen Attribut-Nummern nicht mehr gearbeitet werden sollte. Im Listing \ref{lst:protoReserved} ist zu sehen, wie mithilfe einer "reserved"-Liste die Datenstruktur aus dem Listing \ref{lst:protoExp} angepasst werden kann. Dabei wurde das Attribut der Position und die Effekte-Liste gelöscht. Stattdessen soll jetzt mit x- und y-Variablen und nur einem Effekt, gespeichert in einer Zeichenkette, gearbeitet werden. Die neuen Attribute haben Attribut-Nummern, die erst bei fünf anfangen, da die ersten zwei Nummern schon verwendet werden und die Nummern drei und vier reserviert wurden.\cite{protobufLanguageGuide}
+
+\begin{listing}[htp]
+    \begin{minted}{cpp} 
+        syntax = "proto3";
+        
+        message Monster {
+            reserved 3, 4; 
+            uint32 id = 1;
+            string name = 2;
+            float x = 5;
+            float y = 6,
+            string effect = 7;
+        }
+    \end{minted}
+    \caption{Veränderung der Message aus dem Listing \ref{lst:protoExp}}
+    \label{lst:protoReserved}
+\end{listing}
 %--------------------------------------------------------------------------
 
 
@@ -351,7 +370,7 @@ Um diese Frage zu beantworten, muss erst mal geschaut werden, wann und wo Datenk
 
 \subsubsection{Gzip}
 
-Eine Möglichkeit, Daten zu komprimieren, ist mit dem populären patentfreien Kompressionsprogramm \ac{gzip}. \ac{gzip} verwendet den Deflate-Algorithmus, der eine Kombination aus dem  LZ77\footnote{Lempel-Ziv 77}-Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer \ac{gzip}-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
+Eine Möglichkeit, Daten zu komprimieren, ist mit dem populären patentfreien Kompressionsprogramm \ac{gzip}. \ac{gzip} verwendet den Deflate-Algorithmus, der eine Kombination aus dem \ac{lz77}-Algorithmus und der Huffman-Kodierung ist. Die komprimierten Daten befinden sich in einer \ac{gzip}-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald in einem Block sich Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 
 \subsubsection{\ac{json} Hpack}
 \ac{json} Hpack, oder auch \ac{json} Homogeneous Collections Compressor genannt, ist eine \ac{json}-Komprimierung, die Arrays in \ac{json}-Dokumenten in einer kompakteren Art darstellt und dabei das \ac{json}-Format beibehält. In dem Beispiel \ref{lst:hpackCompressedExp} wird gezeigt, wie das \ac{json}-Dokument \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von \ac{json} Hpack dann durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauf folgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Was darauf folgt, sind die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
@@ -420,12 +439,23 @@ Warum so wenig hier erwähnen (Speichern deutlich komplexer und manche Speichers
 %--------------------------------------------------------------------------
 
 
+
+%--------------------------------------------------------------------------
+\subsection{Datenkontrolle}
+Bevor die Daten geladen werden können sollten diese überprüft werden. Wenn dies nicht vor dem Laden der Daten gemacht wird, kann es zu fehlerhaften Zuständen im Spiel oder allgemein zu Problemen der Ausführung des Programmes kommen. Dabei gibt es zwei Kontrollen, die durchgeführt werden sollten.
+
+Eine \textit{Versionskontrolle} überprüft die Version der Daten eines Spielstandes. Wenn diese Version älter als die Version der Anwendung ist, sollten die Daten zu der neuen Version migriert werden. Dafür ist es sinnvoll beim Speichern der Daten eine Version des Spiels mitzugeben, welche dann beim Laden vergleicht werden kann. Wenn die gespeicherte Version nicht mit der Version des Spieles übereinstimmen, müssen die alten Daten auf die neuen Datenstrukturen übersetzt werden. Dies kann ein sehr aufwendiger Prozess sein, weshalb die Datenstrukturen gut durchdacht sein und nicht häufig verändert werden sollten. 
+
+Eine \textit{Korruptionskontrolle} überprüft, ob die Daten in irgendeiner Form beschädigt sind. Dies kann durch Fehler der Anwendung selber passieren, oder wenn Benutzer die Daten bearbeitet haben.
+%--------------------------------------------------------------------------
+
+
+
 %--------------------------------------------------------------------------
 \subsection{Lazy Loading} \label{ssect:lazyloading}
 Lazy Loading ist eine in der Webentwicklung verwendete Strategie zum effizienteren Laden von Webseiten. Dabei werden Teile einer Webseite erst dann geladen, wenn sie nötig sind. Das Gegenteil dieser Strategie ist das sogenannte Eager Loading, bei dem alles direkt geladen wird.\cite{cloudflareLazyLoad}
 
 Bei einer großen Datenmenge von Spielobjekten ist es äußerst ineffizient, alle Daten direkt aus dem lokalen Speicher in den Arbeitsspeicher zu laden. Hier ist es sinnvoll, eine Lazy Loading Strategie zu verwenden. Eine Möglichkeit, die Daten prozedular zu laden, ist die Spielwelt abhängig von der Position des Spielers zu laden. Dabei werden nur die Daten geladen, die in der Nähe vom Spieler sind. Was als nah genug zum Laden definiert ist, kann mit der Draw Distance\footnote{Auch bekannt als Render Distance. Legt fest, ab welcher Distanz Spielobjekte in die Spielwelt gezeichnet werden sollen.\cite{nerdburglarsWhatDraw}} festgelegt werden. Ein Chunk-System ist für diese Strategie äußerst praktisch, denn es können immer die Daten der Chunks geladen werden, die sich im Umfeld des Spielers befinden. Dann muss nicht über alle Spielobjekte iteriert werden, um die Objekte in der Nähe des Spielers zu finden.
-%--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 
 
@@ -472,7 +502,7 @@ Sei die Welt theoretisch unendlich, dann ist ein Chunk-System unter den sinnvoll
     \label{fig:chunkClass}
 \end{figure}
 
-In der Abbildung \ref{fig:chunkBasedSystem} ist ein Ablaufdiagramm zu dem ersten Ansatz eines Chunk-basierten Systems zu erkennen. Nach Spielstart werden zu Begin die Informationen der einzelnen Chunks geladen. Hiermit sind alle Informationen außer den Elementen eines Chunks gemeint, denn im nächsten Schritt sollen die Elemente der Chunks in der Nähe des Spielers geladen werden. Dafür werden die Positionen und Größen aller Chunks benötigt. Damit ein Lazy Loading stattfindet, werden mit diesem Ansatz nur die Elemente in der Nähe des Spielers geladen. In der Hauptphase des Spieles werden dann weiterhin die Chunk-Elemente der Chunks geladen, die in der Nähe des Spielers sind. Die Chunk-Veränderungen zu speichern, hängt bei dieser Strategie davon ab, ob die Chunks eine feste Größe haben oder nicht. Wird eine feste Chunkgröße gewählt, so muss der Chunkinhalt, also die Elemente eines Chunks, jedes Mal neu angepasst werden, wenn ein Objekt verändert, hinzugefügt oder gelöscht wurde.  Bei einer dynamischen Chunkgröße, wie in \ref{sssect:chunks} gezeigt, wird ähnlich bei Modifikation, Hinzufügung und Löschung von Spielobjekten gearbeitet, nur muss noch zusätzlich jedes Mal die Größe des Chunkinhaltes überprüft werden. Wenn ein Chunk zu viele Elemente hat, müssen diese auf neue, kleinere Chunks verteilt werden. Wenn ein Chunk zu wenig Elemente hat, müssen diese wieder in dem Eltern-Chunk gespeichert werden und dessen Kind-Chunks müssen im Speicher wieder herausgenommen werden.
+In der Abbildung \ref{fig:chunkBasedSystem} ist ein Ablaufdiagramm zu dem ersten Ansatz eines Chunk-basierten Systems zu erkennen. Nach Spielstart werden zu Beginn die Informationen der einzelnen Chunks geladen. Hiermit sind alle Informationen außer den Elementen eines Chunks gemeint, denn im nächsten Schritt sollen die Elemente der Chunks in der Nähe des Spielers geladen werden. Dafür werden die Positionen und Größen aller Chunks benötigt. Damit ein Lazy Loading stattfindet, werden mit diesem Ansatz nur die Elemente in der Nähe des Spielers geladen. In der Hauptphase des Spieles werden dann weiterhin die Chunk-Elemente der Chunks geladen, die in der Nähe des Spielers sind. Die Chunk-Veränderungen zu speichern, hängt bei dieser Strategie davon ab, ob die Chunks eine feste Größe haben oder nicht. Wird eine feste Chunkgröße gewählt, so muss der Chunkinhalt, also die Elemente eines Chunks, jedes Mal neu angepasst werden, wenn ein Objekt verändert, hinzugefügt oder gelöscht wurde.  Bei einer dynamischen Chunkgröße, wie in \ref{sssect:chunks} gezeigt, wird ähnlich bei Modifikation, Hinzufügung und Löschung von Spielobjekten gearbeitet, nur muss noch zusätzlich jedes Mal die Größe des Chunkinhaltes überprüft werden. Wenn ein Chunk zu viele Elemente hat, müssen diese auf neue, kleinere Chunks verteilt werden. Wenn ein Chunk zu wenig Elemente hat, müssen diese wieder in dem Eltern-Chunk gespeichert werden und dessen Kind-Chunks müssen im Speicher wieder herausgenommen werden.
 
 \begin{figure}[htp]
     \centering
