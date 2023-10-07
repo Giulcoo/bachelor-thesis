@@ -144,12 +144,15 @@ def get_sorted_datacount(strategies, datacount):
 
     return list(reversed(sort(results)))
 
-def create_table(title, strategies, results, use_extra_column):
+def create_table(title, strategies, results, use_extra_column, key):
     table = "Strategy" + " " * 18 + "| " + "Chunks" + " " * 61 + "| Score "
 
     equal = "="*102 + "\n"
-    if use_extra_column:
+    if use_extra_column and key == None:
         table += " | Category Score "
+        equal = "="*120 + "\n"
+    elif key != None:
+        table += " | ops/s       "
         equal = "="*120 + "\n"
 
     width = len(table)
@@ -160,8 +163,10 @@ def create_table(title, strategies, results, use_extra_column):
         s = strategies[result[0]]
         table += s.table()
 
-        if use_extra_column:
+        if use_extra_column and key == None:
             table += "| " + str(result[1])
+        elif key != None:
+            table += "| " + s.results[key][0]
         
         table += "\n"
 
@@ -170,16 +175,16 @@ def create_table(title, strategies, results, use_extra_column):
 def write_sorted(strategies):
     with open(SCORE_FILE, "w", encoding="utf-8") as f:
         results = get_sorted(strategies)
-        f.write(create_table("Top 10", strategies, results[:10], False))
+        f.write(create_table("Top 10", strategies, results[:10], False, None))
 
         for function in get_functions(strategies):
-            f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True))
+            f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True, None))
 
         for datacount in ['1000', '10000', '100000']:
-            f.write(create_table(f"Top 5 with {datacount} data count", strategies, get_sorted_datacount(strategies, datacount)[:5], True))
+            f.write(create_table(f"Top 5 with {datacount} data count", strategies, get_sorted_datacount(strategies, datacount)[:5], True, None))
 
         for key in get_keys(strategies):
-            f.write(create_table(f"Top 5 with {key}", strategies, get_sorted_key(strategies, key)[:5], True))
+            f.write(create_table(f"Top 5 with {key}", strategies, get_sorted_key(strategies, key)[:5], True, key))
 
 
         f.write("\n"*3)
@@ -237,6 +242,39 @@ def plot_serialization(strategies, serialization):
     plt.title("Top 10 Strategien mit " + serialization + "-Serialisierung")
     plt.gcf().set_size_inches(14, 5)
     plt.savefig(PLOT + "//" + serialization + ".png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+def plot_chunk_system(strategies, dynamic):
+    x = []
+    y = []
+
+    i = 0
+    for result in get_sorted(strategies):
+        s = strategies[result[0]]
+        if s.dynamic == dynamic: 
+            x.append(s.label())
+            y.append(s.score())
+            i += 1
+        
+        if i >= 5:
+            break
+
+    x_axis = np.arange(len(x))
+
+    fig = plt.figure()
+    plt.bar(x,y)
+    plt.xlabel("Strategien")
+    plt.ylabel("Score")
+    plt.xticks(x_axis, x)
+    plt.gcf().set_size_inches(7, 5)
+
+    if dynamic:
+        plt.title("Top 10 Strategien mit dynamischen Chunk-System")
+        plt.savefig(PLOT + "//dynamisch.png", dpi=300, bbox_inches='tight')
+    else:
+        plt.title("Top 10 Strategien mit statischen Chunk-System")
+        plt.savefig(PLOT + "//statisch.png", dpi=300, bbox_inches='tight')
+
     plt.close(fig)
 
 def plot_func(strategies, function):
@@ -303,6 +341,8 @@ def plot(strategies):
     plot_top(strategies)
     plot_serialization(strategies, "Json")
     plot_serialization(strategies, "Binary")
+    plot_chunk_system(strategies, True)
+    plot_chunk_system(strategies, False)
 
     for function in get_functions(strategies):
         plot_func(strategies, function)

@@ -114,182 +114,182 @@ Binary + GZip             | Dynamic size (Max elements/chunk: 10000, Min element
 ===================================
 Top 5 with ('createGame', '1000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 95
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 94
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 93
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 92
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 214.846
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 214.773
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 213.279
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 211.015
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 203.722
+----------------------------------------------------------------------------------------------------------------------
 
 ====================================
 Top 5 with ('createGame', '10000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 95
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 94
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 93
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 92
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 63.119
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 62.375
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 61.780
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 49.423
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 35.782
+----------------------------------------------------------------------------------------------------------------------
 
 =====================================
 Top 5 with ('createGame', '100000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 95
-Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 94
-Binary                    | Static size (Chunk amount: 10x10)                                  | 924   | 93
-Json                      | Static size (Chunk amount: 10x10)                                  | 836   | 92
-Binary + GZip             | Static size (Chunk amount: 2x2)                                    | 1001  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 6.494
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 4.049
+Binary                    | Static size (Chunk amount: 10x10)                                  | 924   | 3.054
+Json                      | Static size (Chunk amount: 10x10)                                  | 836   | 2.328
+Binary + GZip             | Static size (Chunk amount: 2x2)                                    | 1001  | 1.913
+----------------------------------------------------------------------------------------------------------------------
 
 =================================
 Top 5 with ('loadGame', '1000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 95
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1153  | 94
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 93
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 92
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 1050  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 798.272
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1153  | 795.178
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 790.932
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 789.454
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 1050  | 789.105
+----------------------------------------------------------------------------------------------------------------------
 
 ==================================
 Top 5 with ('loadGame', '10000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1153  | 95
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 94
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 93
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 92
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1153  | 128.150
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 128.035
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 126.270
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 121.076
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 118.107
+----------------------------------------------------------------------------------------------------------------------
 
 ===================================
 Top 5 with ('loadGame', '100000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 95
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 94
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 93
-Binary                    | Static size (Chunk amount: 10x10)                                  | 924   | 92
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 15.249
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 14.997
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 14.829
+Binary                    | Static size (Chunk amount: 10x10)                                  | 924   | 13.300
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 13.298
+----------------------------------------------------------------------------------------------------------------------
 
 ======================================
 Top 5 with ('removePlayers', '1000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 95
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 94
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 93
-Json                      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1071  | 92
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 79.807
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 78.723
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 75.146
+Json                      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1071  | 74.984
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 73.775
+----------------------------------------------------------------------------------------------------------------------
 
 =======================================
 Top 5 with ('removePlayers', '10000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 986   | 95
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 966   | 94
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 1050  | 93
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 954   | 92
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 1075  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 986   | 1.318
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 966   | 1.282
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 1050  | 1.279
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 954   | 1.224
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 1075  | 1.217
+----------------------------------------------------------------------------------------------------------------------
 
 ========================================
 Top 5 with ('removePlayers', '100000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 966   | 95
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 954   | 94
-Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1119  | 93
-Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1114  | 92
-Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 986   | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 966   | 0.012
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 500)   | 954   | 0.012
+Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1119  | 0.011
+Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1114  | 0.011
+Binary + GZip             | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 986   | 0.011
+----------------------------------------------------------------------------------------------------------------------
 
 ======================================
 Top 5 with ('createPlayers', '1000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 95
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 94
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 93
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 92
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 753.313
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 753.239
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 752.991
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  | 750.916
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 750.828
+----------------------------------------------------------------------------------------------------------------------
 
 =======================================
 Top 5 with ('createPlayers', '10000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1107  | 95
-Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 94
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 93
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1105  | 92
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1107  | 110.397
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 109.094
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 107.830
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1105  | 107.646
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  | 105.570
+----------------------------------------------------------------------------------------------------------------------
 
 ========================================
 Top 5 with ('createPlayers', '100000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Json + GZip               | Static size (Chunk amount: 2x2)                                    | 943   | 95
-Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 94
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 93
-Binary + GZip             | Static size (Chunk amount: 2x2)                                    | 1001  | 92
-Json                      | Static size (Chunk amount: 10x10)                                  | 836   | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Json + GZip               | Static size (Chunk amount: 2x2)                                    | 943   | 11.521
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 11.411
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 10.773
+Binary + GZip             | Static size (Chunk amount: 2x2)                                    | 1001  | 10.711
+Json                      | Static size (Chunk amount: 10x10)                                  | 836   | 5.292
+----------------------------------------------------------------------------------------------------------------------
 
 ====================================
 Top 5 with ('movePlayers', '1000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 95
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 94
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 93
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 1075  | 92
-Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  | 596.102
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 553.609
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 552.695
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 1075  | 550.083
+Binary                    | Dynamic size (Max elements/chunk: 1000, Min elements/group: 100)   | 1037  | 541.088
+----------------------------------------------------------------------------------------------------------------------
 
 =====================================
 Top 5 with ('movePlayers', '10000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1105  | 95
-Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 94
-Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 995   | 93
-Json                      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 992   | 92
-Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 977   | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1105  | 88.715
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  | 87.362
+Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 995   | 87.034
+Json                      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 992   | 86.285
+Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 977   | 86.141
+----------------------------------------------------------------------------------------------------------------------
 
 ======================================
 Top 5 with ('movePlayers', '100000') ║
 ========================================================================================================================
-Strategy                  | Chunks                                                             | Score  | Category Score 
--------------------------------------------------------------------------------------------------------------------------
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 95
-Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 94
-Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 93
-Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 990   | 92
-Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 91
--------------------------------------------------------------------------------------------------------------------------
+Strategy                  | Chunks                                                             | Score  | ops/s       
+----------------------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  | 10.007
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  | 9.952
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  | 9.686
+Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 990   | 9.487
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  | 9.252
+----------------------------------------------------------------------------------------------------------------------
 
 
 
