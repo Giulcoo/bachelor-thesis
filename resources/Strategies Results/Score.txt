@@ -15,6 +15,64 @@ Binary + GZip             | Dynamic size (Max elements/chunk: 10000, Min element
 Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1119  
 -------------------------------------------------------------------------------------------------------
 
+==================================
+Top 10 with binary Serialization ║
+======================================================================================================
+Strategy                  | Chunks                                                             | Score 
+-------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1153  
+Binary + GZip             | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1129  
+Binary + GZip             | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1127  
+Binary + GZip             | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1119  
+-------------------------------------------------------------------------------------------------------
+
+================================
+Top 10 with JSON-Serialization ║
+======================================================================================================
+Strategy                  | Chunks                                                             | Score 
+-------------------------------------------------------------------------------------------------------
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1115  
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1107  
+Json                      | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1105  
+Json                      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1089  
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  
+Json                      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 500)   | 1071  
+Json                      | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1034  
+Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 995   
+Json                      | Dynamic size (Max elements/chunk: 1000, Min elements/group: 10)    | 992   
+Json + GZip               | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 990   
+-------------------------------------------------------------------------------------------------------
+
+=================================
+Top 5 with dynamic Chunk-System ║
+======================================================================================================
+Strategy                  | Chunks                                                             | Score 
+-------------------------------------------------------------------------------------------------------
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 1000) | 1276  
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 5000) | 1268  
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 50)    | 1252  
+Binary                    | Dynamic size (Max elements/chunk: 10000, Min elements/group: 100)  | 1249  
+Binary                    | Dynamic size (Max elements/chunk: 5000, Min elements/group: 2500)  | 1207  
+-------------------------------------------------------------------------------------------------------
+
+================================
+Top 5 with static Chunk-System ║
+======================================================================================================
+Strategy                  | Chunks                                                             | Score 
+-------------------------------------------------------------------------------------------------------
+Binary                    | Static size (Chunk amount: 2x2)                                    | 1206  
+Json                      | Static size (Chunk amount: 2x2)                                    | 1085  
+Binary + GZip             | Static size (Chunk amount: 2x2)                                    | 1001  
+Json + GZip               | Static size (Chunk amount: 2x2)                                    | 943   
+Binary                    | Static size (Chunk amount: 10x10)                                  | 924   
+-------------------------------------------------------------------------------------------------------
+
 ================================
 Top 5 with function createGame ║
 ========================================================================================================================

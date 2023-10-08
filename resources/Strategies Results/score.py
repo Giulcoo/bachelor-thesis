@@ -159,8 +159,29 @@ def create_table(title, strategies, results, use_extra_column, key):
     table += "\n" + "-" * width + "\n"
 
     table = "="*(len(title)+2) + "\n" + title + " ║\n" + equal + table
+
+    print()
+    print(title)
+
+    is_func = False
+    function = ""
+    func_lines = "\\hline\nStrategie & Datenmenge & ops/s \\\\ \n\\hline \n"
+    func_index = 1
+    if title.split()[-2] == "function":
+        is_func = True
+        function = title.split()[-1]
+
     for result in results:
         s = strategies[result[0]]
+        print(s.latex_table(key))
+
+        if is_func:
+            for count in ['1000', '10000', '100000']:
+                func_lines += str(func_index) + " & " + count + " & " + s.results[(function, count)][0] + "\\\\ \n"
+            
+            if func_index != 5:
+                func_lines +=  " & & \\\\ \n"
+            func_index += 1
         table += s.table()
 
         if use_extra_column and key == None:
@@ -170,12 +191,40 @@ def create_table(title, strategies, results, use_extra_column, key):
         
         table += "\n"
 
+    if is_func:
+        print(func_lines + "\\hline\n")
+
+    print()
+
     return table + "-"*width + "\n\n"
 
 def write_sorted(strategies):
     with open(SCORE_FILE, "w", encoding="utf-8") as f:
         results = get_sorted(strategies)
         f.write(create_table("Top 10", strategies, results[:10], False, None))
+
+        binary = []
+        json = []
+        dynamic = []
+        static = []
+        for result in results:
+            s = strategies[result[0]]
+
+            if s.serialization == "Binary":
+                binary.append(result) 
+            else:
+                json.append(result)
+
+            if s.dynamic:
+                dynamic.append(result) 
+            else:
+                static.append(result)
+
+        results = get_sorted(strategies)
+        f.write(create_table("Top 10 with binary Serialization", strategies, binary[:10], False, None))
+        f.write(create_table("Top 10 with JSON-Serialization", strategies, json[:10], False, None))
+        f.write(create_table("Top 5 with dynamic Chunk-System", strategies, dynamic[:5], False, None))
+        f.write(create_table("Top 5 with static Chunk-System", strategies, static[:5], False, None))
 
         for function in get_functions(strategies):
             f.write(create_table(f"Top 5 with function {function}", strategies, get_sorted_function(strategies, function)[:5], True, None))

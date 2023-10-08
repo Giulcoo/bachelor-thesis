@@ -131,6 +131,33 @@ class Strategy:
         result += score_val + " " * (len_score - len(score_val))
 
         return result
+
+    def latex_table(self, key):
+        result = self.serialization
+
+        if self.gzip:
+            result += " + GZip"
+
+        if self.changefile:
+            result += " + Change File"
+
+
+        result += " & "
+
+        if self.dynamic:
+            result += f"Dynamic size (Max elements/chunk: {self.maxchunkelements}, "
+            result += f"Min elements/group: {self.mingroupelements})"
+        else:
+            result += f"Static size (Chunk amount: {self.chunkamount}x{self.chunkamount})"
+
+        result += " & "
+
+        if key == None:
+            result +=  str(self.score())
+        else:
+            result += str(self.results[key][0])
+
+        return result + "\\\\"
     
     def label(self):
         result = f"{self.serialization}\n"
