@@ -1571,6 +1571,7 @@ INPUT ./chapter/1-introduction.tex
 INPUT chapter/1-introduction.tex
 INPUT ./chapter/1-introduction.tex
 INPUT chapter/1-introduction.tex
+INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecsx1440.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT ./chapter/2-algorithmen.tex
@@ -1583,7 +1584,6 @@ INPUT ./chapter/2-algorithmen.tex
 INPUT chapter/2-algorithmen.tex
 INPUT ./chapter/2-algorithmen.tex
 INPUT chapter/2-algorithmen.tex
-INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecsx1440.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecsx1200.tfm
 INPUT c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecti1095.tfm
 INPUT ./images/Spielphasen.png
