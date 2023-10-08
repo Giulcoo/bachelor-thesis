@@ -207,6 +207,7 @@ Wie zu sehen ist, ist der Ladeprozess von Factorio um einiges aufwendiger als de
 
 \subsection{Fazit}
 Zum Reduzieren der Speicherprozesse ist Factorios Ansatz mit der ID-Mapping sehr effizient. Dies ist eine einfache Art die Daten zu komprimieren, denn Zahlen lassen sich schneller als Namen der Spielobjekte speichern. Außerdem wird auch bei Factorio eine Aufteilung der Daten über Chunks vorgenommen. Damit lassen sich die Spielwelten auch bis zu einer Größe von vier Billionen Tiles spielen, ohne dass es zu Problemen mit dem Speichern und Laden gibt.\todo{Meine eigene Wahrnehmung, wie das Speichersystem ist; Nicht so gut, wegen vielen Wiederholungen und Überkomplizierung}
+\todo{Bearbeitung der Spielwelt beim Speichern/Laden. Schlecht}
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
 %--------------------------------------------------------------------------
@@ -337,6 +338,8 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
 
 \subsection{Speichervorgänge}
 Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Gespeichert wird immer, wenn der gespielte Charakter schlafen geht, was entweder automatisch um zwei Uhr nachts, nach der Uhrzeit im Spiel, passiert oder wenn der Spieler sich zum Bett bewegt und die Schlafen-Aktion ausführt. Bei dem Speicherprozess wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
+
+Ein Tag in Stardew Valley dauert ungefähr 14 Minuten, also wird in maximal 14 Minuten Intervallen das Spiel gespeichert.\todo{In Paragraphen + Zitat}
 
 \subsection{Fazit}
 Das Speicher- und Ladesystem von Stardew Valley ist sehr einfach gehalten, da das Spiel von einer Person entwickelt wurde und der Fokus auf anderen Teilen des Spieles lag. Trotz der Einfachheit stört das System nicht beim Spielen durch lange Speicher- und Ladezeiten. Die Anzahl der Daten scheint jedoch weniger zu sein als bei Minecraft und Factorio. 
