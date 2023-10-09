@@ -2,6 +2,7 @@
 In diesem Kapitel wird die Praxis von Speicher- und Ladesystemen betrachtet. Dabei werden verschiedene Spiele analysiert, um deren Prozesse des Speicherns und Ladens des Spielstandes genauer zu verstehen. Als erstes wird das Sandbox-Spiel Minecraft und danach das Strategiespiel Factorio angeschaut. Zum Schluss wird die Strategie des Simulationsspiel Stardew Valley betrachtet.
 \todo{Weg mit angeschaut}
 \todo{Alternativen: Untersuchen, betrachten, analysieren, vergleichen, ausgearbeitet}
+\todo{Listing statt Code}
 %--------------------------------------------------------------------------
 
 
@@ -255,9 +256,11 @@ Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung beim
 \end{listing}
 
 \subsection{Speicherformate} \label{ssec:speicherformateStardew}
-Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Bei der Hauptdatei zum Speichern des Spielstandes werden die Daten in einem SaveGame-Objekt geschrieben. Bei der SaveGameInfo-Datei werden die Daten in einem Farmer-Objekt gesichert.\cite{stardewvalleywikiSaves}
+Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus dem Listing \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Dort werden verschiedene \ac{xml}-Objekte, die Spielobjekte darstellen sollen, definiert. Bei manchen \ac{xml}-Objekten ist auch zu sehen, dass das "xsi"-Namenspräfix verwendet wurde. Mittels dieser Präfixe können Informationen der \ac{xml}-Objekte gespeichert werden. Für diese Präfixe kann ein \ac{xml}-Schema erstellt werden. \ac{xml}-Schemas definieren und beschreiben die Struktur der \ac{xml}-Daten. Als Präfix gibt es "xsi:type", was zu einem \ac{xml}-Objekt hinzugefügt werden kann, welches Typen-Information zu diesem Objekt speichert. In dem \ac{xml}-Schema können die gültigen Werte des "xsi:type"-Präfix eines Objektes definiert werden. Wenn andere Werte in dem Objekt geschrieben werden, ist das Dokument nicht mehr gültig und muss angepasst werden. Mittels "xsi:nil" ist es möglich zu speichern, dass ein Objekt einen Wert von Null hat. Auch bei diesem Präfix kann in dem \ac{xml}-Schema definiert werden, welche XML-Objekte einen Null-Wert haben können. Diese Funktionen bieten eine zusätzliche Sicherheit beim Speichern und Laden der Daten, da sichergestellt wird, dass die Daten richtige Werte haben.\cite{w3Schema} Die Verwendung der beiden Präfixe sind in dem Listing \ref{lst:stardewvalleySaveGame} zu sehen. Dort werden bei den Items eines Spielers "xsi:type"-Verwendet, um den Item-Typen zu definieren. Bei Inventarfeldern, die leer sind, wird "xsi:nil" auf Wahr gesetzt, um zu definieren, dass das Item an der Stelle nicht existiert.
 
-\todo{Mehr zu den Dateien}
+Bei der Hauptdatei zum Speichern des Spielstandes, welche im Listing \ref{lst:stardewvalleySaveGame} zu sehen ist, werden die Spieldaten alle in einem SaveGame-Objekt geschrieben. Wenn die \ac{xml}-Objekte und alle Kind-Objekte der Hauptdatei zeilenweise getrennt werden\footnote{Zeilenweise getrennte \ac{xml}-Daten aller Speicherdateien \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/resources/BeispielFarm_355642609_PrettyPrint}}, dann werden Tausend Zeilen für das Player-Objekt und um die 174 Tausend Zeilen für die Location-Daten benötigt. Die übrigen Tausend Zeilen in der Hauptdatei definieren \ac{xml}-Objekte in dem SaveGame-Objekt, die kleinere Daten, die eine oder wenige Zeilen benötigen, beschreiben.
+
+Bei der SaveGameInfo-Datei werden die Daten in einem Farmer-Objekt gesichert. Diese Datei beinhaltet deutlich weniger \ac{xml}-Code, als die Hauptdatei. Dadurch lassen sich im "Load Game"-Menü die einzelnen Informationen aller Spielstände besser auflisten, ohne für lange Wartezeiten zu sorgen. Bei einer Hauptdatei mit einer Größe von 3.32 MB hat die SaveGameInfo-Datei nur 30.8 KB an Daten.\footref{stardewvalleySavefiles}
 
 \begin{listing}[htp]
     \begin{minted}[breaklines,frame=single]{xml} 
@@ -285,6 +288,7 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
                 <Item xsi:type="WateringCan">...</Item>
                 <Item xsi:type="Pickaxe">...</Item>
                 ...
+                <Item xsi:nil="true" />
             </items>
             ...
             <farmName>Beispiel Farm</farmName>
@@ -337,9 +341,7 @@ Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes au
 \end{listing}
 
 \subsection{Speichervorgänge}
-Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Gespeichert wird immer, wenn der gespielte Charakter schlafen geht, was entweder automatisch um zwei Uhr nachts, nach der Uhrzeit im Spiel, passiert oder wenn der Spieler sich zum Bett bewegt und die Schlafen-Aktion ausführt. Bei dem Speicherprozess wird der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
-
-Ein Tag in Stardew Valley dauert ungefähr 14 Minuten, also wird in maximal 14 Minuten Intervallen das Spiel gespeichert.\todo{In Paragraphen + Zitat}
+Die Speichervorgänge von Stardew Valley sind sehr schlicht gehalten. In der Spielwelt gibt es einen Tag-Nacht-Zyklus. Gespeichert wird immer, wenn der gespielte Charakter schlafen geht, was entweder automatisch um zwei Uhr nachts, nach der Uhrzeit im Spiel, passiert oder wenn der Spieler sich zum Bett bewegt und die Schlafen-Aktion ausführt. Der Spieler kann jederzeit ins Bett gehen, falls er dies aber nicht tut und automatisch Schlafen geht, besteht ein Tag in Stardew Valley aus 14 Minuten.\cite{stardewvalleywikiCycle} Das heißt, dass der Spielstand in Intervallen von maximal 14 Minuten gespeichert wird. Bei dem Speicherprozess wird dann der komplette Spielstand abgespeichert. Falls das Programm vorher terminiert, ist der Spielstand des aktuellen Tages im Spiel verloren gegangen.\cite{stardewvalleywikiSaves}
 
 \subsection{Fazit}
 Das Speicher- und Ladesystem von Stardew Valley ist sehr einfach gehalten, da das Spiel von einer Person entwickelt wurde und der Fokus auf anderen Teilen des Spieles lag. Trotz der Einfachheit stört das System nicht beim Spielen durch lange Speicher- und Ladezeiten. Die Anzahl der Daten scheint jedoch weniger zu sein als bei Minecraft und Factorio. 

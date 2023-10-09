@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/100000.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/100000.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/removePlayers.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/removePlayers.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/top.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Plots/top.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/Score.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/score.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Strategies Results/strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../resources/Strategies Results/strategy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../resources/Old Benchmark/BinSave.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/7-fazit.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/7-fazit.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.bib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,6 +146,7 @@
       <workItem from="1696496559829" duration="1933000" />
       <workItem from="1696511705749" duration="7202000" />
       <workItem from="1696577597415" duration="214000" />
+      <workItem from="1696838150730" duration="2790000" />
     </task>
     <servers />
   </component>
