@@ -4,8 +4,7 @@ import strategies.service.GameService;
 
 public class App {
     public static void main(String[] args) {
-        createGame(1010);
-        movePlayers(1000);
+
     }
 
     public static void createGame(int dataCount){

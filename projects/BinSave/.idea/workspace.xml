@@ -6,11 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="218f53d4-13ad-42bd-af60-fcface6c731c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../resources/Old Benchmark/BinSave.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/DynamicBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/DynamicBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/StaticBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/jmh/java/benchmarks/StaticBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JsonSave/src/main/java/strategies/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/2-algorithmen.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/6-videospiele.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../thesis/src/chapter/7-fazit.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/chapter/7-fazit.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../thesis/src/main.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.bib" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fdb_latexmk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../thesis/src/main.fls" beforeDir="false" afterPath="$PROJECT_DIR$/../../thesis/src/main.fls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +121,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
@@ -147,6 +154,7 @@
       <workItem from="1696511705749" duration="7202000" />
       <workItem from="1696577597415" duration="214000" />
       <workItem from="1696838150730" duration="3385000" />
+      <workItem from="1696868858637" duration="422000" />
     </task>
     <servers />
   </component>

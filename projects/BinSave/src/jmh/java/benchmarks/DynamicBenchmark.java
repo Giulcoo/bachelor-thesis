@@ -7,8 +7,8 @@ import strategies.Constants;
 import java.util.concurrent.TimeUnit;
 
 @Fork(1)
-@Warmup(iterations = 1)
-@Measurement(iterations = 1)
+@Warmup(iterations = 5)
+@Measurement(iterations = 10)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 public class DynamicBenchmark {
@@ -51,27 +51,27 @@ public class DynamicBenchmark {
         }
     }
 
-//    @Benchmark
-//    public static void createGame(){
-//        Constants.DYNAMIC_CHUNK_SIZE = true;
-//        Constants.USE_CHANGE_FILE = useChangeFile;
-//        Constants.USE_GZIP = useGzip;
-//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-//
-//        App.createGame(dataCount);
-//    }
-//
-//    @Benchmark
-//    public static void loadGame(CreateData createData){
-//        Constants.DYNAMIC_CHUNK_SIZE = true;
-//        Constants.USE_CHANGE_FILE = useChangeFile;
-//        Constants.USE_GZIP = useGzip;
-//        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
-//        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
-//
-//        App.loadGame();
-//    }
+    @Benchmark
+    public static void createGame(){
+        Constants.DYNAMIC_CHUNK_SIZE = true;
+        Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
+        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+
+        App.createGame(dataCount);
+    }
+
+    @Benchmark
+    public static void loadGame(CreateData createData){
+        Constants.DYNAMIC_CHUNK_SIZE = true;
+        Constants.USE_CHANGE_FILE = useChangeFile;
+        Constants.USE_GZIP = useGzip;
+        Constants.CHUNK_MAX_ELEMENTS = chunkMaxElements;
+        Constants.CHUNK_GROUP_MIN_ELEMENTS = chunkMaxElements/chunkMinElements;
+
+        App.loadGame();
+    }
 
     @Benchmark
     public static void createPlayers(CreateSmallData createData){
