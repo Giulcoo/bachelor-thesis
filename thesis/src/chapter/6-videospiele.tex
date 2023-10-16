@@ -139,14 +139,14 @@ Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber versc
 \begin{figure}[htp]
     \centering
     \begin{tikzpicture}
-        \pie{29.6/Decoratives,
+        \pie{29.6/Dekorations-Objekte,
             23.7/Tiles,
-            15.3/Entities,
-            9.6/Blueprint library,
-            9.4/Force data,
-            5/Transport belts,
-            4.1/Surface \& Chunk date,
-            3.3/Other
+            15.3/Entitäten,
+            9.6/Blueprint Bibliothek,
+            9.4/Physikalische Kräfte,
+            5/Transportbänder,
+            4.1/Oberfläche \& Chunk-Daten,
+            3.3/Andere Daten
         }    
     \end{tikzpicture}
     \caption{Anteil der Datentypen beim Speichern\cite{factorioFridayFacts270}}
@@ -269,7 +269,7 @@ Wie zu sehen ist, gibt es bei Stardew Valley keine richtige Datenaufteilung beim
 \end{listing}
 
 \subsection{Speicherformate} \label{ssec:speicherformateStardew}
-Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus dem Listing \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Dort werden verschiedene \ac{xml}-Objekte, die Spielobjekte darstellen sollen, definiert. Bei manchen \ac{xml}-Objekten ist auch zu sehen, dass das "xsi"-Namenspräfix verwendet wurde. Mittels dieser Präfixe können Informationen der \ac{xml}-Objekte gespeichert werden. Für diese Präfixe kann ein \ac{xsd} erstellt werden. \ac{xsd}\todo{Plural} definieren und beschreiben die Struktur der \ac{xml}-Daten. Als Präfix gibt es "xsi:type", was zu einem \ac{xml}-Objekt hinzugefügt werden kann, welches Typen-Information zu diesem Objekt speichert. In dem \ac{xsd} können die gültigen Werte des "xsi:type"-Präfix eines Objektes definiert werden. Wenn andere Werte in dem Objekt geschrieben werden, ist das Dokument nicht mehr gültig und muss angepasst werden. Mittels "xsi:nil" ist es möglich zu speichern, dass ein Objekt einen Wert von Null hat. Auch bei diesem Präfix kann in dem \ac{xsd} definiert werden, welche XML-Objekte einen Null-Wert haben können. Diese Funktionen bieten eine zusätzliche Sicherheit beim Speichern und Laden der Daten, da sichergestellt wird, dass die Daten richtige Werte haben.\cite{w3Schema} Die Verwendung der beiden Präfixe sind in dem Listing \ref{lst:stardewvalleySaveGame} zu sehen. Dort werden bei den Items eines Spielers "xsi:type"-Verwendet, um den Item-Typen zu definieren. Bei Inventarfeldern, die leer sind, wird "xsi:nil" auf Wahr gesetzt, um zu definieren, dass das Item an der Stelle nicht existiert.
+Als Speicherformat wurde das \ac{xml}-Format verwendet. In den \ac{xml}-Codes aus dem Listing \ref{lst:stardewvalleySaveGame} und \ref{lst:stardewvalleySaveGameInfo} ist zu sehen, wie die Daten aufgeschrieben werden. Dort werden verschiedene \ac{xml}-Objekte, die Spielobjekte darstellen sollen, definiert. Bei manchen \ac{xml}-Objekten ist auch zu sehen, dass das "xsi"-Namenspräfix verwendet wurde. Mittels dieser Präfixe können Informationen der \ac{xml}-Objekte gespeichert werden. Für diese Präfixe kann ein \ac{xsd} erstellt werden. \acp{xsd}\todo{Passt Plural?} definieren und beschreiben die Struktur der \ac{xml}-Daten. Als Präfix gibt es "xsi:type", was zu einem \ac{xml}-Objekt hinzugefügt werden kann, welches Typen-Information zu diesem Objekt speichert. In dem \ac{xsd} können die gültigen Werte des "xsi:type"-Präfix eines Objektes definiert werden. Wenn andere Werte in dem Objekt geschrieben werden, ist das Dokument nicht mehr gültig und muss angepasst werden. Mittels "xsi:nil" ist es möglich zu speichern, dass ein Objekt einen Wert von Null hat. Auch bei diesem Präfix kann in dem \ac{xsd} definiert werden, welche XML-Objekte einen Null-Wert haben können. Diese Funktionen bieten eine zusätzliche Sicherheit beim Speichern und Laden der Daten, da sichergestellt wird, dass die Daten richtige Werte haben.\cite{w3Schema} Die Verwendung der beiden Präfixe sind in dem Listing \ref{lst:stardewvalleySaveGame} zu sehen. Dort werden bei den Items eines Spielers "xsi:type"-Verwendet, um den Item-Typen zu definieren. Bei Inventarfeldern, die leer sind, wird "xsi:nil" auf Wahr gesetzt, um zu definieren, dass das Item an der Stelle nicht existiert.
 
 Bei der Hauptdatei zum Speichern des Spielstandes, welche im Listing \ref{lst:stardewvalleySaveGame} zu sehen ist, werden die Spieldaten alle in einem SaveGame-Objekt geschrieben. Wenn die \ac{xml}-Objekte und alle Kind-Objekte der Hauptdatei zeilenweise getrennt werden\footnote{Zeilenweise getrennte \ac{xml}-Daten aller Speicherdateien \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/resources/BeispielFarm_355642609_PrettyPrint}}, dann werden tausend Zeilen für das Player-Objekt und ungefähr 174 tausend Zeilen für die Location-Daten benötigt. Die übrigen tausend Zeilen in der Hauptdatei definieren \ac{xml}-Objekte in dem SaveGame-Objekt, die kleinere Daten, die eine oder wenige Zeilen benötigen, beschreiben.
 
