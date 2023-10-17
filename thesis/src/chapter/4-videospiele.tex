@@ -20,9 +20,7 @@ Bevor das Speicher- und Ladesystem von Minecraft genauer betrachtet werden kann,
 Eine Entität kann ein Spieler, ein Tier oder Monster sein. Die wichtigste Information einer Entität ist deren Position, Geschwindigkeit und Rotation. Des Weiteren gibt es viele zusätzliche Informationen zu einer Entität, wie die Luft, die die Entität noch übrig hat zum Überleben, die Distanz, die eine Entität schon gefallen ist oder wie lange eine Entität noch brennen wird.\cite{minecraftEntityFormat}
 %Weitere Quelle: Entity.java:writeWithoutTypeID()
 
-\textit{Items} bei Minecraft existieren im Inventar, in Kisten und in anderen Spielgegenständen. Wenn ein Spieler ein Item fallen lässt, dann werden diese als Entitäten in die Welt platziert und als solche gespeichert. Manche Items können in die Welt platziert werden und werden dann zu neuen Blöcken oder Entitäten. Jedes Item hat die Information "Count", "Slot", "id" und "tag". "Count" und "Slot" definieren, wie viele Items in welchem Inventarplatz liegen. "id" ist die Identifikationsnummer eines Items. Jedes Item hat eine eigene Identifikationsnummer, mit der diese gespeichert werden. "tag" gibt noch zusätliche Informationen über ein Item, wie die Haltbarkeit oder ob ein Item unzerbrechlich ist.
-\cite{minecraftPlayerdatFormat}
-\cite{minecraftItem}
+\textit{Items} bei Minecraft existieren im Inventar, in Kisten und in anderen Spielgegenständen. Wenn ein Spieler ein Item fallen lässt, dann werden diese als Entitäten in die Welt platziert und als solche gespeichert. Manche Items können in die Welt platziert werden und werden dann zu neuen Blöcken oder Entitäten. Jedes Item hat die Information "Count", "Slot", "id" und "tag". "Count" und "Slot" definieren, wie viele Items in welchem Inventarplatz liegen. "id" ist die Identifikationsnummer eines Items. Jedes Item hat eine eigene Identifikationsnummer, mit der diese gespeichert werden. "tag" gibt noch zusätliche Informationen über ein Item, wie die Haltbarkeit oder ob ein Item unzerbrechlich ist.\cite{minecraftPlayerdatFormat}\cite{minecraftItem}
 
 %Item werdeb z.B. in player.dat gespeichert
 
@@ -73,7 +71,7 @@ Ein Spieler kann in Minecraft verschiedene Spielwelten erstellen. Dabei bekommt 
             .3 \dots.
         .2 \dots.
     } 
-    \caption{Ordnerstruktur einer Spielwelt in Minecraft\cite{minecraftFolderStruc}}
+    \caption{Ordnerstruktur einer Spielwelt in Minecraft \cite{minecraftFolderStruc}}
     \label{lst:ordnerStrukturMinecraft}
 \end{listing}
 
@@ -127,13 +125,6 @@ In diesem Abschnitt wird das Speicher- und Ladesystem von Factorio genauer betra
 \subsection{Daten}
 Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber verschiedene Formate zum Speichern der Daten. Welche verschiedenen Arten von Daten das Spiel hat, zeigt die Abbildung \ref{fig:factorioSaveStatistic}. Das Kreisdiagramm zeigt, welche Arten von Daten wie viel Speicherplatz benötigen, bei 40 MB unkomprimierten Daten. Ungefähr 70\% des Speicherplatzes verbrauchen drei Kategorien der Spielobjekte, die Dekorations-Objekte, Tiles und Entitäten. Tiles sind Rechtecke, die das kleinste Stück in der Spielwelt darstellen. Die Tiles sind auch die Maßeinheiten für alle Gebiets- und Distanzabmessungen. Die Größe von Entitäten wird auch in Tiles angegeben. Zum Beispiel ist das "Rocket Silo", die größte Entität im Spiel, neun Tiles breit und lang. Die Spielwelt hat eine maximale Größe von zwei Millionen Tiles in der Breite und Länge, also vier Billionen Tiles.\cite{factorioMapStructure} Die restlichen Daten sind aus der Blueprint Bibliothek, physikalische Kräfte, Transportbänder, Oberfläche und Chunk-Daten und weiteren kleineren Daten.\cite{factorioFridayFacts270} Die Blueprint Bibliothek ist ein virtuelles Inventar, welches Blueprint-artige Items speichert.\cite{factorioBlueprintLibrary} Ein Blueprint ist zum Duplizieren von Fabrikbereichen, welche als Blueprint gespeichert und dann in der Spielwelt eingefügt werden können.\cite{factorioBlueprint}. Da ein Spieler eine Vielzahl an Blueprints erstellen kann, müssen diese beim Speicherprozess mit einbezogen werden. Transportbänder sind wichtig zum Maximieren der Produktion und deren Automatisierung. Sie transportieren die abgebauten oder hergestellten Ressourcen. Was genau ein Chunk beinhaltet, ist in dem Abschnitt \ref{ssec:factorioDatenaufteilung} zu sehen.
 
-% \begin{figure}[htp]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{images/factorio_save_statistic.png}
-%     \caption{Anteil der Datentypen beim Speichern\cite{factorioFridayFacts270}}
-%     \label{fig:factorioSaveStatistic}
-% \end{figure}
-
 \begin{figure}[htp]
     \centering
     \begin{tikzpicture}
@@ -147,7 +138,7 @@ Factorio benutzt Serialisierung und Deserialisierung, verwendet dabei aber versc
             3.3/Andere Daten
         }    
     \end{tikzpicture}
-    \caption{Anteil der Datentypen beim Speichern\cite{factorioFridayFacts270}}
+    \caption{Anteil der Datentypen beim Speichern \cite{factorioFridayFacts270}}
     \label{fig:factorioSaveStatistic}
 \end{figure}
 
@@ -174,7 +165,7 @@ Anschließend wird die ID-Mapping gespeichert.\cite{factorioGithubSaveLoad} Die 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.9\textwidth]{images/id_mapping_factorio.png}
-    \caption{Spielobjekte und deren Identifikationsnummer eines Spielstands\cite{factorioFridayFacts259}}
+    \caption{Spielobjekte und deren Identifikationsnummer eines Spielstands \cite{factorioFridayFacts259}}
     \label{fig:factorioIdMapping}
 \end{figure}
 

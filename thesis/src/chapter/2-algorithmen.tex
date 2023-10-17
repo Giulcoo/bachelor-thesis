@@ -201,14 +201,14 @@ Eine populäre Umsetzung der binären Serialisierung ist der \textit{Protocol Bu
 \begin{figure}[htp]
     \centering
     \includegraphics[width=0.7\textwidth]{images/protobuf_time.png}
-    \caption{Kodierungs- und Dekodierungszeiten im Vergleich (weniger\\ ist besser)\cite{currier2022protocol}}
+    \caption{Kodierungs- und Dekodierungszeiten im Vergleich (weniger ist besser) \cite{currier2022protocol}}
     \label{fig:protobufTime}
 \end{figure}
 
 \begin{figure}[htp]
     \centering
     \includegraphics[width=1\textwidth]{images/protobuf_browser.png}
-    \caption{Laufzeit- und Datengrößen-Vergleich (weniger ist besser)\cite{currier2022protocol}}
+    \caption{Laufzeit- und Datengrößen-Vergleich (weniger ist besser) \cite{currier2022protocol}}
     \label{fig:protobufBrowser}
 \end{figure}
 
@@ -249,7 +249,7 @@ Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die
     \begin{minted}{java} 
         protoc -I=<Pfad 1> --java_out=<Pfad 2> <Pfad 3>/data.proto
     \end{minted}
-    \caption{Protoc Kommandozeilenbefehl für Java\cite{protobufProtocolBufferJava}}
+    \caption{Protoc Kommandozeilenbefehl für Java \cite{protobufProtocolBufferJava}}
     \label{lst:protocJava}
 \end{listing}
 
@@ -376,8 +376,7 @@ Um dies zu beantworten, muss zunächst geschaut werden, wann und wo Datenkomprim
 Eine Möglichkeit, Daten zu komprimieren, ist mit dem patentfreien Kompressionsprogramm \ac{gzip}. \ac{gzip} verwendet den Deflate-Algorithmus, der eine Kombination aus dem \ac{lz77}-Algorithmus und der Huffman-Kodierung ist.\cite{ucdavisExplanationDEFLATE} Die komprimierten Daten befinden sich in einer \ac{gzip}-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald sich in einem Block Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
 
 \subsubsection{\ac{json} Hpack}
-\ac{json} Hpack, oder auch \ac{json} Homogeneous Collections Compressor genannt, ist eine \ac{json}-Komprimierung, die Arrays in \ac{json}-Dokumenten in einer kompakteren Art darstellt und dabei das \ac{json}-Format beibehält. In dem Beispiel aus Listing \ref{lst:hpackCompressedExp} wird gezeigt, wie das \ac{json}-Dokument aus Listing \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von \ac{json} Hpack durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauffolgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Darauf folgen die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.
-\cite{webreflectionLastVersion}
+\ac{json} Hpack, oder auch \ac{json} Homogeneous Collections Compressor genannt, ist eine \ac{json}-Komprimierung, die Arrays in \ac{json}-Dokumenten in einer kompakteren Art darstellt und dabei das \ac{json}-Format beibehält. In dem Beispiel aus Listing \ref{lst:hpackCompressedExp} wird gezeigt, wie das \ac{json}-Dokument aus Listing \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von \ac{json} Hpack durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauffolgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Darauf folgen die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.\cite{webreflectionLastVersion}
 
 \begin{listing}[htp]
     \begin{minted}{javascript} 
