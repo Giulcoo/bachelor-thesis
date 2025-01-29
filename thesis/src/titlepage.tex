@@ -1,0 +1,53 @@
+\begin{titlepage}
+	%select font without serifs
+	\sffamily
+
+	% Logo
+	\begin{tabularx}{\textwidth}{@{}l@{}>{\raggedleft\arraybackslash}X@{}r@{}}
+		\multirow{2}{*}{\includegraphics[width=6.8cm]{images/Logo_UniKassel}} &
+		\raisebox{-1mm}{\small{Fachbereich Elektrotechnik/Informatik}} \\
+		&\raisebox{-1mm}{\small{\thesisdepartment}} &
+	\end{tabularx}
+
+	\vspace{2.5cm}
+
+	\begin{center}
+		% Title and subtitle
+		\huge{\thesistitle}
+
+		\vspace{3cm}
+
+		\renewcommand{\baselinestretch}{1.3}
+		\Large{\thesistype}
+
+		\large
+		\thesistypedesc
+	\end{center}
+
+	\vspace{1.5cm}
+	\renewcommand{\baselinestretch}{1}
+	\begin{table}[htpb]
+		\centering
+		\begin{tabular}{ll}
+			\\
+			Eingereicht von: & \thesisauthorname \\
+			Anschrift: & \thesisauthorhomestreet \\
+			& \thesisauthorhometown \\
+			\\
+			Matrikelnummer: & \thesisauthormatrikelnumber \\
+			E-Mail: & \thesisauthoremail \\
+			\\
+			Vorgelegt im: & \thesisdepartment \\
+			\\
+			Erstprüfer: & \thesisfirstreviewer \\
+			Zweitprüferin: & \thesissecondreviewer \\
+			\\
+			Betreuer: & \thesissupervisor \\
+			\\
+			Eingereicht am: & \thesisdate \\
+		\end{tabular}
+	\end{table}
+
+	% font with serifs
+	\rmfamily
+\end{titlepage}

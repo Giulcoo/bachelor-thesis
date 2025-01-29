@@ -1,0 +1,581 @@
+\chapter{Algorithmen}\label{ch:algorithmen}
+In diesem Kapitel werden verschiedene Methoden und Strategien für Speicher- und Ladesysteme betrachtet. Zu Beginn wird definiert, welche Arten von Daten Videospiele beinhalten und auf welche Art von Daten sich diese Arbeit fokussieren wird. Anschließend wird ausgearbeitet, welche Spielphasen typischerweise aufeinanderfolgen und zu welchen Zeitpunkten in diesen Phasen ein Speicher- und Ladeprozess durchgeführt werden muss. Anschließend wird die Speicherung und das Laden der Spieldaten und verschiedene Strategien dazu betrachtet. Zum Schluss wird mit den verschiedenen Strategien ein fertiges Speicher- und Ladesystem aufgestellt. Dabei werden verschiedene Variationen des Systems miteinander verglichen, um schließlich herauszufinden, welche Strategien besonders effizient sind.
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\section{Speichersysteme}\label{sect:speichersysteme}
+Dieser Abschnitt befasst sich ausführlich mit dem komplexen Speicherprozess eines Videospieles. Dabei wird zunächst eine gründliche Analyse der Struktur eines Spiels durchgeführt, um zu verstehen, wie es aufgebaut ist und welche vielfältigen Datentypen verwendet werden. Anschließend werden verschiedene Strategien und relevante Faktoren im Zusammenhang mit dem Speichersystem eines Spiels detailliert vorgestellt.
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Daten in Videospielen}
+Um sich weiter mit Speicher- und Ladesystemen auseinanderzusetzen, muss erst einmal definiert werden, welche Arten von Daten es in Videospielen gibt. Allgemein können die Daten in zwei Kategorien unterteilt werden. Ein Videospiel besitzt \textit{statische} und \textit{dynamische} Daten.
+
+\textit{Statische Daten} sind Daten, die sich nicht mehr verändern. Dies könnten zum Beispiel die visuellen und audiotechnischen Daten sein. Spiele haben fast immer Charaktere, Texturen, Musik oder Soundeffekte, die einmal erstellt werden und danach unverändert im Spiel geladen werden. Bei vielen Videospielen gibt es auch Level- oder Kartendaten. Wenn diese sich nie während des Spieles verändern und fest definiert sind, sind diese ebenfalls eine Art von statischen Spieldaten. 
+
+\textit{Dynamische Daten} dagegen sind Daten, die sich ständig verändern können. Hierbei handelt es sich oft um den Spielstand eines erstellten Spieles. Dazu gehören zum Beispiel die Position des Spielers, seine Rotation, die aktuelle Geschwindigkeit oder das Inventar. Alles Daten, die sich andauernd während des Spielens verändern können. Zu den dynamischen Daten können aber auch Nutzerdaten, wie Benutzername, Passwort und Avatar, gehören. 
+
+Zumal die meisten Spiele öfters aktualisiert werden, gibt es auch bei den statischen Daten einige Schreib- und Leseprozesse.\cite{lin2017studying} Da sich diese aber im Vergleich zu den dynamischen Daten nicht so oft verändern, liegt der Fokus dieser Arbeit bei den dynamischen Daten, genauer gesagt, wie der Spielstand eines Spieles effizient gespeichert und geladen werden kann. Für dynamische Daten gibt es viele Speicher- und Ladeprozesse während der Laufzeit eines Videospiels, was die Effizienz dieser Prozesse herausfordernd macht. Da sich Nutzerdaten selten verändern, stehen sie auch nicht im Fokus der Arbeit. 
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Spielphasen} \label{ssect:spielphasen}
+Um zu verstehen, wann ein Spielstand gespeichert oder geladen werden muss, muss erst einmal analysiert werden, welche Phasen ein Videospiel allgemein hat.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/Spielphasen.png}
+    \caption{Phasen eines Spieles}
+    \label{fig:spielphasen}
+\end{figure}
+
+In Abbildung \ref{fig:spielphasen} ist zu erkennen, wie der Ablauf einer generellen Spielphase in Videospielen gestaltet ist. Der Prozess beginnt mit dem Spielstart, bei dem der Benutzer die Wahl zwischen dem Erstellen eines neuen Spiels oder dem Laden eines bereits vorhandenen Spielstands treffen muss. Sobald diese Eröffnungsphase abgeschlossen ist, wird die Hauptphase erreicht. Die Dauer dieser Phase hängt von der Spieldauer ab, da hier der Benutzer aktiv ins Geschehen eingreift und das Videospiel spielt.
+
+In dieser Spielphase können vielfältige Ereignisse auftreten, die entweder direkt oder indirekt als Reaktion auf die Aktionen des Spielers entstehen. Die Ereignisse äußern sich in Form von Veränderungen an Spielobjekten, entweder durch Modifikation, Hinzufügung oder Löschung dieser. Beispielsweise kann der Spieler in eine neue Region vorstoßen, wodurch Daten dieser Region geladen und möglicherweise Daten der vorherigen Region gespeichert werden müssen. Das Spielobjekt des eigenen Charakters wurde in diesem Fall verändert, denn es wurde die Position und Region des Spielers verändert. Eventuell müssen dann auch neue Gegner erstellt oder stehen gelassene Items der alten Region gelöscht werden. 
+
+Sobald der Spieler sich dazu entscheidet, das Spiel zu beenden, gelangt er zur Phase des Spielendes. Hierbei ist es eventuell erforderlich, Daten zu speichern, bevor das Programm ordnungsgemäß beendet werden kann oder die Rückkehr zum Hauptbildschirm des Spiels erfolgt. Das Spielende markiert einen Schlusspunkt in der aktuellen Spielsitzung. Wenn diese erneut fortgesetzt werden soll, muss der Spielstand, der bei dem letzten Beenden des Spieles erreicht wurde, wieder vollständig hergestellt werden. 
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Delta-basierte Speicherung} \label{ssect:deltasave}
+Um die Menge der zu speichernden Daten zu reduzieren, empfiehlt es sich, auf eine delta-basierte Speicherung zurückzugreifen. Bei dieser Methode werden lediglich die Daten gespeichert, die sich seit dem letzten Speichervorgang verändert haben. Insbesondere bei großen Datenmengen entfaltet diese Speichertechnik ihre volle Effektivität, da dann oft für jeden Speicherprozess nur ein geringer Prozentsatz der Gesamtdatenmenge gesichert werden muss und somit die Schreibprozesse im Sekundärspeicher stark reduziert werden. In der Abbildung \ref{fig:deltaSave} ist zum Beispiel die Spielwelt in vier Zonen unterteilt. In der ersten Zone hat sich die Position eines Spielobjektes verändert und in der dritten Zone wurde eins hinzugefügt. Statt beim nächsten Speicherprozess alle vier Zonen zu sichern, werden nur die erste und dritte Zone berücksichtigt. Um stets den Überblick darüber zu behalten, welche Veränderungen eingetreten sind, gilt es, auf Ereignisse zu achten, bei denen Modifikationen, Hinzufügungen oder Löschungen von Spielobjekten auftreten.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/DeltaSave.png}
+    \caption{Modifizierung der Spielobjekte}
+    \label{fig:deltaSave}
+\end{figure}
+
+Um die Anzahl der Lese- und Schreibprozesse möglichst stark zu minimieren, kann eine Datei erstellt werden, in der zur Laufzeit des Spieles eine Liste aller Veränderungen der Spielobjekte geführt wird. Hierbei muss nicht das ganze Objekt gespeichert werden, es reicht, die Identifikationsnummer des Objekts und die veränderten Attribute zu speichern. Somit sind die jeweiligen Schreibprozesse auf dem lokalen Speicher während der Laufzeit deutlich kleiner. Wenn die Spielwelt wieder gestartet und geladen wird, können diese Veränderungen dann endgültig bei den gespeicherten Spielobjekten angewandt werden, um diese zu aktualisieren. Danach kann diese Liste von Veränderungen wieder geleert werden und das Spiel kann gestartet werden.
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Aufteilung der Daten} 
+Eine weitere Art, die Datenmenge besser zu organisieren, um im Anschluss Speicherprozesse zu reduzieren, ist das Aufteilen der Daten. Wenn die ganze Datenmenge in sinnvolle Gruppen unterteilt wurde, ist es nicht notwendig, jedes Mal die ganze Datenmenge zu durchlaufen. Stattdessen kann sich immer nur eine bestimmte Gruppe vorgenommen werden. In diesem Abschnitt werden zwei Möglichkeiten der Aufteilung der Spieldaten betrachtet, nach Chunks und nach Level oder Karten der Spielwelt. Beide Strategien haben unterschiedliche Szenarien, wann deren Einsatz sinnvoll ist.
+
+\subsubsection{Chunks} \label{sssect:chunks}
+Eine sehr weit verbreitete Art der Aufteilung von Spieldaten sind \textit{Chunks}. Chunks haben bei Videospielen meist eine feste Position und sind alle gleich groß. Daten werden dann abhängig der Position zu dem entsprechenden Chunk zugeteilt. Vorteilhaft an dieser Herangehensweise ist, dass recht einfach und schnell gefiltert werden kann, welche Daten relevant für den aktuellen Spielstand sind. Beim Speichern und Laden können dann nur Chunks in der Nähe des Spielers betrachtet werden. Außerdem können Spielwelten mit dieser Struktur theoretisch unendlich Groß sein. Die Größe muss nicht festgesetzt sein. Es gibt auch Variationen von Chunk-Systemen, wie zum Beispiel das \textit{statische} und \textit{dynamische Chunk-System}. Bei einem \textit{statischen Chunk-System} wird die Chunkgröße fest auf einen Wert definiert und wird sich auch nie verändern. Bei einem \textit{dynamischen Chunk-System} passen sich die Chunkgrößen an, je nach Menge der Daten in einem Chunk. Wenn zu viele Daten in einem Chunk sind, werden weitere Chunks erstellt, um die Daten des ursprünglichen Chunks auf diese aufzuteilen. Die Abbildung \ref{fig:chunkSplitting} zeigt ein Beispielszenario, wo in einem Chunk zu viele Charaktere sind und dieser dann in vier gleich große Chunks aufgeteilt wird. Wenn eine Gruppe von gleich großen Chunks zu wenig Elemente beinhalten, dann werden diese wieder zu einem größeren Chunk vereinigt. Die Abbildung \ref{fig:chunkJoining} demonstriert diesen Fall. Diese Variation des Chunk-Systems ist gerade dann sinnvoll, wenn sich die Datenmenge stetig und stark verändern kann. 
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/chunkSplitting.png}
+    \caption{Vollen Chunk auf kleinere aufteilen}
+    \label{fig:chunkSplitting}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/chunkJoining.png}
+    \caption{Leere Chunks vereinigen}
+    \label{fig:chunkJoining}
+\end{figure}
+
+Allgemein sind Chunk-Systeme hilfreich, wenn die Spielwelt theoretisch unendlich ist. Außerdem sind sie eine einfache und effiziente Art, Daten klar voneinander zu trennen und zu gruppieren. Chunks haben eine quadratische oder bei dreidimensionalen Spielen kubische Form. Deutlich aufwendiger wäre es, mit anderen Formen wie Polygonen die Welt aufzuteilen. Dann zu schauen, welches Spielobjekt in welchem Chunk ist, würde mehr und kompliziertere Berechnungen benötigen. Ein dynamisches Chunk-System wäre auch nur sinnvoll, wenn in einem Chunk theoretisch unendlich viele Spielobjekte existieren können. Wenn das Spiel keine Grenze hat für Spielobjekte pro Chunk, dann ist es auch schwierig vorherzusehen, wie groß die Chunks sein müssen, sodass es nicht zu Problemen in der Leistung des Spieles kommt. 
+
+\subsubsection{Level oder Karten}
+Wenn die Spielwelt aus statischen Elementen wie Level oder Karten besteht, dann können die Daten auch nach Szenen oder Räumen aufgeteilt werden. Es können dann immer nur die Szenen oder Räume gespeichert oder geladen werden, in denen der Spieler sich momentan befindet. Falls die Szenen oder Räume zu groß werden, können diese auch in Sektoren oder Chunks aufgeteilt werden, damit nicht zu viele Daten durchlaufen werden müssen.    
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Serialisieren}
+%\url{https://en.wikipedia.org/wiki/Comparison_of_data-serialization_formats}
+
+\textit{Serialisierung} ist der Prozess, bei dem ein Objekt zu einer Ansammlung von Bytes umgewandelt wird oder der Zustand eines Objekts in einem Medium abgespeichert wird. Beim Serialisieren wird die Datenstruktur und der Inhalt eines Objektes so kodiert, dass dies im Speicher gesichert kann. Diese Kodierung wird dann verwendet, um den Zustand des Objektes wiederherstellen zu können. \textit{Deserialisierung} ist der Gegenprozess von Serialisierung, der den zuvor serialisierten Zustand wieder in das ursprüngliche Objektformat zurückführt, in dem die kodierten Daten aus dem Medium extrahiert werden, die ursprüngliche Datenstruktur rekonstruiert und folglich das Objekt in seinen initialen Zustand zurückversetzt.\cite{codeguruWorkingWith}
+
+Es gibt verschiedene Herangehensweisen, um Daten zu Serialisieren. In diesem Abschnitt werden einige Strategien genauer betrachtet. Als Erstes wird die populäre Serialisierung mit \ac{json}\cite{prokurainnovationsReasonJSON} und der binären Version mit \ac{bson} angeschaut. Zum Schluss wird die kompakte binäre Serialisierung betrachtet und wie diese umgesetzt werden kann.
+
+\subsubsection{JSON}
+Eine beliebte Möglichkeit, Objekte auf Medien abzuspeichern, ist im \textit{\ac{json}-Format}.\cite{prokurainnovationsReasonJSON} \ac{json} ist eine Kodierung von Daten, die für Menschen lesbar ist und wurde Anfang der 2000er Jahre erfunden.\cite{toptalDeepLookJson} \ac{json}-Objekte sind Ansammlungen von Werten, denen jeweils ein Schlüssel in der Form eines String-Wertes zugeordnet wird. Unterstützte Datentypen sind String, Boolean, Number, Array, Object und null. \ac{json} wird häufig für APIs, Konfigurations-Dateien und als Datenbank-Speicher verwendet. Aber es kann auch dazu verwendet werden, den Zustand eines Objektes in lokalen Dateien zu speichern.\cite{mongodbJSONBSON} In dem Listing \ref{lst:jsonExp} ist zu sehen, wie ein Objekt im \ac{json}-Format abgespeichert werden kann. Das entsprechende Klassendiagramm des zu speichernden Objektes ist in Abbildung \ref{fig:monsterBspKlasse} zu sehen. Das Objekt "position" besteht aus den Variablen x und y, die den Typ Number besitzen, und "effects" ist ein Array von Strings. 
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {
+            "id": 1,
+            "name": "Vampir",
+            "position": {
+                "x": 0.15,
+                "y": 2.34
+            },
+            "effects": [
+                "vergiftet", 
+                "frost"
+            ]
+        }
+    \end{minted}
+    \caption{Beispiel für ein \ac{json}-Objekt}
+    \label{lst:jsonExp}
+\end{listing}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.18\textwidth]{images/MonsterBspKlasse.png}
+    \caption{Klassendiagramm des \ac{json}-Objektes aus dem Listing \ref{lst:jsonExp}}
+    \label{fig:monsterBspKlasse}
+\end{figure}
+
+Wenn sich für \ac{json} entschieden wurde, existieren drei Arten, die Daten zu verarbeiten. Die erste Variante ist mithilfe einer \textit{Streaming API}, mit der direkt \ac{json}-Objekte mit Schlüsseln und Werten erstellt oder auf Schlüsselwerte von \ac{json}-Objekten zugegriffen werden kann. Im Listing \ref{lst:streamingApiBsp} ist durch Pseudocode zu sehen, wie mit einer Streaming API das \ac{json}-Objekt aus dem Listing \ref{lst:jsonExp} erstellt werden kann. Die letzten drei Zeilen sollen einen Zugriff auf Werte des \ac{json}-Objektes darstellen.\cite{tutorialspointJacksonStreaming} Das \textit{Tree Model} dagegen arbeitet mit einem \ac{json}-Dokument, welches in dem Arbeitsspeicher als Baumstruktur gespeichert wird, wodurch das Aktualisieren von Daten sehr schnell abläuft. Diese Baumstruktur kann dann als \ac{json}-String in einer lokalen Datei abgespeichert werden. Zuletzt gibt es noch das \textit{Data Binding}, welches die Objekte direkt zu \ac{json} serialisiert und umgekehrt deserialisiert. Im Listing \ref{lst:dataBindingBsp} ist Pseudocode zu sehen, in dem ein erstelltes Objekt direkt als \ac{json}-Objekt in einer Datei gespeichert wird. Das Objekt ist aus der Monster-Klasse der Abbildung \ref{fig:monsterBspKlasse}. Danach wird das Objekt mit den Werten eines \ac{json}-Objektes einer anderen Datei gesetzt.\cite{tutorialspointJacksonData}\cite{tutorialspointJacksonOverview}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        writeStartObject()
+        writeField("id", 1)
+        writeField("name", "Vampir")
+        writeField("name", "Vampir")
+        writeFieldName("position")
+        writeStartObject()
+        writeField("x",  0.15) 
+        writeField("y",  2.34) 
+        writeEndObject()
+        writeFieldName("effects")
+        writeStartArray()
+        write("vergiftet") 
+        write("frost")
+        writeEndArray()
+
+        get("id")
+        get("position").get("x")
+        get("effects")[0]
+    \end{minted}
+    \caption{Streaming API für \ac{json} in Pseudocode}
+    \label{lst:streamingApiBsp}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        Monster monster = new Monster()
+        monster.setID(1)
+        monster.setName("Vampir")
+        monster.setPosition(new Position(0.15, 2.34))
+        monster.setEffects(new String[]{"vergiftet", "frost"})
+        toJSON("data1.json", monster)
+
+        monster = toObject("data2.json")
+    \end{minted}
+    \caption{Data Binding mit \ac{json} in Pseudocode}
+    \label{lst:dataBindingBsp}
+\end{listing}
+
+\subsubsection{BSON}
+\textit{\ac{bson}} ist eine binäre Kodierung von \ac{json}-Daten und wurde für die NoSQL-Datenbank MongoDB entwickelt.\cite{geeksforgeeksWhatBSON} Es ist mit \ac{bson} möglich, jedes \ac{json}-Dokument als ein \ac{bson}-Dokument zu speichern. \ac{bson} unterstützt alle Datentypen von \ac{json} und erweitert diese noch mit weiteren Typen, wie einem Datum-Typ und ein BinData-Typ. Außerdem werden Zahlen anders verarbeitet. Während \ac{json} Zahlen als Zeichenketten speichert, werden diese bei \ac{bson} als 32- oder 64-Bit Integers oder 64-Bit Gleitkommazahl gespeichert. Eine Eigenschaft, die \ac{bson} auch noch im Vergleich zu \ac{json} besitzt, ist eine maximale Dokumenten-Größe von 16 MB. \ac{bson} hat gegenüber \ac{json} den Vorteil, dass Daten viel schneller durchlaufen werden, in dem viele Datentypen mit einer festen Länge und bei Datentypen mit variabler Länge die Information der Länge gespeichert werden. Ein Nachteil von \ac{bson} ist, dass durch die binäre Kodierung die Lesbarkeit wegfällt.\cite{bsonspecBSONBinary}\cite{postgreSQLandBSON}\cite{mongodbJSONBSON}
+
+Das \ac{json}-Dokument aus dem Listing \ref{lst:bsonJsonObj} wäre äquivalent zu dem \ac{bson}-Dokument aus dem Listing \ref{lst:bsonExp}. Die erste Zeile von dem \ac{bson}-Dokument beschreibt immer die Größe des ganzen Dokuments. In der nächsten Zeile wird definiert, dass es sich bei der ersten Variable des Dokuments um einen String-Typen handelt. Jeder Typ hat eine eigene Kodierung, um diesen zu identifizieren, wobei String als 0x02 kodiert wird. Die nächsten zwei Zeilen definieren den Schlüssel und Schlüsselwert des Strings. Mit 0x00 wird das Ende des Dokuments gesetzt, wie in der letzten Zeile zu sehen ist.
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {"hello": "world"}
+    \end{minted}
+    \caption{Weiteres Beispiel eines \ac{json}-Dokuments \cite{mongodbJSONBSON}}
+    \label{lst:bsonJsonObj}
+\end{listing} 
+
+\begin{listing}[htp]
+    \begin{minted}{javascript} 
+        \x16\x00\x00\x00           
+        \x02                      
+        hello\x00                  
+        \x06\x00\x00\x00world\x00  
+        \x00                       
+    \end{minted}
+    \caption{\ac{bson} Kodierung des \ac{json}-Dokuments aus dem Listing \ref{lst:bsonJsonObj} \cite{mongodbJSONBSON}}
+    \label{lst:bsonExp}
+\end{listing}
+
+\subsubsection{Binäre Serialisierung} \label{sssec:binSerialisierung}
+Bei der \textit{binären Serialisierung} wird ein Objekt in eine Menge von Bytes konvertiert, um es anschließend zu speichern oder über das Netzwerk zu übertragen. Während dieses Vorgangs wird jede Variable eines Objekts in eine binäre Darstellung umgewandelt, die vom Datentyp der jeweiligen Variable abhängt. Die Entscheidung für die Verwendung binärer Serialisierung ist vorteilhaft, wenn höchste Priorität auf Leistung und Kompaktheit der gespeicherten Daten gelegt wird. Ein Problem mit der binären Serialisierung ist jedoch, dass diese nicht von Menschen lesbar ist. Zudem können Änderungen an dem zu serialisierenden Objekt, wie beispielsweise das Hinzufügen oder Löschen von Variablen, dazu führen, dass ältere binäre Daten nicht mehr erfolgreich deserialisiert werden können.\cite{microsoftBinarySerialization}\cite{programmathicallyUnderstandingBinary}
+
+Eine große Herausforderung beim Arbeiten mit binärer Serialisierung ist es, wenn sich die Datenstrukturen der zu speichernden Daten verändern. Wenn keine weiteren Maßnahmen gewählt werden, ist es komplex, alte Daten in neueren Versionen der Anwendung mit anderen Klassenstrukturen zu deserialisieren. Es gibt jedoch einige Herangehensweisen, die bei der binären Serialisierung Probleme mit unterschiedlichen Versionen von Daten verhindern können. Zum Beispiel gibt es die \ac{vts}-Funktion, die von Microsoft für verschiedene Arten von Serialisierungen in C\# und Visual Basic entwickelt wurde.\cite{microsoftVersiontolerantBinary} Mit \ac{vts} werden neue Attribute von neuen Daten bei älteren Versionen der Anwendung ignoriert. Neue Attribute können auch so gekennzeichnet werden, dass diese zu einer Version der Anwendung zugeordnet werden können. Außerdem können Standardwerte definiert werden, die Attributen zugeordnet werden, wenn diese beim Deserialisieren nicht gefunden wurden. Diese Funktionen können für das binäre Serialisieren verwendet werden, jedoch wird empfohlen, keine Attribute zu löschen oder deren Namen oder Typen zu verändern.\cite{microsoftVersiontolerantBinary} Also ist der Entwickler in den meisten Fällen etwas eingeschränkt, wenn er die Datenstruktur der zu speichernden Daten anpassen möchte. Für mehr Freiheit sollte der Entwickler vor dem Deserialisieren der Daten immer eine Versionskontrolle durchführen. Falls die Versionen der Daten nicht mit der Version der Anwendung übereinstimmen, muss ein Migrationsalgorithmus geschrieben werden, der die bestehenden Daten an die neuen Datenstrukturen anpasst.
+
+Eine populäre Umsetzung der binären Serialisierung ist der \textit{Protocol Buffer}. Dieser wurde Anfang 2001 von Google entwickelt und wird seitdem in vielen Projekten von Google, anderen Unternehmen und Entwicklern verwendet. Der Protocol Buffer verwendet kompilierte Klassen, deren Daten mittels Klassen-Methoden zu binären Daten serialisiert werden können. Das Besondere dabei ist, dass der Protocol Buffer in verschiedenen Programmiersprachen und Plattformen verwendet werden kann. Es ist folglich möglich, dass die Programmierumgebung beim Serialisieren ganz anders ist, als die beim Deserialisieren. Da es sich um eine binäre Serialisierung handelt, sind die Daten zwar nicht für Menschen leserlich, jedoch ist der Protocol Buffer eine schnelle und kompakte Art, Daten zu serialisieren. Bei den Abbildungen \ref{fig:protobufTime} und \ref{fig:protobufBrowser} ist zu sehen, wie schnell der Protocol Buffer im Vergleich zur \ac{json}-Serialisierung ist.  In der Abbildung \ref{fig:protobufBrowser} ist auch zu sehen, dass die Daten des Protocol Buffers kompakter als die \ac{json}-Daten sind. Welchen Vorteil dies auf die Effizienz anbietet, wird in Abschnitt \ref{ssec:kompression} diskutiert.\cite{currier2022protocol}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/protobuf_time.png}
+    \caption{Kodierungs- und Dekodierungszeiten im Vergleich (weniger ist besser) \cite{currier2022protocol}}
+    \label{fig:protobufTime}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/protobuf_browser.png}
+    \caption{Laufzeit- und Datengrößen-Vergleich (weniger ist besser) \cite{currier2022protocol}}
+    \label{fig:protobufBrowser}
+\end{figure}
+
+Um mit Protocol Buffer zu arbeiten, muss als Erstes eine ".proto"-Datei erstellt werden. Diese Datei definiert die Datenstrukturen, die von dem Programm gespeichert werden sollen. Das Listing \ref{lst:protoExp} zeigt, wie eine Proto-Datei aussehen kann. Dabei wurde die Klasse aus der Abbildung \ref{fig:monsterBspKlasse} als Protocol Buffer-Klasse geschrieben. In einer Proto-Datei muss immer in der ersten Zeile definiert werden, mit welcher Protocol Buffer-Version gearbeitet wird. In dem Beispiel aus dem Listing \ref{lst:protoExp} wird mit der dritten Protocol Buffer-Version gearbeitet, welche aktuell die neuste Version ist. In einer Proto-Datei werden verschiedene Datentypen unterstützt. Mit der "message" können neue Datenstrukturen definiert werden. Die Klasse Monster zum Beispiel besteht aus einer nicht-negativen 32-Bit Integer Identifikationsnummer, einem String, der den Namen beschreibt, einer Position und einer Liste von Effekten. Die Position wird dabei als neue Klasse in der Monster-Klasse definiert und besteht aus den Gleitkommazahlen x und y. Falls nur bestimmte Werte für eine Variable gesetzt werden sollen, kann das Enum verwendet werden. In dem Beispiel aus Listing \ref{lst:protoExp} wird das Enum für die verschiedenen Effekte, die ein Monster haben kann, verwendet. Durch die "repeated"-Annotation wird hier eine Liste von Effekten definiert. Jedes Attribut bekommt eine Attribut-Nummer, für ein besseres Zuordnen der Werte beim Deserialisieren.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava} Die Attribut-Nummer gibt auch mehr Sicherheit beim Verändern der Datenstruktur, eine genauere Erklärung dazu gibt es am Ende dieses Abschnittes. 
+
+\begin{listing}[htp]
+    \begin{minted}{cpp} 
+        syntax = "proto3";
+        
+        message Monster {
+            uint32 id = 1;
+            string name = 2;
+
+            message Position {
+                float x = 1;
+                float y = 2;
+            }
+
+            Position position = 3;
+
+            enum Effect {
+                VERGIFTET = 0;
+                PARALYSE = 1;
+                FROST = 2;
+                ...
+            }
+
+            repeated Effect effects = 4;
+        }
+    \end{minted}
+    \caption{Proto-Datei einer Monster-Klasse}
+    \label{lst:protoExp}
+\end{listing}
+
+Anschließend kann mit dem \ac{protoc} die Proto-Datei kompiliert werden, um die Datenstrukturen in einer gewünschten Programmiersprache zu erstellen. In dem Listing \ref{lst:protocJava} ist zu sehen, wie der \ac{protoc}-Befehl aussehen würde, wenn mit der Java-Programmiersprache gearbeitet werden würde. Dabei müssen drei Pfade angegeben werden. Als Erstes den Pfad, auf dem sich der Quellcode der Anwendung befindet, dann der Pfad, in der die generierten Datenstrukturen gespeichert werden sollen und zum Schluss der Pfad zu der erstellten Proto-Datei. Statt Java kann \ac{protoc} seit der dritten Version die Datenstrukturen auch in C++, Kotlin, Python, Go, Ruby, Objective-C, C\# und PHP generieren lassen.\cite{protobufLanguageGuide}\cite{protobufProtocolBufferJava}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        protoc -I=<Pfad 1> --java_out=<Pfad 2> <Pfad 3>/data.proto
+    \end{minted}
+    \caption{Protoc Kommandozeilenbefehl für Java \cite{protobufProtocolBufferJava}}
+    \label{lst:protocJava}
+\end{listing}
+
+Bei den generierten Datenstrukturen wird für jede Message eine Klasse erstellt. Jede Klasse hat ihre eigene Builder-Klasse, um Instanzen dieser Klasse generieren lassen zu können. Die erstellten Klassen haben alle automatisch generierte Funktionen und Variablen, abhängig von den Variablen der Messages. In dem Listing aus \ref{lst:protoJavaGeneratedMonster} und \ref{lst:protoJavaGeneratedBuilder} ist zu sehen, welche Funktionen die generierten Klassen beinhalten, die aus der Monster-Message aus dem Listing \ref{lst:protoExp} resultieren würden. 
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        // required uint32 id = 1;
+        public boolean hasId();
+        public int getId();
+
+        // required string name = 2;
+        public boolean hasName();
+        public String getName();
+
+        // required Monster.Position position = 3;
+        public boolean hasPosition();
+        public Position getPosition();
+
+        // repeated Monster.Effect effects = 4;
+        public List<Effect> getEffectsList();
+        public int getEffectsCount();
+        public Effect getEffects(int index);
+    \end{minted}
+    \caption{Generierte Monster-Klasse aus der Monster Message}
+    \label{lst:protoJavaGeneratedMonster}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        // required uint32 id = 1;
+        public boolean hasId();
+        public int getId();
+        public Builder setId(int value);
+        public Builder clearId();
+
+        // required string name = 2;
+        public boolean hasName();
+        public String getName();
+        public Builder setName(String value);
+        public Builder clearName();
+
+        // required Monster.Position position = 3;
+        public boolean hasPosition();
+        public Position getPosition();
+        public Builder setPosition(Position value);
+        public Builder clearPosition();
+
+        // repeated Monster.Effect effects = 4;
+        public List<Effect> getEffectsList();
+        public int getEffectsCount();
+        public Effect getEffects(int index);
+        public Builder setEffects(int index, Effect value);
+        public Builder addEffects(Effect value);
+        public Builder addAllEffects(Iterable<Effect> value);
+        public Builder clearEffects();
+    \end{minted}
+    \caption{Generierte Builder-Klasse für die Monster-Klasse}
+    \label{lst:protoJavaGeneratedBuilder}
+\end{listing}
+
+In den Listings \ref{lst:protobufJavaWrite} und \ref{lst:protobufJavaRead} ist zu sehen, wie in Java die Daten in einer Datei binär gespeichert und geladen werden können. Dafür wird hauptsächlich mit den generierten Buildern gearbeitet, denn diese können mit der Funktion "build" eine neue Monster-Instanz mit den gespeicherten Werten erstellen und mit "writeTo" diese Instanz serialisieren, um sie dann in eine gegebene Datei zu schreiben. Mit der Funktion "parseFrom" der Monster-Klasse wird eine neue Instanz aus einer Datei geladen. 
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        Monster.Builder monster = Monster.newBuilder();
+        monster.setId(1);
+        monster.setName("Vampir");
+
+        Monster.Position.Builder position = Monster.Position.newBuilder();
+        position.setX(0.15f);
+        position.setY(2.34f);
+        monster.setPosition(position.build());
+
+        monster.addEffects(Monster.Effect.VERGIFTET);
+        monster.addEffects(Monster.Effect.FROST);
+
+        FileOutputStream output = new FileOutputStream("filename");
+        monster.build().writeTo(output);
+        output.close();
+    \end{minted}
+    \caption{Schreiben von Daten mit den Protocol Buffer-Klassen in Java}
+    \label{lst:protobufJavaWrite}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}{java} 
+        Monster monster = Monster.parseFrom(new FileInputStream("filename"));
+    \end{minted}
+    \caption{Lesen von Daten mit den Protocol Buffer-Klassen in Java}
+    \label{lst:protobufJavaRead}
+\end{listing}
+
+Zu Beginn dieses Abschnitts der binären Serialisierung wurde erwähnt, dass Veränderungen der Datenstruktur zu großen Problemen beim Deserialisieren von binären Daten führen können. Protocol Buffer hat Funktionen, um dieses Problem zu verhindern. Veränderungen der Datenstruktur durch Hinzufügen von neuen Attributen können problemlos gemacht werden. Bei Veränderungen wie dem Löschen oder Verändern von Attributen müssen einige Schritte beachtet werden. Jedes Attribut hat eine Attribut-Nummer. Wenn ein Attribut gelöscht wird, sollte die Attribut-Nummer nicht weiter verwendet werden. Dies könnte zu Problemen führen, wie Parse/Merge-Fehler und Daten-Veränderung. Es würden Attribute mit einer Definition serialisiert und nach der Veränderung mit einer anderen Definition deserialisiert werden. Aus diesem Grund sollten Attribut-Nummern von gelöschten Attributen reserviert werden, damit diese Nummern nicht mehr verwendet werden. Mit der "reserved"-Liste, die in einer Message in der Proto-Datei definiert wird, werden die Attribut-Nummern, die nicht mehr verwendet werden sollen, aufgezählt. Diese Liste ist besonders hilfreich, wenn mit mehreren Entwicklern gearbeitet wird,
+da definiert ist, mit welchen Attribut-Nummern nicht mehr gearbeitet werden darf. Im Listing \ref{lst:protoReserved} ist zu sehen, wie mithilfe einer "reserved"-Liste die Datenstruktur aus dem Listing \ref{lst:protoExp} angepasst werden kann. Dabei wurde das Attribut der Position und die Effekte-Liste gelöscht. Stattdessen soll jetzt mit x- und y-Variablen und nur einem Effekt, gespeichert in einer Zeichenkette, gearbeitet werden. Die neuen Attribute haben Attribut-Nummern, die erst bei fünf anfangen, da die ersten zwei Nummern schon verwendet werden und die Nummern drei und vier reserviert wurden.\cite{protobufLanguageGuide}
+
+\begin{listing}[htp]
+    \begin{minted}{cpp} 
+        syntax = "proto3";
+        
+        message Monster {
+            reserved 3, 4; 
+            uint32 id = 1;
+            string name = 2;
+            float x = 5;
+            float y = 6,
+            string effect = 7;
+        }
+    \end{minted}
+    \caption{Veränderung der Message aus dem Listing \ref{lst:protoExp}}
+    \label{lst:protoReserved}
+\end{listing}
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Datenkompression} \label{ssec:kompression}
+Kompression von Daten ist eine Technik, die bei Software- und Web-Projekten verwendet wird. Da es bei diesem Paper um Laufzeit-Effizienz und nicht um geringe Nutzung des Speicherplatzes geht, stellt sich erst einmal die Frage, ob Datenkompression für das Speichern der Daten von Videospielen überhaupt notwendig ist. Datenkompression ist ein zeitintensiver Prozess und könnte die Laufzeit erhöhen.
+
+Um dies zu beantworten, muss zunächst geschaut werden, wann und wo Datenkomprimierung verwendet wird. Hauptsächlich wird Datenkompression verwendet, wenn eine große Datenmenge gespeichert werden muss. Je nach Algorithmus ist es durchaus möglich, dass die komprimierte Datenmenge über weniger als die Hälfte der Größe der ursprünglichen Datenmenge verfügt. Dadurch werden Kosten gespart, denn das Speichermedium braucht weniger Speicherplatz. Die Komprimierung von Daten hat aber nicht nur auf den Speicherplatz einen positiven Einfluss. Wenn eine Anwendung einen hohen Datentransfer hat, kann mithilfe von Datenkompression die Menge der gesendeten Daten gesteigert werden. Dies ist bei Videospielen hilfreich, denn beim Speichern des Spielstandes müssen die Daten der einzelnen Spielobjekte aus dem Arbeitsspeicher auf den Sekundärspeicher gespeichert werden. Da der Sekundärspeicher ein viel langsameres Speichermedium als der Arbeitsspeicher ist, hilft es dort, die Größe der Daten bei den Schreib- und Leseprozessen zu reduzieren.\cite{mediumWhenDataCompression}
+
+\subsubsection{Gzip}
+
+Eine Möglichkeit, Daten zu komprimieren, ist mit dem patentfreien Kompressionsprogramm \ac{gzip}. \ac{gzip} verwendet den Deflate-Algorithmus, der eine Kombination aus dem \ac{lz77}-Algorithmus und der Huffman-Kodierung ist.\cite{ucdavisExplanationDEFLATE} Die komprimierten Daten befinden sich in einer \ac{gzip}-Datei, die die Daten als 32 Kilobytes Blöcke analysiert. Sobald sich in einem Block Wörter wiederholen, kann dieser Block komprimiert werden. \cite{gnuGzip}\cite{1414952}\cite{seobilityGzipFunktioniert}
+
+\subsubsection{\ac{json} Hpack}
+\ac{json} Hpack, oder auch \ac{json} Homogeneous Collections Compressor genannt, ist eine \ac{json}-Komprimierung, die Arrays in \ac{json}-Dokumenten in einer kompakteren Art darstellt und dabei das \ac{json}-Format beibehält. In dem Beispiel aus Listing \ref{lst:hpackCompressedExp} wird gezeigt, wie das \ac{json}-Dokument aus Listing \ref{lst:hpackJsonExp} in einer komprimierten Form geschrieben werden kann. Die Komprimierung wird von \ac{json} Hpack durchgeführt, welches aus den Daten ein kompakteres eindimensionales Array erstellt. Am Anfang des Arrays wird mit einer Zahl definiert, wie viele Schlüssel das Array benutzt. Diese werden dann in den darauffolgenden Strings aufgezählt. In diesem Beispiel gibt es die vier Schlüssel namens "id", "name", "level" und "health". Darauf folgen die Objekte des Arrays und deren Werte. Diese werden ungetrennt in das Array gespeichert. Die Trennung der einzelnen Objekte wird mit der Information der Anzahl der Schlüssel erreicht.\cite{webreflectionLastVersion}
+
+\begin{listing}[htp]
+    \begin{minted}{javascript} 
+        [
+            {
+                "id": 1,
+                "name": "Vampir",
+                "level": 5,
+                "health": 95.0
+            },
+            {
+                "id": 2,
+                "name": "Skelett",
+                "level": 7,
+                "health": 30.12
+            },
+            ...
+        ]                   
+    \end{minted}
+    \caption{}
+    \label{lst:hpackJsonExp}
+\end{listing}
+
+\begin{listing}[htp]
+    \begin{minted}[breaklines,frame=single]{javascript} 
+        [4,"id","name","level","health", 1, "Vampir", 5, 95.0, 2, "Skelett", 7, 30.12, ...]                  
+    \end{minted}
+    \caption{}
+    \label{lst:hpackCompressedExp}
+\end{listing}
+
+\subsubsection{Weitere Strategien}
+Es gibt noch weitere Strategien, wie dafür gesorgt werden kann, dass die Daten kompakter gespeichert werden können. Zum einen können kürzere Attribut-Namen bei Klassen definiert werden. Beispielsweise können alle Attribute mit einem Buchstaben dargestellt werden, falls es keine Attribute mit gleichem Anfangsbuchstaben gibt. Eine weitere Art, die Menge der Daten zu verringern, ist, dass Null-Werte ausgeschlossen werden. Wenn keine Information zu einer bestimmten Variable gespeichert wurde, dann kann automatisch angenommen werden, dass diese den Wert von Null hat. Strukturen wie Vektoren lassen sich auch einfach komprimieren. Statt x, y, z oder weitere Attribute zu besitzen, können Vektoren als Array von Zahlen definiert werden. Falls es bei Klassenattributen feste Werte, wie zum Beispiel bei Enums, gibt, die gesetzt werden können, können diesen Werten eine feste ID zugeordnet werden, damit dann nur noch die Zahl und nicht der Wert gespeichert werden muss.\cite{objelean2011json}\cite{baeldungReducingJSON}
+
+In dem \ac{json}-Dokument aus Listing \ref{lst:shorterJson} ist zu sehen, wie das Dokument aus Listing \ref{lst:jsonExp} kompakter beschrieben werden kann, ohne großen Aufwand zu betreiben. Die Klassenattribute wurden alle mit dem ersten Buchstaben abgekürzt. Da es nur begrenzt viele Monsternamen und Effekte gibt, werden diese über eine ID gespeichert. Der Monstername "Vampir" bekommt die ID 1 unter den Monsternamen. Bei den Effekten hat in diesem Beispiel der Effekt "vergiftet" die ID 1 und der Effekt "frost" die ID 3 unter allen Effekten bekommen. Das Positions-Objekt wurde als Array dargestellt, wobei der erste Eintrag im Array die x-Position und der zweite Eintrag die y-Position darstellt. Das Resultat ist deutlich kompakter als das ursprüngliche Dokument.
+
+\begin{listing}[htp]
+    \begin{minted}{javascript}
+        {
+            "i": 1,
+            "n": 1,
+            "p": [0.15, 2.34],
+            "e": [1, 3]
+        }
+    \end{minted}
+    \caption{Kompaktere Version des \ac{json}-Objekt aus dem Listing \ref{lst:jsonExp}}
+    \label{lst:shorterJson}
+\end{listing}
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\section{Ladesysteme}\label{sect:ladesysteme}
+In diesem Abschnitt werden Prozesse zum Vorbereiten der Daten des Spielstandes vor dem Laden und Strategien für ein effizienteres Laden ausgearbeitet. Beim Vorbereiten der Daten wird die Kontrolle dieser durch Überprüfung der Version und ob Fehler enthalten sind, genauer untersucht. Für die Phase danach, wenn die Daten geladen werden können, wird die Strategie des Lazy Loadings betrachtet.
+%--------------------------------------------------------------------------
+
+
+
+%--------------------------------------------------------------------------
+\subsection{Datenkontrolle}
+Bevor die Daten geladen werden können, sollten diese überprüft werden. Wenn dieser Schritt übersprungen wird, kann es zu fehlerhaften Zuständen im Spiel oder zu Problemen der Ausführung des Programmes kommen. Dabei gibt es zwei Kontrollen, die durchgeführt werden sollten.
+
+Eine \textit{Versionskontrolle} überprüft die Version der Daten eines Spielstandes. Wenn diese Version älter als die Version der Anwendung ist, sollten die Daten zu der neuen Version migriert werden. In der Informatik werden Anwendungen, die mit älteren Daten und Versionen arbeiten können, \textit{Backward-Compatible} genannt.\cite{mediumEnsuringBackwards} Um eine Abwärtskompatibilität zu garantieren, ist es sinnvoll, beim Speichern der Daten eine Version des Spiels mitzugeben, welche dann beim Laden verglichen werden kann. Wenn die gespeicherte Version nicht mit der Version des Spieles übereinstimmt, müssen die alten Daten auf die neuen Datenstrukturen übersetzt werden. Ein Beispiel, wo dies verwendet wird, ist das Spiel Factorio. Mehr Informationen dazu sind im Abschnitt \ref{sec:factorio} zu finden. Dies kann ein sehr aufwendiger Prozess sein, weshalb die Datenstrukturen gut durchdacht und nicht häufig verändert werden sollten. Im besten Fall sollten auch neue Attribute nicht mit einem Null- oder Standardwert, sondern im Kontext der alten Daten gesetzt werden. Wenn zum Beispiel ein Gegner eine neue Art von Rüstung haben soll, die als neues Attribut von der Gegner-Klasse gespeichert wird, sollten die gespeicherten Gegner bei diesem Attribut keinen Null-Wert, sondern stattdessen eine passende Rüstung zu dem Typen und Level des Gegners bekommen. Statt die Version anzugeben, können auch sogenannte \textit{Feature-Flags} gespeichert werden. Eine Feature-Flag speichert die Information, ob die Version der gespeicherten Daten bereits bestimmte Funktionen unterstützt. Wenn zu einer Funktion noch keine Flag gesetzt wurde, dann wurde diese auch noch nicht in den Daten umgesetzt. Bei dem Beispiel der neuen Gegner-Rüstung kann dafür eine Flag gesetzt werden, wenn die aktuelle Version der Daten bereits den neuen Rüstungs-Typen beinhaltet. Wenn eine Feature-Flag noch nicht gesetzt wurde, müssen die relevanten Daten an die neuen Funktionen angepasst werden. Anstatt die Daten zuerst auf die neue Version zu übersetzen oder auf Feature-Flags zu achten, kann auch der Programmcode der neuen Version so entwickelt werden, dass er mit älteren Versionen funktioniert. Dafür können zum Beispiel die Ladefunktionen der alten Versionen verwendet oder Null-Werten in den Daten beachtet werden und anschließend die Daten auf die neue Version modifiziert werden.\cite{mediumEnsuringBackwards} 
+
+Eine \textit{Fehlerkontrolle} überprüft, ob die Daten in irgendeiner Form beschädigt sind. Dies kann durch Fehler der Anwendung selbst passieren, oder wenn Benutzer die Daten bearbeitet haben. Dabei gibt es zwei Schritte, die in einer vollen Fehlerkontrolle durchgeführt werden müssen, um für valide Spieldaten zu sorgen. Der erste Schritt ist die Überprüfung der Daten und ob diese fehlerhaft sind. Dafür sollten die Daten mit der aktuellen Datenstruktur verglichen werden, \acused{dh}\ac{dh} ob alle benötigten Attribute existieren, den richtigen Datentyp und zugelassene Werte haben. Der zweite Schritt sollte die fehlerhaften Zustände korrigieren. Im idealen Fall sollten alle fehlerhaften Daten auf den ursprünglichen validen Zustand wiederhergestellt werden. Dies ist in den meisten Fällen nur bei kleinen Fehlern möglich, zum Beispiel wenn ein Attribut einen numerischen Wert haben soll und sich in den Zahlen ein Buchstabe befindet. Bei komplexeren Fehlern existieren zwei Möglichkeiten, die Daten wieder fehlerfrei zu machen. Die eine Möglichkeit ist es, dass für jeden Spielstand ein Backup gemacht wird. Ein Backup ist eine Sicherheitskopie der Daten, mit der, wenn der originale Spielstand beschädigt ist, diese wieder hergestellt werden können.\cite{ibmDevelopingBackup} Die Backup-Dateien sollten jedoch nicht bearbeitet werden, sonst können auch diese aus fehlerhaften Werten bestehen. Die zweite Möglichkeit ist, dass die fehlerhaften Attribute oder Objekte auf einen definierten Standardwert zurückgesetzt werden (wie mit der \ac{vts} aus dem Abschnitt \ref{sssec:binSerialisierung}). Hier können zwar bei stark beschädigten Daten viele Informationen verloren gehen, dafür ist dieser Prozess aber deutlich schneller, denn er kann bereits während des ersten Schrittes der Fehlererkennung durchgeführt werden.
+%--------------------------------------------------------------------------
+
+
+
+%--------------------------------------------------------------------------
+\subsection{Lazy Loading} \label{ssect:lazyloading}
+Lazy Loading ist eine in der Webentwicklung verwendete Strategie zum effizienteren Laden von Webseiten. Dabei werden Teile einer Webseite erst dann geladen, wenn sie gebraucht werden. Das Gegenteil dieser Strategie ist das sogenannte Eager Loading, bei dem alles auf einmal geladen wird.\cite{cloudflareLazyLoad}
+
+Bei einer großen Datenmenge von Spielobjekten ist es ineffizient, alle Daten direkt aus dem lokalen Speicher in den Arbeitsspeicher zu laden. Aus diesem Grund ist es sinnvoll, eine Lazy Loading Strategie zu verwenden. Eine Möglichkeit, die Daten schrittweise zu laden, ist die Spielwelt abhängig von der Position des Spielers zu laden. Dabei werden nur die Daten geladen, die in der Nähe vom Spieler sind. Um zu definieren, welche Spielobjekte in der Nähe eines Spielers sind, kann die Draw Distance\footnote{Auch bekannt als Render Distance. Legt fest, ab welcher Distanz Spielobjekte in die Spielwelt gezeichnet werden sollen.\cite{nerdburglarsWhatDraw}} als Maßstab verwendet werden. Ein Chunk-System ist für diese Strategie geeignet, denn es können immer die Daten der Chunks geladen werden, die sich im Umfeld des Spielers befinden. Dann muss nicht über alle Spielobjekte iteriert werden, um die Objekte in der Nähe des Spielers zu finden.
+%--------------------------------------------------------------------------
+
+
+
+
+%--------------------------------------------------------------------------
+%--------------------------------------------------------------------------
+\section{Strategien}
+In diesem Abschnitt wird mit den Methoden und Strategien aus diesem Kapitel ein komplettes Speicher- und Ladesystem aufgebaut. Dabei werden verschiedene Strategien zusammengestellt und anschließend in einem Testszenario geprüft. Zum Schluss werden die Ergebnisse gegenübergestellt, um herauszufinden, welche Strategien wann effizienter laufen und welche im Allgemeinen am effizientesten arbeiten.
+
+\subsection{Allgemeines Speicher- und Ladesystem}
+Ein allgemeines Speicher- und Ladesystem würde aus den Phasen bestehen, die in der Abbildung \ref{fig:speicherphasen} zu sehen sind. Diese Phasen laufen während oder zwischen den Spielphasen, die im Abschnitt \ref{ssect:spielphasen} zu sehen sind. Manche Schritte sind optional, je nachdem für welches System sich entschieden wird.
+
+Nachdem das Spiel gestartet wird, muss erst einmal der letzte Spielstand geladen werden. Hier kann entschieden werden, ob alles auf einmal oder nur Teile geladen werden sollen (siehe den Abschnitt zu \hyperref[ssect:lazyloading]{Lazy Loading}). Falls es eine Datei gibt mit einer Liste von Änderungen, die nochmal abgearbeitet werden muss, wie im Abschnitt \ref{ssect:deltasave}, dann geschieht das Abarbeiten der Liste hier. Während der Hauptphase des Spieles muss auf Events reagiert werden. Veränderungen der Events müssen gesammelt und entweder direkt oder in Intervallen abgespeichert werden. Wenn die Lazy Loading-Methode für Videospiele aus Abschnitt \ref{ssect:lazyloading} gewählt wurde, muss hier auf Events geachtet werden, bei denen sich die Position des Spielers verändert. Wenn der Spieler sich an noch ungeladene Bereichen der Spielwelt annähert, müssen Spielobjekte dieser Bereiche rechtzeitig geladen werden. Bevor dann das Spiel beendet wird, kann es noch sein, dass das Speichersystem letzte Änderungen noch abspeichern muss, damit kein Verlust des Spielstandes entsteht.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.36\textwidth]{images/Speichersystem.png}
+    \caption{Phasen eines allgemeinen Speicher- und Ladesystems}
+    \label{fig:speicherphasen}
+\end{figure}
+
+\iffalse
+\begin{itemize}
+    \item Je nach Speichersystem können die Events die in "Änderung speichern" behandelt werden in zwei Kategorien unterteilt werden:
+    \begin{enumerate}
+        \item Ein Spielobjekt wurde hinzugefügt/geändert
+        \item Ein Spielobjekt wurde gelöscht
+    \end{enumerate}
+\end{itemize}
+\fi
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Chunk-basiertes System}
+Sei die Welt theoretisch unendlich, dann ist ein Chunk-System eine sinnvolle Aufteilungen der Daten für ein Speicher- und Ladesystem. In der Abbildung \ref{fig:chunkClass} ist zu sehen, aus welchen Attributen die Chunk-Klasse besteht. Jeder Chunk hat eine Identifikationsnummer, Position, Größe und Elemente. Die Position kann die Mitte des Chunks sein, oder ein Eckpunkt. Position und Größe sind dabei zwei- oder dreidimensionale Vektoren, je nachdem in welcher Dimension das Spiel gespielt wird. Der Typ der Elemente hängt von dem Chunk ab. Das ausgewählte Chunk-System hat für jeden zu speichernden Datentyp ein eigenes Chunk-Subsystem. Wenn es zu viele Datentypen gibt, ist es sinnvoller, in einem Chunk alle Spielobjekte gemeinsam zu speichern, egal welchen Datentyp diese haben. Optional ist es noch möglich, die parentID und childrenID zu speichern. Wenn sich für ein dynamisches Chunk-System entschieden wird, dann können die alten Chunks, die auf kleinere Chunks aufgeteilt wurden, erhalten bleiben. Damit dann eine Relation zwischen den alten Chunks und den neuen Chunks gibt, können diese mit einer Eltern-Kind-Relation verbunden werden. Jeder Eltern-Chunk hat vier (in zweidimensionalen Spielen) oder acht (in dreidimensionalen Spielen) Kinder-Chunks, wenn der Eltern-Chunk aufgeteilt wurde. Beim Vereinigen von Chunks können deren Elemente auch leichter an den Eltern-Chunk weitergegeben werden. Danach können die Kinder-Chunks gelöscht werden.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.28\textwidth]{images/Chunk.png}
+    \caption{Chunk Klasse}
+    \label{fig:chunkClass}
+\end{figure}
+
+
+In der Abbildung \ref{fig:chunkBasedSystem} ist ein Ablaufdiagramm zu dem ersten Ansatz eines Chunk-basierten Systems zu erkennen. Nach Spielstart werden zu Beginn die Informationen der einzelnen Chunks geladen. Hiermit sind alle Informationen außer den Elementen eines Chunks gemeint, denn im nächsten Schritt sollen die Elemente der Chunks in der Nähe des Spielers geladen werden. Dafür werden die Positionen und Größen aller Chunks benötigt. Damit ein Lazy Loading stattfindet, werden mit diesem Ansatz nur die Elemente in der Nähe des Spielers geladen. In der Hauptphase des Spieles werden dann weiterhin die Chunk-Elemente der Chunks geladen, die in der Nähe des Spielers sind. Die Chunk-Veränderungen zu speichern, hängt bei dieser Strategie davon ab, ob die Chunks eine feste Größe haben oder nicht. Wird eine feste Chunkgröße gewählt, so muss der Chunkinhalt, also die Elemente eines Chunks, jedes Mal neu angepasst werden, wenn ein Objekt verändert, hinzugefügt oder gelöscht wurde.  Bei einer dynamischen Chunkgröße, wie in \ref{sssect:chunks} gezeigt, wird ähnlich bei Modifikation, Hinzufügung und Löschung von Spielobjekten gearbeitet, nur muss noch zusätzlich jedes Mal die Größe des Chunkinhaltes überprüft werden. Wenn ein Chunk zu viele Elemente hat, müssen diese auf neue, kleinere Chunks verteilt werden. Wenn eine Gruppe von Chunks zu wenig Elemente haben, müssen diese wieder in dem Eltern-Chunk gespeichert werden und dessen Kind-Chunks müssen im Speicher wieder herausgenommen werden.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.36\textwidth]{images/Chunkbasiert.png}
+    \caption{Chunk-basiertes System}
+    \label{fig:chunkBasedSystem}
+\end{figure}
+
+Eine Erweiterung des Chunk-basierten Systems wäre das Hinzufügen einer Change-Datei, die alle Veränderungen der Spielwelt speichert, wie in \ref{ssect:deltasave} gezeigt. Die Veränderungen können in einer Liste gespeichert werden, als Objekte der Klasse der Abbildung \ref{fig:changesClass}. Diese Klasse besteht aus einem ID-, Event- und Objekt-Attribut. Das Event kennzeichnet, ob ein Spielobjekt hinzugefügt, verändert oder gelöscht wurde. Je nach Event sieht dann das Objekt anders aus. Wenn ein Spielobjekt verändert wurde, reicht es, dort die ID des Objekts und die veränderten Attribute mit deren Werten zu speichern. Falls ein Spielobjekt gelöscht wurde, genügt es, die ID des gelöschten Objektes anzugeben. Für den Fall, dass ein Spielobjekt neu hinzugefügt wurde, kann hier das komplette Spielobjekt übergeben werden. Zu den veränderten Daten müssen auch die Chunks betrachtet werden. Falls ein Spielobjekt zu einem anderen Chunk verschoben wurde, muss dies der Change-Datei übergeben werden. Wenn ein dynamisches Chunk-System verwendet wird, muss außerdem noch in der Change-Datei gespeichert werden, wenn ein Chunk erstellt oder gelöscht wurde. Durch diese Strategie werden die Schreib- und Leseprozesse in dem lokalen Speicher stark reduziert, da während der Laufzeit des Spieles nur die Veränderungen gespeichert werden und kein Chunkinhalt neu angepasst werden muss.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.25\textwidth]{images/Changes.png}
+    \caption{Speichern von Veränderungen}
+    \label{fig:changesClass}
+\end{figure}
+
+In der Abbildung \ref{fig:altchunkBasedSystem} ist das Ablaufdiagramm des Chunk-basierten Speicher- und Ladesystems mit Change-Datei zu sehen. Wie zu sehen, gibt es einige Parallelen zu dem System aus der Abbildung \ref{fig:chunkBasedSystem}. Ein paar Phasen sind jedoch etwas anders oder neu. Zu Beginn müssen die Veränderungen des letzten Spielstandes in die lokalen Daten zu den einzelnen Chunks übertragen werden. Dafür muss die Change-Datei von oben nach unten abgearbeitet werden, da in den ersten Zeilen die ältesten Veränderungen sind. Zum Beispiel kann es sein, dass zweimal die Position eines Spielobjektes verändert wurde. Die ältere Position wurde zuerst in die Change-Datei gespeichert und wird dann durch das Abarbeiten von oben nach unten durch die neue Position überschrieben. Danach kann die Change-Datei wieder geleert werden, um wieder die neuen Veränderungen sammeln zu können. Eine weitere Anpassung ist das Speichern der Veränderungen. Hier werden nicht die lokalen Chunk-Daten aktualisiert, sondern stattdessen die Veränderungen der Change-Datei übergeben. Der Rest läuft genau gleich ab, wie bei der vorherigen Chunk-basierten Strategie.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/Chunkbasiert2.png}
+    \caption{Alternative zu dem Chunk-basierten System}
+    \label{fig:altchunkBasedSystem}
+\end{figure}
+%--------------------------------------------------------------------------
+
+
+%--------------------------------------------------------------------------
+\subsection{Auswertung}
+In diesem Abschnitt wird mit einem Java-Projekt\footnote{Code zu dem Projekt \url{https://github.com/Giulcoo/bachelor-thesis/tree/main/projects}} getestet, welche Strategien am effizientesten sind. Dabei werden unterschiedliche Szenarien aus Spielen und das Speichern und Laden dieser Szenarien gemessen. Die Ergebnisse der Messungen werden anschließend mit unterschiedlichen Ansätzen eines Speicher- und Ladesystems verglichen. 
+
+\subsubsection{Methodik}
+Zum Testen der Strategien wurde ein Testszenario aufgestellt, welches Events in Spielen simulieren soll. Um den Test einfach zu halten, wurde nur mit einem Spielobjekt der Player-Klasse gearbeitet. Ein Player kann entweder der Spieler selbst sein oder \acp{npc} des Spieles. In der Abbildung \ref{fig:playerClass} ist zu sehen, welche Attribute ein Player hat. Die Identifikationsnummer, der Name und ob der Player ein Bot ist, sind Daten, die sich nicht verändern. Das Attribut "chunk" kann die Chunk-ID des Players speichern und verändert sich, so wie die Position des Players. Die Player-Objekte werden in Chunks gruppiert und auch im Zusammenhang mit diesen gespeichert oder geladen. Die Chunks sind nach der Klasse der Abbildung \ref{fig:chunkClass} strukturiert.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.2\textwidth]{images/PlayerKlasse.png}
+    \caption{Spieler-Klasse}
+    \label{fig:playerClass}
+\end{figure}
+
+Um diese Datenstruktur und ihre Parameter richtig zu testen, wurden fünf verschiedene Szenarien erstellt, welche die Basisaktionen in einem Spiel simulieren sollen. Die Funktion \textit{"createGame"} stellt das Szenario dar, bei dem ein neues Spiel erstellt wird und die komplette Datenstruktur eines Spieles aufgebaut werden muss. Die Funktion \textit{"loadGame"} stellt das Szenario dar, bei dem ein Spieler den letzten Spielstand weiterspielen will. Hier müssen die alte Datenstruktur und Spieldaten geladen werden. Die Funktionen \textit{"createPlayers"}, \textit{"movePlayers"} und \textit{"removePlayers"} simulieren verschiedene Szenarien, während das Spiel gespielt wird. Bei diesen Funktionen wird ein alter Spielstand geladen und dieser wird danach bearbeitet. Bei "createPlayers" wird simuliert, dass während des Spielens neue Gegner erstellt werden. Bei "movePlayers" werden zufällige \acp{npc} und der Spieler selber verschoben und bei der Funktion "removePlayers" werden Gegner gelöscht, weil diese zum Beispiel von dem Spieler besiegt wurden. Alle Änderungen werden am Ende jeder dieser Funktionen gespeichert. Bevor diese Funktionen aufgerufen werden, werden Daten vorbereitet, damit in diesen Szenarien mit einem schon existierenden Spielstand gestartet werden kann.
+
+Zum Testen von verschiedenen Strategien auf das Testszenario gibt es verschiedene Parameter, die betrachtet werden. Als Speicher- und Ladesystem wurden die zwei Systeme der Abbildungen \ref{fig:chunkBasedSystem} und \ref{fig:altchunkBasedSystem} verwendet. Dabei gibt es einen Parameter, mit dem eingestellt werden kann, ob eine Change-Datei verwendet werden soll, die alle Änderungen der Spielobjekte so kompakt wie möglich speichert. Ein weiterer Parameter des Systems ist, mit welcher Art von Serialisierung gearbeitet werden soll. Es gibt die Wahl zwischen der binären Serialisierung und der Serialisierung zu \ac{json}. Für die binäre Serialisierung wurde der Protocol Buffer verwendet, da dieser auch für Java unterstützt wird. Für die Serialisierung zu \ac{json} wurde die Bibliothek Jackson verwendet. Jackson bietet eine Vielzahl von Funktionen an, um Java-Objekte als \ac{json}-String zu formatieren und abzuspeichern.\cite{githubGitHubFasterXMLjackson} Die Strategien mit Protocol Buffer und Jackson laufen außerhalb des Serialisierungsprozesses exakt gleich ab. Bei der Serialisierung gibt es auch die Option, \ac{gzip}-Komprimierung auf die Daten anzuwenden, um die Schreib- und Leseprozesse im Sekundärspeicher zu reduzieren. Nach diesen Parametern gibt es noch Einstellungen für das Chunk-System. Wenn sich für Chunks mit dynamischer Größe entschieden wird, muss eingestellt werden, wie viele Player-Objekte ein Chunk maximal haben kann, bevor er in kleinere Chunks aufgeteilt wird. Für diesen Parameter liegen die Werte bei 1000, 5000 und 10000 maximalen Elemente pro Chunk. Außerdem muss eingestellt werden, unter welcher Anzahl von Player-Objekten in einer Gruppe von vier Chunks diese wieder vereinigt werden. Dafür wird die Summe der Player-Objekte der Chunks berechnet und wenn diese unter der festgelegten Grenze liegt, werden die Chunks wieder vereinigt. Dieser Parameter hängt vom Parameter der Chunk-Aufteilung ab. Chunks werden entweder bei 50\%, 10\% oder 1\% der Zahl des Chunk-Aufteilungsparameters wieder vereinigt. Wenn zum Beispiel jeder Chunk maximal 10000 Elemente beinhalten kann, bevor er aufgeteilt wird, dann werden Gruppen von Chunks entweder bei einer Summe von unter 5000 (50\%), 1000 (10\%) oder 100 (1\%) Elementen vereinigt. Bei einer statischen Chunkgröße muss eingestellt werden, wie viele Chunks die Spielwelt haben soll. Werte für diesen Parameter liegen bei zwei mal zwei (also vier Chunks), zehn mal zehn (also 100 Chunks) oder 50 mal 50 (also 2500 Chunks). Die Spielwelt hat dabei eine feste Größe, aber es können theoretisch unendlich viele Spieler an einer Position sein. Die Zahlenwerte der Parameter wurden so gewählt, dass sowohl kleine, als auch größere Werte für die Parameter getestet werden können. Es geht bei den Messungen nicht darum, die exakten Zahlenwerte für eine perfekte Strategie zu finden, sondern zu analysieren, in welcher Situation ein größerer oder kleinerer Zahlenwert für einen bestimmten Parameter vorteilhafter ist. 
+
+Zum Testen der Parameter werden die verschiedenen Funktionen der Szenarien ausgeführt. Dabei werden den Funktionen unterschiedliche Größen von Daten übergeben. Als Größen gibt es einmal 1000 Daten, 10000 Daten und 100000 Daten. Zum Beispiel stellt der Parameter von der Funktion "createGame" ein, wie viele Player im neuen Spiel erstellt werden sollen. Dies können dann 1000, 10000 oder 100000 Player-Objekte sein. Auch hier wurden diese Werte ausgewählt, um unterschiedliche Datenmengen bei den Funktionen zu testen. 1000 veränderte Spielobjekte ist eine kleine Menge die schnell gespeichert werden kann. 100000 dagegen ist eine sehr große Menge, die deutlich mehr Zeit zum Speichern benötigen wird. Die 10000 dienen als Mittelwert, zwischen wenig und vielen Spieldaten. Dadurch werden die Strategien auf sehr viele unterschiedliche Szenarien und Größen getestet.
+
+Die verschiedenen Parameter und Größen der Daten wurden mit \ac{jmh} getestet.\cite{githubGitHubOpenjdkjmh} \ac{jmh} ist ein Java-Harness zum Erstellen von Benchmarks. In diesen Benchmarks können die Laufzeiten von Funktionen und Programmen gemessen werden, in dem diese über mehrere Durchläufe ausgeführt werden und am Ende eine durchschnittliche Laufzeit zurückgegeben wird. Diese wird bei \ac{jmh} in \ac{ops}, also wie oft die zu testende Funktion pro Sekunde ausgeführt werden kann, angegeben.\cite{githubGitHubOpenjdkjmh} Der Vorteil von \ac{jmh} im Vergleich zu einfachen Messungen der Laufzeit in Sekunden, ist, dass die Messungen nicht anhand eines einzigen Aufrufs gemacht werden und dass es eine "Warm-up"-Phase gibt, bei der die \ac{jvm} vorbereitet wird. Außerdem können "Setup"-Funktionen für alle Benchmark-Funktionen definiert werden, die Daten für diese vorbereiten, ohne bei der Zeit mitgemessen zu werden. Die "Setup"-Funktion von \ac{jmh} wird bei Szenarien verwendet, wo Daten zu Beginn vorliegen sollen, wie zum Beispiel bei der Funktion "loadGame". Alle zu testenden Funktionen arbeiten zwar zufällig, jedoch wird zu Beginn des Programmes immer ein Seed eingestellt, damit alle Testszenarien mit den gleichen Daten arbeiten. Dieser Seed ist auch für jeden Parameter der Gleiche.
+
+\subsubsection{Ergebnisse}
+Um herauszufinden, welche Strategie in welchen Fällen die beste ist, wurde ein Score-Wert berechnet, in dem für jedes Szenario und jede Datengröße die Strategien nach ihren Ergebnissen sortiert wurden. Je besser eine Strategie bei einem Szenario und einer Datengröße nach den Benchmark-Ergebnissen gelaufen ist, desto größer ist der Score-Wert für diese Kategorie. Am Ende wurden die Score-Werte aller Szenarien und Datengrößen aufsummiert, um einen allgemeinen Score-Wert zu berechnen. Je größer dieser Wert ist, desto besser waren die Ergebnisse einer Strategie im Vergleich zu anderen Strategien bei allen Szenarien und Datengrößen. 
+
+Das Balkendiagramm\footnote{Zu jedem Balkendiagramm gibt es auch noch Tabellen im \hyperref[ch:appendix]{Anhang} mit den genauen Werten} in der Abbildung \ref{fig:topStrat} zeigt die zehn besten Strategien\footnote{\label{stratScores}Ergebnisse aller Messungen und berechneten Score-Werte: \url{https://github.com/Giulcoo/bachelor-thesis/blob/main/resources/Strategies\%20Results/Score.txt}} nach dem Score-System aller Szenarien und Datengrößen. "Dynamic" und "Static" geben in diesem und anderen Diagrammen an, ob die Chunks sich dynamisch an die Datenmenge anpassen, oder ob es nur eine feste Anzahl an Chunks gibt. Bei dynamischer Chunk-Anzahl wird noch in der letzten Zeile mit zwei Zahlen angegeben, wie viele Player-Objekte ein Chunk maximal beinhalten kann, bevor dieser sich in kleinere Chunks aufteilt, und unter welcher Anzahl an Player-Objekten eine Gruppe von Chunks wieder vereinigt wird. Bei statischer Chunk-Anzahl wird angegeben, in wie vielen Chunks die Spielwelt aufgeteilt wird. In der Abbildung \ref{fig:topStrat} fällt auf, dass die besten Strategien alle eine binäre Serialisierung verwenden. Der einzige Fall, wo die Serialisierung mit \ac{json} schneller war, war bei dem Testszenario der Funktion "createPlayers" (siehe Abbildung \ref{fig:createPlayers}).
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=1\textwidth]{images/plots/top.png}
+    \caption{Beste Strategien nach dem Score-System aller Kategorien}
+    \label{fig:topStrat}
+\end{figure}
+
+Wenn die besten Strategien von der binären- und \ac{json}-Serialisierung betrachtet werden (siehe Abbildungen \ref{fig:topStratBin} und \ref{fig:topStratJson}), fällt außerdem noch auf, dass wenige Strategien mit \ac{gzip}-Komprimierung dabei sind. Die besten Strategien bei beiden Serialisierungen sind ansonsten auch sehr ähnlich. Es gibt hauptsächlich Strategien mit dynamischen Chunk-Systemen und das einzige statische Chunk-System hat die Spielwelt auf zwei mal zwei Chunks aufgeteilt. Diese Strategie ist auch nach dem Score-System die Schnellste beim Arbeiten mit einer Datengröße von 10000 (siehe Abbildung \ref{fig:middleDataCount}), bei den anderen Datengrößen (siehe Abbildung \ref{fig:smallDataCount} und \ref{fig:bigDataCount}) und den verschiedenen Testszenarien (siehe Abbildung \ref{fig:createGame}, \ref{fig:loadGame}, \ref{fig:createPlayers}, \ref{fig:movePlayers} und \ref{fig:removePlayers}) haben dynamische Chunks besser abgeschnitten. Strategien, bei denen die Chunks möglichst groß sind (siehe Abbildung \ref{fig:topDynamic} und \ref{fig:topStatic}), haben auch überdurchschnittlich abgeschnitten. Strategien mit einer Change-Datei sind bei den besten Strategien nicht zu sehen. Diese haben unterdurchschnittliche Ergebnisse bei den \ac{jmh}-Benchmarks.
+
+\subsubsection{Interpretation}
+Bei den Ergebnissen gab es einige erwartete, genauso wie unerwartete Resultate. Dass die binären Strategien allgemein schneller als die mit \ac{json} waren, war zu erwarten. Binäre Serialisierung kodiert die Daten viel schneller in kompaktere Daten (siehe Abbildung \ref{fig:protobufTime} und \ref{fig:protobufBrowser}), die sich schneller im Sekundärspeicher schreiben und lesen lassen. Aus diesem Grund waren die Ergebnisse mit \ac{gzip} etwas unerwartet. \ac{gzip} reduziert zwar die Anzahl der Schreib- und Leseprozesse im Sekundärspeicher, jedoch kann der Kompressionsalgorithmus die Laufzeit so erhöhen, dass es schneller ist, direkt unkomprimiert mit den Daten im Sekundärspeicher zu arbeiten. Selbst bei einer großen Datenmenge (siehe Abbildung \ref{fig:bigDataCount}) scheinen Strategien mit \ac{gzip}-Komprimierung nicht effizienter als solche ohne zu sein. Das einzige Szenario, bei dem die \ac{gzip}-Komprimierung effizienter lief, ist bei dem Szenario "removePlayers" (siehe Abbildung \ref{fig:removePlayers}). Hier verwenden die besten Strategien größtenteils die Komprimierung. Nach den Ergebnissen ist dieses Szenario das zeitintensivste, weshalb sich hier die zusätzliche Laufzeit durch den Kompressionsalgorithmus mehr lohnt, damit die Prozesse im Sekundärspeicher reduziert werden. Die Ergebnisse der Funktion "createPlayers", wo die Strategie mit \ac{json} schneller als diejenige mit der binären Serialisierung ist, könnten auf Messungenauigkeiten zurückgeführt werden. Bei genauer Betrachtung der Daten, sind bei dem Szenario "createPlayers" mit einer Datengröße von 1000 nur Strategien mit binärer Serialisierung. Erst bei einer Datengröße von 10000 und 100000 sind hauptsächlich Strategien mit \ac{json} zu sehen\footref{stratScores}. Die Ergebnisse unterscheiden sich aber auch nur um maximal ein Prozent bei der besten \ac{json}-Strategie und der besten binären Strategie dieser Kategorie.
+
+Zu erwarten war auch, gerade bei einer großen Datenmenge, dass die dynamischen Chunk-Systeme im Allgemeinen besser abgeschnitten haben, da diese anpassungsfähiger sind und somit die Daten effizienter gruppieren können. Dass jedoch die Strategien mit größeren Chunks besser abschneiden, war weniger zu erwarten. Zu kleine Chunks kosten jedoch auch viel Laufzeit, da die Player-Objekte viel mehr zwischen den Chunks übertragen werden müssen und wenn der Chunk eines neuen Player-Objektes gesucht wird, muss auch eine größere Liste von Chunks durchlaufen werden. Aus diesem Grund scheint auch die Strategie mit statischen Chunk-System und zwei mal zwei Chunks bei den statischen Chunk-Systemen am besten zu funktionieren. Jedes Mal, wenn ein neues Player-Objekt erstellt wird, und der Chunk des Objekts gefunden werden soll, muss nur zwischen vier Chunks gesucht werden. Wenn sich danach die Player-Objekte frei bewegen, passiert es seltener, dass ein Objekt zu einem neuen Chunk gelangt. Bei den Strategien mit dynamischen Chunk-System gibt es zwar laut Score-System einen Gewinner, jedoch kann auch hier wegen Messungenauigkeiten nicht sicher gesagt werden, ob diese Strategie auch wirklich die Schnellste ist. Die Ergebnisse der anderen Strategien mit dynamischen Chunk-Systemen waren bei den \ac{jmh}-Benchmarks auch sehr ähnlich. Jedoch sind auch hier im Allgemeinen die Strategien am erfolgreichsten, wenn sie möglichst große Chunks zulassen, indem jeder Chunk viele Player-Objekte aufnehmen kann, bevor er sich auf kleinere Chunks aufteilt und Gruppen von Chunks schon bei einer größeren Summe von Player-Objekten wieder zu einem größeren Chunk vereinigt werden.
+
+Ein weiteres unerwartetes Ergebnis ist, dass bei den besten Strategien keine dabei ist, die eine Change-Datei verwendet. Erhöhte Ladezeiten waren zu erwarten, da über die Veränderungen des letzten Spielstandes iteriert werden und jeder Chunk nach den Veränderungen konstruiert werden muss. Durch die minimierte Größe an Daten, die geschrieben werden müssen, ist eigentlich zu erwarten, dass dieser Ansatz beim Erstellen des Spieles und das Speichern von Spielerveränderungen besonders effizient läuft. Jedoch gibt es durch diese Strategie eine größere Anzahl an Schreibprozessen im Sekundärspeicher. Und wenn die Daten dieser Prozesse aufsummiert werden, ist deren Menge etwas größer als bei den Strategien ohne Change-Datei. Jedes Objekt der Change-Klasse bringt noch weitere Attribute mit, die gespeichert werden müssen und insgesamt mehr Daten mit sich bringen.
+
+\subsubsection{Fazit}
+Für ein Speicher- und Ladesystem, welches sehr anpassungsfähig sein soll und im Allgemeinen am effizientesten läuft, ist die Strategie mit der binären Serialisierung und dem dynamischen Chunk-System, welches für möglichst große Chunks sorgt, die beste Wahl. Dies ist gerade dann sinnvoll, wenn sich die Anzahl der Daten häufig verändern kann und die Spielwelt auch große Datenmengen zulässt. Da es sehr aufwendig ist, ein dynamisches Chunk-System zu entwickeln, kann hier auch stattdessen die Strategie mit einem statischen Chunk-System und möglichst großen Chunks gewählt werden. Hier sollten die Anzahl der Chunks passend gewählt werden, denn es hängt von der Größe der Spielwelt und der Menge der Spielobjekten in der Welt ab. Jedoch wäre es sinnvoll, bei großen Chunks anzufangen und diese zu testen.    
+
+Wenn der Entwickler Wert auf lesbare Daten legt, dann sollte statt der binären Serialisierung die Serialisierung mit \ac{json} verwendet werden. Jedoch ist auch hier in sehr wenigen Schritten möglich, die ganzen binären Daten von dem Protocol Buffer in \ac{json} zu konvertieren und auch anders herum.\cite{baeldungProtobufToJson} Mittels dieser Funktionalität kann ohne großen Aufwand ein Software-Tool entwickelt werden, mit dem die binären Daten in \ac{json} zu lesen sind. Mit diesem Tool lassen sich auch die Daten im \ac{json}-Format ändern und dann anschließend wieder in die binäre Kodierung konvertieren. Also kann auch mit der binären Serialisierung das  Lesbarkeitsproblem gelöst werden.
+
+Wenn dem Entwickler wichtig ist, dass die Daten möglichst schnell und kompakt gespeichert werden sollen, dann ist eine Strategie mit binärer Serialisierung, \ac{gzip}-Kompression und dynamischen Chunk-System am sinnvollsten. Hier gibt es auch Ansätze, die bei den besten zehn Strategien laut dem Score-System waren. Es wird als nicht viel auf Effizienz verzichtet, beim Verwenden von \ac{gzip}.
